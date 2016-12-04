@@ -12,6 +12,7 @@ TTT COMMANDS is licensed under the **[2-clause BSD license](LICENSE)**.
 Download
 --------
 
+[https://github.com/daichigoto/tttcmds/archive/master.zip](https://github.com/daichigoto/tttcmds/archive/master.zip)
 
 Installation
 ------------
