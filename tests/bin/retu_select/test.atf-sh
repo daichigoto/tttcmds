@@ -1,0 +1,299 @@
+#!/usr/bin/env atf-sh
+# 
+#  Copyright (c) 2016 Daichi GOTO
+#  All rights reserved.
+#  
+#  Redistribution and use in source and binary forms, with or without
+#  modifigation, are permitted provided that the following conditions are 
+#  met: 
+#  
+#  1. Redistributions of source code must retain the above copyright 
+#     notice, this list of conditions and the following disclaimer. 
+#  2. Redistributions in binary form must reproduce the above copyright 
+#     notice, this list of conditions and the following disclaimer in the 
+#     documentation and/or other materials provided with the distribution. 
+#  
+#  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS 
+#  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT 
+#  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR 
+#  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT 
+#  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, 
+#  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT 
+#  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, 
+#  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY 
+#  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT 
+#  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE 
+#  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+#  
+
+atf_test_case empty
+empty_head() {
+	atf_set "descr" "Verify an empty file"
+}
+
+empty_body() {
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/empty_1.out \
+		-x "retu_select 1 $(atf_get_srcdir)/empty.in"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/empty_1.out \
+		-x "retu_select 1 < $(atf_get_srcdir)/empty.in"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/empty_1.out \
+		-x "cat $(atf_get_srcdir)/empty.in |" \
+		   "retu_select 1"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/empty_1.out \
+		-x "cat $(atf_get_srcdir)/empty.in |" \
+		   "retu_select 1 -"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/empty_2.out \
+		-x "retu_select 1" \
+		   "$(atf_get_srcdir)/empty.in" \
+		   "$(atf_get_srcdir)/empty.in" \
+		   "$(atf_get_srcdir)/empty.in"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/empty_3.out \
+		-x "retu_select 1/10 $(atf_get_srcdir)/empty.in"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/empty_4.out \
+		-x "retu_select 10/1 $(atf_get_srcdir)/empty.in"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/empty_5.out \
+		-x "retu_select 5 1 3 " \
+		   "$(atf_get_srcdir)/empty.in" \
+		   "$(atf_get_srcdir)/empty.in"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/empty_6.out \
+		-x "retu_select 5 1 3 " \
+		   "$(atf_get_srcdir)/empty.in" \
+		   "$(atf_get_srcdir)/empty.in" \
+		   "$(atf_get_srcdir)/data_without_eor.in" \
+		   "$(atf_get_srcdir)/empty.in"
+}
+
+atf_test_case a_with_eor
+a_with_eor_head() {
+	atf_set "descr" "Verify a normal file including a LF before EoF"
+}
+
+a_with_eor_body() {
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/a_with_eor_1.out \
+		-x "retu_select 1 $(atf_get_srcdir)/a_with_eor.in"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/a_with_eor_1.out \
+		-x "retu_select 1 < $(atf_get_srcdir)/a_with_eor.in"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/a_with_eor_1.out \
+		-x "cat $(atf_get_srcdir)/a_with_eor.in |" \
+		   "retu_select 1"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/a_with_eor_1.out \
+		-x "cat $(atf_get_srcdir)/a_with_eor.in |" \
+		   "retu_select 1 -"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/a_with_eor_2.out \
+		-x "retu_select 1" \
+		   "$(atf_get_srcdir)/a_with_eor.in" \
+		   "$(atf_get_srcdir)/a_with_eor.in" \
+		   "$(atf_get_srcdir)/a_with_eor.in"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/a_with_eor_3.out \
+		-x "retu_select 1/10 $(atf_get_srcdir)/a_with_eor.in"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/a_with_eor_4.out \
+		-x "retu_select 10/1 $(atf_get_srcdir)/a_with_eor.in"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/a_with_eor_5.out \
+		-x "retu_select 5 1 3" \
+		   "$(atf_get_srcdir)/a_with_eor.in" \
+		   "$(atf_get_srcdir)/a_with_eor.in"
+}
+
+atf_test_case a_without_eor
+a_without_eor_head() {
+	atf_set "descr" "Verify a normal file excluding a LF before EoF"
+}
+
+a_without_eor_body() {
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/a_without_eor_1.out \
+		-x "retu_select 1 $(atf_get_srcdir)/a_without_eor.in"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/a_without_eor_1.out \
+		-x "retu_select 1 < $(atf_get_srcdir)/a_without_eor.in"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/a_without_eor_1.out \
+		-x "cat $(atf_get_srcdir)/a_without_eor.in |" \
+		   "retu_select 1"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/a_without_eor_1.out \
+		-x "cat $(atf_get_srcdir)/a_without_eor.in |" \
+		   "retu_select 1 -"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/a_without_eor_2.out \
+		-x "retu_select 1" \
+		   "$(atf_get_srcdir)/a_without_eor.in" \
+		   "$(atf_get_srcdir)/a_without_eor.in" \
+		   "$(atf_get_srcdir)/a_without_eor.in"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/a_without_eor_3.out \
+		-x "retu_select 1/10 $(atf_get_srcdir)/a_without_eor.in"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/a_without_eor_4.out \
+		-x "retu_select 10/1 $(atf_get_srcdir)/a_without_eor.in"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/a_without_eor_5.out \
+		-x "retu_select 5 1 3" \
+		   "$(atf_get_srcdir)/a_without_eor.in" \
+		   "$(atf_get_srcdir)/a_without_eor.in"
+}
+
+atf_test_case fl_with_eor
+fl_with_eor_head() {
+	atf_set "descr" "Verify a one column file including a LF before EoF"
+}
+
+fl_with_eor_body() {
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/fl_with_eor_1.out \
+		-x "retu_select 1 $(atf_get_srcdir)/fl_with_eor.in"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/fl_with_eor_2.out \
+		-x "retu_select 2 $(atf_get_srcdir)/fl_with_eor.in"
+}
+
+atf_test_case data_with_eor
+data_with_eor_head() {
+	atf_set "descr" "Verify a normal file including a LF before EoF"
+}
+
+data_with_eor_body() {
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/data_with_eor_1.out \
+		-x "retu_select 1 $(atf_get_srcdir)/data_with_eor.in"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/data_with_eor_1.out \
+		-x "retu_select 1 < $(atf_get_srcdir)/data_with_eor.in"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/data_with_eor_1.out \
+		-x "cat $(atf_get_srcdir)/data_with_eor.in |" \
+		   "retu_select 1"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/data_with_eor_1.out \
+		-x "cat $(atf_get_srcdir)/data_with_eor.in |" \
+		   "retu_select 1 -"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/data_with_eor_2.out \
+		-x "retu_select 1" \
+		   "$(atf_get_srcdir)/data_with_eor.in" \
+		   "$(atf_get_srcdir)/data_with_eor.in" \
+		   "$(atf_get_srcdir)/data_with_eor.in"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/data_with_eor_3.out \
+		-x "retu_select 9 5 1 10/3" \
+		   "$(atf_get_srcdir)/data_with_eor.in"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/data_with_eor_4.out \
+		-x "retu_select 9 5 1 10/3" \
+		   "$(atf_get_srcdir)/data_with_eor.in" \
+		   "$(atf_get_srcdir)/a_with_eor.in" \
+		   "$(atf_get_srcdir)/empty.in" \
+		   "$(atf_get_srcdir)/a_with_eor.in"
+}
+
+atf_test_case data_without_eor
+data_without_eor_head() {
+	atf_set "descr" "Verify a normal file excluding a LF before EoF"
+}
+
+data_without_eor_body() {
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/data_without_eor_1.out \
+		-x "retu_select 1 $(atf_get_srcdir)/data_without_eor.in"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/data_without_eor_1.out \
+		-x "retu_select 1 < $(atf_get_srcdir)/data_without_eor.in"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/data_without_eor_1.out \
+		-x "cat $(atf_get_srcdir)/data_without_eor.in |" \
+		   "retu_select 1"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/data_without_eor_1.out \
+		-x "cat $(atf_get_srcdir)/data_without_eor.in |" \
+		   "retu_select 1 -"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/data_without_eor_2.out \
+		-x "retu_select 1" \
+		   "$(atf_get_srcdir)/data_without_eor.in" \
+		   "$(atf_get_srcdir)/data_without_eor.in" \
+		   "$(atf_get_srcdir)/data_without_eor.in"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/data_without_eor_3.out \
+		-x "retu_select 5 1 7/3" \
+		   "$(atf_get_srcdir)/data_without_eor.in"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/data_without_eor_4.out \
+		-x "retu_select 9 5 1 10/3" \
+		   "$(atf_get_srcdir)/data_without_eor.in"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/data_without_eor_5.out \
+		-x "retu_select 9 5 1 10/3" \
+		   "$(atf_get_srcdir)/data_without_eor.in" \
+		   "$(atf_get_srcdir)/a_without_eor.in" \
+		   "$(atf_get_srcdir)/empty.in" \
+		   "$(atf_get_srcdir)/a_without_eor.in"
+}
+
+atf_test_case many_retu_without_eor
+many_retu_without_eor_head() {
+	atf_set "descr" "Verify a many retu process"
+}
+
+many_retu_without_eor_body() {
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/many_retu_without_eor_1.out \
+		-x "retu_select 1/9000" \
+		   "$(atf_get_srcdir)/many_retu_without_eor.in"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/many_retu_without_eor_2.out \
+		-x "retu_select 9000/1" \
+		   "$(atf_get_srcdir)/many_retu_without_eor.in"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/many_retu_without_eor_3.out \
+		-x "retu_select 9000/10000 100/10" \
+		   "$(atf_get_srcdir)/many_retu_without_eor.in"
+}
+
+atf_test_case select
+select_head() {
+	atf_set "descr" "Verify that the command selects correct targets"
+}
+
+select_body() {
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/select_1.out \
+		-x "retu_select 5 1 3 7" \
+		   "$(atf_get_srcdir)/data_without_eor.in"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/select_2.out \
+		-x "retu_select 1/100" \
+		   "$(atf_get_srcdir)/data_without_eor.in"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/select_3.out \
+		-x "retu_select 100/1" \
+		   "$(atf_get_srcdir)/data_without_eor.in"
+}
+
+atf_init_test_cases()
+{
+	atf_add_test_case empty
+	atf_add_test_case a_with_eor
+	atf_add_test_case a_without_eor
+	atf_add_test_case fl_with_eor
+	atf_add_test_case data_with_eor
+	atf_add_test_case data_without_eor
+	atf_add_test_case many_retu_without_eor
+	atf_add_test_case select
+}

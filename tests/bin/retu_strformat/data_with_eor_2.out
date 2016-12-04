@@ -1,0 +1,10 @@
+STRING:_aa @ _\@\@_ _\@\@_ dd STRING:_ee ff
+STRING:_aa bb _\@\@_ _\@\@_ dd STRING:_ee ff
+STRING:_aa bb _\@\@_ _\@\@_ dd STRING:_ee ff
+STRING:_aa bb _\@\@_ _\@\@_ @ STRING:_ee ff
+STRING:_aa bb _\@\@_ _\@\@_ ee STRING:_ ff
+STRING:_aa @ _\@\@_ _\@\@_ dd STRING:_ee ff
+STRING:_aa bb _\@\@_ _\@\@_ dd STRING:_ee ff
+STRING:_aa bb _\@\@_ _\@\@_ dd STRING:_ee ff
+STRING:_aa bb _\@\@_ _\@\@_ @ STRING:_ee ff
+STRING:_aa bb _\@\@_ _\@\@_ ee STRING:_ ff

@@ -1,0 +1,5 @@
+STRING:_aa @ @ @ dd STRING:_ee ff
+STRING:_aa bb @ @ dd STRING:_ee ff
+STRING:_aa bb @ @ dd STRING:_ee ff
+STRING:_aa bb @ @ @ STRING:_ee ff
+STRING:_aa bb @ @ ee STRING:_ ff

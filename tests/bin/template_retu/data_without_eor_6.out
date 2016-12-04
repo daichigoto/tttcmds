@@ -1,0 +1,5 @@
+aa (@ b B) bb (cc d D) dd ee (ff f)
+aa (bb b B) @ (cc d D) dd ee (ff f)
+aa (bb b B) cc (@ d D) dd ee (ff f)
+aa (bb b B) cc (dd d D) @ ee (ff f)
+aa (bb b B) cc (dd d D) ee @ (ff f)
