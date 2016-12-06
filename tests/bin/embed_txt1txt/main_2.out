@@ -1,0 +1,10 @@
+<html>
+<body>
+	<thead>
+		<tr><th>NAME1</th><th>NAME2</th><th>NAME3</th></tr>
+	</thead>
+	<tbody>
+		<tr><td>a</td><td>b</td><td>c</td></tr>
+	</tbody>
+</body>
+</html>

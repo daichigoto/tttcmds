@@ -1,0 +1,85 @@
+#!/usr/bin/env atf-sh
+# 
+#  Copyright (c) 2016 Daichi GOTO
+#  All rights reserved.
+#  
+#  Redistribution and use in source and binary forms, with or without
+#  modifigation, are permitted provided that the following conditions are 
+#  met: 
+#  
+#  1. Redistributions of source code must retain the above copyright 
+#     notice, this list of conditions and the following disclaimer. 
+#  2. Redistributions in binary form must reproduce the above copyright 
+#     notice, this list of conditions and the following disclaimer in the 
+#     documentation and/or other materials provided with the distribution. 
+#  
+#  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS 
+#  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT 
+#  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR 
+#  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT 
+#  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, 
+#  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT 
+#  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, 
+#  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY 
+#  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT 
+#  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE 
+#  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+#  
+
+atf_test_case txt1txt
+txt1txt_head() {
+	atf_set "descr" "Verify a files embedding process"
+}
+
+txt1txt_body() {
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/main_1.out \
+		-x "embed_txt1txt" \
+		   "1,'<!--HEAD-->',$(atf_get_srcdir)/thead_with_eor.html" \
+		   "2,'<!--BODY-->',$(atf_get_srcdir)/tbody_with_eor.html" \
+		   "$(atf_get_srcdir)/main.html"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/main_1.out \
+		-x "cat $(atf_get_srcdir)/main.html |" \
+		   "embed_txt1txt" \
+		   "1,'<!--HEAD-->',$(atf_get_srcdir)/thead_with_eor.html" \
+		   "2,'<!--BODY-->',$(atf_get_srcdir)/tbody_with_eor.html"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/main_2.out \
+		-x "embed_txt1txt" \
+		   "1,'<!--HEAD-->',$(atf_get_srcdir)/thead_without_eor.html" \
+		   "2,'<!--BODY-->',$(atf_get_srcdir)/tbody_without_eor.html" \
+		   "$(atf_get_srcdir)/main.html"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/main_2.out \
+		-x "cat $(atf_get_srcdir)/main.html |" \
+		   "embed_txt1txt" \
+		   "1,'<!--HEAD-->',$(atf_get_srcdir)/thead_without_eor.html" \
+		   "2,'<!--BODY-->',$(atf_get_srcdir)/tbody_without_eor.html"
+}
+
+atf_test_case txt1txt_n
+txt1txt_n_head() {
+	atf_set "descr" "Verify a files embedding process without newline"
+}
+
+txt1txt_n_body() {
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/main_2.out \
+		-x "embed_txt1txt -n" \
+		   "1,'<!--HEAD-->',$(atf_get_srcdir)/thead_with_eor.html" \
+		   "2,'<!--BODY-->',$(atf_get_srcdir)/tbody_with_eor.html" \
+		   "$(atf_get_srcdir)/main.html"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/main_2.out \
+		-x "cat $(atf_get_srcdir)/main.html |" \
+		   "embed_txt1txt -n" \
+		   "1,'<!--HEAD-->',$(atf_get_srcdir)/thead_with_eor.html" \
+		   "2,'<!--BODY-->',$(atf_get_srcdir)/tbody_with_eor.html"
+}
+
+atf_init_test_cases()
+{
+	atf_add_test_case txt1txt
+	atf_add_test_case txt1txt_n
+}
