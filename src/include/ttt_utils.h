@@ -286,3 +286,24 @@
 		fclose(fp_fp); \
 	} \
 }
+
+#define FILEPROCESS_ALLBUFFER { \
+	int fp_fd, fp_size, fp_rsize; \
+	struct stat fp_st; \
+	char *fp_buf; \
+	for (int fp_file_i = 1; fp_file_i <= F_ARGC; fp_file_i++) { \
+		if (-1 == stat(F_ARGV[fp_file_i], &fp_st )) \
+			err(errno, "%s", F_ARGV[fp_file_i]); \
+		fp_size = fp_st.st_size; \
+		fp_buf = calloc(1, fp_size * sizeof(char)); \
+		if (-1 == (fp_fd = open(F_ARGV[fp_file_i], O_RDONLY))) \
+			err(errno, "%s", F_ARGV[fp_file_i]); \
+		fp_rsize = 0; \
+		while (fp_rsize != fp_size) \
+			fp_rsize += read(fp_fd, fp_buf+fp_rsize, \
+				fp_size-fp_rsize); \
+		TGT_BUFFER_PROCESS(fp_buf, fp_size) \
+		free(fp_buf); \
+		close(fp_fd); \
+	} \
+}
