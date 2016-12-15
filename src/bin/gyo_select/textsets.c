@@ -43,8 +43,12 @@ struct textset cmdtextsets[] = {
 	{ "command_synopsis", "en_", 
 	  _CMD(CMDNAME) " "
 	  "[" _OPT("a") "|" _OPT("o") "] [" _OPT("hvD") "] [" _OPT("-") "] "
-	  _ARG("N=key") "|" _ARG("N/M=key") " "
-	  "[" _ARG("N=key") "|" _ARG("N/M=key") "\n" _ETC "] "
+	  _ARG("N=key") "|" _ARG("N/M=key") "|" 
+	  _ARG("N>key") "|" _ARG("N/M>key") "|" 
+	  _ARG("N<key") "|\n" _ARG("N/M<key") " "
+	  "[" _ARG("N=key") "|" _ARG("N/M=key") "|"
+	  _ARG("N>key") "|" _ARG("N/M>key") "|" 
+	  _ARG("N<key") "|" _ARG("N/M<key") " " _ETC "] "
 	  "[" _ARG("file") " " _ETC "]" },
 
 	{ "command_description", "ja_JP", 
@@ -65,8 +69,16 @@ struct textset cmdtextsets[] = {
 	  _OPT("-") "		オプションの終了を指定\n"
 	  _ARG("N=key") "\t	" _ARG("N") "列の値が" _ARG("key") 
 	  			"に一致\n"
-	  _ARG("N/M=key") "\t	" _ARG("N") "列から" _ARG("M") "例の値が"
-	  			_ARG("key") "に一致\n"
+	  _ARG("N>key") "\t	" _ARG("N") "列の値が" _ARG("key") 
+	  			"よりも大きい\n"
+	  _ARG("N<key") "\t	" _ARG("N") "列の値が" _ARG("key") 
+	  			"よりも小さい\n"
+	  _ARG("N/M=key") "\t	" _ARG("N=key") "と同じ処理を" _ARG("M") 
+	  			"例まで適用\n"
+	  _ARG("N/M>key") "\t	" _ARG("N>key") "と同じ処理を" _ARG("M") 
+	  			"例まで適用\n"
+	  _ARG("N/M<key") "\t	" _ARG("N<key") "と同じ処理を" _ARG("M") 
+	  			"例まで適用\n"
 	  _ARG("file") "\t	ファイルを指定" },
 	 
 	{ "command_options", "en_", 
@@ -78,9 +90,19 @@ struct textset cmdtextsets[] = {
 	  _OPT("-") "		Specify the end of options.\n"
 	  _ARG("N=key") "\t	The value of " _ARG("N") "th column and "
 	  			"the " _ARG("key") " match.\n"
-	  _ARG("N/M=key") "\t	The values of " _ARG("N") "th to " 
-	  			_ARG("M") "th column and the " _ARG("key") 
-				" match.\n"
+	  _ARG("N>key") "\t	The value of " _ARG("N") "th column is "
+	  			"greater than the " _ARG("key") ".\n"
+	  _ARG("N<key") "\t	The value of " _ARG("N") "th column is "
+	  			"lesser than the " _ARG("key") ".\n"
+	  _ARG("N/M=key") "\t	Process the " _ARG("N") "th to " 
+	  			_ARG("M") "th columns in the same way\n"
+				"\t\tas " _ARG("N=key") ".\n" 
+	  _ARG("N/M>key") "\t	Process the " _ARG("N") "th to " 
+	  			_ARG("M") "th columns in the same way\n"
+				"\t\tas " _ARG("N>key") ".\n" 
+	  _ARG("N/M<key") "\t	Process the " _ARG("N") "th to " 
+	  			_ARG("M") "th columns in the same way\n"
+				"\t\tas " _ARG("N<key") ".\n" 
 	  _ARG("file") "\t	Specify the file." },
 
 	{ "command_example", "en_", 
@@ -97,6 +119,15 @@ struct textset cmdtextsets[] = {
 	  _P("gyo_select -o 2= 3= data.ssv")
 	  _S("1 @ 3 4 5 6 7 8 9")
 	  _S("1 2 @ 4 5 6 7 8 9")
+	  _P("cat date.ssv")
+	  _S("20150101 20150505 20151010")
+	  _S("20160101 20160505 20161010")
+	  _S("20170101 20170505 20171010")
+	  _P("gyo_select 2'>'20160101 date.ssv")
+	  _S("20160101 20160505 20161010")
+	  _S("20170101 20170505 20171010")
+	  _P("gyo_select 2'>'20160101 3'<'20170101 date.ssv")
+	  _S("20160101 20160505 20161010")
 	  _P("") },
 
 	TEXTSET_END

@@ -25,7 +25,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#define VERSION "20161102"
+#define VERSION "20161215"
 #define CMDNAME "gyo_select"
 #define ALIAS "gyosel row_select"
 
@@ -36,18 +36,48 @@
 		if (NF < R_ARGV_MAX) \
 			goto gyo_not_match; \
 		for (int i = 1; i <= R_ARGV_MAX; i++) \
-			if (R_INDEX_EXIST[i] == R_INDEX_IS_EXISTENCE) \
-				if (0 != strcmp(GYO_BUFFER[i], \
-				         R_ARGV_ARG1[R_INDEX_TO_ARGV[i]])) \
-				goto gyo_not_match; \
+			if (R_INDEX_EXIST[i] == R_INDEX_IS_EXISTENCE) { \
+				cmpret = strcmp(GYO_BUFFER[i], \
+					R_ARGV_ARG1[R_INDEX_TO_ARGV[i]]); \
+				switch (R_ARGV_DELIM \
+					[R_INDEX_TO_ARGV[i]]) { \
+				case '>': \
+					if (cmpret <= 0) \
+						goto gyo_not_match; \
+					break; \
+				case '<': \
+					if (cmpret >= 0) \
+						goto gyo_not_match; \
+					break; \
+				default: \
+					if (0 != cmpret) \
+						goto gyo_not_match; \
+					break; \
+				} \
+			} \
 		goto gyo_match; \
 	} \
 	else { \
 		for (int i = 1; i <= R_ARGV_MAX; i++) \
-			if (R_INDEX_EXIST[i] == R_INDEX_IS_EXISTENCE) \
-				if (0 == strcmp(GYO_BUFFER[i], \
-				         R_ARGV_ARG1[R_INDEX_TO_ARGV[i]])) \
-				goto gyo_match; \
+			if (R_INDEX_EXIST[i] == R_INDEX_IS_EXISTENCE) { \
+				cmpret = strcmp(GYO_BUFFER[i], \
+					R_ARGV_ARG1[R_INDEX_TO_ARGV[i]]); \
+				switch (R_ARGV_DELIM \
+					[R_INDEX_TO_ARGV[i]]) { \
+				case '>': \
+					if (cmpret > 0) \
+						goto gyo_match; \
+					break; \
+				case '<': \
+					if (cmpret < 0) \
+						goto gyo_match; \
+					break; \
+				default: \
+					if (0 == cmpret) \
+						goto gyo_match; \
+					break; \
+				} \
+			} \
 		goto gyo_not_match; \
 	} \
 gyo_match: \

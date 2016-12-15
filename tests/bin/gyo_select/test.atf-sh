@@ -316,6 +316,39 @@ or_condition_body() {
 		   "$(atf_get_srcdir)/data_with_eor.in"
 }
 
+atf_test_case greaterthan
+greaterthen_head() {
+	atf_set "descr" "Verify GREATERTHAN condition"
+}
+
+greaterthan_body() {
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/date_with_eor_1.out \
+		-x "gyo_select 3'>'20130202" \
+		   "$(atf_get_srcdir)/date_with_eor.in"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/date_with_eor_2.out \
+		-x "gyo_select 3'>'20130202 4'>'20150404" \
+		   "$(atf_get_srcdir)/date_with_eor.in"
+}
+
+
+atf_test_case lesserthan
+lesserthan_head() {
+	atf_set "descr" "Verify LESSERTHAN condition"
+}
+
+lesserthan_body() {
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/date_with_eor_3.out \
+		-x "gyo_select 3'<'20130203" \
+		   "$(atf_get_srcdir)/date_with_eor.in"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/date_with_eor_4.out \
+		-x "gyo_select 3'<'20170101 5'<'20160404" \
+		   "$(atf_get_srcdir)/date_with_eor.in"
+}
+
 atf_init_test_cases()
 {
 	atf_add_test_case empty
@@ -326,4 +359,6 @@ atf_init_test_cases()
 	atf_add_test_case data_without_eor
 	atf_add_test_case and_condition
 	atf_add_test_case or_condition
+	atf_add_test_case greaterthan
+	atf_add_test_case lesserthan
 }
