@@ -168,7 +168,8 @@ getcmdargs(const int argc, char *argv[], const char *optargs, int flags)
 			case 'e': SETFLAG("e", FLAG_e, FLAG_e_ARG); break;
 			case 'f': SETFLAG("f", FLAG_f, FLAG_f_ARG); break;
 			case 'g': SETFLAG("g", FLAG_g, FLAG_g_ARG); break;
-			case 'h': SETFLAG("h", FLAG_h, FLAG_h_ARG); break;
+			case 'h': SETFLAG("h", FLAG_h, FLAG_h_ARG);
+			          usage();                          break;
 			case 'i': SETFLAG("i", FLAG_i, FLAG_i_ARG); break;
 			case 'j': SETFLAG("j", FLAG_j, FLAG_j_ARG); break;
 			case 'k': SETFLAG("k", FLAG_k, FLAG_k_ARG); break;
@@ -182,7 +183,8 @@ getcmdargs(const int argc, char *argv[], const char *optargs, int flags)
 			case 's': SETFLAG("s", FLAG_s, FLAG_s_ARG); break;
 			case 't': SETFLAG("t", FLAG_t, FLAG_t_ARG); break;
 			case 'u': SETFLAG("u", FLAG_u, FLAG_u_ARG); break;
-			case 'v': SETFLAG("v", FLAG_v, FLAG_v_ARG); break;
+			case 'v': SETFLAG("v", FLAG_v, FLAG_v_ARG); 
+			          version();                        break;
 			case 'w': SETFLAG("w", FLAG_w, FLAG_w_ARG); break;
 			case 'x': SETFLAG("x", FLAG_x, FLAG_x_ARG); break;
 			case 'y': SETFLAG("y", FLAG_y, FLAG_y_ARG); break;
