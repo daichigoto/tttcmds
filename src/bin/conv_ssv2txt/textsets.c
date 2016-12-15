@@ -78,7 +78,7 @@ struct textset cmdtextsets[] = {
 	  _S("0 0 0 2 3")
 	  _S("0 0 0 3 4")
 	  _P("cat data1.ssv |")
-	  _P2("conv_ssv2txt - date2.ssv")
+	  _P2("conv_ssv2txt - data2.ssv")
 	  _S("000001 EUROPEAN PEAR @CHINA")
 	  _S("000002   FRENCH BEAN @CHINA")
 	  _S("000003                JAPAN")
