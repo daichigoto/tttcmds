@@ -643,7 +643,7 @@ mktempfile(void)
 	struct stat sb;
 	int i, j, k, len;
 	char *home = getenv("HOME"), *dir, *dir2;
-	if (NULL == home)
+	if (NULL == home || 0 == strcmp(home, "/"))
 		home = "/tmp";
 
 	len = strlen(home) + strlen(TMPDIR_NAME) + 2;
@@ -685,5 +685,5 @@ mktempfile(void)
 	sprintf(tempfile, "%s/%s", dir, TMPFILE_NAME);
 
 	if (-1 == mkstemp(tempfile))
-		err(errno, "getcmdargs#mktempfile failed");
+		err(errno, "getcmdargs#mktempfile: %s: failed", tempfile);
 }
