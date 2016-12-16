@@ -25,12 +25,69 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#define VERSION "20161215"
+#define VERSION "20161216"
 #define CMDNAME "gyo_select"
 #define ALIAS "gyosel row_select"
 
 #include "ttt.h"
 
+#define TGT_GYO_PROCESS(GYO_BUFFER,NF) \
+	if (!FLAG_o) { \
+		if (NF < R_ARGV_MAX) \
+			goto gyo_not_match; \
+		for (int i = 1; i <= R_ARGC; i++) \
+			if (R_INDEX_EXIST[R_ARGV[i]] == \
+			    R_INDEX_IS_EXISTENCE) { \
+				cmpret = strcmp(GYO_BUFFER[R_ARGV[i]], \
+					R_ARGV_ARG1[i]); \
+				switch (R_ARGV_DELIM[i]) { \
+				case '>': \
+					if (cmpret <= 0) \
+						goto gyo_not_match; \
+					break; \
+				case '<': \
+					if (cmpret >= 0) \
+						goto gyo_not_match; \
+					break; \
+				default: \
+					if (0 != cmpret) \
+						goto gyo_not_match; \
+					break; \
+				} \
+			} \
+		goto gyo_match; \
+	} \
+	else { \
+		for (int i = 1; i <= R_ARGC; i++) { \
+			if (R_INDEX_EXIST[R_ARGV[i]] == \
+			    R_INDEX_IS_EXISTENCE) { \
+				cmpret = strcmp(GYO_BUFFER[R_ARGV[i]], \
+					R_ARGV_ARG1[i]); \
+				switch (R_ARGV_DELIM[i]) { \
+				case '>': \
+					if (cmpret > 0) \
+						goto gyo_match; \
+					break; \
+				case '<': \
+					if (cmpret < 0) \
+						goto gyo_match; \
+					break; \
+				default: \
+					if (0 == cmpret) \
+						goto gyo_match; \
+					break; \
+				} \
+			} \
+		} \
+		goto gyo_not_match; \
+	} \
+gyo_match: \
+	for (int i = 1; i < NF; i++) \
+		printf("%s ", GYO_BUFFER[i]); \
+	printf("%s\n", GYO_BUFFER[NF]); \
+gyo_not_match:
+
+/*
 #define TGT_GYO_PROCESS(GYO_BUFFER,NF) \
 	if (!FLAG_o) { \
 		if (NF < R_ARGV_MAX) \
@@ -85,3 +142,4 @@ gyo_match: \
 		printf("%s ", GYO_BUFFER[i]); \
 	printf("%s\n", GYO_BUFFER[NF]); \
 gyo_not_match:
+*/
