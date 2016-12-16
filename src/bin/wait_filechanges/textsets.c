@@ -42,7 +42,7 @@ struct textset cmdtextsets[] = {
 
 	{ "command_synopsis", "en_",
 	  _CMD(CMDNAME) " "
-	  "[" _OPT("hvD") "] [" _OPT("-") "] "
+	  "[" _OPT("phvD") "] [" _OPT("-") "] "
 	  _ARG("file") "|" _ARG("dir") " "
 	  "[" _ARG("file") "|" _ARG("dir") " " _ETC "]" },
 
