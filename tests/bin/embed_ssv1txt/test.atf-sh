@@ -1,0 +1,67 @@
+#!/usr/bin/env atf-sh
+# 
+#  Copyright (c) 2016 Daichi GOTO
+#  All rights reserved.
+#  
+#  Redistribution and use in source and binary forms, with or without
+#  modifigation, are permitted provided that the following conditions are 
+#  met: 
+#  
+#  1. Redistributions of source code must retain the above copyright 
+#     notice, this list of conditions and the following disclaimer. 
+#  2. Redistributions in binary form must reproduce the above copyright 
+#     notice, this list of conditions and the following disclaimer in the 
+#     documentation and/or other materials provided with the distribution. 
+#  
+#  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS 
+#  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT 
+#  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR 
+#  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT 
+#  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, 
+#  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT 
+#  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, 
+#  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY 
+#  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT 
+#  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE 
+#  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+#  
+
+atf_test_case ssv1txt
+ssv1txt_head() {
+	atf_set "descr" "Verify a ssv data embedding process"
+}
+
+ssv1txt_body() {
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/main_1.out \
+		-x "embed_ssv1txt" \
+		   "-t $(atf_get_srcdir)/main.html" \
+		   "1.'<!--HEAD-->' 2.'<!--BODY-->'" \
+		   "$(atf_get_srcdir)/data.ssv"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/table_bodytr_1.out \
+		-x "embed_ssv1txt" \
+		   "-t $(atf_get_srcdir)/table_bodytr.html" \
+		   "1:'<!--L1-->' 2:'<!--L2-->' 3:'<!--L3-->'" \
+		   "$(atf_get_srcdir)/farm.ssv"
+}
+
+atf_test_case ssv1txt_n
+ssv1txt_n_head() {
+	atf_set "descr" "Verify a ssv data  embedding process without newline"
+}
+
+ssv1txt_n_body() {
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/table_bodytr_2.out \
+		-x "embed_ssv1txt -n" \
+		   "-t $(atf_get_srcdir)/table_bodytr.html" \
+		   "1:'<!--L1-->' 2:'<!--L2-->' 3:'<!--L3-->'" \
+		   "$(atf_get_srcdir)/farm.ssv"
+}
+
+atf_init_test_cases()
+{
+	atf_add_test_case ssv1txt
+	atf_add_test_case ssv1txt_n
+}
