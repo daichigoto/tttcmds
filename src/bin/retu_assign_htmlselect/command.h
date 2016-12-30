@@ -36,8 +36,8 @@
  * setup linked-list data for HTML SELECT
  */
 #define TGT_GYO_PROCESS(GYO_BUFFER,NF) \
-	if (FLAG_n && flag_n_firstline) { \
-		flag_n_firstline = 0; \
+	if (flag_1 && flag_1_firstline) { \
+		flag_1_firstline = 0; \
 		goto next_gyo_process; \
 	} \
 	sel2 = calloc(1, sizeof(*sel2)); \
