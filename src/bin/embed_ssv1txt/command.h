@@ -39,7 +39,7 @@
 		for (int i = 1; i <= R_ARGC; i++) { \
 			len = strlen(R_ARGV_ARG1[i]); \
 			if (0 == strncmp(R_ARGV_ARG1[i], tbuf + j, len)) { \
-				printf("%s", GYO_BUFFER[R_ARGV[i]]); \
+				printf("%s", _ssvstr2str(GYO_BUFFER[R_ARGV[i]])); \
 				j += len - 1; \
 				match = 1; \
 				break; \
