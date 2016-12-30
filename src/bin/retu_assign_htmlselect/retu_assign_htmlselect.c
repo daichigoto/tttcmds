@@ -36,7 +36,7 @@ static struct selectset {
 int
 main(int argc, char *argv[])
 {
-	getcmdargs(argc, argv, "d:hvD",
+	getcmdargs(argc, argv, "d:1hvD",
 	           CMDARGS_R_NEED|
 		   CMDARGS_R_ARGARG_1_NEED|
 		   CMDARGS_R_ARGARG_2_NEED|
@@ -124,8 +124,11 @@ main(int argc, char *argv[])
 
 		cmdargs = r_cmdargs[i];
 
-		int firstline, value_len, len;
+		int firstline, flag_n_firstline, value_len, len;
 		firstline = 1;
+		flag_n_firstline = 0;
+		if (FLAG_n)
+			flag_n_firstline = 1;
 
 		FILEPROCESS_GYO	
 	}

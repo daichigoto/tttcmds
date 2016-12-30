@@ -222,6 +222,30 @@ longdata_without_eor_body() {
 		   "$(atf_get_srcdir)/longdata_without_eor.in"
 }
 
+atf_test_case tagdata_with_eor
+data_with_eor_head() {
+	atf_set "descr" "Verify a tag file including a LF before EoF"
+}
+
+tagdata_with_eor_body() {
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/tagdata_with_eor_1.out \
+		-x "retu_assign_htmlselect" \
+		   "5:$(atf_get_srcdir)/vegetable.tag:1:2" \
+		   "5:_attr_:name:vege1" \
+		   "1:$(atf_get_srcdir)/vegetable.tag:1:2" \
+		   "1:_attr_:name:vege2" \
+		   "$(atf_get_srcdir)/data_with_eor.in"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/tagdata_with_eor_2.out \
+		-x "retu_assign_htmlselect -1" \
+		   "5:$(atf_get_srcdir)/vegetable.tag:1:2" \
+		   "5:_attr_:name:vege1" \
+		   "1:$(atf_get_srcdir)/vegetable.tag:1:2" \
+		   "1:_attr_:name:vege2" \
+		   "$(atf_get_srcdir)/data_with_eor.in"
+}
+
 atf_init_test_cases()
 {
 	atf_add_test_case empty
@@ -231,4 +255,5 @@ atf_init_test_cases()
 	atf_add_test_case data_with_eor
 	atf_add_test_case data_without_eor
 	atf_add_test_case longdata_without_eor
+	atf_add_test_case tagdata_with_eor
 }

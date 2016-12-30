@@ -25,7 +25,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#define VERSION "20161119"
+#define VERSION "20161230"
 #define CMDNAME "retu_assign_htmlselect"
 #define ALIAS "assign_htmlselect col_assign_htmlselect"
 
@@ -36,6 +36,10 @@
  * setup linked-list data for HTML SELECT
  */
 #define TGT_GYO_PROCESS(GYO_BUFFER,NF) \
+	if (FLAG_n && flag_n_firstline) { \
+		flag_n_firstline = 0; \
+		goto next_gyo_process; \
+	} \
 	sel2 = calloc(1, sizeof(*sel2)); \
 	sel2->name = calloc(1, \
 		(strlen(GYO_BUFFER[R_ARGV[1]]) + 1) * sizeof(char)); \
@@ -57,7 +61,8 @@
 	} \
 	else \
 		SLIST_INSERT_AFTER(sel1, sel2, entries); \
-	sel1 = sel2;
+	sel1 = sel2; \
+next_gyo_process: 
 
 /*
  * value to HTML SELECT conversion
