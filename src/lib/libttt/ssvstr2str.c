@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Daichi GOTO
+ * Copyright (c) 2016,2017 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -69,6 +69,17 @@ ssvstr2str(char *str, char *ssvstr)
 		case '\0':
 			*str_p = '\0';
 			goto finish;
+		case '@':
+			/*
+			 * Here is an expansion for the conv_ssv2txt
+			 * command. The conv_ssv2txt treats not only
+			 * a SSV string but also some SSV strings 
+			 * separated by some spaces. So the conv_ssv2txt
+			 * must translate '@ ', ' @' and ' @ ' between 
+			 * some SSV strings.
+			 */
+			--str_p;
+			break;
 		default:
 			*str_p = *ssvstr_p;
 			break;

@@ -37,6 +37,9 @@ empty_body() {
 		-x "conv_ssv2txt $(atf_get_srcdir)/empty.in"
 	atf_check -s ignore \
 		-o file:$(atf_get_srcdir)/empty_1.out \
+		-x "conv_ssv2txt -t $(atf_get_srcdir)/empty.in"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/empty_1.out \
 		-x "conv_ssv2txt < $(atf_get_srcdir)/empty.in"
 	atf_check -s ignore \
 		-o file:$(atf_get_srcdir)/empty_1.out \
@@ -63,6 +66,9 @@ a_with_eor_body() {
 	atf_check -s ignore \
 		-o file:$(atf_get_srcdir)/a_with_eor_1.out \
 		-x "conv_ssv2txt $(atf_get_srcdir)/a_with_eor.in"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/a_with_eor_1.out \
+		-x "conv_ssv2txt -t $(atf_get_srcdir)/a_with_eor.in"
 	atf_check -s ignore \
 		-o file:$(atf_get_srcdir)/a_with_eor_1.out \
 		-x "conv_ssv2txt < $(atf_get_srcdir)/a_with_eor.in"
@@ -93,6 +99,9 @@ a_without_eor_body() {
 		-x "conv_ssv2txt $(atf_get_srcdir)/a_without_eor.in"
 	atf_check -s ignore \
 		-o file:$(atf_get_srcdir)/a_without_eor_1.out \
+		-x "conv_ssv2txt -t $(atf_get_srcdir)/a_without_eor.in"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/a_without_eor_1.out \
 		-x "conv_ssv2txt < $(atf_get_srcdir)/a_without_eor.in"
 	atf_check -s ignore \
 		-o file:$(atf_get_srcdir)/a_without_eor_1.out \
@@ -118,6 +127,9 @@ fl_with_eor_head() {
 fl_with_eor_body() {
 	atf_check -s ignore \
 		-o file:$(atf_get_srcdir)/fl_with_eor_1.out \
+		-x "conv_ssv2txt -t $(atf_get_srcdir)/fl_with_eor.in"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/fl_with_eor_2.out \
 		-x "conv_ssv2txt $(atf_get_srcdir)/fl_with_eor.in"
 }
 
@@ -129,20 +141,40 @@ data_with_eor_head() {
 data_with_eor_body() {
 	atf_check -s ignore \
 		-o file:$(atf_get_srcdir)/data_with_eor_1.out \
-		-x "conv_ssv2txt $(atf_get_srcdir)/data_with_eor.in"
+		-x "conv_ssv2txt -t $(atf_get_srcdir)/data_with_eor.in"
 	atf_check -s ignore \
 		-o file:$(atf_get_srcdir)/data_with_eor_1.out \
-		-x "conv_ssv2txt < $(atf_get_srcdir)/data_with_eor.in"
+		-x "conv_ssv2txt -t < $(atf_get_srcdir)/data_with_eor.in"
 	atf_check -s ignore \
 		-o file:$(atf_get_srcdir)/data_with_eor_1.out \
 		-x "cat $(atf_get_srcdir)/data_with_eor.in |" \
-		   "conv_ssv2txt"
+		   "conv_ssv2txt -t"
 	atf_check -s ignore \
 		-o file:$(atf_get_srcdir)/data_with_eor_1.out \
+		-x "cat $(atf_get_srcdir)/data_with_eor.in |" \
+		   "conv_ssv2txt -t -"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/data_with_eor_2.out \
+		-x "conv_ssv2txt -t" \
+		   "$(atf_get_srcdir)/data_with_eor.in" \
+		   "$(atf_get_srcdir)/data_with_eor.in" \
+		   "$(atf_get_srcdir)/data_with_eor.in"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/data_with_eor_3.out \
+		-x "conv_ssv2txt $(atf_get_srcdir)/data_with_eor.in"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/data_with_eor_3.out \
+		-x "conv_ssv2txt < $(atf_get_srcdir)/data_with_eor.in"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/data_with_eor_3.out \
+		-x "cat $(atf_get_srcdir)/data_with_eor.in |" \
+		   "conv_ssv2txt" 
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/data_with_eor_3.out \
 		-x "cat $(atf_get_srcdir)/data_with_eor.in |" \
 		   "conv_ssv2txt -"
 	atf_check -s ignore \
-		-o file:$(atf_get_srcdir)/data_with_eor_2.out \
+		-o file:$(atf_get_srcdir)/data_with_eor_4.out \
 		-x "conv_ssv2txt" \
 		   "$(atf_get_srcdir)/data_with_eor.in" \
 		   "$(atf_get_srcdir)/data_with_eor.in" \
@@ -157,20 +189,40 @@ data_without_eor_head() {
 data_without_eor_body() {
 	atf_check -s ignore \
 		-o file:$(atf_get_srcdir)/data_without_eor_1.out \
+		-x "conv_ssv2txt -t $(atf_get_srcdir)/data_without_eor.in"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/data_without_eor_1.out \
+		-x "conv_ssv2txt -t < $(atf_get_srcdir)/data_without_eor.in"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/data_without_eor_1.out \
+		-x "cat $(atf_get_srcdir)/data_without_eor.in |" \
+		   "conv_ssv2txt -t"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/data_without_eor_1.out \
+		-x "cat $(atf_get_srcdir)/data_without_eor.in |" \
+		   "conv_ssv2txt -t -"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/data_without_eor_2.out \
+		-x "conv_ssv2txt -t" \
+		   "$(atf_get_srcdir)/data_without_eor.in" \
+		   "$(atf_get_srcdir)/data_without_eor.in" \
+		   "$(atf_get_srcdir)/data_without_eor.in"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/data_without_eor_3.out \
 		-x "conv_ssv2txt $(atf_get_srcdir)/data_without_eor.in"
 	atf_check -s ignore \
-		-o file:$(atf_get_srcdir)/data_without_eor_1.out \
+		-o file:$(atf_get_srcdir)/data_without_eor_3.out \
 		-x "conv_ssv2txt < $(atf_get_srcdir)/data_without_eor.in"
 	atf_check -s ignore \
-		-o file:$(atf_get_srcdir)/data_without_eor_1.out \
+		-o file:$(atf_get_srcdir)/data_without_eor_3.out \
 		-x "cat $(atf_get_srcdir)/data_without_eor.in |" \
 		   "conv_ssv2txt"
 	atf_check -s ignore \
-		-o file:$(atf_get_srcdir)/data_without_eor_1.out \
+		-o file:$(atf_get_srcdir)/data_without_eor_3.out \
 		-x "cat $(atf_get_srcdir)/data_without_eor.in |" \
 		   "conv_ssv2txt -"
 	atf_check -s ignore \
-		-o file:$(atf_get_srcdir)/data_without_eor_2.out \
+		-o file:$(atf_get_srcdir)/data_without_eor_4.out \
 		-x "conv_ssv2txt" \
 		   "$(atf_get_srcdir)/data_without_eor.in" \
 		   "$(atf_get_srcdir)/data_without_eor.in" \
@@ -185,6 +237,10 @@ longdata_without_eor_head() {
 longdata_without_eor_body() {
 	atf_check -s ignore \
 		-o file:$(atf_get_srcdir)/longdata_without_eor_1.out \
+		-x "conv_ssv2txt -t" \
+		   "$(atf_get_srcdir)/longdata_without_eor.in"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/longdata_without_eor_2.out \
 		-x "conv_ssv2txt" \
 		   "$(atf_get_srcdir)/longdata_without_eor.in"
 }
@@ -197,6 +253,14 @@ diff_retu_without_eor_head() {
 diff_retu_without_eor_body() {
 	atf_check -s ignore \
 		-o file:$(atf_get_srcdir)/diff_retu_without_eor_1.out \
+		-x "cat $(atf_get_srcdir)/empty.in |" \
+		   "conv_ssv2txt -t" \
+		   "$(atf_get_srcdir)/fl_with_eor.in" \
+		   "$(atf_get_srcdir)/data_without_eor.in" \
+		   "$(atf_get_srcdir)/a_without_eor.in" \
+		   "-"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/diff_retu_without_eor_2.out \
 		-x "cat $(atf_get_srcdir)/empty.in |" \
 		   "conv_ssv2txt" \
 		   "$(atf_get_srcdir)/fl_with_eor.in" \
@@ -213,6 +277,11 @@ some_stdins_head() {
 some_stdins_body() {
 	atf_check -s ignore \
 		-o file:$(atf_get_srcdir)/some_stdins_1.out \
+		-x "cat $(atf_get_srcdir)/data_without_eor.in |" \
+		   "conv_ssv2txt -t" \
+		   "- - -"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/some_stdins_2.out \
 		-x "cat $(atf_get_srcdir)/data_without_eor.in |" \
 		   "conv_ssv2txt" \
 		   "- - -"

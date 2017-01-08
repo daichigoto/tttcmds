@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Daichi GOTO
+ * Copyright (c) 2016,2017 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -25,7 +25,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#define VERSION "20161125"
+#define VERSION "20170109"
 #define CMDNAME "conv_ssv2txt"
 #define ALIAS "ssv2txt"
 
@@ -76,3 +76,9 @@
 #define TGT_RETU_PROCESS(BUF,BUFLEN,I)
 
 #define END_OF_LINE_RETU_PROCESS
+
+/*
+ * convert the ssv data to the text data
+ */
+#define TGT_BUFFER_PROCESS(BUF,BUFLEN) \
+	printf("%s",_ssvstr2str(BUF));

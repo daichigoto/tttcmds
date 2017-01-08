@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Daichi GOTO
+ * Copyright (c) 2016,2017 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -30,33 +30,41 @@
 int
 main(int argc, char *argv[])
 {
-	getcmdargs(argc, argv, "hvD",
+	getcmdargs(argc, argv, "thvD",
 	           CMDARGS_R_NONE|CMDARGS_STDIN_TO_TMPFILE);
 
-	/*
-	 * count the max number of columns
-	 */
-	int retu = -1, i = 0;
-	char p = EOF;
-	FILEPROCESS_CHAR
-	if (0 == retu)
-		exit(EX_OK);
-
-	/*
-	 * count the max length for each column
-	 */
-	int maxlen[retu + 1], len;
-	memset(maxlen, 0, sizeof(int) * (retu + 1));
-	FILEPROCESS_GYO
-
-	/*
-	 * convert the ssv data to the text table data
-	 */
-	int count;
-	char *buf[retu + 1];
-	for (i = 1; i <= retu; i++)
-		buf[i] = calloc(1, sizeof(char) * (maxlen[i] + 1));
-	FILEPROCESS_RETU
+	if (FLAG_t) {
+		/*
+		 * count the max number of columns
+		 */
+		int retu = -1, i = 0;
+		char p = EOF;
+		FILEPROCESS_CHAR
+		if (0 == retu)
+			exit(EX_OK);
+	
+		/*
+		 * count the max length for each column
+		 */
+		int maxlen[retu + 1], len;
+		memset(maxlen, 0, sizeof(int) * (retu + 1));
+		FILEPROCESS_GYO
+	
+		/*
+		 * convert the ssv data to the text table data
+		 */
+		int count;
+		char *buf[retu + 1];
+		for (i = 1; i <= retu; i++)
+			buf[i] = calloc(1, sizeof(char) * (maxlen[i] + 1));
+		FILEPROCESS_RETU
+	}
+	else {
+		/*
+		 * convert the ssv data to the text data
+		 */
+		FILEPROCESS_ALLBUFFER
+	}
 
 	getcmdargs_unlinktmpf();
 

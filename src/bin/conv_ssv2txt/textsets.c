@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Daichi GOTO
+ * Copyright (c) 2016,2017 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -34,27 +34,30 @@ struct textset cmdtextsets[] = {
 
 	{ "command_alias", "en_", ALIAS },
 
+	{ "command_copyright", "en_", "2016,2017 ONGS Inc."},
+
 	{ "command_comment", "ja_JP",
 	  "SSVデータをテキスト表データへ変換して出力" },
 
 	{ "command_comment", "en_", 
-	  "convert the SSV data to the TEXT table data" },
+	  "convert the SSV data to the TEXT data" },
 
 	{ "command_synopsis", "en_", 
-	  _CMD(CMDNAME) " "
+	  _CMD(CMDNAME) " " "[" _OPT("t") "] "
 	  "[" _OPT("hvD") "] [" _OPT("-") "] "
 	  "[" _ARG("file") " " _ETC "]" },
 
 	{ "command_description", "ja_JP", 
-	  "SSVデータをテキスト表データへ変換して出力。ファイルの指\n"
+	  "SSVデータをテキストデータへ変換して出力。ファイルの指\n"
 	  "定がないか、-が指定されている場合には標準入力を使用。" },
 
 	{ "command_description", "en_", 
-	  "Convert the SSV data to the TEXT table data. If " 
-	  _ARG("file")" is a\nsingle dash (`-') or absent, it reads "
+	  "Convert the SSV data to the TEXT data. If " 
+	  _ARG("file")" is a single\ndash (`-') or absent, it reads "
 	  "from the standard input." },
 
 	{ "command_options", "ja_JP", 
+	  _OPT("t") "		テーブル形式にフォーマットして表示\n"
 	  _OPT("h") "		使い方表示\n"
 	  _OPT("v") "		バージョン表示\n"
 	  _OPT("D") "		デバッグモード\n"
@@ -62,6 +65,7 @@ struct textset cmdtextsets[] = {
 	  _ARG("file")"\t	ファイルを指定" },
 	
 	{ "command_options", "en_", 
+	  _OPT("t") "		Print the data in the txt-table format.\n"
 	  _OPT("h") "		Print the usage message.\n"
 	  _OPT("v") "		Print the version.\n"
 	  _OPT("D") "		Enable the debug mode.\n"
@@ -79,6 +83,14 @@ struct textset cmdtextsets[] = {
 	  _S("0 0 0 3 4")
 	  _P("cat data1.ssv |")
 	  _P2("conv_ssv2txt - data2.ssv")
+	  _S("000001 EUROPEAN PEAR @CHINA")
+	  _S("000002 FRENCH BEAN @CHINA")
+	  _S("000003 JAPAN")
+	  _S("0 0 0 1 2")
+	  _S("0 0 0 2 3")
+	  _S("0 0 0 3 4")
+	  _P("cat data1.ssv |")
+	  _P2("conv_ssv2txt -t - data2.ssv")
 	  _S("000001 EUROPEAN PEAR @CHINA")
 	  _S("000002   FRENCH BEAN @CHINA")
 	  _S("000003                JAPAN")
