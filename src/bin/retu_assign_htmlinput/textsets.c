@@ -96,7 +96,9 @@ struct textset cmdtextsets[] = {
 	  _P2("\t1._attr_.name.nam1 \\")
 	  _P2("\t2._attr_.name.'nam 2' \\")
 	  _P2("\t2._attr_.id.uniq")
-_S("<input_name=\"nam1\"_value=\"1\"> <input_name=\"nam_2\"_id=\"uniq\"> <input_value=\"3\">")
+	  _S("<input_name=\"nam1\"_value=\"1\"> "
+	     "<input_name=\"nam_2\"_id=\"uniq\"> "
+	     "<in\nput_value=\"3\">")
 	  _P("") },
 
 	TEXTSET_END
