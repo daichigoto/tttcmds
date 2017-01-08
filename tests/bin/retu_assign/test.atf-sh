@@ -245,6 +245,12 @@ join_body() {
  		   "2:$(atf_get_srcdir)/join_master_name.ssv:1:2" \
  		   "$(atf_get_srcdir)/join_data.ssv"
  	atf_check -s ignore \
+ 		-o file:$(atf_get_srcdir)/join_1.ssv \
+ 		-x "cat $(atf_get_srcdir)/join_master_name.ssv |" \
+		   "retu_assign" \
+ 		   "2:-:1:2" \
+ 		   "$(atf_get_srcdir)/join_data.ssv"
+ 	atf_check -s ignore \
  		-o file:$(atf_get_srcdir)/join_2.ssv \
  		-x "retu_assign" \
  		   "2:$(atf_get_srcdir)/join_master_name.ssv:1:2" \
