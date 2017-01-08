@@ -1,0 +1,10 @@
+<input_type="checkbox"_value="1"_name="vege2"> @ bb cc <input_type="checkbox"_value="1"_name="vege1"> ee ff
+<input_type="checkbox"_value="1"_name="vege2"> bb @ cc <input_type="checkbox"_value="1"_name="vege1"> ee ff
+<input_type="checkbox"_value="1"_name="vege2"> bb cc @ <input_type="checkbox"_value="1"_name="vege1"> ee ff
+<input_type="checkbox"_value="1"_name="vege2"> bb cc dd <input_type="checkbox"_value="1"_name="vege1"> ee ff
+<input_type="checkbox"_value="1"_name="vege2"> bb cc dd <input_type="checkbox"_value="1"_name="vege1"> @ ff
+<input_type="checkbox"_value="1"_name="vege2"> @ bb cc <input_type="checkbox"_value="1"_name="vege1"> ee ff
+<input_type="checkbox"_value="1"_name="vege2"> bb @ cc <input_type="checkbox"_value="1"_name="vege1"> ee ff
+<input_type="checkbox"_value="1"_name="vege2"> bb cc @ <input_type="checkbox"_value="1"_name="vege1"> ee ff
+<input_type="checkbox"_value="1"_name="vege2"> bb cc dd <input_type="checkbox"_value="1"_name="vege1"> ee ff
+<input_type="checkbox"_value="1"_name="vege2"> bb cc dd <input_type="checkbox"_value="1"_name="vege1"> @ ff
