@@ -81,4 +81,6 @@
  * convert the ssv data to the text data
  */
 #define TGT_BUFFER_PROCESS(BUF,BUFLEN) \
-	printf("%s",_ssvstr2str(BUF));
+	printf("%s",_ssvstr2str(BUF)); \
+	if (BUFLEN > 0 && '\n' != BUF[BUFLEN - 1]) \
+		putchar('\n');
