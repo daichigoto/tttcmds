@@ -1,5 +1,5 @@
-<input_name="vege2">aa</input> @ bb cc <input_name="vege1">dd</input> ee ff
-<input_name="vege2">aa</input> bb @ cc <input_name="vege1">dd</input> ee ff
-<input_name="vege2">aa</input> bb cc @ <input_name="vege1">dd</input> ee ff
-<input_name="vege2">aa</input> bb cc dd <input_name="vege1"></input> ee ff
-<input_name="vege2">aa</input> bb cc dd <input_name="vege1">ee</input> @ ff
+<input_name="vege2"_value="aa"> @ bb cc <input_name="vege1"_value="dd"> ee ff
+<input_name="vege2"_value="aa"> bb @ cc <input_name="vege1"_value="dd"> ee ff
+<input_name="vege2"_value="aa"> bb cc @ <input_name="vege1"_value="dd"> ee ff
+<input_name="vege2"_value="aa"> bb cc dd <input_name="vege1"> ee ff
+<input_name="vege2"_value="aa"> bb cc dd <input_name="vege1"_value="ee"> @ ff

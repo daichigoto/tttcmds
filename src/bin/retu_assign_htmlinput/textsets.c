@@ -89,15 +89,14 @@ struct textset cmdtextsets[] = {
 	
 	{ "command_example", "en_", 
 	  _P("echo 1 @ 3 | retu_assign_htmlinput 1/3")
-	  _S("<input>1</input> <input></input> <input>3</input>")
+	  _S("<input_value=\"1\"> <input> <input_value=\"3\">")
 	  _P("echo 1 @ 3 |")
 	  _P2("assign_htmlinput \\")
 	  _P2("\t1/3 \\")
 	  _P2("\t1._attr_.name.nam1 \\")
 	  _P2("\t2._attr_.name.'nam 2' \\")
 	  _P2("\t2._attr_.id.uniq")
-_S("<input_name=\"nam1\">1</input> <input_name=\"nam_2\"_id=\"uniq\"></inp")
-_S("ut> <input>3</input>")
+_S("<input_name=\"nam1\"_value=\"1\"> <input_name=\"nam_2\"_id=\"uniq\"> <input_value=\"3\">")
 	  _P("") },
 
 	TEXTSET_END

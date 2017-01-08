@@ -25,7 +25,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#define VERSION "20161125"
+#define VERSION "20170108"
 #define CMDNAME "retu_assign_htmlinput"
 #define ALIAS "assign_htmlinput col_assign_htmlinput"
 
@@ -45,10 +45,9 @@
 		hashtables[INDEX], &hash_key, &hash_val, R_NEXT)) { \
 		printf("_%s=\"%s\"", hash_key.data, hash_val.data); \
 	} \
-	printf(">"); \
 	if (0 != strcmp("@", RETU_BUFFER)) \
-		printf("%s",RETU_BUFFER); \
-	printf("</input>");
+		printf("_value=\"%s\"",RETU_BUFFER); \
+	printf(">");
 
 #define NOTGT_RETU_PROCESS(RETU_BUFFER,RETU_BUFFER_MAXLEN,INDEX) \
 	printf("%s",RETU_BUFFER);
