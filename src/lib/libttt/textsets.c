@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Daichi GOTO
+ * Copyright (c) 2016,2017 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -27,7 +27,7 @@
 
 #include "ttt.h"
 
-struct textset *textsets[] = { deftextsets, cmdtextsets, NULL};
+struct textset *textsets[] = { cmdtextsets, deftextsets, NULL};
 
 struct textset deftextsets[] = {
 	{ "version",		"ja_JP", "バージョン"		},
