@@ -33,7 +33,7 @@ main(int argc, char *argv[])
 	getcmdargs(argc, argv, "d:hvD", CMDARGS_R_NEED);
 
 	/*
-	 * setect data file and column specifics setup
+	 * column specifics setup
 	 */
         DB *hashtables[R_INDEX_MAX + 1];
         DBT hash_key, hash_val;
