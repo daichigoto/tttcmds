@@ -27,6 +27,7 @@
 
 #define FILEPROCESS_RETU { \
 	FILE *fp_fp; \
+	int fp_no_output = 0; \
 	int fp_b = 0, fp_r_i = 1; \
 	int fp_buf_i, fp_buf_len; \
 	char *fp_buf, *fp_p = NULL, *fp_newbuf, *fp_buf_end; \
@@ -68,12 +69,12 @@
 			} \
 			switch (fp_b) { \
 			case ' ': \
-				putchar(' '); \
+				if (!fp_no_output) putchar(' '); \
 				++fp_r_i; \
 				break; \
 			case '\n': \
 			case EOF: \
-				putchar('\n'); \
+				if (!fp_no_output) putchar('\n'); \
 				fp_r_i = 1; \
 				END_OF_LINE_RETU_PROCESS \
 				break; \
