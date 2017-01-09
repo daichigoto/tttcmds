@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Daichi GOTO
+ * Copyright (c) 2016,2017 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -34,6 +34,8 @@ struct textset cmdtextsets[] = {
 
 	{ "command_alias", "en_", ALIAS },
 
+	{ "command_copyright", "en_", "2016,2017 ONGS Inc." },
+
 	{ "command_comment", "ja_JP",
 	  "条件に一致しない行を出力する" },
 
@@ -42,9 +44,14 @@ struct textset cmdtextsets[] = {
 
 	{ "command_synopsis", "en_", 
 	  _CMD(CMDNAME) " "
-	  "[" _OPT("a") "|" _OPT("o") "] [" _OPT("hvD") "] [" _OPT("-") "] "
-	  _ARG("N=key") "|" _ARG("N/M=key") " "
-	  "[" _ARG("N=key") "|" _ARG("N/M=key") " " _ETC "]\n"
+	  "[" _OPT("a") "|" _OPT("o") "] "
+	  "[" _OPT("hvD") "] [" _OPT("-") "] "
+	  _ARG("N=key") "|" _ARG("N/M=key") "|"
+	  _ARG("N>key") "|" _ARG("N/M>key") "|"
+	  _ARG("N<key") "|\n" _ARG("N/M<key") " "
+	  "[" _ARG("N=key") "|" _ARG("N/M=key") "|" 
+	      _ARG("N>key") "|" _ARG("N/M>key") "|" 
+	      _ARG("N<key") "|" _ARG("N/M<key") " " _ETC "] "
 	  "[" _ARG("file") " " _ETC "]" },
 
 	{ "command_description", "ja_JP", 
@@ -63,9 +70,18 @@ struct textset cmdtextsets[] = {
 	  _OPT("v") "		バージョン表示\n"
 	  _OPT("D") "		デバッグモード\n"
 	  _OPT("-") "		オプションの終了を指定\n"
-	  _ARG("N=key") "\t	" _ARG("N") "列の値がkeyに一致\n"
-	  _ARG("N/M=key") "\t	" _ARG("N") "列から" _ARG("M") 
-	  			"列の値が" _ARG("key") "に一致\n"
+	  _ARG("N=key") "\t	" _ARG("N") "列の値が" _ARG("key") 
+	  			"に一致\n"
+	  _ARG("N>key") "\t	" _ARG("N") "列の値が" _ARG("key") 
+	  			"よりも大きい\n"
+	  _ARG("N<key") "\t	" _ARG("N") "列の値が" _ARG("key") 
+	  			"よりも小さい\n"
+	  _ARG("N/M=key") "\t	" _ARG("N=key") "と同じ処理を" _ARG("M") 
+	  			"列まで適用\n"
+	  _ARG("N/M>key") "\t	" _ARG("N>key") "と同じ処理を" _ARG("M") 
+	  			"列まで適用\n"
+	  _ARG("N/M<key") "\t	" _ARG("N<key") "と同じ処理を" _ARG("M") 
+	  			"列まで適用\n"
 	  _ARG("file") "\t	ファイルを指定" },
 	 
 	{ "command_options", "en_", 
@@ -98,6 +114,20 @@ struct textset cmdtextsets[] = {
 	  _S("1 2 @ 4 5 6 7 8 9")
 	  _P("gyo_delete -o 2= 3= data.ssv")
 	  _S("1 2 3 4 5 6 7 8 9")
+	  _P("gyo_delete -o 2= 2=2 data.ssv")
+	  _P("cat date.ssv")
+	  _S("20150101 20150505 20151010")
+	  _S("20160101 20160505 20161010")
+	  _S("20170101 20170505 20171010")
+	  _P("gyo_delete 2'>'20160101 date.ssv")
+	  _S("20150101 20150505 20151010")
+	  _P("gyo_delete 2'>'20160101 3'<'20170101 date.ssv")
+	  _S("20150101 20150505 20151010")
+	  _S("20160101 20160505 20161010")
+	  _S("20170101 20170505 20171010")
+	  _P("gyo_delete 2'>'20150505 2'<'20170505 date.ssv")
+	  _S("20150101 20150505 20151010")
+	  _S("20170101 20170505 20171010")
 	  _P("") },
 
 	TEXTSET_END
