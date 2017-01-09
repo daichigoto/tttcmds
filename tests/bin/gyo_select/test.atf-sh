@@ -317,7 +317,7 @@ or_condition_body() {
 }
 
 atf_test_case greaterthan
-greaterthen_head() {
+greaterthan_head() {
 	atf_set "descr" "Verify GREATERTHAN condition"
 }
 
