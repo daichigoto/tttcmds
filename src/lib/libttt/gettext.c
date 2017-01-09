@@ -31,7 +31,7 @@ char *
 gettext(const char *key)
 {
 	const char *lang_en = "en_";
-	char *lang = getenv("LANG"), *text_en = NULL;
+	char *lang = getenv("LANG");
 	struct textset *tp;
 
 	if (NULL == lang)
@@ -49,13 +49,11 @@ gettext(const char *key)
 				else if (0 == strncmp(lang_en,
 					tp[j].locale,
 					strlen(tp[j].locale))) {
-					text_en = tp[j].text;
+					return tp[j].text;
 				}
 			}			
 		}
 	}
-	if (NULL != text_en)
-		return text_en;
 
 	return key;
 }
