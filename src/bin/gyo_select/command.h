@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Daichi GOTO
+ * Copyright (c) 2016,2017 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -25,19 +25,45 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#define VERSION "20161216"
+#define VERSION "20170109"
 #define CMDNAME "gyo_select"
 #define ALIAS "gyosel row_select"
 
+#include <limits.h>
+#ifdef __linux__
+#include <db_185.h>
+#else
+#include <db.h>
+#endif
+
 #include "ttt.h"
+
+#define TGT_RETU_PROCESS(BUF,BUFLEN,INDEX) \
+	fp_no_output = 1; \
+	hash_key.data = BUF; \
+	hash_key.size = strlen(hash_key.data) + 1; \
+	hash_val.data = "1"; \
+	hash_val.size = 2; \
+	hashtables[i]->put(hashtables[i], &hash_key, &hash_val, 0);
+
+#define NOTGT_RETU_PROCESS(BUF,BUFLEN,INDEX) \
+	fp_no_output = 1; \
+
+#define END_OF_LINE_RETU_PROCESS
 
 #define TGT_GYO_PROCESS(GYO_BUFFER,NF) \
 	if (!FLAG_o) { \
 		if (NF < R_ARGV_MAX) \
 			goto gyo_not_match; \
-		for (int i = 1; i <= R_ARGC; i++) \
-			if (R_INDEX_EXIST[R_ARGV[i]] == \
-			    R_INDEX_IS_EXISTENCE) { \
+		for (int i = 1; i <= R_ARGC; i++) { \
+			if (NULL != hashtables[i]) { \
+				hash_key.data = GYO_BUFFER[R_ARGV[i]]; \
+				hash_key.size = strlen(hash_key.data) + 1; \
+				if (1 == hashtables[i]->get(hashtables[i], \
+					&hash_key, &hash_val, 0)) \
+					goto gyo_not_match; \
+			} \
+			else { \
 				cmpret = strcmp(GYO_BUFFER[R_ARGV[i]], \
 					R_ARGV_ARG1[i]); \
 				switch (R_ARGV_DELIM[i]) { \
@@ -55,12 +81,19 @@
 					break; \
 				} \
 			} \
+		} \
 		goto gyo_match; \
 	} \
 	else { \
 		for (int i = 1; i <= R_ARGC; i++) { \
-			if (R_INDEX_EXIST[R_ARGV[i]] == \
-			    R_INDEX_IS_EXISTENCE) { \
+			if (NULL != hashtables[i]) { \
+				hash_key.data = GYO_BUFFER[R_ARGV[i]]; \
+				hash_key.size = strlen(hash_key.data) + 1; \
+				if (0 == hashtables[i]->get(hashtables[i], \
+					&hash_key, &hash_val, 0)) \
+					goto gyo_match; \
+			} \
+			else { \
 				cmpret = strcmp(GYO_BUFFER[R_ARGV[i]], \
 					R_ARGV_ARG1[i]); \
 				switch (R_ARGV_DELIM[i]) { \

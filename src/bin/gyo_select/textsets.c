@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Daichi GOTO
+ * Copyright (c) 2016,2017 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -34,6 +34,8 @@ struct textset cmdtextsets[] = {
 
 	{ "command_alias", "en_", ALIAS },
 
+	{ "command_copyright", "en_", "2016,2017 ONGS Inc." },
+
 	{ "command_comment", "ja_JP",
 	  "条件に一致する行を出力する" },
 
@@ -42,31 +44,21 @@ struct textset cmdtextsets[] = {
 
 	{ "command_synopsis", "en_", 
 	  _CMD(CMDNAME) " "
-	  "[" _OPT("a") "|" _OPT("o") "] [" _OPT("hvD") "] [" _OPT("-") "] "
+	  "[" _OPT("a") "|" _OPT("o") "] "
+	  "[" _OPT("hvD") "] [" _OPT("-") "] "
 	  _ARG("N=key") "|" _ARG("N/M=key") "|" 
 	  _ARG("N>key") "|" _ARG("N/M>key") "|" 
-	  _ARG("N<key") "|\n" _ARG("N/M<key") " "
+	  _ARG("N<key") "|\n" _ARG("N/M<key") "|"
+	  _ARG("N.f.K") "|" _ARG("N/M.f.K") " "
 	  "[" _ARG("N=key") "|" _ARG("N/M=key") "|"
 	  _ARG("N>key") "|" _ARG("N/M>key") "|" 
-	  _ARG("N<key") "|" _ARG("N/M<key") " " _ETC "] "
+	  _ARG("N<key") "|" _ARG("N/M<key") " " _ETC "]\n"
 	  "[" _ARG("file") " " _ETC "]" },
 
 	{ "command_description", "ja_JP", 
-	  "条件に一致する行を出力する。ファイルの指定がないか、-が指定\n"
-	  "されている場合には標準入力を使用。" },
-
-	{ "command_description", "en_", 
-	  "Print the rows if condition is true. If " _ARG("file") " is "
-	  "a signle dash\n(`-') or absent, it reads from the standard "
-	  "input." },
-
-	{ "command_options", "ja_JP", 
-	  _OPT("a") "		指定をAND条件として処理 (デフォルト設定)\n"
-	  _OPT("o") "		指定をOR条件として処理\n"
-	  _OPT("h") "		使い方表示\n"
-	  _OPT("v") "		バージョン表示\n"
-	  _OPT("D") "		デバッグモード\n"
-	  _OPT("-") "		オプションの終了を指定\n"
+	  "条件に一致する行を出力する。\n"
+	  "\n"
+	  ES_BOLD("等価条件") "\n"
 	  _ARG("N=key") "\t	" _ARG("N") "列の値が" _ARG("key") 
 	  			"に一致\n"
 	  _ARG("N>key") "\t	" _ARG("N") "列の値が" _ARG("key") 
@@ -79,15 +71,19 @@ struct textset cmdtextsets[] = {
 	  			"例まで適用\n"
 	  _ARG("N/M<key") "\t	" _ARG("N<key") "と同じ処理を" _ARG("M") 
 	  			"例まで適用\n"
-	  _ARG("file") "\t	ファイルを指定" },
-	 
-	{ "command_options", "en_", 
-	  _OPT("a") "		Specify AND condition (by default).\n"
-	  _OPT("o") "		Specify OR condition.\n"
-	  _OPT("h") "		Print the usage message.\n"
-	  _OPT("v") "		Print the version.\n"
-	  _OPT("D") "		Enable the debug mode.\n"
-	  _OPT("-") "		Specify the end of options.\n"
+	  "\n"
+	  ES_BOLD("結合条件") "\n"
+	  _ARG("N.f.K") "\t	" _ARG("N") "列の値と" _ARG("f") "ファイル"
+	  			"の" _ARG("K") "列の値が一致\n"
+	  _ARG("N/M.f.K") "\t	" _ARG("N.f.K") "と同じ処理を" _ARG("M") 
+	  			"例まで適用\n"
+	  "\n"
+	  "ファイルの指定がないか、-が指定されている場合には標準入力を使用。" },
+
+	{ "command_description", "en_", 
+	  "Print the rows if condition is true.\n"
+	  "\n"
+	  ES_BOLD("EQUALITY/INEQUALITY CONDITION") "\n"
 	  _ARG("N=key") "\t	The value of " _ARG("N") "th column and "
 	  			"the " _ARG("key") " match.\n"
 	  _ARG("N>key") "\t	The value of " _ARG("N") "th column is "
@@ -103,6 +99,34 @@ struct textset cmdtextsets[] = {
 	  _ARG("N/M<key") "\t	Process the " _ARG("N") "th to " 
 	  			_ARG("M") "th columns in the same way\n"
 				"\t\tas " _ARG("N<key") ".\n" 
+	  "\n"
+	  ES_BOLD("JOIN CONDITION") "\n"
+	  _ARG("N.f.K") "\t	The value of " _ARG("N") "th column and "
+	  			"the value of " _ARG("K") "th\n\t\tcolumn "
+				"of the file " _ARG("f") " match.\n"
+	  _ARG("N/M.f.K") "\t	Process the " _ARG("N") "th to " 
+	  			_ARG("M") "th columns in the same way\n"
+				"\t\tas " _ARG("N.f.K") ".\n" 
+	  "\n"
+	  "If " _ARG("file") " is a signle dash (`-') or absent, it reads "
+	  "from the standard\ninput." },
+
+	{ "command_options", "ja_JP", 
+	  _OPT("a") "		指定をAND条件として処理 (デフォルト設定)\n"
+	  _OPT("o") "		指定をOR条件として処理\n"
+	  _OPT("h") "		使い方表示\n"
+	  _OPT("v") "		バージョン表示\n"
+	  _OPT("D") "		デバッグモード\n"
+	  _OPT("-") "		オプションの終了を指定\n"
+	  _ARG("file") "\t	ファイルを指定" },
+	 
+	{ "command_options", "en_", 
+	  _OPT("a") "		Specify AND condition (by default).\n"
+	  _OPT("o") "		Specify OR condition.\n"
+	  _OPT("h") "		Print the usage message.\n"
+	  _OPT("v") "		Print the version.\n"
+	  _OPT("D") "		Enable the debug mode.\n"
+	  _OPT("-") "		Specify the end of options.\n"
 	  _ARG("file") "\t	Specify the file." },
 
 	{ "command_example", "en_", 
@@ -134,6 +158,15 @@ struct textset cmdtextsets[] = {
 	  _S("20160101 20160505 20161010")
 	  _P("gyo_select 2'>'20150505 2'<'20170505 date.ssv")
 	  _S("20160101 20160505 20161010")
+	  _P("cat key.ssv")
+	  _S("001 20160101 20151010")
+	  _S("002 20170101 20171010")
+	  _P("gyo_select 1:key.ssv:2 date.ssv")
+	  _S("20160101 20160505 20161010")
+	  _S("20170101 20170505 20171010")
+	  _P("gyo_select 3:key.ssv:3 date.ssv")
+	  _S("20160101 20160505 20161010")
+	  _S("20170101 20170505 20171010")
 	  _P("") },
 
 	TEXTSET_END

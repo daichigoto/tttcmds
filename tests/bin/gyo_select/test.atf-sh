@@ -1,6 +1,6 @@
 #!/usr/bin/env atf-sh
 # 
-#  Copyright (c) 2016 Daichi GOTO
+#  Copyright (c) 2016,2017 Daichi GOTO
 #  All rights reserved.
 #  
 #  Redistribution and use in source and binary forms, with or without
@@ -388,6 +388,35 @@ multiple_or_condition_body() {
 		   "$(atf_get_srcdir)/date_with_eor.in"
 }
 
+atf_test_case join
+join_head() {
+	atf_set "descr" "Verity JOIN process"
+}
+
+join_body() {
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/join_1.out \
+		-x "gyo_select" \
+		   "1:$(atf_get_srcdir)/key.ssv:2" \
+		   "$(atf_get_srcdir)/date_with_eor.in"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/join_2.out \
+		-x "gyo_select" \
+		   "1:$(atf_get_srcdir)/key.ssv:3" \
+		   "$(atf_get_srcdir)/date_with_eor.in"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/join_3.out \
+		-x "gyo_select" \
+		   "4:$(atf_get_srcdir)/key.ssv:3" \
+		   "$(atf_get_srcdir)/date_with_eor.in"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/join_4.out \
+		-x "gyo_select -o " \
+		   "1:$(atf_get_srcdir)/key.ssv:2" \
+		   "4=20160303" \
+		   "$(atf_get_srcdir)/date_with_eor.in"
+}
+
 atf_init_test_cases()
 {
 	atf_add_test_case empty
@@ -402,4 +431,5 @@ atf_init_test_cases()
 	atf_add_test_case lesserthan
 	atf_add_test_case multiple_and_condition
 	atf_add_test_case multiple_or_condition
+	atf_add_test_case join
 }
