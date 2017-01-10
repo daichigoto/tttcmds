@@ -51,8 +51,9 @@ struct textset cmdtextsets[] = {
 	  _ARG("N<key") "|\n" _ARG("N/M<key") "|"
 	  _ARG("N.f.K") "|" _ARG("N/M.f.K") " "
 	  "[" _ARG("N=key") "|" _ARG("N/M=key") "|"
-	  _ARG("N>key") "|" _ARG("N/M>key") "|" 
-	  _ARG("N<key") "|" _ARG("N/M<key") " " _ETC "]\n"
+	      _ARG("N>key") "|" _ARG("N/M>key") "|" 
+	      _ARG("N<key") "|" _ARG("N/M<key") "|\n" 
+	      _ARG("N.f.K") "|" _ARG("N/M.f.K") " " _ETC "] "
 	  "[" _ARG("file") " " _ETC "]" },
 
 	{ "command_description", "ja_JP", 
