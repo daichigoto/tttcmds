@@ -1,6 +1,6 @@
 #!/usr/bin/env atf-sh
 # 
-#  Copyright (c) 2016 Daichi GOTO
+#  Copyright (c) 2016,2017 Daichi GOTO
 #  All rights reserved.
 #  
 #  Redistribution and use in source and binary forms, with or without
@@ -316,6 +316,107 @@ or_condition_body() {
 		   "$(atf_get_srcdir)/data_with_eor.in"
 }
 
+atf_test_case greaterthan
+greaterthen_head() {
+	atf_set "descr" "Verify GREATERTHAN condition"
+}
+
+greaterthan_body() {
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/date_with_eor_1.out \
+		-x "gyo_delete 3'>'20130202" \
+		   "$(atf_get_srcdir)/date_with_eor.in"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/date_with_eor_2.out \
+		-x "gyo_delete 3'>'20130202 4'>'20150404" \
+		   "$(atf_get_srcdir)/date_with_eor.in"
+}
+
+atf_test_case lesserthan
+lesserthan_head() {
+	atf_set "descr" "Verify LESSERTHAN condition"
+}
+
+lesserthan_body() {
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/date_with_eor_3.out \
+		-x "gyo_delete 3'<'20130203" \
+		   "$(atf_get_srcdir)/date_with_eor.in"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/date_with_eor_4.out \
+		-x "gyo_delete 3'<'20170101 5'<'20160404" \
+		   "$(atf_get_srcdir)/date_with_eor.in"
+}
+
+atf_test_case multiple_and_condition
+multiple_and_condition_head() {
+	atf_set "descr" "Verity MULTIPLE-AND condition"
+}
+
+multiple_and_condition_body() {
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/multiple_and_condition_1.out \
+		-x "gyo_delete 2= 2=bb" \
+		   "$(atf_get_srcdir)/data_with_eor.in"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/multiple_and_condition_2.out \
+		-x "gyo_delete 3'>'20130202 3'<'20160202" \
+		   "$(atf_get_srcdir)/date_with_eor.in"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/multiple_and_condition_3.out \
+		-x "gyo_delete 3'<'20130202 3'>'20160202" \
+		   "$(atf_get_srcdir)/date_with_eor.in"
+}
+
+atf_test_case multiple_or_condition
+multiple_or_condition_head() {
+	atf_set "descr" "Verity MULTIPLE-OR condition"
+}
+
+multiple_or_condition_body() {
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/multiple_or_condition_1.out \
+		-x "gyo_delete -o 2= 2=bb" \
+		   "$(atf_get_srcdir)/data_with_eor.in"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/multiple_or_condition_2.out \
+		-x "gyo_delete -o 3'>'20130202 3'<'20160202" \
+		   "$(atf_get_srcdir)/date_with_eor.in"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/multiple_or_condition_3.out \
+		-x "gyo_delete -o 3=20130202 3=20160202" \
+		   "$(atf_get_srcdir)/date_with_eor.in"
+}
+
+atf_test_case join
+join_head() {
+	atf_set "descr" "Verity JOIN process"
+}
+
+join_body() {
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/join_1.out \
+		-x "gyo_delete" \
+		   "1:$(atf_get_srcdir)/key.ssv:2" \
+		   "$(atf_get_srcdir)/date_with_eor.in"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/join_2.out \
+		-x "gyo_delete" \
+		   "1:$(atf_get_srcdir)/key.ssv:3" \
+		   "$(atf_get_srcdir)/date_with_eor.in"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/join_3.out \
+		-x "gyo_delete" \
+		   "4:$(atf_get_srcdir)/key.ssv:3" \
+		   "$(atf_get_srcdir)/date_with_eor.in"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/join_4.out \
+		-x "gyo_delete -o " \
+		   "1:$(atf_get_srcdir)/key.ssv:2" \
+		   "4=20160303" \
+		   "$(atf_get_srcdir)/date_with_eor.in"
+}
+
 atf_init_test_cases()
 {
 	atf_add_test_case empty
@@ -326,4 +427,9 @@ atf_init_test_cases()
 	atf_add_test_case data_without_eor
 	atf_add_test_case and_condition
 	atf_add_test_case or_condition
+	atf_add_test_case greaterthan
+	atf_add_test_case lesserthan
+	atf_add_test_case multiple_and_condition
+	atf_add_test_case multiple_or_condition
+	atf_add_test_case join
 }

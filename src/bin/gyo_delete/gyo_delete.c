@@ -31,8 +31,46 @@ int
 main(int argc, char *argv[])
 {
 	getcmdargs(argc, argv, "a!o!hvD", 
-	           CMDARGS_R_NEED|CMDARGS_R_ARGARG_1_NEED|
+	           CMDARGS_R_NEED|
+		   CMDARGS_R_ARGARG_1_NEED|
 		   CMDARGS_R_ARGARG_TO_SSVSTR);
+
+	/*
+	 * hashtable setup for join process
+	 */
+	struct tttcmdargs cmdargs_org;
+	char *r_argv[4];
+
+	DB *hashtables[R_ARGC + 1];
+	DBT hash_key, hash_val;
+	memset(hashtables, 0, (R_ARGC + 1) * sizeof(DB *));
+
+	cmdargs_org = cmdargs;
+
+	for (int i = 1; i <= cmdargs_org.r_argc; i++) {
+		if (NULL == cmdargs_org.r_argv_arg2[i]) {
+			hashtables[i] = NULL;
+			continue;
+		}
+
+		r_argv[0] = "";
+		r_argv[1] = cmdargs_org.r_argv_arg2[i];
+		r_argv[2] = _ssvstr2str(cmdargs_org.r_argv_arg1[i]);
+		r_argv[3] = NULL;
+		getcmdargs(3, r_argv, "", CMDARGS_R_NEED);
+
+		hashtables[i] = dbopen(NULL, O_CREAT|O_RDWR, 0644,
+			DB_HASH, NULL);
+		if (NULL == hashtables[i])
+			err(errno, "retu_assign: dbopen failed");
+
+		FILEPROCESS_RETU
+	}
+
+	/*
+	 * restore command cmdargs
+	 */
+	cmdargs = cmdargs_org;
 
 	int cmpret;
 	FILEPROCESS_GYO
