@@ -32,8 +32,12 @@ struct tttcmdargs cmdargs;
 #define SETFLAG(X,Y,Z) \
 	Y = 1; \
 	if (NULL != optargs && NULL != strstr(optargs, X)) { \
-		if (':' == *(1+strstr(optargs, X))) \
-			Z = argv[++i]; \
+		if (':' == *(1+strstr(optargs, X))) { \
+			if ('\0' == argv[i][2]) \
+				Z = argv[++i]; \
+			else \
+				Z = &argv[i][2]; \
+		} \
 		else if ('!' == *(1+strstr(optargs, X))) { \
 			if (exclusion) \
 				usage(); \
