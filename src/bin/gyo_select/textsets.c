@@ -45,14 +45,15 @@ struct textset cmdtextsets[] = {
 	{ "command_synopsis", "en_", 
 	  _CMD(CMDNAME) " "
 	  "[" _OPT("a") "|" _OPT("o") "] "
+	  "[" _OPT("n") "] "
 	  "[" _OPT("hvD") "] [" _OPT("-") "] "
 	  _ARG("N=key") "|" _ARG("N/M=key") "|" 
-	  _ARG("N>key") "|" _ARG("N/M>key") "|" 
-	  _ARG("N<key") "|\n" _ARG("N/M<key") "|"
+	  _ARG("N>key") "|" _ARG("N/M>key") "|\n" 
+	  _ARG("N<key") "|" _ARG("N/M<key") "|"
 	  _ARG("N.f.K") "|" _ARG("N/M.f.K") " "
 	  "[" _ARG("N=key") "|" _ARG("N/M=key") "|"
 	      _ARG("N>key") "|" _ARG("N/M>key") "|" 
-	      _ARG("N<key") "|" _ARG("N/M<key") "|\n" 
+	      _ARG("N<key") "|\n" _ARG("N/M<key") "|" 
 	      _ARG("N.f.K") "|" _ARG("N/M.f.K") " " _ETC "] "
 	  "[" _ARG("file") " " _ETC "]" },
 
@@ -115,6 +116,8 @@ struct textset cmdtextsets[] = {
 	{ "command_options", "ja_JP", 
 	  _OPT("a") "		指定をAND条件として処理 (デフォルト設定)\n"
 	  _OPT("o") "		指定をOR条件として処理\n"
+	  _OPT("n") "		出力を行わず、1行も一致しなかった場合には"
+	  			"1で、\n\t\tそうでない場合には0で終了\n"
 	  _OPT("h") "		使い方表示\n"
 	  _OPT("v") "		バージョン表示\n"
 	  _OPT("D") "		デバッグモード\n"
@@ -124,6 +127,9 @@ struct textset cmdtextsets[] = {
 	{ "command_options", "en_", 
 	  _OPT("a") "		Specify AND condition (by default).\n"
 	  _OPT("o") "		Specify OR condition.\n"
+	  _OPT("n") "		Do not print. If one or more lines match "
+	  			"it\n\t\treturns 0, otherwise it "
+				"returns 1.\n"
 	  _OPT("h") "		Print the usage message.\n"
 	  _OPT("v") "		Print the version.\n"
 	  _OPT("D") "		Enable the debug mode.\n"
@@ -168,6 +174,9 @@ struct textset cmdtextsets[] = {
 	  _P("gyo_select 3:key.ssv:3 date.ssv")
 	  _S("20160101 20160505 20161010")
 	  _S("20170101 20170505 20171010")
+	  _P("gyo_select -n -a 2= 3= data.ssv && echo match")
+	  _P("gyo_select -n -o 2= 3= data.ssv && echo match")
+	  _S("match")
 	  _P("") },
 
 	TEXTSET_END

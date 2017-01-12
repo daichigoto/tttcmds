@@ -25,7 +25,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#define VERSION "20170109"
+#define VERSION "20170112"
 #define CMDNAME "gyo_select"
 #define ALIAS "gyosel row_select"
 
@@ -115,7 +115,11 @@
 		goto gyo_not_match; \
 	} \
 gyo_match: \
-	for (int i = 1; i < NF; i++) \
-		printf("%s ", GYO_BUFFER[i]); \
-	printf("%s\n", GYO_BUFFER[NF]); \
+	if (FLAG_n) \
+		match_or_not = 0; \
+	else { \
+		for (int i = 1; i < NF; i++) \
+			printf("%s ", GYO_BUFFER[i]); \
+		printf("%s\n", GYO_BUFFER[NF]); \
+	} \
 gyo_not_match:

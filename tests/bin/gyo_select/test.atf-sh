@@ -417,6 +417,30 @@ join_body() {
 		   "$(atf_get_srcdir)/date_with_eor.in"
 }
 
+atf_test_case option_n
+option_n_head() {
+	atf_set "descr" "Verity -n process"
+}
+
+option_n_body() {
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/option_n_1.out \
+		-x "echo 1 2 3 4 5 |" \
+		   "gyo_select -n 1=1 && echo match"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/option_n_2.out \
+		-x "echo 1 2 3 4 5 |" \
+		   "gyo_select -n 1=2 && echo match"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/option_n_2.out \
+		-x "echo 1 2 3 4 5 |" \
+		   "gyo_select -n 1=1 || echo match"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/option_n_1.out \
+		-x "echo 1 2 3 4 5 |" \
+		   "gyo_select -n 1=2 || echo match"
+}
+
 atf_init_test_cases()
 {
 	atf_add_test_case empty
@@ -432,4 +456,5 @@ atf_init_test_cases()
 	atf_add_test_case multiple_and_condition
 	atf_add_test_case multiple_or_condition
 	atf_add_test_case join
+	atf_add_test_case option_n
 }

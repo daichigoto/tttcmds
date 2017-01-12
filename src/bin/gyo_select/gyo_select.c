@@ -30,10 +30,12 @@
 int
 main(int argc, char *argv[])
 {
-	getcmdargs(argc, argv, "a!o!hvD",
+	getcmdargs(argc, argv, "a!o!nhvD",
 	           CMDARGS_R_NEED|
 		   CMDARGS_R_ARGARG_1_NEED|
 		   CMDARGS_R_ARGARG_TO_SSVSTR);
+
+	int match_or_not = 1;
 
 	/*
 	 * hashtable setup for join process
@@ -74,6 +76,9 @@ main(int argc, char *argv[])
 
 	int cmpret;
 	FILEPROCESS_GYO
+
+	if (FLAG_n)
+		exit(match_or_not);
 
 	exit(EX_OK);
 }
