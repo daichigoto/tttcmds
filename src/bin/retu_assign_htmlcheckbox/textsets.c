@@ -105,7 +105,7 @@ struct textset cmdtextsets[] = {
 	     "<input_type=\"checkbox\"\n_value=\"1\"> "
 	     "<input_type=\"checkbox\"_value=\"1\">")
 	  _P("echo 1 @ 3 |")
-	  _P2("assign_htmlinput \\")
+	  _P2("retu_assign_htmlcheckbox \\")
 	  _P2("\t1/3 \\")
 	  _P2("\t1._attr_.name.nam1 \\")
 	  _P2("\t2._attr_.name.'nam 2' \\")
@@ -118,7 +118,7 @@ struct textset cmdtextsets[] = {
 	     "<input_type=\"checkbox\"_value=\"\n3\"> "
 	     "<input_type=\"checkbox\"_value=\"3\"_checked>")
 	  _P("echo '1 @ \\@ _ \\_ \" @' |")
-	  _P2("assign_htmlinput \\")
+	  _P2("retu_assign_htmlcheckbox -r \\")
 	  _P2("\t7 \\")
 	  _P2("\t7._attr_.name.nam7 \\")
 	  _P2("\t7._attr_.id.'\\1:\\2:\\3:\\4:\\5:\\6'")
