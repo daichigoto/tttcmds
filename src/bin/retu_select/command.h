@@ -25,19 +25,25 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#define VERSION "20161026"
+#define VERSION "20170114"
 #define CMDNAME "retu_select"
 #define ALIAS "retusel col_select"
 
 #include "ttt.h"
 
 #define TGT_GYO_PROCESS(GYO_BUFFER,NF) \
-	for (int i = 1; i < R_ARGC; i++) \
-		if (R_ARGV[i] > NF || NULL == GYO_BUFFER[R_ARGV[i]]) \
-			printf("@ "); \
+	if (FLAG_1 && first_line) \
+		first_line = 0; \
+	else { \
+		for (int i = 1; i < R_ARGC; i++) \
+			if (R_ARGV[i] > NF || \
+				NULL == GYO_BUFFER[R_ARGV[i]]) \
+				printf("@ "); \
+			else \
+				printf("%s ", GYO_BUFFER[R_ARGV[i]]); \
+		if (R_ARGV[R_ARGC] > NF || \
+			NULL == GYO_BUFFER[R_ARGV[R_ARGC]]) \
+			printf("@\n"); \
 		else \
-			printf("%s ", GYO_BUFFER[R_ARGV[i]]); \
-	if (R_ARGV[R_ARGC] > NF || NULL == GYO_BUFFER[R_ARGV[R_ARGC]]) \
-		printf("@\n"); \
-	else \
-		printf("%s\n", GYO_BUFFER[R_ARGV[R_ARGC]]);
+			printf("%s\n", GYO_BUFFER[R_ARGV[R_ARGC]]); \
+	}

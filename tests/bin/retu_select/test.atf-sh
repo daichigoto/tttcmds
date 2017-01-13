@@ -1,6 +1,6 @@
 #!/usr/bin/env atf-sh
 # 
-#  Copyright (c) 2016 Daichi GOTO
+#  Copyright (c) 2016,2017 Daichi GOTO
 #  All rights reserved.
 #  
 #  Redistribution and use in source and binary forms, with or without
@@ -286,6 +286,18 @@ select_body() {
 		   "$(atf_get_srcdir)/data_without_eor.in"
 }
 
+atf_test_case remove_first_line
+remove_first_line_head() {
+	atf_set "descr" "Verify a -1 option"
+}
+
+remove_first_line_body() {
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/remove_first_line_1.out \
+		-x "retu_select -1 1/3" \
+		   "$(atf_get_srcdir)/price.tag"
+}
+
 atf_init_test_cases()
 {
 	atf_add_test_case empty
@@ -296,4 +308,5 @@ atf_init_test_cases()
 	atf_add_test_case data_without_eor
 	atf_add_test_case many_retu_without_eor
 	atf_add_test_case select
+	atf_add_test_case remove_first_line
 }

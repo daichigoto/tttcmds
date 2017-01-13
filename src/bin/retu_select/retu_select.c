@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Daichi GOTO
+ * Copyright (c) 2016,2017 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -30,9 +30,10 @@
 int
 main(int argc, char *argv[])
 {
-	getcmdargs(argc, argv, "hvD",
+	getcmdargs(argc, argv, "1hvD",
 	           CMDARGS_R_NEED|CMDARGS_R_ARGARG_NONE);
 
+	int first_line = 1;
 	FILEPROCESS_GYO
 
 	exit(EX_OK);
