@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Daichi GOTO
+ * Copyright (c) 2016,2017 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -107,6 +107,8 @@ void version(void);
 
 char *_str2ssvstr(char *);
 char *_ssvstr2str(char *);
+char *_ltgt2charref(char *);
+char *_quote2charref(char *);
 
 #include "ttt_aliases.h"
 #include "ttt_text.h"
