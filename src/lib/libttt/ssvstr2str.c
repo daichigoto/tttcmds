@@ -78,7 +78,14 @@ ssvstr2str(char *str, char *ssvstr)
 			 * must translate '@ ', ' @' and ' @ ' between 
 			 * some SSV strings.
 			 */
-			--str_p;
+			if ((ssvstr_p == ssvstr && ' ' == *(ssvstr_p+1)) ||
+			    (ssvstr_p != ssvstr && ' ' == *(ssvstr_p-1) && 
+			     (' ' == *(ssvstr_p+1) || 
+			      '\0' == *(ssvstr_p+1) ||
+			      '\n' == *(ssvstr_p+1))))
+				--str_p;
+			else 
+				*str_p = '@';
 			break;
 		default:
 			*str_p = *ssvstr_p;
