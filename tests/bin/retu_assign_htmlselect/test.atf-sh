@@ -246,6 +246,28 @@ tagdata_with_eor_body() {
 		   "$(atf_get_srcdir)/data_with_eor.in"
 }
 
+atf_test_case references
+references_head() {
+	atf_set "descr" "Verify a references feature"
+}
+
+references_body() {
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/referenes_1.out \
+		-x "echo SELECT 000003 000001 000000 |" \
+		   "retu_assign_htmlselect -r" \
+		   "4:$(atf_get_srcdir)/vegetable.tag:1:2" \
+		   "4:_attr_:name:vege1" \
+		   "4:_attr_:id:'\1:\2'"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/referenes_2.out \
+		-x "echo SELECT 000003 000001 000000 |" \
+		   "retu_assign_htmlselect -r" \
+		   "4:$(atf_get_srcdir)/vegetable.tag:1:2" \
+		   "4:_attr_:name:vege1" \
+		   "4:_attr_:id:'\4:\2:\3:\1'"
+}
+
 atf_init_test_cases()
 {
 	atf_add_test_case empty
@@ -256,4 +278,5 @@ atf_init_test_cases()
 	atf_add_test_case data_without_eor
 	atf_add_test_case longdata_without_eor
 	atf_add_test_case tagdata_with_eor
+	atf_add_test_case references
 }

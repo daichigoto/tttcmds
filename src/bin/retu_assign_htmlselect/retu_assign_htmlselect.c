@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Daichi GOTO
+ * Copyright (c) 2016,2017 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -36,7 +36,7 @@ static struct selectset {
 int
 main(int argc, char *argv[])
 {
-	getcmdargs(argc, argv, "d:1hvD",
+	getcmdargs(argc, argv, "d:1rhvD",
 	           CMDARGS_R_NEED|
 		   CMDARGS_R_ARGARG_1_NEED|
 		   CMDARGS_R_ARGARG_2_NEED|
@@ -139,6 +139,8 @@ main(int argc, char *argv[])
 	 */
 	cmdargs = cmdargs_org;
 
+	char *refs[1+R_INDEX_MAX], *p;
+	int refindex, num;
 	FILEPROCESS_RETU
 
 	exit(EX_OK);

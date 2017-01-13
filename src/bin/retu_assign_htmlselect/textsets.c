@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Daichi GOTO
+ * Copyright (c) 2016,2017 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -34,6 +34,8 @@ struct textset cmdtextsets[] = {
 
 	{ "command_alias", "en_", ALIAS },
 
+	{ "command_copyright", "en_", "2016,2017 ONGS Inc." },
+
 	{ "command_comment", "ja_JP",
 	  "列にHTML SELECTデータを割り当てる" },
 
@@ -44,11 +46,12 @@ struct textset cmdtextsets[] = {
 	  _CMD(CMDNAME) " "
 	  "[" _OPT("d") " " _ARG("delim") "] " 
 	  "[" _OPT("1") "] " 
+	  "[" _OPT("r") "] " 
 	  "[" _OPT("hvD") "] [" _OPT("-") "] "
-	  _ARG("N.f.K.A") "|" _ARG("N/M.f.K.A") "\n"
+	  _ARG("N.f.K.A") "|\n" _ARG("N/M.f.K.A") " "
 	  "[" _ARG("N.f.K.A") "|" _ARG("N/M.f.K.A") "|"
 	  _ARG("N._attr_.a.v") "|" _ARG("N/M._attr_.a.v")
-	  " " _ETC "] "
+	  " " _ETC "]\n"
 	  "[" _ARG("file") " " _ETC "]" },
 
 	{ "command_description", "ja_JP", 
@@ -110,6 +113,7 @@ struct textset cmdtextsets[] = {
 	  _OPT("d") " " _ARG("delim") "\tHTML SELECTのラベル間区切り"
 	  	"文字列を指定\n\t\t(デフォルトは空白)\n"
 	  _OPT("1") "		ファイル" _ARG("f") "の1行目を無視\n"
+	  _OPT("r") "		前の列の値を参照使用可能(\\1, \\2...)\n"
 	  _OPT("h") "		使い方表示\n"
 	  _OPT("v") "		バージョン表示\n"
 	  _OPT("D") "		デバッグモード\n"
@@ -120,6 +124,8 @@ struct textset cmdtextsets[] = {
 	  _OPT("d") " " _ARG("delim") "\tSet the delimiter between "
 	  	"HTML SELECT text\n\t\t(default is a space).\n"
 	  _OPT("1") "		Ignore the first line of the file " _ARG("f") ".\n"
+	  _OPT("r") "		Use references to the pre columns "
+	  			"(\\1, \\2...)\n"
 	  _OPT("h") "		Print the usage message.\n"
 	  _OPT("v") "		Print the version.\n"
 	  _OPT("D") "		Enable the debug mode.\n"
@@ -160,6 +166,15 @@ _S("EY,JAPAN</option></select> <select_name=\"vegetable\"><option_valu")
 _S("e=\"000001\">000001,EUROPEAN_PEAR,CHINA</option><option_value=\"000")
 _S("002\">000002,FRENCH_BEAN,CHINA</option><option_value=\"000003\">000")
 _S("003,JAPANESE_PARSLEY,JAPAN</option></select>")
+	  _P("cat table.ssv |")
+	  _P("retu_assign_htmlselect -r \\")
+	  _P2("\t4:vegetable.ssv:1:2 \\")
+	  _P2("\t4._attr_.name.vage2 \\")
+	  _P2("\t4._attr_.id.'\\1:\\2'")
+_S("SELECT 000003 000001 <select_name=\"vege2\"_id=\"SELECT:000003\"><op")
+_S("tion_value=\"000001\">EUROPEAN_PEAR</option><option_value=\"000002\"")
+_S(">FRENCH_BEAN</option><option_value=\"000003\">JAPANESE_PARSLEY</op")
+_S("tion></select>")
 	  _P("") },
 
 	TEXTSET_END

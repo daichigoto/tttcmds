@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Daichi GOTO
+ * Copyright (c) 2016,2017 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -25,7 +25,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#define VERSION "20161230"
+#define VERSION "20170113"
 #define CMDNAME "retu_assign_htmlselect"
 #define ALIAS "assign_htmlselect col_assign_htmlselect"
 
@@ -68,14 +68,24 @@ next_gyo_process:
  * value to HTML SELECT conversion
  */
 #define TGT_RETU_PROCESS(RETU_BUFFER,RETU_BUFFER_MAXLEN,INDEX) \
+	if (FLAG_r) \
+		COPY_RETUBUFFER_TO_REFS(RETU_BUFFER,INDEX) \
 	printf("<select"); \
 	if (0 == hashtables[INDEX]->seq( \
 		hashtables[INDEX], &hash_key, &hash_val, R_FIRST)) { \
-		printf("_%s=\"%s\"", hash_key.data, hash_val.data); \
+		if (FLAG_r) \
+			PRINT_REFERENCED_STRING(INDEX) \
+		else \
+			printf("_%s=\"%s\"", \
+				hash_key.data, hash_val.data); \
 	} \
 	while (0 == hashtables[INDEX]->seq( \
 		hashtables[INDEX], &hash_key, &hash_val, R_NEXT)) { \
-		printf("_%s=\"%s\"", hash_key.data, hash_val.data); \
+		if (FLAG_r) \
+			PRINT_REFERENCED_STRING(INDEX) \
+		else \
+			printf("_%s=\"%s\"", \
+				hash_key.data, hash_val.data); \
 	} \
 	printf(">"); \
 	SLIST_FOREACH(sel1, &list[INDEX], entries) { \
@@ -92,6 +102,47 @@ next_gyo_process:
 	printf("</select>");
 
 #define NOTGT_RETU_PROCESS(RETU_BUFFER,RETU_BUFFER_MAXLEN,INDEX) \
+	if (FLAG_r) \
+		COPY_RETUBUFFER_TO_REFS(RETU_BUFFER,INDEX) \
 	printf("%s",RETU_BUFFER);
+
+#define COPY_RETUBUFFER_TO_REFS(RETU_BUFFER,INDEX) { \
+	refs[INDEX] = \
+		calloc(1, (1 + strlen(RETU_BUFFER)) * \
+			sizeof(char)); \
+	strcpy(refs[INDEX],RETU_BUFFER); \
+}
+
+#define PRINT_REFERENCED_STRING(INDEX) { \
+	printf("_%s=\"", hash_key.data); \
+	p = hash_val.data; \
+	while ('\0' != *p) { \
+		if ('\\' != *p) \
+			putchar(*p); \
+		else { \
+			++p; \
+			num = (int)(*p) - 48; \
+			if (num < 0 || 9 < num) \
+				putchar(*p); \
+			else { \
+				refindex = 0; \
+				for (;;) { \
+					refindex = \
+						10 * refindex + num; \
+					num = (int)(*(p+1)) - 48; \
+					if (num < 0 || 9 < num) \
+						break; \
+					++p; \
+				} \
+			} \
+			if (0 == refindex || \
+				refindex > INDEX) \
+				usage(); \
+			printf("%s",refs[refindex]); \
+		} \
+		++p; \
+	} \
+	putchar('"'); \
+}
 
 #define END_OF_LINE_RETU_PROCESS
