@@ -25,7 +25,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#define VERSION "20170112"
+#define VERSION "20170113"
 #define CMDNAME "gyo_select"
 #define ALIAS "gyosel row_select"
 
@@ -64,8 +64,27 @@
 					goto gyo_not_match; \
 			} \
 			else { \
-				cmpret = strcmp(GYO_BUFFER[R_ARGV[i]], \
-					R_ARGV_ARG1[i]); \
+				if (FLAG_N) { \
+					n1 = strtoll(GYO_BUFFER[R_ARGV[i]],\
+						(char **)NULL, 10); \
+					if (0 == n1 && \
+						EINVAL == errno) \
+						usage(); \
+					n2 = strtoll(R_ARGV_ARG1[i], \
+						(char **)NULL, 10); \
+					if (0 == n2 && \
+						EINVAL == errno) \
+						usage(); \
+					cmpret = 0; \
+					if (n1 > n2) \
+						cmpret = 1; \
+					else if (n1 < n2) \
+						cmpret = -1; \
+				} \
+				else \
+					cmpret = \
+					strcmp(GYO_BUFFER[R_ARGV[i]], \
+						R_ARGV_ARG1[i]); \
 				switch (R_ARGV_DELIM[i]) { \
 				case '>': \
 					if (cmpret <= 0) \
@@ -94,8 +113,27 @@
 					goto gyo_match; \
 			} \
 			else { \
-				cmpret = strcmp(GYO_BUFFER[R_ARGV[i]], \
-					R_ARGV_ARG1[i]); \
+				if (FLAG_N) { \
+					n1 = strtoll(GYO_BUFFER[R_ARGV[i]],\
+						(char **)NULL, 10); \
+					if (0 == n1 && \
+						EINVAL == errno) \
+						usage(); \
+					n2 = strtoll(R_ARGV_ARG1[i], \
+						(char **)NULL, 10); \
+					if (0 == n2 && \
+						EINVAL == errno) \
+						usage(); \
+					cmpret = 0; \
+					if (n1 > n2) \
+						cmpret = 1; \
+					else if (n1 < n2) \
+						cmpret = -1; \
+				} \
+				else \
+					cmpret = \
+					strcmp(GYO_BUFFER[R_ARGV[i]], \
+						R_ARGV_ARG1[i]); \
 				switch (R_ARGV_DELIM[i]) { \
 				case '>': \
 					if (cmpret > 0) \

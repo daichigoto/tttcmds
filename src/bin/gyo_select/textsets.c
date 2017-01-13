@@ -46,6 +46,7 @@ struct textset cmdtextsets[] = {
 	  _CMD(CMDNAME) " "
 	  "[" _OPT("a") "|" _OPT("o") "] "
 	  "[" _OPT("n") "] "
+	  "[" _OPT("N") "] "
 	  "[" _OPT("hvD") "] [" _OPT("-") "] "
 	  _ARG("N=key") "|" _ARG("N/M=key") "|" 
 	  _ARG("N>key") "|" _ARG("N/M>key") "|\n" 
@@ -118,6 +119,7 @@ struct textset cmdtextsets[] = {
 	  _OPT("o") "		指定をOR条件として処理\n"
 	  _OPT("n") "		出力を行わず、1行も一致しなかった場合には"
 	  			"1で、\n\t\tそうでない場合には0で終了\n"
+	  _OPT("N") "		大小比較を数値として実施\n"
 	  _OPT("h") "		使い方表示\n"
 	  _OPT("v") "		バージョン表示\n"
 	  _OPT("D") "		デバッグモード\n"
@@ -130,6 +132,8 @@ struct textset cmdtextsets[] = {
 	  _OPT("n") "		Do not print. If one or more lines match "
 	  			"it\n\t\treturns 0, otherwise it "
 				"returns 1.\n"
+	  _OPT("N") "		Do < or > compare by numeric value "
+	  			"instead of string.\n"
 	  _OPT("h") "		Print the usage message.\n"
 	  _OPT("v") "		Print the version.\n"
 	  _OPT("D") "		Enable the debug mode.\n"
@@ -177,6 +181,11 @@ struct textset cmdtextsets[] = {
 	  _P("gyo_select -n -a 2= 3= data.ssv && echo match")
 	  _P("gyo_select -n -o 2= 3= data.ssv && echo match")
 	  _S("match")
+	  _P("gyo_select 1'>'3 date.ssv")
+	  _P("gyo_select -N 1'>'3 date.ssv")
+	  _S("20150101 20150505 20151010")
+	  _S("20160101 20160505 20161010")
+	  _S("20170101 20170505 20171010")
 	  _P("") },
 
 	TEXTSET_END
