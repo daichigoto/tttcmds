@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Daichi GOTO
+ * Copyright (c) 2016,2017 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -30,7 +30,7 @@
 int
 main(int argc, char *argv[])
 {
-	getcmdargs(argc, argv, "c:hvD", CMDARGS_R_NEED);
+	getcmdargs(argc, argv, "c:rhvD", CMDARGS_R_NEED);
 
 	/*
 	 * set the checked value
@@ -100,6 +100,8 @@ main(int argc, char *argv[])
 		}
 	}
 
+	char *refs[1+R_INDEX_MAX], *p, *p2;
+	int refindex, num;
 	FILEPROCESS_RETU
 
 	exit(EX_OK);

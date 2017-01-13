@@ -44,6 +44,7 @@ struct textset cmdtextsets[] = {
 
 	{ "command_synopsis", "en_", 
 	  _CMD(CMDNAME) " [" _OPT("c") " " _ARG("val") "] "
+	  "[" _OPT("r") "] "
 	  "[" _OPT("hvD") "] [" _OPT("-") "] "
 	  _ARG("N") "|" _ARG("N/M") " "
 	  "[" _ARG("N") "|" _ARG("N/M") "|\n" 
@@ -80,6 +81,7 @@ struct textset cmdtextsets[] = {
 	  _OPT("c") " " _ARG("val") 
 	  	"		値が" _ARG("val") 
 				"だった場合にをcheckedとする\n"
+	  _OPT("r") "		前の列の値を参照使用可能(\\1, \\2...)\n"
 	  _OPT("h") "		使い方表示\n"
 	  _OPT("v") "		バージョン表示\n"
 	  _OPT("D") "		デバッグモード\n"
@@ -89,6 +91,8 @@ struct textset cmdtextsets[] = {
 	{ "command_options", "en_", 
 	  _OPT("c") " " _ARG("val") 
 	  	"		Set the " _ARG("val") " as checked date.\n"
+	  _OPT("r") "		Use references to the pre columns "
+	  			"(\\1, \\2...)\n"
 	  _OPT("h") "		Print the usage message.\n"
 	  _OPT("v") "		Print the version.\n"
 	  _OPT("D") "		Enable the debug mode.\n"
@@ -113,6 +117,12 @@ struct textset cmdtextsets[] = {
 	  _S("<input_type=\"checkbox\"_value=\"3\"> "
 	     "<input_type=\"checkbox\"_value=\"\n3\"> "
 	     "<input_type=\"checkbox\"_value=\"3\"_checked>")
+	  _P("echo '1 @ \\@ _ \\_ \" @' |")
+	  _P2("assign_htmlinput \\")
+	  _P2("\t7 \\")
+	  _P2("\t7._attr_.name.nam7 \\")
+	  _P2("\t7._attr_.id.'\\1:\\2:\\3:\\4:\\5:\\6'")
+	  _S("1 @ <input_type=\"checkbox\"_value=\"\"_name=\"nam7\"_id=\"1::@:_:\\_:&\nquot;\">")
 	  _P("") },
 
 	TEXTSET_END

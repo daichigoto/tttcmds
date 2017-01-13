@@ -252,6 +252,21 @@ longdata_without_eor_body() {
 		   "$(atf_get_srcdir)/longdata_without_eor.in"
 }
 
+atf_test_case references
+references_head() {
+	atf_set "descr" "Verify a references feature"
+}
+
+references_body() {
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/referenes_1.out \
+		-x "echo '@ _ \\@ \\_ \"' |" \
+		   "retu_assign_htmlcheckbox -r" \
+		   "5" \
+		   "5:_attr_:name:vege5" \
+		   "5:_attr_:id:'\1:\2:\3:\4:\5'"
+}
+
 atf_init_test_cases()
 {
 	atf_add_test_case empty
@@ -261,4 +276,5 @@ atf_init_test_cases()
 	atf_add_test_case data_with_eor
 	atf_add_test_case data_without_eor
 	atf_add_test_case longdata_without_eor
+	atf_add_test_case references
 }
