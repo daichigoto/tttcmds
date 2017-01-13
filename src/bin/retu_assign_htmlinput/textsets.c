@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Daichi GOTO
+ * Copyright (c) 2016,2017 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -34,6 +34,8 @@ struct textset cmdtextsets[] = {
 
 	{ "command_alias", "en_", ALIAS },
 
+	{ "command_copyright", "en_", "2016,2017 ONGS Inc." },
+
 	{ "command_comment", "ja_JP",
 	  "列をHTML INPUTデータに変換する" },
 
@@ -42,6 +44,7 @@ struct textset cmdtextsets[] = {
 
 	{ "command_synopsis", "en_", 
 	  _CMD(CMDNAME) " "
+	  "[" _OPT("r") "] "
 	  "[" _OPT("hvD") "] [" _OPT("-") "] "
 	  _ARG("N") "|" _ARG("N/M") " "
 	  "[" _ARG("N") "|" _ARG("N/M") "|" 
@@ -74,6 +77,7 @@ struct textset cmdtextsets[] = {
 	  "from the\nstandard input." },
 
 	{ "command_options", "ja_JP", 
+	  _OPT("r") "		前の列の値を参照使用可能(\\1, \\2...)\n"
 	  _OPT("h") "		使い方表示\n"
 	  _OPT("v") "		バージョン表示\n"
 	  _OPT("D") "		デバッグモード\n"
@@ -81,6 +85,8 @@ struct textset cmdtextsets[] = {
 	  _ARG("file") "\t	ファイルを指定" },
 	
 	{ "command_options", "en_", 
+	  _OPT("r") "		Use references to the pre columns "
+	  			"(\\1, \\2...)\n"
 	  _OPT("h") "		Print the usage message.\n"
 	  _OPT("v") "		Print the version.\n"
 	  _OPT("D") "		Enable the debug mode.\n"
@@ -99,6 +105,13 @@ struct textset cmdtextsets[] = {
 	  _S("<input_name=\"nam1\"_value=\"1\"> "
 	     "<input_name=\"nam_2\"_id=\"uniq\"> "
 	     "<in\nput_value=\"3\">")
+	  _P("echo '1 @ \\@ _ \\_ \" @' |")
+	  _P2("retu_assign_htmlinput -r \\")
+	  _P2("\t7 \\")
+	  _P2("\t7._attr_.name.nam7 \\")
+	  _P2("\t7._attr_.id.'\\1:\\2:\\3:\\4:\\5:\\6'")
+	  _S("1 @ \\@ _ \\_ \" <input_value=\"\"_name=\"nam7\"_"
+	     "id=\"1::@:_:\\_:&quot;\">")
 	  _P("") },
 
 	TEXTSET_END

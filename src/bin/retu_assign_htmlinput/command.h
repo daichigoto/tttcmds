@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Daichi GOTO
+ * Copyright (c) 2016,2017 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -25,7 +25,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#define VERSION "20170108"
+#define VERSION "20170113"
 #define CMDNAME "retu_assign_htmlinput"
 #define ALIAS "assign_htmlinput col_assign_htmlinput"
 
@@ -36,20 +36,83 @@
  * value to HTML INPUT conversion
  */
 #define TGT_RETU_PROCESS(RETU_BUFFER,RETU_BUFFER_MAXLEN,INDEX) \
+	if (FLAG_r) \
+		COPY_RETUBUFFER_TO_REFS(RETU_BUFFER,INDEX) \
 	printf("<input"); \
 	if (0 == hashtables[INDEX]->seq( \
 		hashtables[INDEX], &hash_key, &hash_val, R_FIRST)) { \
-		printf("_%s=\"%s\"", hash_key.data, hash_val.data); \
+		if (FLAG_r) \
+			PRINT_REFERENCED_STRING(INDEX) \
+		else \
+			printf("_%s=\"%s\"", hash_key.data, \
+				_quote2charref(hash_val.data)); \
 	} \
 	while (0 == hashtables[INDEX]->seq( \
 		hashtables[INDEX], &hash_key, &hash_val, R_NEXT)) { \
-		printf("_%s=\"%s\"", hash_key.data, hash_val.data); \
+		if (FLAG_r) \
+			PRINT_REFERENCED_STRING(INDEX) \
+		else \
+			printf("_%s=\"%s\"", hash_key.data, \
+				_quote2charref(hash_val.data)); \
 	} \
-	if (0 != strcmp("@", RETU_BUFFER)) \
-		printf("_value=\"%s\"",RETU_BUFFER); \
+	if (0 == strcmp("@", RETU_BUFFER)) \
+		; \
+	else if (0 == strcmp("\\@", RETU_BUFFER)) \
+		printf("_value=\"@\""); \
+	else \
+		printf("_value=\"%s\"",_quote2charref(RETU_BUFFER)); \
 	printf(">");
 
 #define NOTGT_RETU_PROCESS(RETU_BUFFER,RETU_BUFFER_MAXLEN,INDEX) \
+	if (FLAG_r) \
+		COPY_RETUBUFFER_TO_REFS(RETU_BUFFER,INDEX) \
 	printf("%s",RETU_BUFFER);
+
+#define COPY_RETUBUFFER_TO_REFS(RETU_BUFFER,INDEX) { \
+	if (INDEX <= R_INDEX_MAX) { \
+		refs[INDEX] = \
+			calloc(1, (1 + strlen(RETU_BUFFER)) * \
+					sizeof(char)); \
+		strcpy(refs[INDEX],RETU_BUFFER); \
+	} \
+}
+
+#define PRINT_REFERENCED_STRING(INDEX) { \
+	printf("_%s=\"", hash_key.data); \
+	p = hash_val.data; \
+	while ('\0' != *p) { \
+		if ('\\' != *p) \
+			putchar(*p); \
+		else { \
+			++p; \
+			num = (int)(*p) - 48; \
+			if (num < 0 || 9 < num) \
+				putchar(*p); \
+			else { \
+				refindex = 0; \
+				for (;;) { \
+					refindex = \
+						10 * refindex + num; \
+					num = (int)(*(p+1)) - 48; \
+					if (num < 0 || 9 < num) \
+						break; \
+					++p; \
+				} \
+			} \
+			if (0 == refindex || \
+				refindex > INDEX) \
+				usage(); \
+			p2 = _quote2charref(refs[refindex]); \
+			if (0 == strcmp("@", p2)) \
+				; \
+			else if (0 == strcmp("\\@", p2)) \
+				putchar('@'); \
+			else \
+				printf("%s", p2); \
+		} \
+		++p; \
+	} \
+	putchar('"'); \
+}
 
 #define END_OF_LINE_RETU_PROCESS
