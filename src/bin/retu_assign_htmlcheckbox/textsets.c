@@ -122,8 +122,8 @@ struct textset cmdtextsets[] = {
 	  _P2("\t7 \\")
 	  _P2("\t7._attr_.name.nam7 \\")
 	  _P2("\t7._attr_.id.'\\1:\\2:\\3:\\4:\\5:\\6'")
-	  _S("1 @ <input_type=\"checkbox\"_value=\"\"_"
-	     "name=\"nam7\"_id=\"1::@:_:\\_:&\nquot;\">")
+	  _S("1 @ \\@ _ \\_ \" <input_type=\"checkbox\"_value=\"\"_"
+	     "name=\"nam7\"_id=\"1:\n:@:_:\\_:&quot;\">")
 	  _P("") },
 
 	TEXTSET_END
