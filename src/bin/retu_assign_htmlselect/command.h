@@ -118,10 +118,12 @@ next_gyo_process:
 	printf("%s",RETU_BUFFER);
 
 #define COPY_RETUBUFFER_TO_REFS(RETU_BUFFER,INDEX) { \
-	refs[INDEX] = \
-		calloc(1, (1 + strlen(RETU_BUFFER)) * \
-			sizeof(char)); \
-	strcpy(refs[INDEX],RETU_BUFFER); \
+	if (INDEX <= R_INDEX_MAX) { \
+		refs[INDEX] = \
+			calloc(1, (1 + strlen(RETU_BUFFER)) * \
+				sizeof(char)); \
+		strcpy(refs[INDEX],RETU_BUFFER); \
+	} \
 }
 
 #define PRINT_REFERENCED_STRING(INDEX) { \
