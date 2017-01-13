@@ -49,10 +49,20 @@
 		value_len += strlen(GYO_BUFFER[R_ARGV[j]]) + delim_len; \
 	sel2->value = calloc(1, value_len * sizeof(char)); \
 	for (int j = 2; j <= R_ARGC; j++) { \
-		strcpy(sel2->value + len, GYO_BUFFER[R_ARGV[j]]) ; \
-		len += strlen(GYO_BUFFER[R_ARGV[j]]); \
-		strcpy(sel2->value + len, delim); \
-		len += delim_len; \
+		if (0 == strcmp("@", GYO_BUFFER[R_ARGV[j]])) \
+			; \
+		else if (0 == strcmp("\\@", GYO_BUFFER[R_ARGV[j]])) { \
+			strcpy(sel2->value + len, "@") ; \
+			len += 1; \
+			strcpy(sel2->value + len, delim); \
+			len += delim_len; \
+		} \
+		else { \
+			strcpy(sel2->value + len, GYO_BUFFER[R_ARGV[j]]) ; \
+			len += strlen(GYO_BUFFER[R_ARGV[j]]); \
+			strcpy(sel2->value + len, delim); \
+			len += delim_len; \
+		} \
 	} \
 	*(sel2->value + len - delim_len) = '\0'; \
 	if (firstline) { \
@@ -77,7 +87,8 @@ next_gyo_process:
 			PRINT_REFERENCED_STRING(INDEX) \
 		else \
 			printf("_%s=\"%s\"", \
-				hash_key.data, hash_val.data); \
+				hash_key.data, \
+				_quote2charref(hash_val.data)); \
 	} \
 	while (0 == hashtables[INDEX]->seq( \
 		hashtables[INDEX], &hash_key, &hash_val, R_NEXT)) { \
@@ -85,19 +96,19 @@ next_gyo_process:
 			PRINT_REFERENCED_STRING(INDEX) \
 		else \
 			printf("_%s=\"%s\"", \
-				hash_key.data, hash_val.data); \
+				hash_key.data, \
+				_quote2charref(hash_val.data)); \
 	} \
 	printf(">"); \
 	SLIST_FOREACH(sel1, &list[INDEX], entries) { \
 		if (0 == strcmp(RETU_BUFFER, sel1->name)) \
 			printf("<option_value=\"%s\"_selected>", \
-				sel1->name); \
+				_quote2charref(sel1->name)); \
 		else \
-			printf("<option_value=\"%s\">", sel1->name); \
-		if (0 == strcmp("@", sel1->value)) \
-			printf("</option>"); \
-		else \
-			printf("%s</option>", sel1->value); \
+			printf("<option_value=\"%s\">", \
+				_quote2charref(sel1->name)); \
+		printf("%s</option>", \
+			_ltgt2charref(sel1->value)); \
 	} \
 	printf("</select>");
 
@@ -138,7 +149,13 @@ next_gyo_process:
 			if (0 == refindex || \
 				refindex > INDEX) \
 				usage(); \
-			printf("%s",refs[refindex]); \
+			p2 = _quote2charref(refs[refindex]); \
+			if (0 == strcmp("@", p2)) \
+				; \
+			else if (0 == strcmp("\\@", p2)) \
+				putchar('@'); \
+			else \
+				printf("%s", p2); \
 		} \
 		++p; \
 	} \

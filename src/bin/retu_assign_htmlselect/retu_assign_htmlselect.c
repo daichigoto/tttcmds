@@ -139,7 +139,7 @@ main(int argc, char *argv[])
 	 */
 	cmdargs = cmdargs_org;
 
-	char *refs[1+R_INDEX_MAX], *p;
+	char *refs[1+R_INDEX_MAX], *p, *p2;
 	int refindex, num;
 	FILEPROCESS_RETU
 

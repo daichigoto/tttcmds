@@ -256,16 +256,23 @@ references_body() {
 		-o file:$(atf_get_srcdir)/referenes_1.out \
 		-x "echo SELECT 000003 000001 000000 |" \
 		   "retu_assign_htmlselect -r" \
-		   "4:$(atf_get_srcdir)/vegetable.tag:1:2" \
+		   "4:$(atf_get_srcdir)/vegetable.ssv:1:2" \
 		   "4:_attr_:name:vege1" \
 		   "4:_attr_:id:'\1:\2'"
 	atf_check -s ignore \
 		-o file:$(atf_get_srcdir)/referenes_2.out \
 		-x "echo SELECT 000003 000001 000000 |" \
 		   "retu_assign_htmlselect -r" \
-		   "4:$(atf_get_srcdir)/vegetable.tag:1:2" \
+		   "4:$(atf_get_srcdir)/vegetable.ssv:1:2" \
 		   "4:_attr_:name:vege1" \
 		   "4:_attr_:id:'\4:\2:\3:\1'"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/referenes_3.out \
+		-x "echo '@ _ \\@ \\_ \"' |" \
+		   "retu_assign_htmlselect -r" \
+		   "5:$(atf_get_srcdir)/vegetable2.ssv:1:2" \
+		   "5:_attr_:name:vege5" \
+		   "5:_attr_:id:'\1:\2:\3:\4:\5'"
 }
 
 atf_init_test_cases()

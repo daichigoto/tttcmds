@@ -1,1 +1,1 @@
-SELECT 000003 000001 <select_name="vege1"_id="SELECT:000003"><option_value="ID">COUNTRY1</option><option_value="000001">EUROPEAN_PEAR</option><option_value="000002">FRENCH_BEAN</option><option_value="000003">JAPANESE_PARSLEY</option></select>
+SELECT 000003 000001 <select_name="vege1"_id="SELECT:000003"><option_value="000001">EUROPEAN_PEAR</option><option_value="000002">FRENCH_BEAN</option><option_value="000003">JAPANESE_PARSLEY</option></select>
