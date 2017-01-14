@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Daichi GOTO
+ * Copyright (c) 2016,2017 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -25,7 +25,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#define VERSION "20161117"
+#define VERSION "20170115"
 #define CMDNAME "retu_assign"
 #define ALIAS "assign col_assign"
 
@@ -90,10 +90,8 @@
 #define TGT_RETU_PROCESS(BUF,BUFLEN,I) { \
 	if (mode[I]&DO_ASSIGN) \
 		TGT_RETU_PROCESS_DO_ASSIGN(BUF,BUFLEN,I) \
-	else if (mode[I]&DO_MATCH_SWAP) \
-		TGT_RETU_PROCESS_DO_MATCH_SWAP(BUF,BUFLEN,I) \
-	else if (mode[I]&DO_NOTMATCH_SWAP) \
-		TGT_RETU_PROCESS_DO_NOTMATCH_SWAP(BUF,BUFLEN,I) \
+	else if (mode[I]&(DO_MATCH_SWAP|DO_NOTMATCH_SWAP)) \
+		TGT_RETU_PROCESS_DO_SWAP(BUF,BUFLEN,I) \
 	else if (mode[I]&DO_JOIN) \
 		TGT_RETU_PROCESS_DO_JOIN(BUF,BUFLEN,I) \
 	else \
@@ -112,23 +110,17 @@
 	printf("%s", R_ARGV_ARG1[R_INDEX_TO_ARGV[I]]);
 
 /*
- * match swap process
+ * swap process
  */
-#define TGT_RETU_PROCESS_DO_MATCH_SWAP(BUF,BUFLEN,I) { \
-	if (0 == strcmp(BUF,R_ARGV_ARG1[R_INDEX_TO_ARGV[I]])) \
-		printf("%s",R_ARGV_ARG2[R_INDEX_TO_ARGV[I]]); \
+#define TGT_RETU_PROCESS_DO_SWAP(BUF,BUFLEN,I) { \
+	if (mode[I]&DO_MATCH_SWAP && \
+		0 == strcmp(BUF,R_ARGV_ARG1[R_INDEX_TO_ARGV[I]])) \
+		printf("%s",matchswap[I]); \
+	else if (mode[I]&DO_NOTMATCH_SWAP && \
+		0 != strcmp(BUF,R_ARGV_ARG1[R_INDEX_TO_ARGV[I]])) \
+		printf("%s",notmatchswap[I]); \
 	else \
 		printf("%s",BUF); \
-}
-
-/*
- * not match swap process
- */
-#define TGT_RETU_PROCESS_DO_NOTMATCH_SWAP(BUF,BUFLEN,I) { \
-	if (0 == strcmp(BUF,R_ARGV_ARG1[R_INDEX_TO_ARGV[I]])) \
-		printf("%s",BUF); \
-	else \
-		printf("%s",R_ARGV_ARG2[R_INDEX_TO_ARGV[I]]); \
 }
 
 /*

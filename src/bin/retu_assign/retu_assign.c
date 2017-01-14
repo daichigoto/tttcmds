@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Daichi GOTO
+ * Copyright (c) 2016,2017 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -43,16 +43,23 @@ main(int argc, char *argv[])
 		mode[i] = DO_NOTHING;
 	struct tttcmdargs r_cmdargs[R_INDEX_MAX + 1];
 
+	char *matchswap[R_INDEX_MAX + 1];
+	char *notmatchswap[R_INDEX_MAX + 1];
+
 	char *filename;
 	for (int i = 1; i <= R_ARGC; i++) {
 		if (NULL == R_ARGV_ARG2[i] && NULL == R_ARGV_ARG3[i]) {
 			mode[R_ARGV[i]] = DO_ASSIGN;
 		}
 		else if (NULL != R_ARGV_ARG2[i] && NULL == R_ARGV_ARG3[i]) {
-			if ('!' != R_ARGV_DELIM[i])
-				mode[R_ARGV[i]] = DO_MATCH_SWAP;
-			else
-				mode[R_ARGV[i]] = DO_NOTMATCH_SWAP;
+			if ('!' != R_ARGV_DELIM[i]) {
+				mode[R_ARGV[i]] |= DO_MATCH_SWAP;
+				matchswap[R_ARGV[i]] = R_ARGV_ARG2[i];
+			}
+			else {
+				mode[R_ARGV[i]] |= DO_NOTMATCH_SWAP;
+				notmatchswap[R_ARGV[i]] = R_ARGV_ARG2[i];
+			}
 		}
 		else if (NULL != R_ARGV_ARG2[i] && NULL != R_ARGV_ARG3[i]) {
 			mode[R_ARGV[i]] = DO_JOIN;

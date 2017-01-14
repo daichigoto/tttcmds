@@ -144,6 +144,8 @@ struct textset cmdtextsets[] = {
 	  _S("AA @ cc dd ee ff gg hh ii jj kk")
 	  _P("retu_assign 1!aa!AA 2!aa!AA 3!aa!AA data.ssv") 
 	  _S("aa AA AA dd ee ff gg hh ii jj kk")
+	  _P("1.aa.AA 1!aa!cc data.ssv")
+	  _S("AA @ cc dd ee ff gg hh ii jj kk")
 	  _P("retu_assign 1/11..0 data.ssv") 
 	  _S("aa 0 cc dd ee ff gg hh ii jj kk")
 	  _P("retu_assign 1/11!!0 data.ssv") 
