@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Daichi GOTO
+ * Copyright (c) 2016,2017 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -34,12 +34,16 @@ struct textset cmdtextsets[] = {
 
 	{ "command_alias", "en_", ALIAS },
 
+	{ "command_copyright", "en_", "2016,2017 ONGS Inc." },
+
 	{ "command_comment", "ja_JP", "指定した列以外の列を出力する" },
 
 	{ "command_comment", "en_", "print columns other than specified" },
 
 	{ "command_synopsis", "en_", 
-	  _CMD(CMDNAME) " [" _OPT("hvD") "] [" _OPT("-") "] "
+	  _CMD(CMDNAME) " "
+	  "[" _OPT("1") "] "
+	  "[" _OPT("hvD") "] [" _OPT("-") "] "
 	  _ARG("N") "|" _ARG("N/M") " "
 	  "[" _ARG("N") "|" _ARG("N/M") " " _ETC "] "
 	  "[" _ARG("file") " " _ETC "]" },
@@ -54,6 +58,7 @@ struct textset cmdtextsets[] = {
 	  "input." },
 
 	{ "command_options", "ja_JP", 
+	  _OPT("1") "		入力の1行目を削除\n"
 	  _OPT("h") "		使い方表示\n"
 	  _OPT("v") "		バージョン表示\n"
 	  _OPT("D") "		デバッグモード\n"
@@ -64,6 +69,7 @@ struct textset cmdtextsets[] = {
 	  _ARG("file") "\t	ファイルを指定" },
 	
 	{ "command_options", "en_", 
+	  _OPT("1") "		Remove the first line of the input.\n"
 	  _OPT("h") "		Print the usage message.\n"
 	  _OPT("v") "		Print the version.\n"
 	  _OPT("D") "		Enable the debug mode.\n"
@@ -87,6 +93,13 @@ struct textset cmdtextsets[] = {
 	  _S("1 2 3 4 5 6 7 8 9")
 	  _S("a b c d e f g h i")
 	  _S("A B C D E F G H I")
+	  _P("cat price.tag")
+	  _S("ID PRICE")
+	  _S("000001 12800")
+	  _S("000002 9800")
+	  _P("retu_delete -1 3 price.tag")
+	  _S("000001 12800")
+	  _S("000002 9800")
 	  _P("") },
 
 	TEXTSET_END

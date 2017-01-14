@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Daichi GOTO
+ * Copyright (c) 2016,2017 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -25,24 +25,30 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#define VERSION "20161102"
+#define VERSION "20170114"
 #define CMDNAME "retu_delete"
 #define ALIAS "retudel col_delete"
 
 #include "ttt.h"
 
 #define TGT_GYO_PROCESS(GYO_BUFFER,NF) \
-	int i, j, k; \
-	for (i=1, j=0; i<=NF; i++) \
-		if (R_INDEX_EXIST[i] == R_INDEX_IS_NOT_EXISTENCE) \
-			++j; \
-	for (i=1, k=0; i<=NF; i++) { \
-		if (R_INDEX_EXIST[i] == R_INDEX_IS_NOT_EXISTENCE) { \
-			printf("%s", GYO_BUFFER[i]); \
-			++k; \
-			if (j != k) \
-				printf(" "); \
-			else \
-				printf("\n"); \
+	if (FLAG_1 && first_line) \
+		first_line = 0; \
+	else { \
+		int i, j, k; \
+		for (i=1, j=0; i<=NF; i++) \
+			if (R_INDEX_EXIST[i] == \
+				R_INDEX_IS_NOT_EXISTENCE) \
+				++j; \
+		for (i=1, k=0; i<=NF; i++) { \
+			if (R_INDEX_EXIST[i] == \
+				R_INDEX_IS_NOT_EXISTENCE) { \
+				printf("%s", GYO_BUFFER[i]); \
+				++k; \
+				if (j != k) \
+					printf(" "); \
+				else \
+					printf("\n"); \
+			} \
 		} \
 	}
