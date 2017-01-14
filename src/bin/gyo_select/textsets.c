@@ -193,7 +193,7 @@ struct textset cmdtextsets[] = {
 	  _S("ID PRICE")
 	  _S("000001 12800")
 	  _S("000002 9800")
-	  _P("gyo_select -1 -N 2'>'0")
+	  _P("gyo_select -1 -N 2'>'0 price.tag")
 	  _S("000001 12800")
 	  _S("000002 9800")
 	  _P("") },
