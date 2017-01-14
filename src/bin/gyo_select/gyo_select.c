@@ -74,8 +74,15 @@ main(int argc, char *argv[])
 	 */
 	cmdargs = cmdargs_org;
 
+	long long int n1, n2[1+R_ARGC];
+	if (FLAG_N)
+		for (int i = 1; i <= R_ARGC; i++) {
+			n2[i] = strtoll(R_ARGV_ARG1[i], (char **)NULL, 10);
+			if (0 == n2[i] && EINVAL == errno)
+				usage();
+		}
+
 	int cmpret;
-	long long int n1, n2;
 	int first_line = 1;
 	FILEPROCESS_GYO
 

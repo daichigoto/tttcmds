@@ -455,6 +455,14 @@ numeric_compare_body() {
 		-o file:$(atf_get_srcdir)/numeric_compare_2.out \
 		-x "echo 10 20 30 40 50 |" \
 		   "gyo_select -N 5'>'100"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/numeric_compare_3.out \
+		-x "cat $(atf_get_srcdir)/nums_with_eor.in |" \
+		   "gyo_select -N 2'>'1"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/numeric_compare_4.out \
+		-x "cat $(atf_get_srcdir)/nums_with_eor.in |" \
+		   "gyo_select -N 4'>'1"
 }
 
 atf_test_case remove_first_line

@@ -73,16 +73,11 @@
 						(char **)NULL, 10); \
 					if (0 == n1 && \
 						EINVAL == errno) \
-						usage(); \
-					n2 = strtoll(R_ARGV_ARG1[i], \
-						(char **)NULL, 10); \
-					if (0 == n2 && \
-						EINVAL == errno) \
-						usage(); \
+						goto gyo_not_match; \
 					cmpret = 0; \
-					if (n1 > n2) \
+					if (n1 > n2[i]) \
 						cmpret = 1; \
-					else if (n1 < n2) \
+					else if (n1 < n2[i]) \
 						cmpret = -1; \
 				} \
 				else \
@@ -122,16 +117,11 @@
 						(char **)NULL, 10); \
 					if (0 == n1 && \
 						EINVAL == errno) \
-						usage(); \
-					n2 = strtoll(R_ARGV_ARG1[i], \
-						(char **)NULL, 10); \
-					if (0 == n2 && \
-						EINVAL == errno) \
-						usage(); \
+						continue; \
 					cmpret = 0; \
-					if (n1 > n2) \
+					if (n1 > n2[i]) \
 						cmpret = 1; \
-					else if (n1 < n2) \
+					else if (n1 < n2[i]) \
 						cmpret = -1; \
 				} \
 				else \
