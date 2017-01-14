@@ -25,7 +25,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#define VERSION "20170112"
+#define VERSION "20170114"
 #define CMDNAME "gyo_delete"
 #define ALIAS "gyodel row_delete"
 
@@ -52,6 +52,10 @@
 #define END_OF_LINE_RETU_PROCESS
 
 #define TGT_GYO_PROCESS(GYO_BUFFER,NF) \
+	if (FLAG_1 && first_line) { \
+		first_line = 0; \
+		goto gyo_match; \
+	} \
 	if (!FLAG_o) { \
 		if (NF < R_ARGV_MAX) \
 			goto gyo_not_match; \
@@ -64,8 +68,22 @@
 					goto gyo_not_match; \
 			} \
 			else { \
-				cmpret = strcmp(GYO_BUFFER[R_ARGV[i]], \
-					R_ARGV_ARG1[i]); \
+				if (FLAG_N) { \
+					n1 = strtoll(GYO_BUFFER[R_ARGV[i]],\
+						(char **)NULL, 10); \
+					if (0 == n1 && \
+						EINVAL == errno) \
+						goto gyo_not_match; \
+					cmpret = 0; \
+					if (n1 > n2[i]) \
+						cmpret = 1; \
+					else if (n1 < n2[i]) \
+						cmpret = -1; \
+				} \
+				else \
+					cmpret = \
+					strcmp(GYO_BUFFER[R_ARGV[i]], \
+						R_ARGV_ARG1[i]); \
 				switch (R_ARGV_DELIM[i]) { \
 				case '>': \
 					if (cmpret <= 0) \
@@ -94,8 +112,22 @@
 					goto gyo_match; \
 			} \
 			else { \
-				cmpret = strcmp(GYO_BUFFER[R_ARGV[i]], \
-					R_ARGV_ARG1[i]); \
+				if (FLAG_N) { \
+					n1 = strtoll(GYO_BUFFER[R_ARGV[i]],\
+						(char **)NULL, 10); \
+					if (0 == n1 && \
+						EINVAL == errno) \
+						continue; \
+					cmpret = 0; \
+					if (n1 > n2[i]) \
+						cmpret = 1; \
+					else if (n1 < n2[i]) \
+						cmpret = -1; \
+				} \
+				else \
+					cmpret = \
+					strcmp(GYO_BUFFER[R_ARGV[i]], \
+						R_ARGV_ARG1[i]); \
 				switch (R_ARGV_DELIM[i]) { \
 				case '>': \
 					if (cmpret > 0) \

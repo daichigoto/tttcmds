@@ -45,15 +45,17 @@ struct textset cmdtextsets[] = {
 	{ "command_synopsis", "en_", 
 	  _CMD(CMDNAME) " "
 	  "[" _OPT("a") "|" _OPT("o") "] "
+	  "[" _OPT("1") "] "
 	  "[" _OPT("n") "] "
+	  "[" _OPT("N") "] "
 	  "[" _OPT("hvD") "] [" _OPT("-") "] "
-	  _ARG("N=key") "|" _ARG("N/M=key") "|"
-	  _ARG("N>key") "|" _ARG("N/M>key") "|\n"
+	  _ARG("N=key") "|" _ARG("N/M=key") "|\n"
+	  _ARG("N>key") "|" _ARG("N/M>key") "|"
 	  _ARG("N<key") "|" _ARG("N/M<key") "|"
 	  _ARG("N.f.K") "|" _ARG("N/M.f.K") " "
 	  "[" _ARG("N=key") "|" _ARG("N/M=key") "|" 
-	      _ARG("N>key") "|" _ARG("N/M>key") "|" 
-	      _ARG("N<key") "|\n" _ARG("N/M<key") "|" 
+	      _ARG("N>key") "|\n" _ARG("N/M>key") "|" 
+	      _ARG("N<key") "|" _ARG("N/M<key") "|" 
 	      _ARG("N.f.K") "|" _ARG("N/M.f.K") " " _ETC "] "
 	  "[" _ARG("file") " " _ETC "]" },
 
@@ -116,9 +118,11 @@ struct textset cmdtextsets[] = {
 	{ "command_options", "ja_JP", 
 	  _OPT("a") "		指定をAND条件として処理 (デフォルト設定)\n"
 	  _OPT("o") "		指定をOR条件として処理\n"
+	  _OPT("1") "		入力の1行目を削除\n"
 	  _OPT("n") "		出力は行わないが、1行でも出力対象となった"
 	  			"場合には\n\t\t0で、そうでない場合には1で"
 				"終了\n"
+	  _OPT("N") "		大小比較を数値として実施\n"
 	  _OPT("h") "		使い方表示\n"
 	  _OPT("v") "		バージョン表示\n"
 	  _OPT("D") "		デバッグモード\n"
@@ -128,9 +132,12 @@ struct textset cmdtextsets[] = {
 	{ "command_options", "en_", 
 	  _OPT("a") "		Specify AND condition (by default).\n"
 	  _OPT("o") "		Specify OR condition.\n"
+	  _OPT("1") "		Remove the first line of the input.\n"
 	  _OPT("n") "		Do not print. If one or more lines match "
 	  			"as\n\t\toutput lines it returns 0, "
 				"otherwise it returns 1.\n"
+	  _OPT("N") "		Do < or > compare by numeric value "
+	  			"instead of string.\n"
 	  _OPT("h") "		Print the usage message.\n"
 	  _OPT("v") "		Print the version.\n"
 	  _OPT("D") "		Enable the debug mode.\n"
@@ -177,6 +184,18 @@ struct textset cmdtextsets[] = {
 	  _P("gyo_delete -n -o 2= 3= data.ssv && echo outputed")
 	  _S("outputed")
 	  _P("gyo_delete -n -o 2= 2=2 data.ssv && echo outputed")
+	  _P("gyo_delete 1'>'3 date.ssv")
+	  _S("20150101 20150505 20151010")
+	  _S("20160101 20160505 20161010")
+	  _S("20170101 20170505 20171010")
+	  _P("gyo_delete -N 1'>'3 date.ssv")
+	  _P("cat price.tag")
+	  _S("ID PRICE")
+	  _S("000001 12800")
+	  _S("000002 9800")
+	  _P("gyo_delete -1 -N 2'<'0 price.tag")
+	  _S("000001 12800")
+	  _S("000002 9800")
 	  _P("") },
 
 	TEXTSET_END
