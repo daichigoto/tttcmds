@@ -50,13 +50,24 @@ struct textset cmdtextsets[] = {
 	  "[" _ARG("file") " " _ETC "]" },
 	
 	{ "command_description", "ja_JP", 
-	  "指定した順で指定した列を出力する。ファイルの指定がないか、-が\n"
-	  "指定されている場合には標準入力を使用。" },
+	  "指定した順で指定した列を出力する。\n"
+	  "\n"
+	  _ARG("N") "		" _ARG("N") "列目を指定\n"
+	  _ARG("N/M") "		" _ARG("N") "列目から" _ARG("M") 
+	  			"列目を指定\n"
+	  "\n"
+	  "ファイルの指定がないか、-が指定されている場合には標準入力を"
+	  "使用。" },
 
 	{ "command_description", "en_", 
-	  "Print the specified columns in the specified order. If " 
-	  _ARG("file") "\nis a single dash (`-') or absent, it reads "
-	  "from the standard\ninput." },
+	  "Print the specified columns in the specified order.\n"
+	  "\n"
+	  _ARG("N") "		Specify the " _ARG("N") "th column.\n"
+	  _ARG("N/M") "		Specify the range from the " _ARG("N")
+	  			"th to " _ARG("M") "th column.\n"
+	  "\n"
+	  "If " _ARG("file") " is a single dash (`-') or absent, it reads "
+	  "from the\nstandard input." },
 
 	{ "command_options", "ja_JP", 
 	  _OPT("1") "		入力の1行目を削除\n"
@@ -64,9 +75,6 @@ struct textset cmdtextsets[] = {
 	  _OPT("v") "		バージョン表示\n"
 	  _OPT("D") "		デバッグモード\n"
 	  _OPT("-") "		オプションの終了を指定\n"
-	  _ARG("N") "		" _ARG("N") "列目を指定\n"
-	  _ARG("N/M") "		" _ARG("N") "列目から" _ARG("M") 
-	  			"列目を指定\n"
 	  _ARG("file") "\t	ファイルを指定" },
 	
 	{ "command_options", "en_", 
@@ -75,9 +83,6 @@ struct textset cmdtextsets[] = {
 	  _OPT("v") "		Print the version.\n"
 	  _OPT("D") "		Enable the debug mode.\n"
 	  _OPT("-") "		Specify the end of options.\n"
-	  _ARG("N") "		Specify the " _ARG("N") "th column.\n"
-	  _ARG("N/M") "		Specify the range from the " _ARG("N")
-	  			"th to " _ARG("M") "th column.\n"
 	  _ARG("file") "\t	Specify the file." },
 
 	{ "command_example", "en_", 
