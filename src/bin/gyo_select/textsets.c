@@ -45,16 +45,17 @@ struct textset cmdtextsets[] = {
 	{ "command_synopsis", "en_", 
 	  _CMD(CMDNAME) " "
 	  "[" _OPT("a") "|" _OPT("o") "] "
+	  "[" _OPT("1") "] "
 	  "[" _OPT("n") "] "
 	  "[" _OPT("N") "] "
 	  "[" _OPT("hvD") "] [" _OPT("-") "] "
-	  _ARG("N=key") "|" _ARG("N/M=key") "|" 
-	  _ARG("N>key") "|" _ARG("N/M>key") "|\n" 
+	  _ARG("N=key") "|" _ARG("N/M=key") "|\n" 
+	  _ARG("N>key") "|" _ARG("N/M>key") "|" 
 	  _ARG("N<key") "|" _ARG("N/M<key") "|"
 	  _ARG("N.f.K") "|" _ARG("N/M.f.K") " "
 	  "[" _ARG("N=key") "|" _ARG("N/M=key") "|"
-	      _ARG("N>key") "|" _ARG("N/M>key") "|" 
-	      _ARG("N<key") "|\n" _ARG("N/M<key") "|" 
+	      _ARG("N>key") "|\n" _ARG("N/M>key") "|" 
+	      _ARG("N<key") "|" _ARG("N/M<key") "|" 
 	      _ARG("N.f.K") "|" _ARG("N/M.f.K") " " _ETC "] "
 	  "[" _ARG("file") " " _ETC "]" },
 
@@ -117,6 +118,7 @@ struct textset cmdtextsets[] = {
 	{ "command_options", "ja_JP", 
 	  _OPT("a") "		指定をAND条件として処理 (デフォルト設定)\n"
 	  _OPT("o") "		指定をOR条件として処理\n"
+	  _OPT("1") "		入力の1行目を削除\n"
 	  _OPT("n") "		出力を行わず、1行も一致しなかった場合には"
 	  			"1で、\n\t\tそうでない場合には0で終了\n"
 	  _OPT("N") "		大小比較を数値として実施\n"
@@ -129,6 +131,7 @@ struct textset cmdtextsets[] = {
 	{ "command_options", "en_", 
 	  _OPT("a") "		Specify AND condition (by default).\n"
 	  _OPT("o") "		Specify OR condition.\n"
+	  _OPT("1") "		Remove the first line of the input.\n"
 	  _OPT("n") "		Do not print. If one or more lines match "
 	  			"it\n\t\treturns 0, otherwise it "
 				"returns 1.\n"
@@ -186,6 +189,13 @@ struct textset cmdtextsets[] = {
 	  _S("20150101 20150505 20151010")
 	  _S("20160101 20160505 20161010")
 	  _S("20170101 20170505 20171010")
+	  _P("cat price.tag")
+	  _S("ID PRICE")
+	  _S("000001 12800")
+	  _S("000002 9800")
+	  _P("gyo_select -1 -N 2'>'0")
+	  _S("000001 12800 @")
+	  _S("000002 9800 @")
 	  _P("") },
 
 	TEXTSET_END

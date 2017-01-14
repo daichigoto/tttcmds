@@ -25,7 +25,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#define VERSION "20170113"
+#define VERSION "20170114"
 #define CMDNAME "gyo_select"
 #define ALIAS "gyosel row_select"
 
@@ -52,6 +52,10 @@
 #define END_OF_LINE_RETU_PROCESS
 
 #define TGT_GYO_PROCESS(GYO_BUFFER,NF) \
+	if (FLAG_1 && first_line) { \
+		first_line = 0; \
+		goto gyo_not_match; \
+	} \
 	if (!FLAG_o) { \
 		if (NF < R_ARGV_MAX) \
 			goto gyo_not_match; \

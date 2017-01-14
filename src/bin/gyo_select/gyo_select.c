@@ -30,7 +30,7 @@
 int
 main(int argc, char *argv[])
 {
-	getcmdargs(argc, argv, "a!o!nNhvD",
+	getcmdargs(argc, argv, "a!o!1nNhvD",
 	           CMDARGS_R_NEED|
 		   CMDARGS_R_ARGARG_1_NEED|
 		   CMDARGS_R_ARGARG_TO_SSVSTR);
@@ -76,6 +76,7 @@ main(int argc, char *argv[])
 
 	int cmpret;
 	long long int n1, n2;
+	int first_line = 1;
 	FILEPROCESS_GYO
 
 	if (FLAG_n)

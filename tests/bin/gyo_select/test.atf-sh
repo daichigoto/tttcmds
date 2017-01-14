@@ -457,6 +457,18 @@ numeric_compare_body() {
 		   "gyo_select -N 5'>'100"
 }
 
+atf_test_case remove_first_line
+remove_first_line_head() {
+	atf_set "descr" "Verify a -1 option"
+}
+
+remove_first_line_body() {
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/remove_first_line_1.out \
+		-x "gyo_select -1 -N 2'>'0" \
+		   "$(atf_get_srcdir)/price.tag"
+}
+
 atf_init_test_cases()
 {
 	atf_add_test_case empty
@@ -474,4 +486,5 @@ atf_init_test_cases()
 	atf_add_test_case join
 	atf_add_test_case option_n
 	atf_add_test_case numeric_compare
+	atf_add_test_case remove_first_line
 }
