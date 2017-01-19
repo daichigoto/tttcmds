@@ -179,7 +179,7 @@ proc_application_x_www_form_urlencoded(char *p)
 		}
 	}
 	if (s == buf)
-		putchar('\n');
+		printf("@\n");
 	else {
 		*s = '\0';
 		printf("%s\n",_str2ssvstr(buf));
