@@ -35,6 +35,7 @@ struct textset deftextsets[] = {
 	{ "name",		"ja_JP", "名前" 		},
 	{ "synopsis",		"ja_JP", "書式" 		},
 	{ "description", 	"ja_JP", "解説" 		},
+	{ "environment",	"ja_JP", "環境変数" 		},
 	{ "example", 		"ja_JP", "使用例" 		},
 	{ "alias", 		"ja_JP", "別名" 		},
 	{ "options", 		"ja_JP", "オプション" 		},

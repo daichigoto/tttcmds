@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Daichi GOTO
+ * Copyright (c) 2017 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -61,6 +61,15 @@ usage(void)
 	        upperstring(gettext("options")),
 	        indent(gettext("command_options")));
 
+	if (textkeyexists("command_environment") &&
+	    NULL != gettext("command_environment") &&
+	    '\0' != gettext("command_environment")[0]) {
+		fprintf(OUT, "\n"
+		        ES_BOLD("%s") "\n"
+			"%s",
+		        upperstring(gettext("environment")),
+		        indent(gettext("command_environment")));
+	}
 	if (textkeyexists("command_example") &&
 	    NULL != gettext("command_example") &&
 	    '\0' != gettext("command_example")[0]) {
