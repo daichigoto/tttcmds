@@ -135,7 +135,7 @@ main(int argc, char *argv[])
 	}
 
 	/*
-	 * restore comman cmdargs
+	 * restore command cmdargs
 	 */
 	cmdargs = cmdargs_org;
 

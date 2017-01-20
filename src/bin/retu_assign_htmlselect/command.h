@@ -25,7 +25,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#define VERSION "20170113"
+#define VERSION "20170120"
 #define CMDNAME "retu_assign_htmlselect"
 #define ALIAS "assign_htmlselect col_assign_htmlselect"
 
