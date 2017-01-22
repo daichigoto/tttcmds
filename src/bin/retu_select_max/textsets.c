@@ -63,7 +63,7 @@ struct textset cmdtextsets[] = {
 
 	{ "command_description", "en_", 
 	  "Print the maximum value of the specified column in the "
-	  "specified\n column's order.\n"
+	  "specified\ncolumn's order.\n"
 	  "\n"
 	  _ARG("N") "		Specify the " _ARG("N") "th column.\n"
 	  _ARG("N/M") "		Specify the range from the " _ARG("N")
