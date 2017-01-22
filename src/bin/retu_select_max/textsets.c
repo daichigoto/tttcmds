@@ -38,8 +38,8 @@ struct textset cmdtextsets[] = {
 
 	{ "command_comment", "ja_JP", "指定した列の最大値を出力する" },
 
-	{ "command_comment", "en_", "print the max value of the specified "
-	  "column" },
+	{ "command_comment", "en_", "print the maximum value of the "
+	  "specified column" },
 
 	{ "command_synopsis", "en_", 
 	  _CMD(CMDNAME) " "
@@ -62,8 +62,8 @@ struct textset cmdtextsets[] = {
 	  "使用。" },
 
 	{ "command_description", "en_", 
-	  "Print the max value of the specified column in the specified\n"
-	  "column's order.\n"
+	  "Print the maximum value of the specified column in the "
+	  "specified\n column's order.\n"
 	  "\n"
 	  _ARG("N") "		Specify the " _ARG("N") "th column.\n"
 	  _ARG("N/M") "		Specify the range from the " _ARG("N")
