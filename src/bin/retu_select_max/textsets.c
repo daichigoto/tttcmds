@@ -115,9 +115,9 @@ struct textset cmdtextsets[] = {
 	  _S("000002 9800")
 	  _P("retu_select_max -1 -N 1/2 data.tag")
 	  _S("000002 12980")
-	  _P("echo | retu_select 5")
+	  _P("echo | retu_select_max 5")
           _S("@")
-	  _P("echo | retu_select -d 000001 5")
+	  _P("echo | retu_select_max -d 000001 5")
           _S("000001")
 	  _P("") },
 
