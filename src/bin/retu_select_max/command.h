@@ -44,7 +44,7 @@
 
 #define MAX(TARGET,I) { \
 	if ('\0' != TARGET[0] && '@' != TARGET[0] && '\0' != TARGET[1]) { \
-		if (0 == strcmp("@", max[I])) { \
+		if ('@' == max[I][0] && '\0' == max[I][1]) { \
 			if (FLAG_N) { \
 				errno = 0; \
 				num = (int)strtol(TARGET, \
