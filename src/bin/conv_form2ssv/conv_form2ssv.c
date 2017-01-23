@@ -76,8 +76,9 @@ proc_post()
 	if (NULL == content_length)
 		usage();
 
+	errno = 0;
 	int bufsize = (int)strtol(content_length, (char **)NULL, 10);
-	if (0 == bufsize && EINVAL == errno)
+	if (EINVAL == errno)
 		usage();
 
 	char buf[bufsize + 1];

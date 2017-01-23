@@ -69,10 +69,10 @@
 			} \
 			else { \
 				if (FLAG_N) { \
+					errno = 0; \
 					n1 = strtoll(GYO_BUFFER[R_ARGV[i]],\
 						(char **)NULL, 10); \
-					if (0 == n1 && \
-						EINVAL == errno) \
+					if (EINVAL == errno) \
 						goto gyo_not_match; \
 					cmpret = 0; \
 					if (n1 > n2[i]) \
@@ -113,10 +113,10 @@
 			} \
 			else { \
 				if (FLAG_N) { \
+					errno = 0; \
 					n1 = strtoll(GYO_BUFFER[R_ARGV[i]],\
 						(char **)NULL, 10); \
-					if (0 == n1 && \
-						EINVAL == errno) \
+					if (EINVAL == errno) \
 						continue; \
 					cmpret = 0; \
 					if (n1 > n2[i]) \

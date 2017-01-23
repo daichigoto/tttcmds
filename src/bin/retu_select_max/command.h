@@ -46,6 +46,7 @@
 	if ('\0' != TARGET[0] && '@' != TARGET[0] && '\0' != TARGET[1]) { \
 		if (0 == strcmp("@", max[I])) { \
 			if (FLAG_N) { \
+				errno = 0; \
 				num = (int)strtol(TARGET, \
 					(char **)NULL, 10); \
 				if (EINVAL != errno) { \
@@ -59,6 +60,7 @@
 		} \
 		else { \
 			if (FLAG_N) { \
+				errno = 0; \
 				num = (int)strtol(TARGET, \
 					(char **)NULL, 10); \
 				if (EINVAL != errno) { \

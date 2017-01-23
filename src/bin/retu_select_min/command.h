@@ -25,70 +25,57 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "command.h"
+#define VERSION "20170123"
+#define CMDNAME "retu_select_min"
+#define ALIAS "retusel_min col_select_min"
 
-int
-main(int argc, char *argv[])
-{
-	getcmdargs(argc, argv, "a!o!1nNhvD",
-	           CMDARGS_R_NEED|
-		   CMDARGS_R_ARGARG_1_NEED|
-		   CMDARGS_R_ARGARG_TO_SSVSTR);
+#include "ttt.h"
 
-	int match_or_not = 1;
-
-	/*
-	 * hashtable setup for join process
-	 */
-	struct tttcmdargs cmdargs_org;
-	char *r_argv[4];
-
-	DB *hashtables[R_ARGC + 1];
-	DBT hash_key, hash_val;
-	memset(hashtables, 0, (R_ARGC + 1) * sizeof(DB *));
-	
-	cmdargs_org = cmdargs;
-
-	for (int i = 1; i <= cmdargs_org.r_argc; i++) {
-		if (NULL == cmdargs_org.r_argv_arg2[i]) {
-			hashtables[i] = NULL;
-			continue;
-		}
-
-		r_argv[0] = "";
-		r_argv[1] = cmdargs_org.r_argv_arg2[i];
-		r_argv[2] = _ssvstr2str(cmdargs_org.r_argv_arg1[i]);
-		r_argv[3] = NULL;
-		getcmdargs(3, r_argv, "", CMDARGS_R_NEED);
-
-		hashtables[i] = dbopen(NULL, O_CREAT|O_RDWR, 0644,
-			DB_HASH, NULL);
-		if (NULL == hashtables[i])
-			err(errno, "retu_assign: dbopen failed");
-
-		FILEPROCESS_RETU
+#define TGT_GYO_PROCESS(GYO_BUFFER,NF) \
+	if (FLAG_1 && first_line) \
+		first_line = 0; \
+	else { \
+		for (int i = 1; i <= R_ARGC; i++) \
+			if (R_ARGV[i] <= NF && \
+				NULL != GYO_BUFFER[R_ARGV[i]]) { \
+				MIN(GYO_BUFFER[R_ARGV[i]],i); \
+			} \
 	}
 
-	/*
-	 * restore command cmdargs
-	 */
-	cmdargs = cmdargs_org;
-
-	long long int n1, n2[1+R_ARGC];
-	if (FLAG_N)
-		for (int i = 1; i <= R_ARGC; i++) {
-			errno = 0;
-			n2[i] = strtoll(R_ARGV_ARG1[i], (char **)NULL, 10);
-			if (EINVAL == errno)
-				usage();
-		}
-
-	int cmpret;
-	int first_line = 1;
-	FILEPROCESS_GYO
-
-	if (FLAG_n)
-		exit(match_or_not);
-
-	exit(EX_OK);
+#define MIN(TARGET,I) { \
+	if ('\0' != TARGET[0] && '@' != TARGET[0] && '\0' != TARGET[1]) { \
+		if (0 == strcmp("@", min[I])) { \
+			if (FLAG_N) { \
+				errno = 0; \
+				num = (int)strtol(TARGET, \
+					(char **)NULL, 10); \
+				if (EINVAL != errno) { \
+					strcpy(min[I], \
+						_str2ssvstr(TARGET)); \
+					nummin[I] = num; \
+				} \
+			} \
+			else \
+				strcpy(min[I], _str2ssvstr(TARGET)); \
+		} \
+		else { \
+			if (FLAG_N) { \
+				errno = 0; \
+				num = (int)strtol(TARGET, \
+					(char **)NULL, 10); \
+				if (EINVAL != errno) { \
+					if (num < nummin[I]) { \
+						strcpy(min[I], \
+						_str2ssvstr(TARGET)); \
+						nummin[I] = num; \
+					} \
+				} \
+			} \
+			else { \
+				if (strcmp(TARGET, min[I]) < 0) \
+					strcpy(min[I], \
+						_str2ssvstr(TARGET)); \
+			} \
+		} \
+	} \
 }

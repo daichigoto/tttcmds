@@ -62,8 +62,9 @@ main(int argc, char *argv[])
 	if (FLAG_V)
 		val = FLAG_V_ARG;
 	if (FLAG_c) {
+		errno = 0;
 		count = (int)strtol(FLAG_c_ARG, (char **)NULL, 10);
-		if (0 == count && EINVAL == errno)
+		if (EINVAL == errno)
 			usage();
 	}
 
