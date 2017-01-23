@@ -25,57 +25,39 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#define VERSION "20170123"
-#define CMDNAME "retu_select_min"
-#define ALIAS "retusel_min col_select_min"
+#include "command.h"
 
-#include "ttt.h"
+int
+main(int argc, char *argv[])
+{
+	getcmdargs(argc, argv, "1d:NhvD",
+	           CMDARGS_R_NEED|CMDARGS_R_ARGARG_NONE);
 
-#define TGT_GYO_PROCESS(GYO_BUFFER,NF) \
-	if (FLAG_1 && first_line) \
-		first_line = 0; \
-	else { \
-		for (int i = 1; i <= R_ARGC; i++) \
-			if (R_ARGV[i] <= NF && \
-				NULL != GYO_BUFFER[R_ARGV[i]]) { \
-				MIN(GYO_BUFFER[R_ARGV[i]],i); \
-			} \
+	char min[R_ARGC+1][4096];
+	int nummin[R_ARGC+1];
+
+	int num;
+	for (int i = 1; i <= R_ARGC; i++) {
+		min[i][0] = '@';
+		min[i][1] = '\0';
 	}
+	int first_line = 1;
 
-#define MIN(TARGET,I) { \
-	if ('\0' != TARGET[0] && '@' != TARGET[0] && '\0' != TARGET[1]) { \
-		if ('@' == min[I][0] && '\0' == min[I][1]) { \
-			if (FLAG_N) { \
-				errno = 0; \
-				num = (int)strtol(TARGET, \
-					(char **)NULL, 10); \
-				if (EINVAL != errno) { \
-					strcpy(min[I], \
-						_str2ssvstr(TARGET)); \
-					nummin[I] = num; \
-				} \
-			} \
-			else \
-				strcpy(min[I], _str2ssvstr(TARGET)); \
-		} \
-		else { \
-			if (FLAG_N) { \
-				errno = 0; \
-				num = (int)strtol(TARGET, \
-					(char **)NULL, 10); \
-				if (EINVAL != errno) { \
-					if (num < nummin[I]) { \
-						strcpy(min[I], \
-						_str2ssvstr(TARGET)); \
-						nummin[I] = num; \
-					} \
-				} \
-			} \
-			else { \
-				if (strcmp(TARGET, min[I]) < 0) \
-					strcpy(min[I], \
-						_str2ssvstr(TARGET)); \
-			} \
-		} \
-	} \
+	FILEPROCESS_GYO
+
+#define PRINT_VALUE(I,DELIMITER) \
+	if (FLAG_d) { \
+		if ('@' == min[I][0] && '\0' == min[I][1]) \
+			printf("%s%s", FLAG_d_ARG, DELIMITER); \
+		else \
+			printf("@%s", DELIMITER); \
+	} else \
+		printf("%s%s", min[I], DELIMITER);
+
+	for (int i = 1; i < R_ARGC; i++) {
+		PRINT_VALUE(i, " ")
+	}
+	PRINT_VALUE(R_ARGC, "\n")
+
+	exit(EX_OK);
 }
