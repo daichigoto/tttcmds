@@ -47,16 +47,32 @@ struct textset cmdtextsets[] = {
 	  "[" _OPT("d") " " _ARG("val") "] "
 	  "[" _OPT("N") "] "
 	  "[" _OPT("hvD") "] [" _OPT("-") "] "
-	  _ARG("N") "|"_ARG("N/M") " "
-	  "[" _ARG("N") "|" _ARG("N/M") " " _ETC "]\n"
+	  _ARG("N") "|"_ARG("N/M") "|"
+	  _ARG("N.+i.f") "|" _ARG("N.-i.f") "|\n"
+	  _ARG("N/M.+i.f") "|" _ARG("N/M.-i.f") " "
+	  "[" _ARG("N") "|" _ARG("N/M") "|"
+	      _ARG("N.+i.f") "|" _ARG("N.-i.f") "|"
+	      _ARG("N/M.+i.f") "|" _ARG("N/M.-i.f") " " _ETC "]\n"
 	  "[" _ARG("file") " " _ETC "]" },
 	
 	{ "command_description", "ja_JP", 
 	  "指定した列の最大値を指定した列順で出力する。\n"
 	  "\n"
 	  _ARG("N") "		" _ARG("N") "列目を指定\n"
+	  _ARG("N.+i.f") "	\t" _ARG("N") "列目の最大値に"
+	  			_ARG("i") "加算した値をフォーマット" 
+				_ARG("f") "で出力\n"
+				"\t\t(" _OPT("N") "が必要)\n"
+	  _ARG("N.-i.f") "	\t" _ARG("N") "列目の最大値を"
+	  			_ARG("i") "減算した値をフォーマット" 
+				_ARG("f") "で出力\n" 
+				"\t\t(" _OPT("N") "が必要)\n"
 	  _ARG("N/M") "		" _ARG("N") "列目から" _ARG("M") 
 	  			"列目を指定\n"
+	  _ARG("N/M.+i.f") "	" _ARG("N.+i.f") "と同じ処理を"
+	  			_ARG("M") "列まで適用\n"
+	  _ARG("N/M.-i.f") "	" _ARG("N.-i.f") "と同じ処理を"
+	  			_ARG("M") "列まで適用\n"
 	  "\n"
 	  "ファイルの指定がないか、-が指定されている場合には標準入力を"
 	  "使用。" },
@@ -115,6 +131,10 @@ struct textset cmdtextsets[] = {
 	  _S("000002 9800")
 	  _P("retu_select_max -1 -N 1/2 data.tag")
 	  _S("000002 12980")
+	  _P("retu_select_max -1 -N 1.+1.%03d data.tag")
+	  _S("003")
+	  _P("retu_select_max -1 -N 1.+5.%010d data.tag")
+	  _S("0000000012")
 	  _P("echo | retu_select_max 5")
           _S("@")
 	  _P("echo | retu_select_max -d 000001 5")
