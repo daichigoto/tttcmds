@@ -38,7 +38,7 @@ struct textset cmdtextsets[] = {
 
 	{ "command_comment", "ja_JP", "指定した列の最大値を出力する" },
 
-	{ "command_comment", "en_", "print the maximum value of the "
+	{ "command_comment", "en_", "print the maximum value for each "
 	  "specified column" },
 
 	{ "command_synopsis", "en_", 
@@ -78,12 +78,28 @@ struct textset cmdtextsets[] = {
 	  "使用。" },
 
 	{ "command_description", "en_", 
-	  "Print the maximum value of the specified column in the "
-	  "specified\ncolumn's order.\n"
+	  "Print the maximum value for each specified column in the "
+	  "specified\norder.\n"
 	  "\n"
-	  _ARG("N") "		Specify the " _ARG("N") "th column.\n"
-	  _ARG("N/M") "		Specify the range from the " _ARG("N")
-	  			"th to " _ARG("M") "th column.\n"
+	  _ARG("N") "		Print the maximum value of the " 
+	  			_ARG("N") "th column.\n"
+	  _ARG("N.+i.f") "	\tAdd " _ARG("i") " to the maximum value "
+	  			"of the " _ARG("N") "th column\n"
+				"\t\tand print it in the format of " 
+				_ARG("f") ".\n"
+	  _ARG("N.-i.f") "	\tSubtract " _ARG("i") " from the "
+	  			"maximum value of the " _ARG("N") "th\n"
+				"\t\tcolumn and print it in the format "
+				"of " _ARG("f") ".\n"
+	  _ARG("N/M")		"\t\tProcess " _ARG("N") "th to " _ARG("M")
+				"th columns in the same way as\n\t\t" 
+				_ARG("N") ".\n"
+	  _ARG("N/M.+i.f")	"\tProcess " _ARG("N") "th to " _ARG("M")
+				"th columns in the same way as\n\t\t" 
+				_ARG("N.+i.f") ".\n"
+	  _ARG("N/M.-i.f")	"\tProcess " _ARG("N") "th to " _ARG("M")
+	  			"th columns in the same way as\n\t\t"
+				_ARG("N.-i.f") ".\n"
 	  "\n"
 	  "If " _ARG("file") " is a single dash (`-') or absent, it reads "
 	  "from the\nstandard input." },
