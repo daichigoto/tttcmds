@@ -25,7 +25,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#define VERSION "20170123"
+#define VERSION "20170124"
 #define CMDNAME "retu_select_min"
 #define ALIAS "retusel_min col_select_min"
 

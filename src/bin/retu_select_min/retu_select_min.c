@@ -30,16 +30,29 @@
 int
 main(int argc, char *argv[])
 {
-	getcmdargs(argc, argv, "1d:NhvD",
-	           CMDARGS_R_NEED|CMDARGS_R_ARGARG_NONE);
+	getcmdargs(argc, argv, "1d:NhvD", CMDARGS_R_NEED);
 
 	char min[R_ARGC+1][4096];
-	int nummin[R_ARGC+1];
-
 	int num;
+	int nummin[R_ARGC+1];
+	int numinc[R_ARGC+1];
+	char *numfmt[R_ARGC+1];
+
 	for (int i = 1; i <= R_ARGC; i++) {
 		min[i][0] = '@';
 		min[i][1] = '\0';
+		nummin[i] = 0;
+		numinc[i] = 0;
+		numfmt[i] = "%d";
+		if (NULL != R_ARGV_ARG1[i]) {
+			errno = 0;
+			numinc[i] = (int)strtol(R_ARGV_ARG1[i],
+				(char **)NULL, 10);
+			if (EINVAL == errno)
+				usage();
+		}
+		if (NULL != R_ARGV_ARG2[i])
+			numfmt[i] = R_ARGV_ARG2[i];
 	}
 	int first_line = 1;
 
@@ -51,8 +64,14 @@ main(int argc, char *argv[])
 			printf("%s%s", FLAG_d_ARG, DELIMITER); \
 		else \
 			printf("@%s", DELIMITER); \
-	} else \
-		printf("%s%s", min[I], DELIMITER);
+	} else { \
+		if (FLAG_N && NULL != R_ARGV_ARG1[I]) { \
+			printf(numfmt[I], nummin[I] + numinc[I]); \
+			printf("%s", DELIMITER); \
+		} \
+		else \
+			printf("%s%s", min[I], DELIMITER); \
+	}
 
 	for (int i = 1; i < R_ARGC; i++) {
 		PRINT_VALUE(i, " ")

@@ -38,7 +38,7 @@ struct textset cmdtextsets[] = {
 
 	{ "command_comment", "ja_JP", "指定した列の最小値を出力する" },
 
-	{ "command_comment", "en_", "print the minimum value of the "
+	{ "command_comment", "en_", "print the minimum value for each "
 	  "specified column" },
 
 	{ "command_synopsis", "en_", 
@@ -47,27 +47,59 @@ struct textset cmdtextsets[] = {
 	  "[" _OPT("d") " " _ARG("val") "] "
 	  "[" _OPT("N") "] "
 	  "[" _OPT("hvD") "] [" _OPT("-") "] "
-	  _ARG("N") "|"_ARG("N/M") " "
-	  "[" _ARG("N") "|" _ARG("N/M") " " _ETC "]\n"
+	  _ARG("N") "|"_ARG("N/M") "|"
+	  _ARG("N.+i.f") "|" _ARG("N.-i.f") "|\n"
+	  _ARG("N/M.+i.f") "|" _ARG("N/M.-i.f") " "
+	  "[" _ARG("N") "|" _ARG("N/M") "|"
+	      _ARG("N.+i.f") "|" _ARG("N.-i.f") "|"
+	      _ARG("N/M.+i.f") "|" _ARG("N/M.-i.f") " " _ETC "]\n"
 	  "[" _ARG("file") " " _ETC "]" },
-	
+	  
 	{ "command_description", "ja_JP", 
 	  "指定した列の最小値を指定した列順で出力する。\n"
 	  "\n"
-	  _ARG("N") "		" _ARG("N") "列目を指定\n"
-	  _ARG("N/M") "		" _ARG("N") "列目から" _ARG("M") 
-	  			"列目を指定\n"
+	  _ARG("N") "		" _ARG("N") "列目の最小値を出力\n"
+	  _ARG("N.+i.f") "	\t" _ARG("N") "列目の最小値に"
+	  			_ARG("i") "加算した値をフォーマット"
+				_ARG("f") "で出力\n"
+				"\t\t(" _OPT("N") "が必要)\n"
+	  _ARG("N.-i.f") "	\t" _ARG("N") "列目の最小値を"
+	  			_ARG("i") "減算した値をフォーマット"
+				_ARG("f") "で出力\n"
+				"\t\t(" _OPT("N") "が必要)\n"
+	  _ARG("N/M") "		" _ARG("N") "列と同じ処理を" 
+	  			_ARG("M") "列まで適用\n"
+	  _ARG("N/M.+i.f") "	" _ARG("N.+i.f") "と同じ処理を"
+	  			_ARG("M") "列まで適用\n"
+	  _ARG("N/M.-i.f") "	" _ARG("N.-i.f") "と同じ処理を"
+	  			_ARG("M") "列まで適用\n"
 	  "\n"
 	  "ファイルの指定がないか、-が指定されている場合には標準入力を"
 	  "使用。" },
 
 	{ "command_description", "en_", 
-	  "Print the minimum value of the specified column in the "
-	  "specified\ncolumn's order.\n"
+	  "Print the minimum value for each specified column in the "
+	  "specified\norder.\n"
 	  "\n"
-	  _ARG("N") "		Specify the " _ARG("N") "th column.\n"
-	  _ARG("N/M") "		Specify the range from the " _ARG("N")
-	  			"th to " _ARG("M") "th column.\n"
+	  _ARG("N") "		Print the minimum value of the "
+	  			_ARG("N") "th column.\n"
+	  _ARG("N.+i.f") "	\tAdd " _ARG("i") " to the minimum value "
+	  			"of the " _ARG("N") "th column\n"
+				"\t\tand print it in the format of "
+				_ARG("f") ".\n"
+	  _ARG("N.-i.f") "	\tSubtract " _ARG("i") " from the "
+	  			"minimum value of the " _ARG("N") "th\n"
+				"\t\tcolumn and print it in the format "
+				"of " _ARG("f") ".\n"
+	  _ARG("N/M")		"\t\tProcess " _ARG("N") "th to " _ARG("M")
+				"th columns in the same way as\n\t\t"
+				_ARG("N") ".\n"
+	  _ARG("N/M.+i.f")	"\tProcess " _ARG("N") "th to " _ARG("M")
+				"th columns in the same way as\n\t\t"
+				_ARG("N.+i.f") ".\n"
+	  _ARG("N/M.-i.f")	"\tProcess " _ARG("N") "th to " _ARG("M")
+	  			"th columns in the same way as\n\t\t"
+				_ARG("N.-i.f") ".\n"
 	  "\n"
 	  "If " _ARG("file") " is a single dash (`-') or absent, it reads "
 	  "from the\nstandard input." },
@@ -115,6 +147,10 @@ struct textset cmdtextsets[] = {
 	  _S("000001 12980")
 	  _P("retu_select_min -1 -N 1/2 data.tag")
 	  _S("000001 9800")
+	  _P("retu_select_min -1 -N 1.+1.%03d data.tag")
+	  _S("002")
+	  _P("retu_select_min -1 -N 1.+5.%010d data.tag")
+	  _S("0000000006")
 	  _P("echo | retu_select_min 5")
           _S("@")
 	  _P("echo | retu_select_min -d 000001 5")

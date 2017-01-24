@@ -102,10 +102,31 @@ default_body() {
 		   "retu_select_min -d 000000 1/5"
 }
 
+atf_test_case increase_and_format
+increase_and_format_head() {
+	atf_set "descr" "Verify an increase and format process"
+}
+
+increase_and_format_body() {
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/increase_and_format_1.out \
+		-x "retu_select_min -1 -N 1/2.+1" \
+		   "$(atf_get_srcdir)/price.tag"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/increase_and_format_2.out \
+		-x "retu_select_min -1 -N 1/2.+1.%06d" \
+		   "$(atf_get_srcdir)/price.tag"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/increase_and_format_3.out \
+		-x "retu_select_min -1 -N 1.+1.%06d 2" \
+		   "$(atf_get_srcdir)/price.tag"
+}
+
 atf_init_test_cases()
 {
 	atf_add_test_case min
 	atf_add_test_case min_numerically
 	atf_add_test_case remove_first_line
 	atf_add_test_case default
+	atf_add_test_case increase_and_format
 }
