@@ -58,7 +58,7 @@ struct textset cmdtextsets[] = {
 	{ "command_description", "ja_JP", 
 	  "指定した列の最大値を指定した列順で出力する。\n"
 	  "\n"
-	  _ARG("N") "		" _ARG("N") "列目を指定\n"
+	  _ARG("N") "		" _ARG("N") "列目の最大値を出力\n"
 	  _ARG("N.+i.f") "	\t" _ARG("N") "列目の最大値に"
 	  			_ARG("i") "加算した値をフォーマット" 
 				_ARG("f") "で出力\n"
@@ -67,8 +67,8 @@ struct textset cmdtextsets[] = {
 	  			_ARG("i") "減算した値をフォーマット" 
 				_ARG("f") "で出力\n" 
 				"\t\t(" _OPT("N") "が必要)\n"
-	  _ARG("N/M") "		" _ARG("N") "列目から" _ARG("M") 
-	  			"列目を指定\n"
+	  _ARG("N/M") "		" _ARG("N") "列と同じ処理を"
+	  			_ARG("M") "列まで適用\n"
 	  _ARG("N/M.+i.f") "	" _ARG("N.+i.f") "と同じ処理を"
 	  			_ARG("M") "列まで適用\n"
 	  _ARG("N/M.-i.f") "	" _ARG("N.-i.f") "と同じ処理を"
