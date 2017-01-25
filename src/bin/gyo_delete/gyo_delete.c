@@ -30,11 +30,12 @@
 int
 main(int argc, char *argv[])
 {
-	getcmdargs(argc, argv, "a!o!1nN@:hvD", 
+	getcmdargs(argc, argv, "a!o!1nNd:@:hvD", 
 	           CMDARGS_R_NEED|
 		   CMDARGS_R_ARGARG_TO_SSVSTR);
 
 	int match_or_not = 1;
+	int nf = 0;
 	char *val = "@";
 	if (FLAG_AT)
 		val = _str2ssvstr(FLAG_AT_ARG);
@@ -96,6 +97,20 @@ main(int argc, char *argv[])
 
 	if (FLAG_n)
 		exit(match_or_not);
+
+	if (FLAG_d && match_or_not) {
+		char *def = _str2ssvstr(FLAG_d_ARG);
+		if (R_ARGC == match_count) {
+			for (int i = 1; i < nf; i++)
+				printf("%s ", def);
+			printf("%s\n", def);
+		}
+		else {
+			for (int i = match_count+1; i < R_ARGC; i++)
+				printf("%s ", def);
+			printf("%s\n", def);
+		}
+	}
 
 	exit(EX_OK);
 }
