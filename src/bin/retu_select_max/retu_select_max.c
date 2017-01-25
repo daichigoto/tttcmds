@@ -61,7 +61,8 @@ main(int argc, char *argv[])
 #define PRINT_VALUE(I,DELIMITER) \
 	if (FLAG_AT) { \
 		if ('@' == max[I][0] && '\0' == max[I][1]) \
-			printf("%s%s", FLAG_AT_ARG, DELIMITER); \
+			printf("%s%s", _str2ssvstr(FLAG_AT_ARG), \
+				DELIMITER); \
 		else \
 			printf("@%s", DELIMITER); \
 	} else { \

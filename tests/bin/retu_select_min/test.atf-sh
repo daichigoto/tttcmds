@@ -100,6 +100,10 @@ default_body() {
 		-o file:$(atf_get_srcdir)/default_2.out \
 		-x "echo |" \
 		   "retu_select_min -@ 000000 1/5"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/default_3.out \
+		-x "echo |" \
+		   "retu_select_min -@ '  @__ ' 1/5"
 }
 
 atf_test_case increase_and_format
