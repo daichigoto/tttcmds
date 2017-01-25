@@ -57,6 +57,7 @@ struct textset cmdtextsets[] = {
 	      _ARG("N>key") "|\n" _ARG("N/M>key") "|" 
 	      _ARG("N<key") "|" _ARG("N/M<key") "|" 
 	      _ARG("N.f.K") "|" _ARG("N/M.f.K") " " _ETC "] "
+	  "[" _ARG("N") "|" _ARG("N/M") " " _ETC "] "
 	  "[" _ARG("file") " " _ETC "]" },
 
 	{ "command_description", "ja_JP", 
@@ -82,7 +83,14 @@ struct textset cmdtextsets[] = {
 	  _ARG("N/M.f.K") "\t	" _ARG("N.f.K") "と同じ処理を" _ARG("M")
 	  			"例まで適用\n"
 	  "\n"
-	  "ファイルの指定がないか、-が指定されている場合には標準入力を使用。" },
+	  ES_BOLD("選択") "\n"
+	  _ARG("") "		指定がない場合はすべての列を出力\n"
+	  _ARG("N") "		" _ARG("N") "列目を出力\n"
+	  _ARG("N/M") "\t	" _ARG("N") "列と同じ処理を"
+	  			_ARG("M") "列まで適用\n"
+	  "\n"
+	  "ファイルの指定がないか、-が指定されている場合には標準入力を"
+	  "使用。" },
 
 	{ "command_description", "en_", 
 	  "Print the rows if condition is false.\n"
@@ -111,6 +119,13 @@ struct textset cmdtextsets[] = {
 	  _ARG("N/M.f.K") "\t	Process the " _ARG("N") "th to "
 	  			_ARG("M") "th columns in the same way\n"
 				"\t\tas " _ARG("N.f.K") ".\n"
+	  "\n"
+	  ES_BOLD("SELECT") "\n"
+	  _ARG("") "		Print the all columns unless specified.\n"
+	  _ARG("N") "		Print the " _ARG("N") "th column.\n"
+	  _ARG("N/M") "\t	Process the " _ARG("N") "th to "
+	  			_ARG("M") "th columns in the same way\n"
+				"\t\tas " _ARG("N") ".\n"
 	  "\n"
 	  "If " _ARG("file") " is a signle dash\n(`-') or absent, it "
 	  "reads from the standard\ninput." },
@@ -196,6 +211,9 @@ struct textset cmdtextsets[] = {
 	  _P("gyo_delete -1 -N 2'<'0 price.tag")
 	  _S("000001 12800")
 	  _S("000002 9800")
+	  _P("gyo_delete -1 -N 2'<'0 1 1 1 price.tag")
+	  _S("000001 000001 000001")
+	  _S("000002 000002 000002")
 	  _P("") },
 
 	TEXTSET_END

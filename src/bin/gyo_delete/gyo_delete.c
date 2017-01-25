@@ -32,7 +32,6 @@ main(int argc, char *argv[])
 {
 	getcmdargs(argc, argv, "a!o!1nNhvD", 
 	           CMDARGS_R_NEED|
-		   CMDARGS_R_ARGARG_1_NEED|
 		   CMDARGS_R_ARGARG_TO_SSVSTR);
 
 	int match_or_not = 1;
@@ -46,6 +45,11 @@ main(int argc, char *argv[])
 	DB *hashtables[R_ARGC + 1];
 	DBT hash_key, hash_val;
 	memset(hashtables, 0, (R_ARGC + 1) * sizeof(DB *));
+
+	int match_count = 1;
+	while (NULL != R_ARGV_ARG1[match_count])
+		++match_count;
+	--match_count;
 
 	cmdargs_org = cmdargs;
 
@@ -76,7 +80,7 @@ main(int argc, char *argv[])
 
 	long long int n1, n2[1+R_ARGC];
 	if (FLAG_N)
-		for (int i = 1; i <= R_ARGC; i++) {
+		for (int i = 1; i <= match_count; i++) {
 			errno = 0;
 			n2[i] = strtoll(R_ARGV_ARG1[i], (char **)NULL, 10);
 			if (EINVAL == errno)

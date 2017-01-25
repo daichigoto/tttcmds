@@ -477,6 +477,54 @@ remove_first_line_body() {
 		   "$(atf_get_srcdir)/price.tag"
 }
 
+atf_test_case atmark
+atmark_head() {
+	atf_set "descr" "Verify an atmark process"
+}
+
+atmark_body() {
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/atmark_1.out \
+		-x "gyo_delete -1 -N 1'>'0" \
+		   "$(atf_get_srcdir)/price2.tag"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/atmark_2.out \
+		-x "gyo_delete -1 -N 2'>'0" \
+		   "$(atf_get_srcdir)/price2.tag"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/atmark_3.out \
+		-x "gyo_delete -1 1." \
+		   "$(atf_get_srcdir)/price2.tag"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/atmark_4.out \
+		-x "gyo_delete -1 2." \
+		   "$(atf_get_srcdir)/price2.tag"
+}
+
+atf_test_case select
+select_head() {
+	atf_set "descr" "Verify a select process"
+}
+
+select_body() {
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/select_1.out \
+		-x "gyo_delete -1 -N 1'>'0 1 2 3/1" \
+		   "$(atf_get_srcdir)/price2.tag"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/select_2.out \
+		-x "gyo_delete -1 -N 2'>'0 1 2 3/1" \
+		   "$(atf_get_srcdir)/price2.tag"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/select_3.out \
+		-x "gyo_delete -1 1. 3 2/1" \
+		   "$(atf_get_srcdir)/price2.tag"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/select_4.out \
+		-x "gyo_delete -1 2. 3 2/1" \
+		   "$(atf_get_srcdir)/price2.tag"
+}
+
 atf_init_test_cases()
 {
 	atf_add_test_case empty
@@ -495,4 +543,6 @@ atf_init_test_cases()
 	atf_add_test_case option_n
 	atf_add_test_case numeric_compare
 	atf_add_test_case remove_first_line
+	atf_add_test_case atmark
+	atf_add_test_case select
 }
