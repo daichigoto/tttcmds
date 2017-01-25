@@ -160,8 +160,7 @@
 		goto gyo_not_match; \
 	} \
 gyo_not_match: \
-	if (FLAG_n) \
-		match_or_not = 0; \
+	match_or_not = 0; \
 	else { \
 		if (R_ARGC == match_count) { \
 			for (int i = 1; i < NF; i++) \
