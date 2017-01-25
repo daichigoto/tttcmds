@@ -30,7 +30,7 @@
 int
 main(int argc, char *argv[])
 {
-	getcmdargs(argc, argv, "1d:NhvD", CMDARGS_R_NEED);
+	getcmdargs(argc, argv, "1N@:hvD", CMDARGS_R_NEED);
 
 	char min[R_ARGC+1][4096];
 	int num;
@@ -59,9 +59,9 @@ main(int argc, char *argv[])
 	FILEPROCESS_GYO
 
 #define PRINT_VALUE(I,DELIMITER) \
-	if (FLAG_d) { \
+	if (FLAG_AT) { \
 		if ('@' == min[I][0] && '\0' == min[I][1]) \
-			printf("%s%s", FLAG_d_ARG, DELIMITER); \
+			printf("%s%s", FLAG_AT_ARG, DELIMITER); \
 		else \
 			printf("@%s", DELIMITER); \
 	} else { \

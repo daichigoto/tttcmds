@@ -44,8 +44,8 @@ struct textset cmdtextsets[] = {
 	{ "command_synopsis", "en_", 
 	  _CMD(CMDNAME) " "
 	  "[" _OPT("1") "] " 
-	  "[" _OPT("d") " " _ARG("val") "] "
 	  "[" _OPT("N") "] "
+	  "[" _OPT("@") " " _ARG("val") "] "
 	  "[" _OPT("hvD") "] [" _OPT("-") "] "
 	  _ARG("N") "|"_ARG("N/M") "|"
 	  _ARG("N.+i.f") "|" _ARG("N.-i.f") "|\n"
@@ -106,9 +106,9 @@ struct textset cmdtextsets[] = {
 
 	{ "command_options", "ja_JP", 
 	  _OPT("1") "		入力の1行目を削除\n"
-	  _OPT("d") " " _ARG("val") "\t\t値がなかった場合に出力する値"
-	  			"(デフォルトは@)\n"
 	  _OPT("N") "		大小比較を文字列ではなく数値で実施\n"
+	  _OPT("@") " " _ARG("val") "\t\t値がなかった場合に出力する値"
+	  			"(デフォルトは@)\n"
 	  _OPT("h") "		使い方表示\n"
 	  _OPT("v") "		バージョン表示\n"
 	  _OPT("D") "		デバッグモード\n"
@@ -117,11 +117,11 @@ struct textset cmdtextsets[] = {
 	
 	{ "command_options", "en_", 
 	  _OPT("1") "		Remove the first line of the input.\n"
-	  _OPT("d") " " _ARG("val") "\t\tSpecify the " _ARG("val") " as "
-	  			"output value if all values are @"
-				"\n\t\t(default is @).\n"
 	  _OPT("N") "		Compare numerically by arithmetic value "
 	  			"instead of\n\t\tstring.\n"
+	  _OPT("@") " " _ARG("val") "\t\tSpecify the " _ARG("val") " as "
+	  			"output value if all values are @"
+				"\n\t\t(default is @).\n"
 	  _OPT("h") "		Print the usage message.\n"
 	  _OPT("v") "		Print the version.\n"
 	  _OPT("D") "		Enable the debug mode.\n"
@@ -153,7 +153,7 @@ struct textset cmdtextsets[] = {
 	  _S("0000000006")
 	  _P("echo | retu_select_min 5")
           _S("@")
-	  _P("echo | retu_select_min -d 000001 5")
+	  _P("echo | retu_select_min -@ 000001 5")
           _S("000001")
 	  _P("") },
 

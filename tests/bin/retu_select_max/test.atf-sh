@@ -88,7 +88,7 @@ remove_first_line_body() {
 
 atf_test_case default
 default_head() {
-	atf_set "descr" "Verify a default-output process"
+	atf_set "descr" "Verify a @-output process"
 }
 
 default_body() {
@@ -99,7 +99,7 @@ default_body() {
 	atf_check -s ignore \
 		-o file:$(atf_get_srcdir)/default_2.out \
 		-x "echo |" \
-		   "retu_select_max -d 000000 1/5"
+		   "retu_select_max -@ 000000 1/5"
 }
 
 atf_test_case increase_and_format
