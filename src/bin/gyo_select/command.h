@@ -25,7 +25,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#define VERSION "20170114"
+#define VERSION "20170125"
 #define CMDNAME "gyo_select"
 #define ALIAS "gyosel row_select"
 
@@ -57,9 +57,14 @@
 		goto gyo_not_match; \
 	} \
 	if (!FLAG_o) { \
-		if (NF < R_ARGV_MAX) \
-			goto gyo_not_match; \
-		for (int i = 1; i <= R_ARGC; i++) { \
+		for (int i = 1; i <= match_count; i++) { \
+			if (NF < R_ARGV[i]) \
+				goto gyo_not_match; \
+			if (GYO_BUFFER[R_ARGV[i]][0] == '@' && \
+			    GYO_BUFFER[R_ARGV[i]][1] == '\0' && \
+			   !(R_ARGV_ARG1[i][0] == '@' && \
+			     R_ARGV_ARG1[i][1] == '\0')) \
+				goto gyo_not_match; \
 			if (NULL != hashtables[i]) { \
 				hash_key.data = GYO_BUFFER[R_ARGV[i]]; \
 				hash_key.size = strlen(hash_key.data) + 1; \
@@ -103,7 +108,14 @@
 		goto gyo_match; \
 	} \
 	else { \
-		for (int i = 1; i <= R_ARGC; i++) { \
+		for (int i = 1; i <= match_count; i++) { \
+			if (NF < R_ARGV[i]) \
+				goto gyo_not_match; \
+			if (GYO_BUFFER[R_ARGV[i]][0] == '@' && \
+			    GYO_BUFFER[R_ARGV[i]][1] == '\0' && \
+			   !(R_ARGV_ARG1[i][0] == '@' && \
+			     R_ARGV_ARG1[i][1] == '\0')) \
+				continue; \
 			if (NULL != hashtables[i]) { \
 				hash_key.data = GYO_BUFFER[R_ARGV[i]]; \
 				hash_key.size = strlen(hash_key.data) + 1; \
@@ -150,8 +162,23 @@ gyo_match: \
 	if (FLAG_n) \
 		match_or_not = 0; \
 	else { \
-		for (int i = 1; i < NF; i++) \
-			printf("%s ", GYO_BUFFER[i]); \
-		printf("%s\n", GYO_BUFFER[NF]); \
+		if (R_ARGC == match_count) { \
+			for (int i = 1; i < NF; i++) \
+				printf("%s ", GYO_BUFFER[i]); \
+			printf("%s\n", GYO_BUFFER[NF]); \
+		} \
+		else { \
+	                for (int i = match_count+1; i < R_ARGC; i++) \
+	                        if (R_ARGV[i] > NF || \
+	                                NULL == GYO_BUFFER[R_ARGV[i]]) \
+	                                printf("@ "); \
+	                        else \
+	                                printf("%s ", GYO_BUFFER[R_ARGV[i]]); \
+	                if (R_ARGV[R_ARGC] > NF || \
+	                        NULL == GYO_BUFFER[R_ARGV[R_ARGC]]) \
+	                        printf("@\n"); \
+	                else \
+	                        printf("%s\n", GYO_BUFFER[R_ARGV[R_ARGC]]); \
+		} \
 	} \
 gyo_not_match:
