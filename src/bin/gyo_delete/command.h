@@ -161,7 +161,7 @@
 	} \
 gyo_not_match: \
 	match_or_not = 0; \
-	else { \
+	if (!FLAG_n) { \
 		if (R_ARGC == match_count) { \
 			for (int i = 1; i < NF; i++) \
 				PRINT(GYO_BUFFER[i], " "); \
