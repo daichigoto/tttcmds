@@ -52,6 +52,7 @@
 #define END_OF_LINE_RETU_PROCESS
 
 #define TGT_GYO_PROCESS(GYO_BUFFER,NF) \
+	nf = NF; \
 	if (FLAG_1 && first_line) { \
 		first_line = 0; \
 		goto gyo_not_match; \
