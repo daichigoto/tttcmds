@@ -535,6 +535,10 @@ default_body() {
 		-o file:$(atf_get_srcdir)/default_1.out \
 		-x "echo |" \
 		   "gyo_select -@ 000000 1. 1/5"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/default_2.out \
+		-x "echo |" \
+		   "gyo_select -@ '  @__ ' 1. 1/5"
 }
 
 atf_init_test_cases()

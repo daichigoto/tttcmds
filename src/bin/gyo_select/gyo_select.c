@@ -35,6 +35,9 @@ main(int argc, char *argv[])
 		   CMDARGS_R_ARGARG_TO_SSVSTR);
 
 	int match_or_not = 1;
+	char *val = "@";
+	if (FLAG_AT)
+		val = _str2ssvstr(FLAG_AT_ARG);
 
 	/*
 	 * hashtable setup for join process

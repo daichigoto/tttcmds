@@ -188,10 +188,7 @@ gyo_not_match:
 
 #define PRINT(TARGET,DELIMITER) \
 	if ('@' == TARGET[0] && '\0' == TARGET[1]) { \
-		if (FLAG_AT) \
-			printf("%s%s", FLAG_AT_ARG, DELIMITER); \
-		else \
-			printf("@%s", DELIMITER); \
+		printf("%s%s", val, DELIMITER); \
 	} \
 	else \
 		printf("%s%s", TARGET, DELIMITER);
