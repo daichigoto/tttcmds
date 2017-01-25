@@ -48,15 +48,16 @@ struct textset cmdtextsets[] = {
 	  "[" _OPT("1") "] "
 	  "[" _OPT("n") "] "
 	  "[" _OPT("N") "] "
-	  "[" _OPT("hvD") "] [" _OPT("-") "] "
-	  _ARG("N=key") "|" _ARG("N/M=key") "|\n" 
+	  "[" _OPT("@") " " _ARG("val") "] "
+	  "[" _OPT("hvD") "] [" _OPT("-") "]\n"
+	  _ARG("N=key") "|" _ARG("N/M=key") "|" 
 	  _ARG("N>key") "|" _ARG("N/M>key") "|" 
 	  _ARG("N<key") "|" _ARG("N/M<key") "|"
-	  _ARG("N.f.K") "|" _ARG("N/M.f.K") " "
+	  _ARG("N.f.K") "|" _ARG("N/M.f.K") "\n"
 	  "[" _ARG("N=key") "|" _ARG("N/M=key") "|"
-	      _ARG("N>key") "|\n" _ARG("N/M>key") "|" 
+	      _ARG("N>key") "|" _ARG("N/M>key") "|" 
 	      _ARG("N<key") "|" _ARG("N/M<key") "|" 
-	      _ARG("N.f.K") "|" _ARG("N/M.f.K") " " _ETC "] "
+	      _ARG("N.f.K") "|" _ARG("N/M.f.K") " " _ETC "]\n"
 	  "[" _ARG("N") "|" _ARG("N/M") " " _ETC "] "
 	  "[" _ARG("file") " " _ETC "]" },
 
@@ -137,6 +138,8 @@ struct textset cmdtextsets[] = {
 	  _OPT("n") "		出力を行わず、1行も一致しなかった場合には"
 	  			"1で、\n\t\tそうでない場合には0で終了\n"
 	  _OPT("N") "		大小比較を文字列ではなく数値として実施\n"
+	  _OPT("@") " " _ARG("val") "\t\t値がなかった場合に出力する値"
+	  			"(デフォルトは@)\n"
 	  _OPT("h") "		使い方表示\n"
 	  _OPT("v") "		バージョン表示\n"
 	  _OPT("D") "		デバッグモード\n"
@@ -152,6 +155,9 @@ struct textset cmdtextsets[] = {
 				"returns 1.\n"
 	  _OPT("N") "		Do < and > compare numerically by "
 	  			"arithmetic value\n\t\tinstead of string.\n"
+	  _OPT("@") " " _ARG("val") "\t\tSpecify the " _ARG("val") " as "
+	  			"output value if all values are @"
+				"\n\t\t(default is @).\n"
 	  _OPT("h") "		Print the usage message.\n"
 	  _OPT("v") "		Print the version.\n"
 	  _OPT("D") "		Enable the debug mode.\n"
@@ -214,6 +220,10 @@ struct textset cmdtextsets[] = {
 	  _P("gyo_select -1 -N 2'>'0 1 1 1 price.tag")
 	  _S("000001 000001 000001")
 	  _S("000002 000002 000002")
+	  _P("gyo_select 2= data.ssv")
+	  _S("1 @ 3 4 5 6 7 8 9")
+	  _P("gyo_select -@ 0 2= data.ssv")
+	  _S("1 0 3 4 5 6 7 8 9")
 	  _P("") },
 
 	TEXTSET_END

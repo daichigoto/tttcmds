@@ -164,21 +164,34 @@ gyo_match: \
 	else { \
 		if (R_ARGC == match_count) { \
 			for (int i = 1; i < NF; i++) \
-				printf("%s ", GYO_BUFFER[i]); \
-			printf("%s\n", GYO_BUFFER[NF]); \
+				PRINT(GYO_BUFFER[i], " "); \
+			PRINT(GYO_BUFFER[NF], "\n"); \
 		} \
 		else { \
 	                for (int i = match_count+1; i < R_ARGC; i++) \
 	                        if (R_ARGV[i] > NF || \
-	                                NULL == GYO_BUFFER[R_ARGV[i]]) \
-	                                printf("@ "); \
-	                        else \
-	                                printf("%s ", GYO_BUFFER[R_ARGV[i]]); \
+	                                NULL == GYO_BUFFER[R_ARGV[i]]) { \
+					PRINT("@", " "); \
+				} \
+	                        else { \
+					PRINT(GYO_BUFFER[R_ARGV[i]], " "); \
+				} \
 	                if (R_ARGV[R_ARGC] > NF || \
-	                        NULL == GYO_BUFFER[R_ARGV[R_ARGC]]) \
-	                        printf("@\n"); \
+	                        NULL == GYO_BUFFER[R_ARGV[R_ARGC]]) { \
+				PRINT("@", "\n"); \
+			} \
 	                else \
-	                        printf("%s\n", GYO_BUFFER[R_ARGV[R_ARGC]]); \
+				PRINT(GYO_BUFFER[R_ARGV[R_ARGC]], "\n"); \
 		} \
 	} \
 gyo_not_match:
+
+#define PRINT(TARGET,DELIMITER) \
+	if ('@' == TARGET[0] && '\0' == TARGET[1]) { \
+		if (FLAG_AT) \
+			printf("%s%s", FLAG_AT_ARG, DELIMITER); \
+		else \
+			printf("@%s", DELIMITER); \
+	} \
+	else \
+		printf("%s%s", TARGET, DELIMITER);
