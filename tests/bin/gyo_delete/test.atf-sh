@@ -525,6 +525,18 @@ select_body() {
 		   "$(atf_get_srcdir)/price2.tag"
 }
 
+atf_test_case default
+default_head() {
+	atf_set "descr" "Verify a @-output process"
+}
+
+default_body() {
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/default_1.out \
+		-x "echo |" \
+		   "gyo_delete -@ 000000 1.NOT 1/5"
+}
+
 atf_init_test_cases()
 {
 	atf_add_test_case empty
@@ -545,4 +557,5 @@ atf_init_test_cases()
 	atf_add_test_case remove_first_line
 	atf_add_test_case atmark
 	atf_add_test_case select
+	atf_add_test_case default
 }
