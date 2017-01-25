@@ -527,7 +527,7 @@ select_body() {
 
 atf_test_case default
 default_head() {
-	atf_set "descr" "Verify a @-output process"
+	atf_set "descr" "Verify a default output process"
 }
 
 default_body() {
@@ -539,6 +539,18 @@ default_body() {
 		-o file:$(atf_get_srcdir)/default_2.out \
 		-x "echo |" \
 		   "gyo_select -@ '  @__ ' 1. 1/5"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/default_3.out \
+		-x "echo |" \
+		   "gyo_select 1.SOMETHING 1/5"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/default_4.out \
+		-x "echo 1 2 3 4 5 |" \
+		   "gyo_select -d '' 1.SOMETHING"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/default_5.out \
+		-x "echo |" \
+		   "gyo_select -d '' 1.SOMETHING 1/5"
 }
 
 atf_init_test_cases()

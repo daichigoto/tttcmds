@@ -48,6 +48,7 @@ struct textset cmdtextsets[] = {
 	  "[" _OPT("1") "] "
 	  "[" _OPT("n") "] "
 	  "[" _OPT("N") "] "
+	  "[" _OPT("d") " " _ARG("def") "] "
 	  "[" _OPT("@") " " _ARG("val") "] "
 	  "[" _OPT("hvD") "] [" _OPT("-") "]\n"
 	  _ARG("N=key") "|" _ARG("N/M=key") "|" 
@@ -138,6 +139,9 @@ struct textset cmdtextsets[] = {
 	  _OPT("n") "		出力を行わず、1行も一致しなかった場合には"
 	  			"1で、\n\t\tそうでない場合には0で終了\n"
 	  _OPT("N") "		大小比較を文字列ではなく数値として実施\n"
+	  _OPT("d") " " _ARG("def") "\t\t1行も一致しなかった場合に"
+	  			"出力する値"
+				"(デフォルトは\n\t\t何も出力しない)\n"
 	  _OPT("@") " " _ARG("val") "\t\t値がなかった場合に出力する値"
 	  			"(デフォルトは@)\n"
 	  _OPT("h") "		使い方表示\n"
@@ -155,6 +159,9 @@ struct textset cmdtextsets[] = {
 				"returns 1.\n"
 	  _OPT("N") "		Do < and > compare numerically by "
 	  			"arithmetic value\n\t\tinstead of string.\n"
+	  _OPT("d") " " _ARG("def") "\t\tSpecify the " _ARG("def") " as "
+	  			"output value if all lines don't\n"
+				"\t\tmatch (default is doing nothing).\n"
 	  _OPT("@") " " _ARG("val") "\t\tSpecify the " _ARG("val") " as "
 	  			"output value if all values are @"
 				"\n\t\t(default is @).\n"
@@ -205,6 +212,9 @@ struct textset cmdtextsets[] = {
 	  _P("gyo_select -n -a 2= 3= data.ssv && echo match")
 	  _P("gyo_select -n -o 2= 3= data.ssv && echo match")
 	  _S("match")
+	  _P("gyo_select -a 2= 3= 1 1 1 data.ssv")
+	  _P("gyo_select -d '' -a 2= 3= 1 1 1 data.ssv")
+	  _S("@ @ @")
 	  _P("gyo_select 1'>'3 date.ssv")
 	  _P("gyo_select -N 1'>'3 date.ssv")
 	  _S("20150101 20150505 20151010")
