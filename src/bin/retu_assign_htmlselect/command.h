@@ -101,12 +101,20 @@ next_gyo_process:
 	} \
 	printf(">"); \
 	SLIST_FOREACH(sel1, &list[INDEX], entries) { \
-		if (0 == strcmp(RETU_BUFFER, sel1->name)) \
-			printf("<option_value=\"%s\"_selected>", \
-				_quote2charref(sel1->name)); \
-		else \
-			printf("<option_value=\"%s\">", \
-				_quote2charref(sel1->name)); \
+		if (0 == strcmp(RETU_BUFFER, sel1->name)) { \
+			if (sel1->name[0] == '@' && sel1->name[1] == '\0') \
+				printf("<option_value=\"\"_selected>"); \
+			else \
+				printf("<option_value=\"%s\"_selected>", \
+					_quote2charref(sel1->name)); \
+		} \
+		else { \
+			if (sel1->name[0] == '@' && sel1->name[1] == '\0') \
+				printf("<option_value=\"\">"); \
+			else \
+				printf("<option_value=\"%s\">", \
+					_quote2charref(sel1->name)); \
+		} \
 		printf("%s</option>", \
 			_ltgt2charref(sel1->value)); \
 	} \
