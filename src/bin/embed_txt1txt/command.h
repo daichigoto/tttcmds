@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Daichi GOTO
+ * Copyright (c) 2016,2017 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -25,18 +25,9 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#define VERSION "20161206"
+#define VERSION "20170126"
 #define CMDNAME "embed_txt1txt"
 #define ALIAS "txt1txt"
-
-#include <sys/types.h>
-#include <fcntl.h>
-#include <limits.h>
-#ifdef __linux__
-#include <db_185.h>
-#else
-#include <db.h>
-#endif
 
 #include "ttt.h"
 
@@ -44,12 +35,12 @@
 	int match; \
 	for (int i = 0; i < SIZE; i++) { \
 		match = 0; \
-		while (0 == hashtable->seq(hashtable, \
-			&hash_key, &hash_val, R_NEXT)) { \
-			if (0 == strncmp(&BUF[i], hash_key.data, \
-				hash_key.size-1)) { \
-				printf("%s", hash_val.data); \
-				i += hash_key.size - 2; \
+		for (int j = 1; j <= R_ARGC; j++) { \
+			if (SIZE - i >= key_len[j] && \
+				0 == strncmp(R_ARGV_ARG1[j], &BUF[i], \
+					key_len[j])) { \
+				printf("%s", text[j]); \
+				i += key_len[j] - 1; \
 				match = 1; \
 				break; \
 			} \

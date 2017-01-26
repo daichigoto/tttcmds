@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Daichi GOTO
+ * Copyright (c) 2016,2017 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -33,46 +33,38 @@ main(int argc, char *argv[])
 	getcmdargs(argc, argv, "nhvD", 
 	           CMDARGS_STDIN_TO_TMPFILE|
 	           CMDARGS_R_NEED|
-		   CMDARGS_R_ARGARG_1_NEED|CMDARGS_R_ARGARG_2_NEED);
+		   CMDARGS_R_ARGARG_1_NEED|
+		   CMDARGS_R_ARGARG_2_NEED);
 
 	/*
-	 * setup the label and value sets
+	 * setup the text data
 	 */
-        DB *hashtable;
-        DBT hash_key, hash_val;
-	int fd, rsize;
+	char *text[R_ARGC+1];
+	int fd, rsize, key_len[R_ARGC+1];
 	struct stat st;
-	char *buf;
-	hashtable = dbopen(NULL, O_CREAT|O_RDWR, 0644, DB_HASH, NULL);
-	for (int i = 0; i < R_ARGC; i++) {
-		hash_key.data = cmdargs.r_argv_arg1[i+1];
-		hash_key.size = strlen(hash_key.data) + 1;
+	for (int i = 1; i <= R_ARGC; i++) {
+		key_len[i] = strlen(R_ARGV_ARG1[i]);
 
 		/*
-		 * the contents of the file into the hashtable
+		 * the contents of the file into the *text[]
 		 */
-		if (-1 == stat(cmdargs.r_argv_arg2[i+1], &st))
-			err(errno, "%s", cmdargs.r_argv_arg2[i+1]);
-		hash_val.size = st.st_size + 1;
-		if (-1 == (fd = open(cmdargs.r_argv_arg2[i+1], O_RDONLY)))
-			err(errno, "%s", cmdargs.r_argv_arg2[i+1]);
-		buf = calloc(1, hash_val.size * sizeof(char));
+		if (-1 == stat(R_ARGV_ARG2[i], &st))
+			err(errno, "%s", R_ARGV_ARG2[i]);
+
+		if (-1 == (fd = open(R_ARGV_ARG2[i], O_RDONLY)))
+			err(errno, "%s", R_ARGV_ARG2[i]);
+
+		text[i] = calloc(1, (st.st_size + 1) * sizeof(char));
+		text[i][st.st_size] = '\0';
+
 		rsize = 0;
-		while (rsize != (int)hash_val.size - 1)
-			rsize += read(fd, buf + rsize,
-				hash_val.size - 1 - rsize);
+		while (rsize != (int)st.st_size)
+			rsize += read(fd, text[i] + rsize, 
+				st.st_size - rsize);
 		close(fd);
-		hash_val.data = buf;
 
-		/*
-		 * option -n process
-		 */
-		if (FLAG_n && '\n' == buf[hash_val.size - 2]) {
-			buf[hash_val.size - 2] = '\0';
-			hash_val.size -= 1;
-		}
-		
-		hashtable->put(hashtable, &hash_key, &hash_val, 0);
+		if (FLAG_n && '\n' == text[i][st.st_size - 1])
+			text[i][st.st_size - 1] = '\0';
 	}
 
 	FILEPROCESS_ALLBUFFER
