@@ -565,6 +565,23 @@ zero_body() {
 		   "gyo_select 1.1 0 0 1 0 0 6 6"
 }
 
+atf_test_case not_match
+not_match_head() {
+	atf_set "descr" "Verify a not-match condition process"
+}
+
+not_match_body() {
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/not_match_1.out \
+		-x "gyo_select 2!bb $(atf_get_srcdir)/data_with_eor.in"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/not_match_2.out \
+		-x "gyo_select 2! $(atf_get_srcdir)/data_with_eor.in"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/not_match_3.out \
+		-x "gyo_select 2! 3! 4! $(atf_get_srcdir)/data_with_eor.in"
+}
+
 atf_init_test_cases()
 {
 	atf_add_test_case empty
@@ -587,4 +604,5 @@ atf_init_test_cases()
 	atf_add_test_case select
 	atf_add_test_case default
 	atf_add_test_case zero
+	atf_add_test_case not_match
 }

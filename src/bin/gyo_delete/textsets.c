@@ -52,13 +52,15 @@ struct textset cmdtextsets[] = {
 	  "[" _OPT("@") " " _ARG("val") "] "
 	  "[" _OPT("hvD") "] [" _OPT("-") "]\n"
 	  _ARG("N=key") "|" _ARG("N/M=key") "|"
+	  _ARG("N!key") "|" _ARG("N/M!key") "|"
 	  _ARG("N>key") "|" _ARG("N/M>key") "|"
-	  _ARG("N<key") "|" _ARG("N/M<key") "|"
-	  _ARG("N.f.K") "|" _ARG("N/M.f.K") "\n"
+	  _ARG("N<key") "|" _ARG("N/M<key") "|\n"
+	  _ARG("N.f.K") "|" _ARG("N/M.f.K") " "
 	  "[" _ARG("N=key") "|" _ARG("N/M=key") "|" 
-	      _ARG("N>key") "|" _ARG("N/M>key") "|" 
+	      _ARG("N!key") "|" _ARG("N/M!key") "|" 
+	      _ARG("N>key") "|" _ARG("N/M>key") "|\n" 
 	      _ARG("N<key") "|" _ARG("N/M<key") "|" 
-	      _ARG("N.f.K") "|" _ARG("N/M.f.K") " " _ETC "]\n"
+	      _ARG("N.f.K") "|" _ARG("N/M.f.K") " " _ETC "] "
 	  "[" _ARG("N") "|" _ARG("N/M") " " _ETC "] "
 	  "[" _ARG("file") " " _ETC "]" },
 
@@ -67,12 +69,16 @@ struct textset cmdtextsets[] = {
 	  "\n"
 	  ES_BOLD("等価条件") "\n"
 	  _ARG("N=key") "\t	" _ARG("N") "列の値が" _ARG("key")
-	  			"に一致\n"
+	  			"に一致(デリミタは!、>、<、/以外の1文字)\n"
+	  _ARG("N!key") "\t	" _ARG("N") "列の値が" _ARG("key")
+	  			"に一致しない\n"
 	  _ARG("N>key") "\t	" _ARG("N") "列の値が" _ARG("key")
 	  			"よりも大きい\n"
 	  _ARG("N<key") "\t	" _ARG("N") "列の値が" _ARG("key")
 	  			"よりも小さい\n"
 	  _ARG("N/M=key") "\t	" _ARG("N=key") "と同じ処理を" _ARG("M")
+	  			"例まで適用\n"
+	  _ARG("N/M!key") "\t	" _ARG("N!key") "と同じ処理を" _ARG("M")
 	  			"例まで適用\n"
 	  _ARG("N/M>key") "\t	" _ARG("N>key") "と同じ処理を" _ARG("M")
 	  			"例まで適用\n"
@@ -99,12 +105,19 @@ struct textset cmdtextsets[] = {
 	  "\n"
 	  ES_BOLD("EQUALITY/INEQUALITY CONDITION") "\n"
 	  _ARG("N=key") "\t	The value of " _ARG("N") "th column and "
-	  			"the " _ARG("key") " match.\n"
+	  			"the " _ARG("key") " match\n"
+				"\t\t(the delimiter is a character other "
+				"than !, >, <\n\t\tand /).\n"
+	  _ARG("N!key") "\t	The value of " _ARG("N") "th column and "
+	  			"the " _ARG("key") " don't match.\n"
 	  _ARG("N>key") "\t	The value of " _ARG("N") "th column is "
 	  			"greater than the " _ARG("key") ".\n"
 	  _ARG("N<key") "\t	The value of " _ARG("N") "th column is "
 	  			"lesser than the " _ARG("key") ".\n"
 	  _ARG("N/M=key") "\t	Process the " _ARG("N") "th to "
+	  			_ARG("M") "th columns in the same way\n"
+				"\t\tas " _ARG("N=key") ".\n"
+	  _ARG("N/M!key") "\t	Process the " _ARG("N") "th to "
 	  			_ARG("M") "th columns in the same way\n"
 				"\t\tas " _ARG("N=key") ".\n"
 	  _ARG("N/M>key") "\t	Process the " _ARG("N") "th to "
@@ -129,7 +142,7 @@ struct textset cmdtextsets[] = {
 	  			_ARG("M") "th columns in the same way\n"
 				"\t\tas " _ARG("N") ".\n"
 	  "\n"
-	  "If " _ARG("file") " is a signle dash\n(`-') or absent, it "
+	  "If " _ARG("file") " is a signle dash (`-') or absent, it "
 	  "reads from the standard\ninput." },
 
 	{ "command_options", "ja_JP", 
@@ -179,6 +192,9 @@ struct textset cmdtextsets[] = {
 	  _S("1 2 @ 4 5 6 7 8 9")
 	  _P("gyo_delete 2=2 data.ssv")
 	  _S("1 @ 3 4 5 6 7 8 9")
+	  _P("gyo_delete 2!2 data.ssv")
+	  _S("1 2 3 4 5 6 7 8 9")
+	  _S("1 2 @ 4 5 6 7 8 9")
 	  _P("gyo_delete 2= data.ssv")
 	  _S("1 2 3 4 5 6 7 8 9")
 	  _S("1 2 @ 4 5 6 7 8 9")

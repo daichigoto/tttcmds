@@ -52,13 +52,15 @@ struct textset cmdtextsets[] = {
 	  "[" _OPT("@") " " _ARG("val") "] "
 	  "[" _OPT("hvD") "] [" _OPT("-") "]\n"
 	  _ARG("N=key") "|" _ARG("N/M=key") "|" 
+	  _ARG("N!key") "|" _ARG("N/M!key") "|" 
 	  _ARG("N>key") "|" _ARG("N/M>key") "|" 
-	  _ARG("N<key") "|" _ARG("N/M<key") "|"
-	  _ARG("N.f.K") "|" _ARG("N/M.f.K") "\n"
+	  _ARG("N<key") "|" _ARG("N/M<key") "|\n"
+	  _ARG("N.f.K") "|" _ARG("N/M.f.K") " "
 	  "[" _ARG("N=key") "|" _ARG("N/M=key") "|"
-	      _ARG("N>key") "|" _ARG("N/M>key") "|" 
+	      _ARG("N!key") "|" _ARG("N/M!key") "|" 
+	      _ARG("N>key") "|" _ARG("N/M>key") "|\n" 
 	      _ARG("N<key") "|" _ARG("N/M<key") "|" 
-	      _ARG("N.f.K") "|" _ARG("N/M.f.K") " " _ETC "]\n"
+	      _ARG("N.f.K") "|" _ARG("N/M.f.K") " " _ETC "] "
 	  "[" _ARG("N") "|" _ARG("N/M") " " _ETC "] "
 	  "[" _ARG("file") " " _ETC "]" },
 
@@ -67,7 +69,9 @@ struct textset cmdtextsets[] = {
 	  "\n"
 	  ES_BOLD("等価条件") "\n"
 	  _ARG("N=key") "\t	" _ARG("N") "列の値が" _ARG("key") 
-	  			"に一致\n"
+	  			"に一致(デリミタは!、>、<、/以外の1文字)\n"
+	  _ARG("N!key") "\t	" _ARG("N") "列の値が" _ARG("key") 
+	  			"に一致しない\n"
 	  _ARG("N>key") "\t	" _ARG("N") "列の値が" _ARG("key") 
 	  			"よりも大きい\n"
 	  _ARG("N<key") "\t	" _ARG("N") "列の値が" _ARG("key") 
@@ -99,7 +103,11 @@ struct textset cmdtextsets[] = {
 	  "\n"
 	  ES_BOLD("EQUALITY/INEQUALITY CONDITION") "\n"
 	  _ARG("N=key") "\t	The value of " _ARG("N") "th column and "
-	  			"the " _ARG("key") " match.\n"
+	  			"the " _ARG("key") " match\n"
+				"\t\t(the delimiter is a character other "
+				"than !, >, <\n\t\tand /).\n"
+	  _ARG("N!key") "\t	The value of " _ARG("N") "th column and "
+	  			"the " _ARG("key") " don't match\n"
 	  _ARG("N>key") "\t	The value of " _ARG("N") "th column is "
 	  			"greater than the " _ARG("key") ".\n"
 	  _ARG("N<key") "\t	The value of " _ARG("N") "th column is "
@@ -179,6 +187,8 @@ struct textset cmdtextsets[] = {
 	  _P("gyo_select 2=2 data.ssv")
 	  _S("1 2 3 4 5 6 7 8 9")
 	  _S("1 2 @ 4 5 6 7 8 9")
+	  _P("gyo_select 2!2 data.ssv")
+	  _S("1 @ 3 4 5 6 7 8 9")
 	  _P("gyo_select 2= data.ssv")
 	  _S("1 @ 3 4 5 6 7 8 9")
 	  _P("gyo_select -a 2= 3= data.ssv")

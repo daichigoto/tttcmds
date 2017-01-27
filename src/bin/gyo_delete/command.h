@@ -25,7 +25,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#define VERSION "20170127"
+#define VERSION "20170128"
 #define CMDNAME "gyo_delete"
 #define ALIAS "gyodel row_delete"
 
@@ -58,13 +58,15 @@
 		goto gyo_match; \
 	} \
 	if (!FLAG_o) { \
+		/* AND CONDITION */ \
 		for (int i = 1; i <= match_count; i++) { \
 			if (NF < R_ARGV[i]) \
 				goto gyo_not_match; \
-			if (GYO_BUFFER[R_ARGV[i]][0] == '@' && \
-			    GYO_BUFFER[R_ARGV[i]][1] == '\0' && \
-			   !(R_ARGV_ARG1[i][0] == '@' && \
-			     R_ARGV_ARG1[i][1] == '\0')) \
+			if ('!' != R_ARGV_DELIM[i] && \
+			    '@' == GYO_BUFFER[R_ARGV[i]][0] && \
+			   '\0' == GYO_BUFFER[R_ARGV[i]][1] && \
+			   !('@' == R_ARGV_ARG1[i][0] && \
+			    '\0' == R_ARGV_ARG1[i][1])) \
 				goto gyo_not_match; \
 			if (NULL != hashtables[i]) { \
 				hash_key.data = GYO_BUFFER[R_ARGV[i]]; \
@@ -92,11 +94,15 @@
 						R_ARGV_ARG1[i]); \
 				switch (R_ARGV_DELIM[i]) { \
 				case '>': \
-					if (cmpret <= 0) \
+					if (0 >= cmpret) \
 						goto gyo_not_match; \
 					break; \
 				case '<': \
-					if (cmpret >= 0) \
+					if (0 <= cmpret) \
+						goto gyo_not_match; \
+					break; \
+				case '!': \
+					if (0 == cmpret) \
 						goto gyo_not_match; \
 					break; \
 				default: \
@@ -109,13 +115,15 @@
 		goto gyo_match; \
 	} \
 	else { \
+		/* OR CONDITION */ \
 		for (int i = 1; i <= match_count; i++) { \
 			if (NF < R_ARGV[i]) \
 				goto gyo_not_match; \
-			if (GYO_BUFFER[R_ARGV[i]][0] == '@' && \
-			    GYO_BUFFER[R_ARGV[i]][1] == '\0' && \
-			   !(R_ARGV_ARG1[i][0] == '@' && \
-			     R_ARGV_ARG1[i][1] == '\0')) \
+			if ('!' != R_ARGV_DELIM[i] && \
+			    '@' == GYO_BUFFER[R_ARGV[i]][0] && \
+			   '\0' == GYO_BUFFER[R_ARGV[i]][1] && \
+			   !('@' == R_ARGV_ARG1[i][0] && \
+			    '\0' == R_ARGV_ARG1[i][1])) \
 				continue; \
 			if (NULL != hashtables[i]) { \
 				hash_key.data = GYO_BUFFER[R_ARGV[i]]; \
@@ -143,11 +151,15 @@
 						R_ARGV_ARG1[i]); \
 				switch (R_ARGV_DELIM[i]) { \
 				case '>': \
-					if (cmpret > 0) \
+					if (0 < cmpret) \
 						goto gyo_match; \
 					break; \
 				case '<': \
-					if (cmpret < 0) \
+					if (0 > cmpret) \
+						goto gyo_match; \
+					break; \
+				case '!': \
+					if (0 != cmpret) \
 						goto gyo_match; \
 					break; \
 				default: \
