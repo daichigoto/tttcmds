@@ -99,9 +99,11 @@ static void stdintotempfile(void);
 int
 getcmdargs(const int argc, char *argv[], const char *optargs, int flags)
 {
-	int i, j, k, range, *i_ptr, exclusion = 0;
+	int i, j, k, range, *i_ptr, exclusion = 0, mincol = 1;
 	char buf[BUFFER_SIZE], *p1, *p2, delim, *c_ptr, **c_pptr, o;
 
+	if (flags&CMDARGS_R_MINIMUMNUM_IS_0)
+		mincol = 0;
 	/*
 	 * cmdargs initialization
 	 */
@@ -278,7 +280,7 @@ retu_analysis:
 			*p2 = '\0';
 			cmdargs.r_argv[1+cmdargs.r_argc] = 
 				(int)strtol(buf, (char **)NULL, 10);
-			if (cmdargs.r_argv[1+cmdargs.r_argc] < 1) {
+			if (cmdargs.r_argv[1+cmdargs.r_argc] < mincol) {
 				fprintf(stderr,
 				        "%d must be 1 or over.\n",
 				        cmdargs.r_argv[1+cmdargs.r_argc]);
