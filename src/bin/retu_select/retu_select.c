@@ -31,7 +31,9 @@ int
 main(int argc, char *argv[])
 {
 	getcmdargs(argc, argv, "1hvD",
-	           CMDARGS_R_NEED|CMDARGS_R_ARGARG_NONE);
+	           CMDARGS_R_NEED|
+		   CMDARGS_R_ARGARG_NONE|
+		   CMDARGS_R_MINIMUMNUM_IS_0);
 
 	int first_line = 1;
 	FILEPROCESS_GYO

@@ -94,6 +94,8 @@ struct textset cmdtextsets[] = {
 	  _S("2 3 4 5 2 3 4 5 2 3 4 5")
 	  _P("retu_select 9/1 data1.ssv")
 	  _S("9 8 7 6 5 4 3 2 1")
+	  _P("retu_select 0 0 1 10 10 data1.ssv")
+	  _S("@ @ 1 @ @")
 	  _P("cat data2.ssv")
 	  _S("A")
 	  _P("retu_select 1/9 data1.ssv data2.ssv")

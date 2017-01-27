@@ -32,7 +32,8 @@ main(int argc, char *argv[])
 {
 	getcmdargs(argc, argv, "a!o!1nNd:@:hvD", 
 	           CMDARGS_R_NEED|
-		   CMDARGS_R_ARGARG_TO_SSVSTR);
+		   CMDARGS_R_ARGARG_TO_SSVSTR|
+		   CMDARGS_R_MINIMUMNUM_IS_0);
 
 	int match_or_not = 1;
 	int nf = 0;
@@ -57,7 +58,10 @@ main(int argc, char *argv[])
 
 	cmdargs_org = cmdargs;
 
-	for (int i = 1; i <= cmdargs_org.r_argc; i++) {
+	for (int i = 1; i <= match_count; i++) {
+		if (0 == cmdargs_org.r_argv[i])
+			usage();
+
 		if (NULL == cmdargs_org.r_argv_arg2[i]) {
 			hashtables[i] = NULL;
 			continue;

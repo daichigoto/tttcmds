@@ -298,6 +298,18 @@ remove_first_line_body() {
 		   "$(atf_get_srcdir)/price.tag"
 }
 
+atf_test_case zero
+zero_head() {
+	atf_set "descr" "Verify a 0 retu"
+}
+
+zero_body() {
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/zero_1.out \
+		-x "echo 1 2 3 4 5 6 7 8 9 |" \
+		   "retu_select 0 0 1 10 10"
+}
+
 atf_init_test_cases()
 {
 	atf_add_test_case empty
@@ -309,4 +321,5 @@ atf_init_test_cases()
 	atf_add_test_case many_retu_without_eor
 	atf_add_test_case select
 	atf_add_test_case remove_first_line
+	atf_add_test_case zero
 }

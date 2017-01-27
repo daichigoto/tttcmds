@@ -553,6 +553,18 @@ default_body() {
 		   "gyo_delete -d '' 1. 1/5"
 }
 
+atf_test_case zero
+zero_head() {
+	atf_set "descr" "Verify a zero retu process"
+}
+
+zero_body() {
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/zero_1.out \
+		-x "echo 1 2 3 4 5 |" \
+		   "gyo_delete 1=0 0 0 1 0 0 6 6"
+}
+
 atf_init_test_cases()
 {
 	atf_add_test_case empty
@@ -574,4 +586,5 @@ atf_init_test_cases()
 	atf_add_test_case atmark
 	atf_add_test_case select
 	atf_add_test_case default
+	atf_add_test_case zero
 }
