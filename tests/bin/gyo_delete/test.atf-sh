@@ -53,18 +53,18 @@ empty_body() {
 		-o file:$(atf_get_srcdir)/empty_1.out \
 		-x "gyo_delete 10/1=k $(atf_get_srcdir)/empty.in"
 	atf_check -s ignore \
-		-o file:$(atf_get_srcdir)/empty_2.out \
+		-o file:$(atf_get_srcdir)/empty_1.out \
 		-x "gyo_delete 1=k" \
 		   "$(atf_get_srcdir)/empty.in" \
 		   "$(atf_get_srcdir)/empty.in" \
 		   "$(atf_get_srcdir)/empty.in"
 	atf_check -s ignore \
-		-o file:$(atf_get_srcdir)/empty_3.out \
+		-o file:$(atf_get_srcdir)/empty_1.out \
 		-x "gyo_delete 5=k 1=k 3=k " \
 		   "$(atf_get_srcdir)/empty.in" \
 		   "$(atf_get_srcdir)/empty.in"
 	atf_check -s ignore \
-		-o file:$(atf_get_srcdir)/empty_4.out \
+		-o file:$(atf_get_srcdir)/empty_2.out \
 		-x "gyo_delete 5=k 1=k 3=k " \
 		   "$(atf_get_srcdir)/empty.in" \
 		   "$(atf_get_srcdir)/empty.in" \

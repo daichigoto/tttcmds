@@ -121,8 +121,10 @@
 		fp_buf_end = &fp_buf[fp_buf_len - 1]; \
 		while (1) { \
 			fp_b = fgetc(fp_fp); \
-			if (EOF == fp_b) \
+			if (EOF == fp_b) { \
 				if (fled) { fled = 0; break; } \
+				else fp_nf = -1; \
+			} \
 			fled = 0; \
 			*fp_p = fp_b; \
 			while (' ' != *fp_p && \

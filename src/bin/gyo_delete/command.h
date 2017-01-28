@@ -25,7 +25,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#define VERSION "20170128"
+#define VERSION "20170129"
 #define CMDNAME "gyo_delete"
 #define ALIAS "gyodel row_delete"
 
@@ -60,6 +60,8 @@
 	if (!FLAG_o) { \
 		/* AND CONDITION */ \
 		for (int i = 1; i <= match_count; i++) { \
+			if (0 == NF) \
+				goto gyo_match; \
 			if (NF < R_ARGV[i]) \
 				goto gyo_not_match; \
 			if ('!' != R_ARGV_DELIM[i] && \

@@ -1,6 +1,6 @@
 #!/usr/bin/env atf-sh
 # 
-#  Copyright (c) 2016 Daichi GOTO
+#  Copyright (c) 2017 Daichi GOTO
 #  All rights reserved.
 #  
 #  Redistribution and use in source and binary forms, with or without
@@ -40,13 +40,16 @@ empty_body() {
 		-x "template_gyo < $(atf_get_srcdir)/empty.in"
 	atf_check -s ignore \
 		-o file:$(atf_get_srcdir)/empty_1.out \
-		-x "cat $(atf_get_srcdir)/empty.in | template_gyo"
+		-x "cat $(atf_get_srcdir)/empty.in |" \
+		   "template_gyo"
 	atf_check -s ignore \
 		-o file:$(atf_get_srcdir)/empty_1.out \
-		-x "cat $(atf_get_srcdir)/empty.in | template_gyo -"
+		-x "cat $(atf_get_srcdir)/empty.in |" \
+		   "template_gyo -"
 	atf_check -s ignore \
 		-o file:$(atf_get_srcdir)/empty_2.out \
-		-x "template_gyo $(atf_get_srcdir)/empty.in" \
+		-x "template_gyo" \
+		   "$(atf_get_srcdir)/empty.in" \
 		   "$(atf_get_srcdir)/empty.in" \
 		   "$(atf_get_srcdir)/empty.in"
 }
