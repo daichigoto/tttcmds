@@ -45,16 +45,27 @@ struct textset cmdtextsets[] = {
 	  _CMD(CMDNAME) " "
 	  "[" _OPT("1") "] " 
 	  "[" _OPT("hvD") "] [" _OPT("-") "] "
-	  _ARG("N") "|"_ARG("N/M") " "
-	  "[" _ARG("N") "|" _ARG("N/M") " " _ETC "] "
+	  _ARG("N") "|"_ARG("N/M") "|"
+	  _ARG("N.k.s") "|"_ARG("N/M.k.s") " "
+	  "[" _ARG("N") "|" _ARG("N/M") "|" 
+	      _ARG("N.k.s") "|\n" _ARG("N/M.k.s") " " _ETC "] "
 	  "[" _ARG("file") " " _ETC "]" },
 	
 	{ "command_description", "ja_JP", 
 	  "指定した順で指定した列を出力する。\n"
 	  "\n"
-	  _ARG("N") "		" _ARG("N") "列目を指定\n"
-	  _ARG("N/M") "		" _ARG("N") "列目から" _ARG("M") 
-	  			"列目を指定\n"
+	  ES_BOLD("単純出力") "\n"
+	  _ARG("N") "\t\t" 	_ARG("N") "列目を出力\n"
+	  _ARG("N/M") "\t\t"	_ARG("N") "と同じ処理を" _ARG("M")
+	 			"列まで適用\n"
+	  "\n"
+	  ES_BOLD("置換出力") "\n"
+	  _ARG("N.k.s") "\t\t" 	_ARG("N") "列目の値が" _ARG("k") 
+	  			"だった場合に" _ARG("s") "を出力、"
+				"そうでない場合には\n\t\t" _ARG("N") 
+				"列の値を出力\n"
+	  _ARG("N/M.k.s") "\t\t" _ARG("N.k.s") "と同じ処理を" _ARG("M")
+	 			"列まで適用\n"
 	  "\n"
 	  "ファイルの指定がないか、-が指定されている場合には標準入力を"
 	  "使用。" },
@@ -62,9 +73,20 @@ struct textset cmdtextsets[] = {
 	{ "command_description", "en_", 
 	  "Print the specified columns in the specified order.\n"
 	  "\n"
-	  _ARG("N") "		Specify the " _ARG("N") "th column.\n"
-	  _ARG("N/M") "		Specify the range from the " _ARG("N")
-	  			"th to " _ARG("M") "th column.\n"
+	  ES_BOLD("SIMPLE PRINT") "\n"
+	  _ARG("N") "		Print the value of the " _ARG("N") "th "
+	  			"column.\n"
+	  _ARG("N/M") "		Process the " _ARG("N") "th to " _ARG("M")
+	  			"th columns in the same way "
+				"\n\t\tas " _ARG("N") ".\n"
+	  "\n"
+	  ES_BOLD("SWAP PRINT") "\n"
+	  _ARG("N.k.s") "\t	Print the value of the " _ARG("N") "th "
+	  			"column if it and " _ARG("k") "\n"
+				"\t\tdon't match, or print " _ARG("k") ".\n"
+	  _ARG("N/M.k.s") "\t	Process the " _ARG("N") "th to " _ARG("M")
+	  			"th columns in the same way "
+				"\n\t\tas " _ARG("N.k.s") ".\n"
 	  "\n"
 	  "If " _ARG("file") " is a single dash (`-') or absent, it reads "
 	  "from the\nstandard input." },
@@ -101,6 +123,12 @@ struct textset cmdtextsets[] = {
 	  _P("retu_select 1/9 data1.ssv data2.ssv")
 	  _S("1 2 3 4 5 6 7 8 9")
 	  _S("A @ @ @ @ @ @ @ @")
+	  _P("retu_select 1:A:1 2/9 data1.ssv data2.ssv")
+	  _S("1 2 3 4 5 6 7 8 9")
+	  _S("1 @ @ @ @ @ @ @ @")
+	  _P("retu_select 1/9::0 data1.ssv data2.ssv")
+	  _S("1 2 3 4 5 6 7 8 9")
+	  _S("A 0 0 0 0 0 0 0 0")
 	  _P("retu_select 1/15 data1.ssv data2.ssv")
 	  _S("1 2 3 4 5 6 7 8 9 @ @ @ @ @ @")
 	  _S("A @ @ @ @ @ @ @ @ @ @ @ @ @ @")

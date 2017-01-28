@@ -25,7 +25,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#define VERSION "20170127"
+#define VERSION "20170129"
 #define CMDNAME "retu_select"
 #define ALIAS "retusel col_select"
 
@@ -38,12 +38,25 @@
 		for (int i = 1; i < R_ARGC; i++) \
 			if (R_ARGV[i] > NF || \
 				NULL == GYO_BUFFER[R_ARGV[i]]) \
-				printf("@ "); \
+				PRINT("@", i, " ") \
 			else \
-				printf("%s ", GYO_BUFFER[R_ARGV[i]]); \
+				PRINT(GYO_BUFFER[R_ARGV[i]], i, " ") \
 		if (R_ARGV[R_ARGC] > NF || \
 			NULL == GYO_BUFFER[R_ARGV[R_ARGC]]) \
-			printf("@\n"); \
+			PRINT("@", R_ARGC, "\n") \
 		else \
-			printf("%s\n", GYO_BUFFER[R_ARGV[R_ARGC]]); \
+			PRINT(GYO_BUFFER[R_ARGV[R_ARGC]], R_ARGC, "\n") \
 	}
+
+#define PRINT(TARGET,INDEX,DELIMITER) { \
+	if (NULL != R_ARGV_ARG1[INDEX] && \
+	    NULL != R_ARGV_ARG2[INDEX]) { \
+		if (0 == strcmp(TARGET, R_ARGV_ARG1[INDEX])) \
+			printf("%s%s", R_ARGV_ARG2[INDEX], DELIMITER); \
+		else \
+			printf("%s%s", TARGET, DELIMITER); \
+	} \
+	else { \
+		printf("%s%s", TARGET, DELIMITER); \
+	} \
+}

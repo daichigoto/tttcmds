@@ -310,6 +310,22 @@ zero_body() {
 		   "retu_select 0 0 1 10 10"
 }
 
+atf_test_case swap
+swap_head() {
+	atf_set "descr" "Verify a swap process"
+}
+
+swap_body() {
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/swap_1.out \
+		-x "echo 1 2 3 4 5 6 7 8 9 |" \
+		   "retu_select 1/9:1:A"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/swap_2.out \
+		-x "echo |" \
+		   "retu_select 1/9::0"
+}
+
 atf_init_test_cases()
 {
 	atf_add_test_case empty
@@ -322,4 +338,5 @@ atf_init_test_cases()
 	atf_add_test_case select
 	atf_add_test_case remove_first_line
 	atf_add_test_case zero
+	atf_add_test_case swap
 }

@@ -32,8 +32,14 @@ main(int argc, char *argv[])
 {
 	getcmdargs(argc, argv, "1hvD",
 	           CMDARGS_R_NEED|
-		   CMDARGS_R_ARGARG_NONE|
 		   CMDARGS_R_MINIMUMNUM_IS_0);
+
+	for (int i = 1; i <= R_ARGC; i++) {
+		if (NULL != R_ARGV_ARG1[i])
+			R_ARGV_ARG1[i] = _str2ssvstr(R_ARGV_ARG1[i]);
+		if (NULL != R_ARGV_ARG2[i])
+			R_ARGV_ARG2[i] = _str2ssvstr(R_ARGV_ARG2[i]);
+	}
 
 	int first_line = 1;
 	FILEPROCESS_GYO
