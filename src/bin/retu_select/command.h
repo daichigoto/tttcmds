@@ -32,20 +32,24 @@
 #include "ttt.h"
 
 #define TGT_GYO_PROCESS(GYO_BUFFER,NF) \
-	if (FLAG_1 && first_line) \
-		first_line = 0; \
-	else { \
-		for (int i = 1; i < R_ARGC; i++) \
-			if (R_ARGV[i] > NF || \
-				NULL == GYO_BUFFER[R_ARGV[i]]) \
-				PRINT("@", i, " ") \
+	if (0 != NF) { \
+		if (FLAG_1 && first_line) \
+			first_line = 0; \
+		else { \
+			for (int i = 1; i < R_ARGC; i++) \
+				if (R_ARGV[i] > NF || \
+					NULL == GYO_BUFFER[R_ARGV[i]]) \
+					PRINT("@", i, " ") \
+				else \
+					PRINT(GYO_BUFFER[R_ARGV[i]], \
+						i, " ") \
+			if (R_ARGV[R_ARGC] > NF || \
+				NULL == GYO_BUFFER[R_ARGV[R_ARGC]]) \
+				PRINT("@", R_ARGC, "\n") \
 			else \
-				PRINT(GYO_BUFFER[R_ARGV[i]], i, " ") \
-		if (R_ARGV[R_ARGC] > NF || \
-			NULL == GYO_BUFFER[R_ARGV[R_ARGC]]) \
-			PRINT("@", R_ARGC, "\n") \
-		else \
-			PRINT(GYO_BUFFER[R_ARGV[R_ARGC]], R_ARGC, "\n") \
+				PRINT(GYO_BUFFER[R_ARGV[R_ARGC]], \
+					R_ARGC, "\n") \
+		} \
 	}
 
 #define PRINT(TARGET,INDEX,DELIMITER) { \

@@ -47,24 +47,24 @@ empty_body() {
 		-x "cat $(atf_get_srcdir)/empty.in |" \
 		   "retu_select 1 -"
 	atf_check -s ignore \
-		-o file:$(atf_get_srcdir)/empty_2.out \
+		-o file:$(atf_get_srcdir)/empty_1.out \
 		-x "retu_select 1" \
 		   "$(atf_get_srcdir)/empty.in" \
 		   "$(atf_get_srcdir)/empty.in" \
 		   "$(atf_get_srcdir)/empty.in"
 	atf_check -s ignore \
-		-o file:$(atf_get_srcdir)/empty_3.out \
+		-o file:$(atf_get_srcdir)/empty_1.out \
 		-x "retu_select 1/10 $(atf_get_srcdir)/empty.in"
 	atf_check -s ignore \
-		-o file:$(atf_get_srcdir)/empty_4.out \
+		-o file:$(atf_get_srcdir)/empty_1.out \
 		-x "retu_select 10/1 $(atf_get_srcdir)/empty.in"
 	atf_check -s ignore \
-		-o file:$(atf_get_srcdir)/empty_5.out \
+		-o file:$(atf_get_srcdir)/empty_1.out \
 		-x "retu_select 5 1 3 " \
 		   "$(atf_get_srcdir)/empty.in" \
 		   "$(atf_get_srcdir)/empty.in"
 	atf_check -s ignore \
-		-o file:$(atf_get_srcdir)/empty_6.out \
+		-o file:$(atf_get_srcdir)/empty_2.out \
 		-x "retu_select 5 1 3 " \
 		   "$(atf_get_srcdir)/empty.in" \
 		   "$(atf_get_srcdir)/empty.in" \
