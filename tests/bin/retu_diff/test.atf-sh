@@ -1,0 +1,91 @@
+#!/usr/bin/env atf-sh
+# 
+#  Copyright (c) 2016,2017 Daichi GOTO
+#  All rights reserved.
+#  
+#  Redistribution and use in source and binary forms, with or without
+#  modifigation, are permitted provided that the following conditions are 
+#  met: 
+#  
+#  1. Redistributions of source code must retain the above copyright 
+#     notice, this list of conditions and the following disclaimer. 
+#  2. Redistributions in binary form must reproduce the above copyright 
+#     notice, this list of conditions and the following disclaimer in the 
+#     documentation and/or other materials provided with the distribution. 
+#  
+#  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS 
+#  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT 
+#  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR 
+#  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT 
+#  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, 
+#  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT 
+#  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, 
+#  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY 
+#  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT 
+#  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE 
+#  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+#  
+
+atf_test_case empty
+empty_head() {
+	atf_set "descr" "Verify an empty file"
+}
+
+empty_body() {
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/empty_1.out \
+		-x "retu_diff" \
+		   "1" \
+		   "$(atf_get_srcdir)/empty.in" \
+		   "$(atf_get_srcdir)/empty.in"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/empty_1.out \
+		-x "retu_diff" \
+		   "1/10" \
+		   "$(atf_get_srcdir)/empty.in" \
+		   "$(atf_get_srcdir)/empty.in"
+}
+
+atf_test_case diff
+diff_head() {
+	atf_set "descr" "Verify a diff process"
+}
+
+diff_body() {
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/diff_1.out \
+		-x "retu_diff" \
+		   "1/5" \
+		   "$(atf_get_srcdir)/data.ssv" \
+		   "$(atf_get_srcdir)/new.ssv"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/diff_2.out \
+		-x "retu_diff" \
+		   "1/6" \
+		   "$(atf_get_srcdir)/data.ssv" \
+		   "$(atf_get_srcdir)/new.ssv"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/diff_3.out \
+		-x "retu_diff" \
+		   "1/7" \
+		   "$(atf_get_srcdir)/data.ssv" \
+		   "$(atf_get_srcdir)/new.ssv"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/diff_4.out \
+		-x "retu_diff" \
+		   "1/8" \
+		   "$(atf_get_srcdir)/data.ssv" \
+		   "$(atf_get_srcdir)/new.ssv"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/diff_5.out \
+		-x "retu_diff" \
+		   "1/20" \
+		   "$(atf_get_srcdir)/data.ssv" \
+		   "$(atf_get_srcdir)/new.ssv"
+}
+
+atf_init_test_cases()
+{
+	atf_add_test_case empty
+	atf_add_test_case diff
+}
