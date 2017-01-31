@@ -44,6 +44,7 @@ struct textset cmdtextsets[] = {
 	{ "command_synopsis", "en_", 
 	  _CMD(CMDNAME) " "
 	  "[" _OPT("1") "] " 
+	  "[" _OPT("d") "] " 
 	  "[" _OPT("hvD") "] [" _OPT("-") "] "
 	  _ARG("N") "|"_ARG("N/M") "|"
 	  _ARG("N.k.s") "|"_ARG("N/M.k.s") " "
@@ -83,7 +84,7 @@ struct textset cmdtextsets[] = {
 	  ES_BOLD("SWAP PRINT") "\n"
 	  _ARG("N.k.s") "\t	Print the value of the " _ARG("N") "th "
 	  			"column if it and " _ARG("k") "\n"
-				"\t\tdon't match, or print " _ARG("k") ".\n"
+				"\t\tdon't match, or print " _ARG("s") ".\n"
 	  _ARG("N/M.k.s") "\t	Process the " _ARG("N") "th to " _ARG("M")
 	  			"th columns in the same way "
 				"\n\t\tas " _ARG("N.k.s") ".\n"
