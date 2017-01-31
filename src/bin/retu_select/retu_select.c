@@ -30,7 +30,7 @@
 int
 main(int argc, char *argv[])
 {
-	getcmdargs(argc, argv, "1hvD",
+	getcmdargs(argc, argv, "1ehvD",
 	           CMDARGS_R_NEED|
 		   CMDARGS_R_MINIMUMNUM_IS_0);
 
@@ -42,7 +42,13 @@ main(int argc, char *argv[])
 	}
 
 	int first_line = 1;
+	int outputed = 0;
 	FILEPROCESS_GYO
+
+	if (FLAG_e && !outputed) {
+		char *a[] = {"@"};
+		TGT_GYO_PROCESS(a, 1);
+	}
 
 	exit(EX_OK);
 }

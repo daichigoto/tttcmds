@@ -25,7 +25,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#define VERSION "20170129"
+#define VERSION "20170201"
 #define CMDNAME "retu_select"
 #define ALIAS "retusel col_select"
 
@@ -49,6 +49,7 @@
 			else \
 				PRINT(GYO_BUFFER[R_ARGV[R_ARGC]], \
 					R_ARGC, "\n") \
+			outputed = 1; \
 		} \
 	}
 

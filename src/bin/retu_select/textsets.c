@@ -44,7 +44,7 @@ struct textset cmdtextsets[] = {
 	{ "command_synopsis", "en_", 
 	  _CMD(CMDNAME) " "
 	  "[" _OPT("1") "] " 
-	  "[" _OPT("d") "] " 
+	  "[" _OPT("e") "] " 
 	  "[" _OPT("hvD") "] [" _OPT("-") "] "
 	  _ARG("N") "|"_ARG("N/M") "|"
 	  _ARG("N.k.s") "|"_ARG("N/M.k.s") " "
@@ -94,6 +94,8 @@ struct textset cmdtextsets[] = {
 
 	{ "command_options", "ja_JP", 
 	  _OPT("1") "		入力の1行目を削除\n"
+	  _OPT("e") "		入力が何もなかった場合、1行だけ空行を"
+	  			"処理\n"
 	  _OPT("h") "		使い方表示\n"
 	  _OPT("v") "		バージョン表示\n"
 	  _OPT("D") "		デバッグモード\n"
@@ -102,6 +104,7 @@ struct textset cmdtextsets[] = {
 	
 	{ "command_options", "en_", 
 	  _OPT("1") "		Remove the first line of the input.\n"
+	  _OPT("e") "		Process the empty line if no input.\n"
 	  _OPT("h") "		Print the usage message.\n"
 	  _OPT("v") "		Print the version.\n"
 	  _OPT("D") "		Enable the debug mode.\n"
@@ -140,6 +143,9 @@ struct textset cmdtextsets[] = {
 	  _P("retu_select -1 1/3 price.tag")
 	  _S("000001 12800 @")
 	  _S("000002 9800 @")
+	  _P("printf '' | retu_select 1/10")
+	  _P("printf '' | retu_select -e 1/10..NON")
+	  _S("NON NON NON NON NON NON NON NON NON NON")
 	  _P("") },
 
 	TEXTSET_END

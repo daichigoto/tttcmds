@@ -70,6 +70,10 @@ empty_body() {
 		   "$(atf_get_srcdir)/empty.in" \
 		   "$(atf_get_srcdir)/data_without_eor.in" \
 		   "$(atf_get_srcdir)/empty.in"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/empty_3.out \
+		-x "retu_select -e 1/10" \
+		   "$(atf_get_srcdir)/empty.in"
 }
 
 atf_test_case a_with_eor
