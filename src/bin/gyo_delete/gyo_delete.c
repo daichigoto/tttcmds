@@ -30,7 +30,7 @@
 int
 main(int argc, char *argv[])
 {
-	getcmdargs(argc, argv, "a!o!1nNd:@:hvD", 
+	getcmdargs(argc, argv, "a!o!1nNe@:hvD", 
 	           CMDARGS_R_NEED|
 		   CMDARGS_R_ARGARG_TO_SSVSTR|
 		   CMDARGS_R_MINIMUMNUM_IS_0);
@@ -102,17 +102,16 @@ main(int argc, char *argv[])
 	if (FLAG_n)
 		exit(match_or_not);
 
-	if (FLAG_d && match_or_not) {
-		char *def = _str2ssvstr(FLAG_d_ARG);
+	if (FLAG_e && match_or_not) {
 		if (R_ARGC == match_count) {
 			for (int i = 1; i < nf; i++)
-				printf("%s ", def);
-			printf("%s\n", def);
+				printf("%s ", val);
+			printf("%s\n", val);
 		}
 		else {
 			for (int i = match_count+1; i < R_ARGC; i++)
-				printf("%s ", def);
-			printf("%s\n", def);
+				printf("%s ", val);
+			printf("%s\n", val);
 		}
 	}
 
