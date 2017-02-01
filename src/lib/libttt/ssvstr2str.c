@@ -42,6 +42,12 @@ ssvstr2str(char *str, char *ssvstr)
 		*str_p = '\0';
 		return str;
 	}
+	if ('@' == *ssvstr_p && '\n' == *(ssvstr_p + 1) && 
+		'\0' == *(ssvstr_p + 2)) {
+		*str_p++ = '\n';
+		*str_p = '\0';
+		return str;
+	}
 	if ('\\' == *ssvstr_p && '@' == *(ssvstr_p + 1) && 
 		'\0' == *(ssvstr_p + 2)) {
 		*str_p = '@';
