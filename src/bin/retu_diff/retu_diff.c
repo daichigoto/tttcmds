@@ -125,8 +125,13 @@ ssv2ssvlines(char *filename)
 			for (int i = 1; i < p_ssvline->nf; i++) {
 				printf("%s ", p_ssvline->data[i]);
 			}
-			printf("%s\n", p_ssvline->data[p_ssvline->nf]);
-			p_ssvline = p_ssvline->next;
+			if (0 != p_ssvline->nf) {
+				printf("%s\n", 
+					p_ssvline->data[p_ssvline->nf]);
+				p_ssvline = p_ssvline->next;
+			}
+			else
+				break;
 		}
 		while (NULL != p_ssvline);
 	}

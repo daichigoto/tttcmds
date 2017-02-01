@@ -25,7 +25,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#define VERSION "20170131"
+#define VERSION "20170202"
 #define CMDNAME "retu_diff"
 #define ALIAS "retudiff col_diff"
 
@@ -34,6 +34,8 @@
 #define TGT_GYO_PROCESS(GYO_BUFFER,NF) \
 	if (0 != NF) { \
 		p_ssvline = &ssv_firstline; \
+		if (0 == p_ssvline->nf) \
+			goto print; \
 		do { \
 			for (int i = 1; i <= R_ARGC; i++) { \
 				if (0 != strcmp( \
@@ -47,6 +49,7 @@
 		} \
 		while (NULL != p_ssvline); \
 	} \
+print: \
 	if (0 != NF) { \
 		for (int i = 1; i < NF; i++) \
 			printf("%s ", GYO_BUFFER[i]); \

@@ -44,6 +44,12 @@ empty_body() {
 		   "1/10" \
 		   "$(atf_get_srcdir)/empty.in" \
 		   "$(atf_get_srcdir)/empty.in"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/empty_2.out \
+		-x "retu_diff" \
+		   "1/10" \
+		   "$(atf_get_srcdir)/empty.in" \
+		   "$(atf_get_srcdir)/data.ssv"
 }
 
 atf_test_case diff
