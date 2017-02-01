@@ -525,32 +525,36 @@ select_body() {
 		   "$(atf_get_srcdir)/price2.tag"
 }
 
-atf_test_case default
-default_head() {
-	atf_set "descr" "Verify a default output process"
+atf_test_case empty_output
+empty_output_head() {
+	atf_set "descr" "Verify an empty output process"
 }
 
-default_body() {
+empty_output_body() {
 	atf_check -s ignore \
-		-o file:$(atf_get_srcdir)/default_1.out \
+		-o file:$(atf_get_srcdir)/empty_output_1.out \
 		-x "echo |" \
 		   "gyo_select -@ 000000 1. 1/5"
 	atf_check -s ignore \
-		-o file:$(atf_get_srcdir)/default_2.out \
+		-o file:$(atf_get_srcdir)/empty_output_2.out \
 		-x "echo |" \
 		   "gyo_select -@ '  @__ ' 1. 1/5"
 	atf_check -s ignore \
-		-o file:$(atf_get_srcdir)/default_3.out \
+		-o file:$(atf_get_srcdir)/empty_output_3.out \
 		-x "echo |" \
 		   "gyo_select 1.SOMETHING 1/5"
 	atf_check -s ignore \
-		-o file:$(atf_get_srcdir)/default_4.out \
+		-o file:$(atf_get_srcdir)/empty_output_4.out \
 		-x "echo 1 2 3 4 5 |" \
-		   "gyo_select -d '' 1.SOMETHING"
+		   "gyo_select -e 1.SOMETHING"
 	atf_check -s ignore \
-		-o file:$(atf_get_srcdir)/default_5.out \
+		-o file:$(atf_get_srcdir)/empty_output_5.out \
 		-x "echo |" \
-		   "gyo_select -d '' 1.SOMETHING 1/5"
+		   "gyo_select -e 1.SOMETHING 1/5"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/empty_output_6.out \
+		-x "echo |" \
+		   "gyo_select -e -@ 0 1.SOMETHING 1/5"
 }
 
 atf_test_case zero
@@ -602,7 +606,7 @@ atf_init_test_cases()
 	atf_add_test_case remove_first_line
 	atf_add_test_case atmark
 	atf_add_test_case select
-	atf_add_test_case default
+	atf_add_test_case empty_output
 	atf_add_test_case zero
 	atf_add_test_case not_match
 }
