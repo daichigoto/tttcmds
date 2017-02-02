@@ -119,6 +119,8 @@
 	else { \
 		/* OR CONDITION */ \
 		for (int i = 1; i <= match_count; i++) { \
+			if (0 == NF) \
+				goto gyo_match; \
 			if (NF < R_ARGV[i]) \
 				goto gyo_not_match; \
 			if ('!' != R_ARGV_DELIM[i] && \
