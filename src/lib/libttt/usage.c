@@ -32,7 +32,7 @@ static char *indent(char *);
 static char *spacetocomma(char *);
 static int textkeyexists(const char *);
 
-#define	OUT stdout
+#define	OUT stderr
 
 void
 usage(void)
