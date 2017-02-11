@@ -80,7 +80,7 @@ struct textset cmdtextsets[] = {
 	{ "command_options", "ja_JP", 
 	  _OPT("c") " " _ARG("val") 
 	  	"		値が" _ARG("val") 
-				"だった場合にをcheckedとする\n"
+				"だった場合にcheckedとする\n"
 	  _OPT("r") "		前の列の値を参照使用可能(\\1, \\2...)\n"
 	  _OPT("h") "		使い方表示\n"
 	  _OPT("v") "		バージョン表示\n"
