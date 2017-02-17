@@ -1,6 +1,6 @@
 #!/usr/bin/env atf-sh
 # 
-#  Copyright (c) 2016 Daichi GOTO
+#  Copyright (c) 2016,2017 Daichi GOTO
 #  All rights reserved.
 #  
 #  Redistribution and use in source and binary forms, with or without
@@ -286,6 +286,30 @@ format_body() {
  		   "$(atf_get_srcdir)/format_with_eor.in"
 }
 
+atf_test_case locale
+locale_head() {
+	atf_set "descr" "Verify a locale-based process"
+}
+
+locale_body() {
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/locale_01.out \
+		-x "echo 20170101 20170102 20170103 |" \
+		   "env LANG=C retu_dateformat 1/3.%Y%m%d.%a"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/locale_02.out \
+		-x "echo 20170101 20170102 20170103 |" \
+		   "env LANG=C retu_dateformat 1/3.%Y%m%d.%A"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/locale_03.out \
+		-x "echo 20170101 20170102 20170103 |" \
+		   "env LANG=ja_JP.UTF-8 retu_dateformat 1/3.%Y%m%d.%a"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/locale_04.out \
+		-x "echo 20170101 20170102 20170103 |" \
+		   "env LANG=ja_JP.UTF-8 retu_dateformat 1/3.%Y%m%d.%A"
+}
+
 atf_init_test_cases()
 {
 	atf_add_test_case empty
@@ -296,4 +320,5 @@ atf_init_test_cases()
 	atf_add_test_case data_without_eor
 	atf_add_test_case longdata_without_eor
 	atf_add_test_case format
+	atf_add_test_case locale
 }

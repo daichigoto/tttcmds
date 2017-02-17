@@ -39,6 +39,8 @@ main(int argc, char *argv[])
 	int str_len, ssvstr_len, outfmt_len;
 	time_t tval;
 	struct tm *tm;
+
+	(void) setlocale(LC_TIME, "");
 	tm = localtime(&tval);
 
 	str_len = ssvstr_len = BUFFER_SIZE;

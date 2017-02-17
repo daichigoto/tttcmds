@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Daichi GOTO
+ * Copyright (c) 2017 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -112,6 +112,12 @@ struct textset cmdtextsets[] = {
 	  _P2("retu_dateformat 1.%Y%m%d%H%M%S.%s 2.%Y%m%d%H%M%S.%s |")
 	  _P2("retu_dateformat 1.%s.\"%m/%d %H:%M\" 2.%s.\"%m/%d %H:%M\"")
 	  _S("11/09_12.14 11/10_08.54")
+	  _P("cat data1.ssv |")
+	  _P2("retu_dateformat 1/2.%Y%m%d%H%M%S.%A(%a)")
+	  _S("Tuesday(Tue) Wednesday(Wed)")
+	  _P("cat data1.ssv |")
+	  _P2("env LANG=ja_JP.UTF-8 retu_dateformat 1/2.%Y%m%d%H%M%S.%A(%a)")
+	  _S("火曜日(火) 水曜日(水)")
 	  _P("") },
 
 	TEXTSET_END
