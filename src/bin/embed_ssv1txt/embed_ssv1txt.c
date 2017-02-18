@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Daichi GOTO
+ * Copyright (c) 2016,2017 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -30,8 +30,7 @@
 int
 main(int argc, char *argv[])
 {
-	getcmdargs(argc, argv, "t:nhvD", 
-	           CMDARGS_R_NEED|CMDARGS_R_ARGARG_1_NEED);
+	getcmdargs(argc, argv, "t:s:nhvD", CMDARGS_DEFAULT);
 
 	struct stat sb;
 	int tsize = 0, fd, rs = 0, len = 0, match;
@@ -42,12 +41,75 @@ main(int argc, char *argv[])
 	 */
 	if (!FLAG_t)
 		usage();
+	if (!FLAG_s && 0 == R_ARGC)
+		usage();
 	if (-1 == stat(FLAG_t_ARG, &sb))
 		err(errno, "%s", FLAG_t_ARG);
-	
+	if (FLAG_s && -1 == stat(FLAG_s_ARG, &sb))
+		err(errno, "%s", FLAG_s_ARG);
+
+	/*
+	 * swap rule setup
+	 */
+	if (FLAG_s) {
+		FILE *fp;
+		if (NULL == (fp = fopen(FLAG_s_ARG, "r")))
+			err(errno, "%s", FLAG_s_ARG);
+
+		char buf[BUFSIZ], *p, *p2;
+		int gyo = 0, n;
+		struct swaprules *s, *s_s;
+		s = calloc(1, sizeof(struct swaprules));
+		s_s = s;
+
+		while (NULL != fgets(buf, BUFSIZ, fp)) {
+			if (2 <= strlen(buf)) {
+				p = buf;
+				while (isdigit(*p))
+					++p;
+				*p = '\0';
+				errno = 0;
+				n = (int)strtol(buf, (char **)NULL, 10);
+				if (EINVAL == errno)
+					err(errno, "%s", buf);
+				++p;
+				p2 = p;
+				while ('\n' != *p && '\0' != *p)
+					++p;
+				*p = '\0';
+				s->r = n;
+				s->r_arg = calloc(1, 
+					(strlen(p2) + 1) * sizeof(char));
+				strcpy(s->r_arg, p2);
+				s->next = calloc(1, 
+					sizeof(struct swaprules));
+				s = s->next;
+				++gyo;
+			}
+		}
+		fclose(fp);
+
+		R_ARGC = gyo;
+		R_ARGV = calloc(1, (1 + gyo) * sizeof(int));
+		R_ARGV_ARG1 = calloc(1, (1 + gyo) * sizeof(char *));
+		R_ARGV[0] = -1;
+		s = s_s;
+		for (int i = 1; i <= R_ARGC; i++) {
+			R_ARGV[i] = s->r;
+			R_ARGV_ARG1[i] = s->r_arg;
+			if (s->r > R_ARGV_MAX)
+				R_ARGV_MAX = s->r;
+			s = s->next;
+		}
+	}
+
+	if (FLAG_D)
+		printcmdargs();
+
 	/*
 	 * template text file into the template buffer
 	 */
+	stat(FLAG_t_ARG, &sb);
 	tsize = sb.st_size;
 	tbuf = calloc(1, (tsize + 1) * sizeof(char));
 	

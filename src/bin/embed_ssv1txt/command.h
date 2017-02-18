@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Daichi GOTO
+ * Copyright (c) 2016,2017 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -25,7 +25,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#define VERSION "20161230"
+#define VERSION "20170218"
 #define CMDNAME "embed_ssv1txt"
 #define ALIAS "ssv1txt"
 
@@ -33,13 +33,20 @@
 
 #include "ttt.h"
 
+struct swaprules {
+	int r;
+	char *r_arg;
+	struct swaprules *next;
+};
+
 #define TGT_GYO_PROCESS(GYO_BUFFER,NF) \
 	for (int j = 0; j < tsize; j++) { \
 		match = 0; \
 		for (int i = 1; i <= R_ARGC; i++) { \
 			len = strlen(R_ARGV_ARG1[i]); \
 			if (0 == strncmp(R_ARGV_ARG1[i], tbuf + j, len)) { \
-				printf("%s", _ssvstr2str(GYO_BUFFER[R_ARGV[i]])); \
+				printf("%s", _ssvstr2str( \
+					GYO_BUFFER[R_ARGV[i]])); \
 				j += len - 1; \
 				match = 1; \
 				break; \
@@ -48,3 +55,4 @@
 		if (!match) \
 			putchar(*(tbuf + j)); \
 	}	
+

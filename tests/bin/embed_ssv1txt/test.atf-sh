@@ -60,8 +60,28 @@ ssv1txt_n_body() {
 		   "$(atf_get_srcdir)/farm.ssv"
 }
 
+atf_test_case ssv1txt_s
+ssv1txt_s_head() {
+	atf_set "descr" "Verify a ssv data embedding process with -s"
+}
+
+ssv1txt_s_body() {
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/main_1.out \
+		-x "embed_ssv1txt" \
+		   "-t $(atf_get_srcdir)/main.html" \
+		   "-s $(atf_get_srcdir)/swap01.ssv" \
+		   "$(atf_get_srcdir)/data.ssv"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/table_bodytr_1.out \
+		-x "embed_ssv1txt" \
+		   "-t $(atf_get_srcdir)/table_bodytr.html" \
+		   "-s $(atf_get_srcdir)/swap02.ssv" \
+		   "$(atf_get_srcdir)/farm.ssv"
+}
 atf_init_test_cases()
 {
 	atf_add_test_case ssv1txt
 	atf_add_test_case ssv1txt_n
+	atf_add_test_case ssv1txt_s
 }
