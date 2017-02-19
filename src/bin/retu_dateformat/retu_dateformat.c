@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Daichi GOTO
+ * Copyright (c) 2017 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -41,6 +41,8 @@ main(int argc, char *argv[])
 	struct tm *tm;
 
 	(void) setlocale(LC_TIME, "");
+
+	tval = time(NULL);
 	tm = localtime(&tval);
 
 	str_len = ssvstr_len = BUFFER_SIZE;

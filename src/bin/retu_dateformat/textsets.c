@@ -114,10 +114,10 @@ struct textset cmdtextsets[] = {
 	  _S("11/09_12.14 11/10_08.54")
 	  _P("cat data1.ssv |")
 	  _P2("retu_dateformat 1/2.%Y%m%d%H%M%S.%A(%a)")
-	  _S("Tuesday(Tue) Wednesday(Wed)")
+	  _S("Wednesday(Wed) Thursday(Thu)")
 	  _P("cat data1.ssv |")
 	  _P2("env LANG=ja_JP.UTF-8 retu_dateformat 1/2.%Y%m%d%H%M%S.%A(%a)")
-	  _S("火曜日(火) 水曜日(水)")
+	  _S("水曜日(水) 木曜日(木)")
 	  _P("") },
 
 	TEXTSET_END
