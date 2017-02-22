@@ -25,7 +25,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#define VERSION "20170218"
+#define VERSION "20170223"
 #define CMDNAME "embed_ssv1txt"
 #define ALIAS "ssv1txt"
 
@@ -45,6 +45,24 @@ struct swaprules {
 		for (int i = 1; i <= R_ARGC; i++) { \
 			len = strlen(R_ARGV_ARG1[i]); \
 			if (0 == strncmp(R_ARGV_ARG1[i], tbuf + j, len)) { \
+				if (R_ARGV[i] <= NF) \
+					printf("%s", _ssvstr2str( \
+						GYO_BUFFER[R_ARGV[i]])); \
+				j += len - 1; \
+				match = 1; \
+				break; \
+			} \
+		} \
+		if (!match) \
+			putchar(*(tbuf + j)); \
+	}	
+
+#define TGT_GYO_PROCESS_ORG(GYO_BUFFER,NF) \
+	for (int j = 0; j < tsize; j++) { \
+		match = 0; \
+		for (int i = 1; i <= R_ARGC; i++) { \
+			len = strlen(R_ARGV_ARG1[i]); \
+			if (0 == strncmp(R_ARGV_ARG1[i], tbuf + j, len)) { \
 				printf("%s", _ssvstr2str( \
 					GYO_BUFFER[R_ARGV[i]])); \
 				j += len - 1; \
@@ -55,4 +73,3 @@ struct swaprules {
 		if (!match) \
 			putchar(*(tbuf + j)); \
 	}	
-
