@@ -30,10 +30,10 @@
 int
 main(int argc, char *argv[])
 {
-	getcmdargs(argc, argv, "t:s:nhvD", CMDARGS_DEFAULT);
+	getcmdargs(argc, argv, "t:s:m:nhvD", CMDARGS_DEFAULT);
 
 	struct stat sb;
-	int tsize = 0, fd, rs = 0, len = 0, match;
+	int tsize = 0, fd, rs = 0, len = 0, max, m, match;
 	char *tbuf;
 
 	/*
@@ -125,6 +125,16 @@ main(int argc, char *argv[])
 	 */
 	if (FLAG_n && '\n' == tbuf[tsize - 1])
 		tbuf[tsize - 1] = '\0';
+
+	/*
+	 * FLAG_m process
+	 */
+	if (FLAG_m) {
+		errno = 0;
+		max = (int)strtol(FLAG_m_ARG, (char **)NULL, 10);
+		if (EINVAL == errno)
+			err(errno, "%s", FLAG_m_ARG);
+	}
 
 	FILEPROCESS_GYO
 
