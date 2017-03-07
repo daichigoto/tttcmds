@@ -34,6 +34,8 @@ struct textset cmdtextsets[] = {
 
 	{ "command_alias", "en_", ALIAS },
 
+	{ "command_copyright", "en_", "2016,2017 ONGS Inc." },
+
 	{ "command_comment", "ja_JP",
 	  "日時形式を変換して出力" },
 
@@ -43,8 +45,10 @@ struct textset cmdtextsets[] = {
 	{ "command_synopsis", "en_", 
 	  _CMD(CMDNAME) " "
 	  "[" _OPT("hvD") "] [" _OPT("-") "] "
-	  _ARG("N.f1.f2") "|" _ARG("N/M.f1.f2") " "
-	  "[" _ARG("N.f1.f2") "|\n" _ARG("N/M.f1.f2") " " _ETC "] "
+	  _ARG("N.f1.f2") "|" _ARG("N/M.f1.f2") "|"
+	  _ARG("N.f1.f2.val") "|\n" _ARG("N/M.f1.f2.val") " "
+	  "[" _ARG("N.f1.f2") "|" _ARG("N/M.f1.f2") "|" 
+	      _ARG("N.f1.f2.val") "|" _ARG("N/M.f1.f2.val") " " _ETC "]\n"
 	  "[" _ARG("file") " " _ETC "]" },
 
 	{ "command_description", "ja_JP", 
@@ -55,6 +59,24 @@ struct textset cmdtextsets[] = {
 		"フォーマットに変換して出力する。フォーマットは\n\t\t"
 		"strptime(3)に準拠\n"
 	  _ARG("N/M.f1.f2") "\t" _ARG("N.f1.f2") "と同じ処理を" 
+	  	_ARG("M") "列まで適用\n"
+	  _ARG("N.f1.f2.val") "\t" _ARG("N") "列の日付データを" _ARG("f1")
+	  	"フォーマットで読み込み、" _ARG("f2") "\n\t\t"
+		"フォーマットに変換して出力する。フォーマットは\n\t\t"
+		"strptime(3)に準拠。" _ARG("f2") "の値は" _ARG("val")
+		"の指定に従って\n\t\t増減する。"
+		"増減は[+-][0-9]+[SMHdwmy]で指定\n"
+		"\t\t+\t増加\n"
+		"\t\t-\t減少\n"
+		"\t\ty\t年\n"
+		"\t\tm\t月\n"
+		"\t\tw\t週\n"
+		"\t\td\t日\n"
+		"\t\tH\t時\n"
+		"\t\tM\t分\n"
+		"\t\tS\t秒\n"
+	  _OPT("h") "		使い方表示\n"
+	  _ARG("N/M.f1.f2.val") "\t" _ARG("N.f1.f2.val") "と同じ処理を" 
 	  	_ARG("M") "列まで適用\n"
 	  "\n"
 	  "ファイルの指定がないか、-が指定されている場合には標準入力を"
@@ -69,6 +91,23 @@ struct textset cmdtextsets[] = {
 		"based on strptime(3).\n"
 	  _ARG("N/M.f1.f2") "\tProcess " _ARG("N") "th to " _ARG("M")
 		"th columns in the same way as\n\t\t" _ARG("N.f1.f2") ".\n"
+	  _ARG("N.f1.f2.val") "\tConvert the date value of " _ARG("N") 
+	  	"th column to another.\n\t\t" _ARG("f1") " is the src "
+		"format, " _ARG("f2") " is the dst format based\n\t\t"	
+		"on strptime(3) and " _ARG("val") " is a shift value "
+		"applied\n\t\tto " _ARG("f2") " by [+-][0-9]+[SMHdwmy].\n"
+		"\t\t+\tincrements\n"
+		"\t\t-\tdecrements\n"
+		"\t\ty\tyear\n"
+		"\t\tm\tmonth\n"
+		"\t\tw\tweek\n"
+		"\t\td\tday\n"
+		"\t\tH\thour\n"
+		"\t\tM\tminit\n"
+		"\t\tS\tsecond\n"
+	  _ARG("N/M.f1.f2.val") "\tProcess " _ARG("N") "th to " _ARG("M")
+		"th columns in the same way as\n\t\t" _ARG("N.f1.f2.val") 
+		".\n"
 	  "\n"
 	  "If " _ARG("file") " is a single dash (`-') or absent, it reads "
 	  "from the\nstandard input." },
@@ -118,6 +157,12 @@ struct textset cmdtextsets[] = {
 	  _P("cat data1.ssv |")
 	  _P2("env LANG=ja_JP.UTF-8 retu_dateformat 1/2.%Y%m%d%H%M%S.%A(%a)")
 	  _S("水曜日(水) 木曜日(木)")
+	  _P("retu_dateformat 1/2.%Y%m%d%H%M%S.%Y%m%d data1.ssv")
+	  _S("20161109 20161110")
+	  _P("retu_dateformat \\")
+	  _P2("	1.%Y%m%d%H%M%S.%Y%m%d.+7d \\")
+	  _P2("	2.%Y%m%d%H%M%S.%Y%m%d.-1m data1.ssv")
+	  _S("20161116 20161010")
 	  _P("") },
 
 	TEXTSET_END

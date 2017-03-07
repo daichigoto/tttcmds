@@ -25,7 +25,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#define VERSION "20170219"
+#define VERSION "20170306"
 #define CMDNAME "retu_dateformat"
 #define ALIAS "dateformat"
 
@@ -35,6 +35,8 @@ typedef unsigned char u_char;
 #endif
 
 #include "ttt.h"
+
+#include "vary.h"
 
 #define TGT_RETU_PROCESS(RETU_BUFFER,RETU_BUFFER_MAXLEN,INDEX) \
 	if (RETU_BUFFER_MAXLEN > str_len) { \
@@ -60,6 +62,10 @@ typedef unsigned char u_char;
 				str,  \
 				R_ARGV_ARG1[R_INDEX_TO_ARGV[INDEX]], \
 				tm)) { \
+		if (NULL != R_ARGV_ARG3[R_INDEX_TO_ARGV[INDEX]]) \
+			v = vary_append(v, R_ARGV_ARG3 \
+				[R_INDEX_TO_ARGV[INDEX]]); \
+			vary_apply(v, tm); \
 			mktime(tm); \
 			(void)strftime( \
 				str, \
@@ -68,6 +74,7 @@ typedef unsigned char u_char;
 				tm); \
 			str2ssvstr(ssvstr, str); \
 			printf("%s", ssvstr); \
+			vary_destroy(v); \
 		} \
 		else { \
 			printf("%s", RETU_BUFFER); \

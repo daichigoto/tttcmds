@@ -41,14 +41,14 @@ main(int argc, char *argv[])
 	struct tm *tm;
 
 	(void) setlocale(LC_TIME, "");
-
-	tval = time(NULL);
+	time(&tval);
 	tm = localtime(&tval);
 
 	str_len = ssvstr_len = BUFFER_SIZE;
 	str = calloc(1, str_len * sizeof(char));
 	ssvstr = calloc(1, ssvstr_len * sizeof(char));
 
+	struct vary *v = NULL;
 	FILEPROCESS_RETU
 
 	exit(EX_OK);

@@ -1,5 +1,5 @@
 #
-#  Copyright (c) 2016 Daichi GOTO
+#  Copyright (c) 2016,2017 Daichi GOTO
 #  All rights reserved.
 #
 #  Redistribution and use in source and binary forms, with or without
@@ -26,3 +26,17 @@
 #
 
 .include "../Makefile.inc"
+
+DATESRC=	${.CURDIR}/../../contrib/date
+.PATH:		${DATESRC}
+
+FUNCS=		vary
+
+OBJS+=		${FUNCS:S,$,.o,}
+
+CFLAGS+=	-I${DATESRC}
+
+prebuild:
+.for i in ${FUNCS}
+	${CC} ${CFLAGS} -c ${DATESRC}/${i}.c -o ${i}.o
+.endfor
