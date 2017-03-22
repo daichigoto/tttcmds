@@ -25,7 +25,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#define VERSION "20170306"
+#define VERSION "20170322"
 #define CMDNAME "retu_dateformat"
 #define ALIAS "dateformat"
 
@@ -62,10 +62,11 @@ typedef unsigned char u_char;
 				str,  \
 				R_ARGV_ARG1[R_INDEX_TO_ARGV[INDEX]], \
 				tm)) { \
-		if (NULL != R_ARGV_ARG3[R_INDEX_TO_ARGV[INDEX]]) \
-			v = vary_append(v, R_ARGV_ARG3 \
-				[R_INDEX_TO_ARGV[INDEX]]); \
-			vary_apply(v, tm); \
+			if (NULL != R_ARGV_ARG3[R_INDEX_TO_ARGV[INDEX]]) { \
+				v = vary_append(v, R_ARGV_ARG3 \
+						[R_INDEX_TO_ARGV[INDEX]]); \
+				vary_apply(v, tm); \
+			} \
 			mktime(tm); \
 			(void)strftime( \
 				str, \

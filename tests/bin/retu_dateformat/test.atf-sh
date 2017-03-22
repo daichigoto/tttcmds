@@ -327,6 +327,13 @@ shift_body() {
 		   "1.%Y%m%d.%Y%m%d.+7d" \
 		   "2.%Y%m%d.%Y%m%d.+16d" \
 		   "3.%Y%m%d.%Y%m%d.-2m"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/shift_3.out \
+		-x "echo 20170101 20170102 20170103 |" \
+		   "retu_dateformat" \
+		   "1.%Y%m%d.%Y%m%d.+7d" \
+		   "2.%Y%m%d.%Y%m%d.+16d" \
+		   "3.%Y%m%d.%Y%m%d"
 }
 
 atf_init_test_cases()
