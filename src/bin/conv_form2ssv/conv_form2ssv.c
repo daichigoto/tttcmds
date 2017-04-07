@@ -29,7 +29,7 @@
 
 static void proc_get();
 static void proc_post();
-static void proc_application_x_www_form_urlencoded(char *);
+static void proc_application_x_www_form_urlencoded(char *, int);
 static void proc_multipart_form_data(char *, int);
 
 static char *env_p;
@@ -62,7 +62,7 @@ proc_get()
 	if (NULL == env_p)
 		usage();
 
-	proc_application_x_www_form_urlencoded(env_p);
+	proc_application_x_www_form_urlencoded(env_p, strlen(env_p));
 }
 
 static void
@@ -88,7 +88,7 @@ proc_post()
 		rs += read(STDIN_FILENO, buf+rs, bufsize-rs);
 
 	if (0 == strcmp("application/x-www-form-urlencoded", env_p))
-		proc_application_x_www_form_urlencoded(buf);
+		proc_application_x_www_form_urlencoded(buf, bufsize);
 	else if (0 == strncmp("multipart/form-data", env_p, 19))
 		proc_multipart_form_data(buf, bufsize);
 	else
@@ -96,9 +96,9 @@ proc_post()
 }
 
 static void
-proc_application_x_www_form_urlencoded(char *p)
+proc_application_x_www_form_urlencoded(char *p, int len)
 {
-	char buf[4096];
+	char buf[1+len];
 	unsigned char c;
 	char *s;
 	s = buf;
@@ -190,9 +190,9 @@ proc_application_x_www_form_urlencoded(char *p)
 static void
 proc_multipart_form_data(char *p, int len)
 {
-	char key[4096], *k;
-	char content[4096], *c;
-	char boundary[4096], *b;
+	char key[1+len], *k;
+	char content[1+len], *c;
+	char boundary[1+len], *b;
 	int boundary_len, rs = 0;
 
 	/*
@@ -239,7 +239,7 @@ proc_multipart_form_data(char *p, int len)
 		printf("%s ", _str2ssvstr(key));
 	
 		/*
-		 * grab the content
+		 * grab the , intcontent
 		 */
 		while ('\0' != *p && 0 != strncmp("\r\n\r\n", p, 4)) {
 			++p;

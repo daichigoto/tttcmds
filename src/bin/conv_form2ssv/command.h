@@ -25,7 +25,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#define VERSION "20170119"
+#define VERSION "20170408"
 #define CMDNAME "conv_form2ssv"
 #define ALIAS "form2ssv"
 
