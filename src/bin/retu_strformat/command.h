@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Daichi GOTO
+ * Copyright (c) 2016,2017 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -25,9 +25,9 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#define VERSION "20161125"
+#define VERSION "20170407"
 #define CMDNAME "retu_strformat"
-#define ALIAS "strformat"
+#define ALIAS "strformat strfmt"
 
 #include "ttt.h"
 
