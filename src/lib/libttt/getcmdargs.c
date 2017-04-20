@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Daichi GOTO
+ * Copyright (c) 2016,2017 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -115,7 +115,6 @@ getcmdargs(const int argc, char *argv[], const char *optargs, int flags)
 	cmdargs.a_argc = 0;
 	cmdargs.a_argv = calloc(1, 2 * sizeof(char *));
 
-	r_argv_max = r_argv_addition_size;
 	cmdargs.r_argv_max = 0;
 	cmdargs.r_argv = calloc(1, r_argv_max * sizeof(int));
 	cmdargs.r_argv_arg1 = calloc(1, r_argv_max * sizeof(char *));
@@ -130,7 +129,6 @@ getcmdargs(const int argc, char *argv[], const char *optargs, int flags)
 		cmdargs.r_index_to_argv[i] = R_INDEX_IS_NONE;
 	}	
 	cmdargs.r_index_max = 0;
-
 	/*
 	 * Command name
 	 */
@@ -428,6 +426,38 @@ retu_analysis:
 			 * Column range pre process
 			 */
 column_range_process:
+			/*
+			 * Array expansion
+			 */
+			if (range) {
+				if (cmdargs.r_argv[1+cmdargs.r_argc] <=
+				            range) {
+					j = cmdargs.r_argv[
+						cmdargs.r_argc+1] + 1;
+					if (cmdargs.r_argc >
+					    r_argv_max - (range - j) - 2) {
+						ARRAY_EXPANSION(r_argv_max,
+							r_argv_max + 
+							range - j + 
+							r_argv_addition_size);
+						r_argv_max += range - j +
+							r_argv_addition_size;
+					}
+				}
+				else {
+					j = cmdargs.r_argv
+						[cmdargs.r_argc+1] - 1;
+					if (cmdargs.r_argc >
+					    r_argv_max - (j - range) - 2) {
+						ARRAY_EXPANSION(r_argv_max,
+							r_argv_max + 
+							j - range +
+							r_argv_addition_size);
+						r_argv_max += j - range +
+							r_argv_addition_size;
+					}
+				}
+			}
 			if (range) {
 				k = cmdargs.r_argc+2;
 				if (cmdargs.r_argv[1+cmdargs.r_argc] <=
