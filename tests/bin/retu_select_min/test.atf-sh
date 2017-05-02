@@ -44,6 +44,10 @@ min_body() {
 		-o file:$(atf_get_srcdir)/min_3.out \
 		-x "retu_select_min 3 1 2" \
 		   "$(atf_get_srcdir)/date.ssv"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/min_4.out \
+		-x "retu_select_min -@ novalue 3 1 2 4" \
+		   "$(atf_get_srcdir)/date.ssv"
 }
 
 atf_test_case min_numerically

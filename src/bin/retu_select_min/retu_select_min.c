@@ -64,7 +64,7 @@ main(int argc, char *argv[])
 			printf("%s%s", _str2ssvstr(FLAG_AT_ARG), \
 				DELIMITER); \
 		else \
-			printf("@%s", DELIMITER); \
+			printf("%s%s", min[I], DELIMITER); \
 	} else { \
 		if (FLAG_N && NULL != R_ARGV_ARG1[I]) { \
 			printf(numfmt[I], nummin[I] + numinc[I]); \
