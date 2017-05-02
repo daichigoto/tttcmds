@@ -25,7 +25,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#define VERSION "20170125"
+#define VERSION "20170502"
 #define CMDNAME "retu_select_max"
 #define ALIAS "retusel_max col_select_max"
 

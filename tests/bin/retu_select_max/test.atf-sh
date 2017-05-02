@@ -44,6 +44,10 @@ max_body() {
 		-o file:$(atf_get_srcdir)/max_3.out \
 		-x "retu_select_max 3 1 2" \
 		   "$(atf_get_srcdir)/date.ssv"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/max_4.out \
+		-x "retu_select_max -@ novalue 3 1 2 4" \
+		   "$(atf_get_srcdir)/date.ssv"
 }
 
 atf_test_case max_numerically
