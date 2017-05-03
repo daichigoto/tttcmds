@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Daichi GOTO
+ * Copyright (c) 2016,2017  Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -25,7 +25,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#define VERSION "20161104"
+#define VERSION "20170503"
 #define CMDNAME "conv_ssv2ssv"
 #define ALIAS "ssv2ssv"
 
@@ -51,15 +51,40 @@
 #define TGT_GYO_PROCESS(GYO_BUFFER,NF) \
 	if (FILEPROCESS_GYO_FILESIZE_IS_ZERO) \
 		goto tgt_gyo_process_end; \
-	for (i = 1; i < retumax; i++) \
-		if (i > NF) \
+	if (FLAG_w) { \
+		j = 0; \
+		for (i = 1; i <= NF; i++) { \
+			printf("%s", GYO_BUFFER[i]); \
+			++j; \
+			if (j == wrap) { \
+				if (i != NF) { \
+					j = 0; \
+					printf("\n"); \
+				} \
+			} \
+			else \
+				printf(" "); \
+		} \
+		++j; \
+		while (j < wrap) { \
 			printf("@ "); \
-		else \
-			printf("%s ", GYO_BUFFER[i]); \
-	if (retumax != 0) { \
-		if (i > NF) \
-			printf("@\n"); \
-		else \
-			printf("%s\n", GYO_BUFFER[retumax]); \
+			++j; \
+		} \
+		if (j == wrap) \
+			printf("@"); \
+		printf("\n"); \
+	} \
+	else { \
+		for (i = 1; i < retumax; i++) \
+			if (i > NF) \
+				printf("@ "); \
+			else \
+				printf("%s ", GYO_BUFFER[i]); \
+		if (retumax != 0) { \
+			if (i > NF) \
+				printf("@\n"); \
+			else \
+				printf("%s\n", GYO_BUFFER[retumax]); \
+		} \
 	} \
 tgt_gyo_process_end:

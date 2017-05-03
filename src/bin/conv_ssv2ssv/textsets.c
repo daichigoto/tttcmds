@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Daichi GOTO
+ * Copyright (c) 2016,2017 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -34,6 +34,8 @@ struct textset cmdtextsets[] = {
 
 	{ "command_alias", "en_", ALIAS },
 
+	{ "command_copyright", "en_", "2017 ONGS Inc." },
+
 	{ "command_comment", "ja_JP",
 	  "SSVデータを正規SSVデータへ変換して出力" },
 
@@ -42,6 +44,7 @@ struct textset cmdtextsets[] = {
 
 	{ "command_synopsis", "en_", 
 	  _CMD(CMDNAME) " "
+	  "[" _OPT("w") " " _ARG("cols") "] "
 	  "[" _OPT("hvD") "] [" _OPT("-") "] "
 	  "[" _ARG("file") " " _ETC "]" },
 
@@ -55,6 +58,7 @@ struct textset cmdtextsets[] = {
 	  "from the standard input." },
 
 	{ "command_options", "ja_JP", 
+	  _OPT("w") " " _ARG("cols") "\t\t指定した列数の後で折り返す\n"
 	  _OPT("h") "		使い方表示\n"
 	  _OPT("v") "		バージョン表示\n"
 	  _OPT("D") "		デバッグモード\n"
@@ -62,6 +66,8 @@ struct textset cmdtextsets[] = {
 	  _ARG("file")"\t	ファイルを指定" },
 	
 	{ "command_options", "en_", 
+	  _OPT("w") " " _ARG("cols") "\t\tWrap lines after the "
+	  			"specified column.\n"
 	  _OPT("h") "		Print the usage message.\n"
 	  _OPT("v") "		Print the version.\n"
 	  _OPT("D") "		Enable the debug mode.\n"
@@ -86,6 +92,13 @@ struct textset cmdtextsets[] = {
 	  _S("1 2 3 4 5 6 7 8 9")
 	  _S("a b c d @ @ @ @ @")
 	  _S("@ a b c d @ @ @ @")
+	  _P("conv_ssv2ssv -w 4 data1.ssv")
+	  _S("1 2 3 4")
+	  _S("5 6 7 8")
+	  _S("9 @ @ @")
+	  _S("a b c d")
+	  _S("@ a b c")
+	  _S("d @ @ @")
 	  _P("") },
 
 	TEXTSET_END

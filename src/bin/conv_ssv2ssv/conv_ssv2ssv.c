@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Daichi GOTO
+ * Copyright (c) 2016,2017 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -30,14 +30,24 @@
 int
 main(int argc, char *argv[])
 {
-	getcmdargs(argc, argv, "hvD",
+	getcmdargs(argc, argv, "w:hvD",
 	           CMDARGS_R_NONE|CMDARGS_STDIN_TO_TMPFILE);
+
+	int wrap = 0;
+	if (FLAG_w) {
+		errno = 0;
+		wrap = strtoll(FLAG_w_ARG, (char **)NULL, 10);
+		if (EINVAL == errno)
+			usage();
+		if (wrap < 1)
+			usage();
+	}
 
 	int retu = 0, retumax = -1;
 	char p;
 	FILEPROCESS_CHAR
 
-	int i;
+	int i, j;
 	FILEPROCESS_GYO
 
 	getcmdargs_unlinktmpf();

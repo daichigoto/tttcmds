@@ -1,6 +1,6 @@
 #!/usr/bin/env atf-sh
 # 
-#  Copyright (c) 2016 Daichi GOTO
+#  Copyright (c) 2016,2017 Daichi GOTO
 #  All rights reserved.
 #  
 #  Redistribution and use in source and binary forms, with or without
@@ -227,6 +227,25 @@ some_stdins_body() {
 		   "- - -"
 }
 
+atf_test_case wrap
+wrap_head() {
+	atf_set "descr" "Verify a wrap process"
+}
+
+wrap_body() {
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/wrap_1.out \
+		-x "conv_ssv2ssv -w 1 $(atf_get_srcdir)/data_with_eor.in"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/wrap_2.out \
+		-x "conv_ssv2ssv -w 5 $(atf_get_srcdir)/data_with_eor.in"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/wrap_3.out \
+		-x "conv_ssv2ssv -w 7 $(atf_get_srcdir)/data_with_eor.in"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/wrap_4.out \
+		-x "conv_ssv2ssv -w 100 $(atf_get_srcdir)/data_with_eor.in"
+}
 atf_init_test_cases()
 {
 	atf_add_test_case empty
@@ -238,4 +257,5 @@ atf_init_test_cases()
 	atf_add_test_case longdata_without_eor
 	atf_add_test_case diff_retu_without_eor
 	atf_add_test_case some_stdins
+	atf_add_test_case wrap
 }
