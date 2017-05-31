@@ -35,7 +35,7 @@
 #include <db.h>
 #endif
 
-char *getatmarkline(int count);
+char *getatmarkline(int, char *);
 int retucnt(char *);
 void strtoargv(char *[], char *);
 void setcmdargs_from_FILENAME_RETU_RETU(struct tttcmdargs *,

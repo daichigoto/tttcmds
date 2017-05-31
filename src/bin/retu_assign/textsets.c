@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Daichi GOTO
+ * Copyright (c) 2017 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -34,6 +34,8 @@ struct textset cmdtextsets[] = {
 
 	{ "command_alias", "en_", ALIAS },
 
+        { "command_copyright", "en_", "2016,2017 ONGS Inc." },
+
 	{ "command_comment", "ja_JP", "列に値を割り当てる" },
 
 	{ "command_comment", "en_",
@@ -41,13 +43,14 @@ struct textset cmdtextsets[] = {
 
 	{ "command_synopsis", "en_", 
 	  _CMD(CMDNAME) " " 
+	  "[" _OPT("@") " " _ARG("val") "] "
 	  "[" _OPT("hvD") "] [" _OPT("-") "] " 
 	  _ARG("N.a") "|" _ARG("N.p.s") "|" _ARG("N!p!s") "|"
-	  _ARG("N.f.K.A")  "|" _ARG("N/M.a") "|" _ARG("N/M.p.s") "|\n"
-	  _ARG("N/M!p!s") "|" _ARG("N/M.f.K.A") " "
+	  _ARG("N.f.K.A")  "|" _ARG("N/M.a") "|\n" 
+	  _ARG("N/M.p.s") "|" _ARG("N/M!p!s") "|" _ARG("N/M.f.K.A") " "
 	  "[" _ARG("N.a") "|" _ARG("N.p.s") "|" _ARG("N!p!s") "|" 
-	      _ARG("N.f.K.A") "|" _ARG("N/M.a") "|" _ARG("N/M.p.s") "|" 
-	      _ARG("N/M!p!s") "|\n" _ARG("N/M.f.K.A") " " _ETC "] "
+	      _ARG("N.f.K.A") "|" _ARG("N/M.a") "|" _ARG("N/M.p.s") "|\n" 
+	      _ARG("N/M!p!s") "|" _ARG("N/M.f.K.A") " " _ETC "] "
 	  "[" _ARG("file") " " _ETC "]" },
 
 	{ "command_description", "ja_JP", 
@@ -118,6 +121,8 @@ struct textset cmdtextsets[] = {
 	  "reads from the\nstandard input." },
 
 	{ "command_options", "ja_JP", 
+	  _OPT("@") " " _ARG("val") "\t\t結合代入で値がなかった場合に"
+	  			"出力する値\n\t\t(デフォルトは@)\n"
 	  _OPT("h") "		使い方表示\n"
 	  _OPT("v") "		バージョン表示\n"
 	  _OPT("D") "		デバッグモード\n"
@@ -125,6 +130,9 @@ struct textset cmdtextsets[] = {
 	  _ARG("file") "\t	ファイルを指定" },
 	
 	{ "command_options", "en_", 
+	  _OPT("@") " " _ARG("val") "\t\tSpecify the " _ARG("val") " as "
+	  			"output value if the assignment "
+				"\n\t\tvalues are @ (default is @).\n"
 	  _OPT("h") "		Print the usage message.\n"
 	  _OPT("v") "		Print the version.\n"
 	  _OPT("D") "		Enable the debug mode.\n"
@@ -177,13 +185,13 @@ struct textset cmdtextsets[] = {
 	  _S("000005 000005 000005 230")
 	  _S("000100 000100 000100 0")
 	  _P("retu_select 1 1 1 2 sales.ssv |") 
-	  _P2("retu_assign 2:name.ssv:1:2 3:farm.ssv:1:2,3") 
+	  _P2("retu_assign -@ NONE 2:name.ssv:1:2 3:farm.ssv:1:2,3") 
 	  _S("000003 BANANA INDIA PHILIPPINES 100")
 	  _S("000001 APPLE CHINA U.S. 220")
 	  _S("000002 MIKAN JAPAN U.K. 120")
 	  _S("000004 BLUEBERRY U.S. CANADA 0")
 	  _S("000005 MELON CHINA TURKEY 230")
-	  _S("000100 @ @ @ 0")
+	  _S("000100 NONE NONE NONE 0")
 	  _P("") },
 
 	TEXTSET_END

@@ -25,7 +25,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#define VERSION "20170115"
+#define VERSION "20170531"
 #define CMDNAME "retu_assign"
 #define ALIAS "assign col_assign"
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Daichi GOTO
+ * Copyright (c) 2016,2017 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -28,14 +28,27 @@
 #include "command.h"
 
 char *
-getatmarkline(int count)
+getatmarkline(int count, char *val)
 {
-	char *buf = calloc(1, sizeof(char) * (count * 2));
+	char *at;
+	int at_len;
+	if (NULL == val) {
+		at = "@";
+		at_len = 1;
+	}
+	else {
+		at = val;
+		at_len = strlen(at);
+	}
+
+	char *buf = calloc(1, sizeof(char) * (at_len * count * 2));
 	char *p;
 	p = buf;
+
 	for (int i = 0; i < count; i++) {
-		*p = '@';
-		++p;
+		strncpy(p, at, at_len);
+		p += at_len;
+
 		*p = ' ';
 		++p;
 	}

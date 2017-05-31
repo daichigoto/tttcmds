@@ -30,10 +30,14 @@
 int
 main(int argc, char *argv[])
 {
-	getcmdargs(argc, argv, "hvD",
+	getcmdargs(argc, argv, "@:hvD",
 	           CMDARGS_R_NEED|
 		   CMDARGS_R_ARGARG_1_NEED|
 		   CMDARGS_R_ARGARG_TO_SSVSTR); 
+
+	char *at = "@";
+	if (FLAG_AT)
+		at = _str2ssvstr(FLAG_AT_ARG);
 
 	/*
 	 * process mode assortment
@@ -104,8 +108,8 @@ main(int argc, char *argv[])
 
 		hash_key.data = "\0";
 		hash_key.size = 1;
-		hash_val.data = getatmarkline(r_argc - 1);
-		hash_val.size = (r_argc - 1) * 2;
+		hash_val.data = getatmarkline(r_argc - 1, at);
+		hash_val.size = strlen(hash_val.data);
 
 		hashtables[i]->put(hashtables[i], &hash_key, &hash_val, 0);
 
