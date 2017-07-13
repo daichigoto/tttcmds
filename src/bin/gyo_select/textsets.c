@@ -78,6 +78,8 @@ struct textset cmdtextsets[] = {
 	  			"よりも小さい\n"
 	  _ARG("N/M=key") "\t	" _ARG("N=key") "と同じ処理を" _ARG("M") 
 	  			"例まで適用\n"
+	  _ARG("N/M!key") "\t	" _ARG("N!key") "と同じ処理を" _ARG("M") 
+	  			"例まで適用\n"
 	  _ARG("N/M>key") "\t	" _ARG("N>key") "と同じ処理を" _ARG("M") 
 	  			"例まで適用\n"
 	  _ARG("N/M<key") "\t	" _ARG("N<key") "と同じ処理を" _ARG("M") 
@@ -115,6 +117,9 @@ struct textset cmdtextsets[] = {
 	  _ARG("N/M=key") "\t	Process the " _ARG("N") "th to " 
 	  			_ARG("M") "th columns in the same way\n"
 				"\t\tas " _ARG("N=key") ".\n" 
+	  _ARG("N/M!key") "\t	Process the " _ARG("N") "th to " 
+	  			_ARG("M") "th columns in the same way\n"
+				"\t\tas " _ARG("N!key") ".\n" 
 	  _ARG("N/M>key") "\t	Process the " _ARG("N") "th to " 
 	  			_ARG("M") "th columns in the same way\n"
 				"\t\tas " _ARG("N>key") ".\n" 
