@@ -19,11 +19,11 @@ Installation
 
 ### required packages installation
 
-* FreeBSD 11.0
+* FreeBSD 11.x
 
         sudo pkg install kyua
 
-* Darwin 16.0.0 (you need [brew](http://brew.sh/))
+* Darwin 16.0.0 (you need a [brew](http://brew.sh/))
 
         brew install bsdmake
         brew install kyua
@@ -38,7 +38,7 @@ Installation
 
 ### build and install
 
-* FreeBSD 11.0
+* FreeBSD 11.x
 
         make clean build
         sudo make install
