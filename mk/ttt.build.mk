@@ -224,7 +224,7 @@ clean:
 .elif ${WORKPLACE} == "/tests"
 TARGETDIRS!=	${FIND} . -type d -maxdepth 1 | ${SED} 's,^[.][/]*,,'
 test:
-	${KYUA} $@
+	${ENV} PATH=${BINDIR}:${PATH} ${KYUA} $@
 build:
 	cd ${SRCDIR}; make $@
 clean: 
@@ -236,7 +236,7 @@ report:
 .elif ${WORKPLACE} == "/tests/bin"
 TARGETDIRS!=	${FIND} . -type d -maxdepth 1 | ${SED} 's,^[.][/]*,,'
 test: 
-	${KYUA} $@
+	${ENV} PATH=${BINDIR}:${PATH} ${KYUA} $@
 build:
 	cd ${SRCDIR}/bin; make $@
 clean:
