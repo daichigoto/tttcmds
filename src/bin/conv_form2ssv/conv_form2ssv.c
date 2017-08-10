@@ -27,8 +27,8 @@
 
 #include "command.h"
 
-static void proc_get();
-static void proc_post();
+static void proc_get(void);
+static void proc_post(void);
 static void proc_application_x_www_form_urlencoded(char *, int);
 static void proc_multipart_form_data(char *, int);
 
