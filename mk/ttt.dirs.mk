@@ -1,5 +1,5 @@
 # 
-#  Copyright (c) 2016 Daichi GOTO
+#  Copyright (c) 2016,2017 Daichi GOTO
 #  All rights reserved.
 #  
 #  Redistribution and use in source and binary forms, with or without
@@ -29,13 +29,16 @@
 . if exists(${.CURDIR}/mk/ttt.build.mk)
 TOPDIR=		${.CURDIR}
 . elif exists(${.CURDIR}/../mk/ttt.build.mk)
-TOPDIR=		${.CURDIR}/..
+TOPDIR=		${.CURDIR:C,/[^/]*$,,}
 . elif exists(${.CURDIR}/../../mk/ttt.build.mk)
-TOPDIR=		${.CURDIR}/../..
+TOPDIR=		${.CURDIR:C,/[^/]*/[^/]*$,,}
 . elif exists(${.CURDIR}/../../../mk/ttt.build.mk)
-TOPDIR=		${.CURDIR}/../../..
+TOPDIR=		${.CURDIR:C,/[^/]*/[^/]*/[^/]*$,,}
 . endif
 .endif
+
+WORKPLACE=	${.CURDIR:S,${TOPDIR},,:C,^$,/,}
+DIRNAME=	${WORKPLACE:C,${WORKPLACE:C,[^/]*$,,},,}
 
 BINDIR?=	${TOPDIR}/bin
 LIBDIR?=	${TOPDIR}/lib

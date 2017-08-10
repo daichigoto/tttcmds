@@ -1,5 +1,5 @@
 # 
-#  Copyright (c) 2016 Daichi GOTO
+#  Copyright (c) 2016,2017 Daichi GOTO
 #  All rights reserved.
 #  
 #  Redistribution and use in source and binary forms, with or without
@@ -66,7 +66,6 @@ CFLAGS=		-I. \
 		-Wno-string-plus-int \
 		-Wno-unused-const-variable \
 		-Wno-incompatible-pointer-types-discards-qualifiers
-
 .if ${OS} == "Linux"
 CFLAGS+=	-Wno-system-headers \
 		-lbsd \
@@ -74,115 +73,197 @@ CFLAGS+=	-Wno-system-headers \
 .elif ${OS} == "Darwin"
 CFLAGS+=	-Wno-system-headers
 .endif
-
 .if defined(DEBUG)
 CFLAGS+=	-g -O0
 .endif
 
-.if !defined(OUT)
-OUT!=		${BASENAME} $$(pwd)
-.endif
+#			TARGET	build	clean	test	report
+# tttcmd/			OK	OK	OK	OK
+#	bin/			-	-	-	-
+#	include/		-	-	-	-
+#	lib/			-	-	-	-
+#	mk/			-	-	-	-
+#	src/			OK	OK	OK	-
+#		bin/		OK	OK	OK	-
+#			cmd/	OK	OK	OK	-
+#		contrib/	-	-	-	-
+#		include/	OK	OK	-	-
+#		lib/		OK	OK	-	-
+#			libttt/	OK	OK	-	-
+#	tests/			OK	OK	OK	OK
+#		bin/		OK	OK	OK	OK
+#			cmd/	OK	OK	OK	OK
 
-.if !defined(OBJS)
-OBJS!=		${LS} | ${GREP} '[.]c$$' 2> /dev/null | ${SED} 's/.c$$/.o/g'
-.endif
-
-OBJS?=		${OUT}.o
-CORE?=		${OUT}.core
-CLEANFILES?=	${OUT} ${BINDIR}/${OUT} ${OBJS} ${CORE} ${SLIB} ${DLIB}
-
-# Directory operation
-.if ${OBJS} == "" && !defined(TGTDIRS)
-TGTDIRS!=	${FIND} . -type d | ${SED} 's,^[.][/]*,,'
-.endif
-
-.if defined(TGTDIRS)
+# /
+.if ${WORKPLACE} == "/"
 build:
-. for dir in ${TGTDIRS}
-	cd ${dir}; ${MAKE}
-. endfor
-
+	cd ${SRCDIR}; make $@
 clean:
-. for dir in ${TGTDIRS}
-	cd ${dir}; ${MAKE} $@
-. endfor
-.endif
+	cd ${SRCDIR}; make $@
+test:
+	cd ${TESTDIR}; make $@
+report:
+	cd ${TESTDIR}; make $@
 
-.SUFFIXES:	.o .c
+# /src
+.elif ${WORKPLACE} == "/src"
+build:
+	cd ${SRCDIR}/bin; ${MAKE} $@
+clean:
+	cd ${SRCDIR}/bin; ${MAKE} $@
+test: 
+	cd ${TESTDIR}; ${MAKE} $@
 
-# Library build
-LIBVERSION?=	0
-.if ${OS} == "Darwin"
-DLIB?=		${LIBDIR}/${OUT}.${LIBVERSION}.dylib
+# /src/bin 
+.elif ${WORKPLACE} == "/src/bin"
+TARGETDIRS!=	${FIND} . -type d -maxdepth 1 | ${SED} 's,^[.][/]*,,'
+build:
+	cd ${SRCDIR}/include; ${MAKE} $@
+	cd ${SRCDIR}/lib; ${MAKE} $@
+	make build-recursive
+clean: 
+	cd ${SRCDIR}/include; ${MAKE} $@
+	cd ${SRCDIR}/lib; ${MAKE} $@
+	make clean-recursive
+test: 
+	cd ${TESTDIR}/bin; ${MAKE} $@
+
+# /src/bin/cmds
+.elif ${WORKPLACE:C,/[^/]*$,,} == "/src/bin"
+. if !defined(OBJS)
+OBJS!=		${LS} | ${GREP} '[.]c$$' 2> /dev/null | ${SED} 's/.c$$/.o/g'
+. endif
+CLEANFILES?=	${DIRNAME} ${BINDIR}/${DIRNAME} ${OBJS} ${DIRNAME}.core
 LIBOBJS?=	${SRCDIR}/lib/libttt/*.o
-.else
-SLIB?=		${LIBDIR}/${OUT}.a
-DLIB?=		${LIBDIR}/${OUT}.so.${LIBVERSION}
-LIBOBJS?=	${LIBDIR}/libttt.a
-
-.endif
-.if ${OUT:Nlib*} == ""
+ALIAS!=		${GREP} '^\#define ALIAS' command.h 2> /dev/null | \
+		${SED} 's/[^"]*"\([^"]*\)"[^"]*/\1/'
+. if ${ALIAS} != ""
+CLEANFILES+=	${ALIAS:S,^,${BINDIR}/,}
+. endif
+. if !target(build)
+build: ${DIRNAME}
+. endif
+${DIRNAME}: ${OBJS}
+	${RM} -f ${BINDIR}/${DIRNAME}
+	${CC} ${CFLAGS} -o ${BINDIR}/${DIRNAME} ${OBJS} ${LIBOBJS}
+	${CHMOD} ${BINPERM} ${BINDIR}/${DIRNAME}
+. if ${OS} != "Darwin"
+.  if !defined(DEBUG)
+	${OBJCOPY} -S ${BINDIR}/${DIRNAME}
+.  endif
+. endif
+. if ${ALIAS} != ""
+.  for i in ${ALIAS}
+	${TEST} -L ${BINDIR}/${i} && ${RM} ${BINDIR}/${i} || ${TRUE}
+	cd ${BINDIR}; ${LN} -s ${DIRNAME} ${i}
+.  endfor
+. endif
+. if exists(command.h)
+.c.o: command.h textsets.c
+	${MAKE} prebuild 2> /dev/null || true
+	${CC} ${CFLAGS} -c $< -o $@
+. else
 .c.o:
-	${CC} ${CFLAGS} -fPIC -c $< -o $@
+	${MAKE} prebuild 2> /dev/null || true
+	${CC} ${CFLAGS} -c $< -o $@
+. endif
+. if !target(clean)
+clean:
+	${RM} -f ${CLEANFILES}
+. endif
+test: build
+. if exists(${TESTDIR}/${WORKPLACE:C,^/src/,,})
+	cd ${TESTDIR}/${WORKPLACE:C,^/src/,,}; ${MAKE} $@
+. endif
 
-${OUT}: ${OBJS}
-.if exists(${SLIB})
-	${RM} -f ${SLIB}
-.endif
-.if exists(${DLIB})
-	${RM} -f ${DLIB}
-.endif
+# /src/lib
+.elif ${WORKPLACE} == "/src/lib"
+TARGETDIRS!=	${FIND} . -type d -maxdepth 1 | ${SED} 's,^[.][/]*,,'
+build: build-recursive
+clean: clean-recursive
+
+# /usr/include
+.elif ${WORKPLACE} == "/src/include"
+OBJS!=		${LS} | ${GREP} '[.]h$$' 2> /dev/null
+build:
+.for i in ${OBJS}
+	${CP} ${i} ${INCLUDEDIR}/${i}
+	${CHMOD} ${INCLUDEPERM} ${INCLUDEDIR}/${i}
+.endfor
+clean:
+.for i in ${OBJS}
+	${RM} -f ${INCLUDEDIR}/${i}
+.endfor
+
+# /src/lib/libttt
+.elif ${WORKPLACE} == "/src/lib/libttt"
+OBJS!=		${LS} | ${GREP} '[.]c$$' 2> /dev/null | ${SED} 's/.c$$/.o/g'
+LIBVERSION?=	0
+. if ${OS} == "Darwin"
+DLIB?=		${LIBDIR}/${DIRNAME}.${LIBVERSION}.dylib
+LIBOBJS?=	${SRCDIR}/lib/${DIRNAME}/*.o
+. else
+SLIB?=		${LIBDIR}/${DIRNAME}.a
+DLIB?=		${LIBDIR}/${DIRNAME}.so.${LIBVERSION}
+LIBOBJS?=	${SRCDIR}/lib/${DIRNAME}/*.o
+. endif
+build: ${OBJS}
+	${RM} -f ${SLIB} ${DLIB}
 	${CC} ${CFLAGS} -o ${DLIB} -shared ${OBJS}
 	${CHMOD} ${LIBPERM} ${DLIB}
 . if ${OS} != "Darwin"
 	${AR} -crv ${SLIB} ${OBJS}
 	${CHMOD} ${LIBPERM} ${SLIB}
 . endif
-
-.else
-
-# Command build
-.if exists(command.h) && exists(textsets.c)
-build: ${OUT}
-
-.c.o: command.h textsets.c
-.else
-.c.o: 
-.endif
-	${MAKE} prebuild 2> /dev/null || true
-	${CC} ${CFLAGS} -c $< -o $@
-
-ALIAS!=		${GREP} '^\#define ALIAS' command.h 2> /dev/null | \
-		${SED} 's/[^"]*"\([^"]*\)"[^"]*/\1/'
-
-. if ${ALIAS} != ""
-CLEANFILES+=	${ALIAS:S,^,${BINDIR}/,}
-. endif
-
-${OUT}: ${OBJS}
-.if exists(${BINDIR}/${OUT})
-	${RM} -f ${BINDIR}/${OUT}
-.endif
-	${CC} ${CFLAGS} -o ${BINDIR}/${OUT} ${OBJS} ${LIBOBJS}
-	${CHMOD} ${BINPERM} ${BINDIR}/${OUT}
-. if ${OS} != "Darwin"
-.  if !defined(DEBUG)
-	${OBJCOPY} -S ${BINDIR}/${OUT}
-.  endif
-. endif
-. if ${ALIAS} != ""
-.  for i in ${ALIAS}
-	${TEST} -L ${BINDIR}/${i} && ${RM} ${BINDIR}/${i} || ${TRUE}
-	cd ${BINDIR}; ${LN} -s ${OUT} ${i}
-.  endfor
-. endif
-.endif
-
-# Clean operation
-.if !target(clean)
+.c.o:
+	${CC} ${CFLAGS} -fPIC -c $< -o $@
 clean:
-	${RM} -f ${CLEANFILES}
+	${RM} -f ${DLIB} ${SLIB} ${LIBOBJS}
+
+# /tests
+.elif ${WORKPLACE} == "/tests"
+TARGETDIRS!=	${FIND} . -type d -maxdepth 1 | ${SED} 's,^[.][/]*,,'
+test:
+	${KYUA} $@
+build:
+	cd ${SRCDIR}; make $@
+clean: 
+	cd ${SRCDIR}; make $@
+report:
+	${KYUA} report-html
+
+# /tests/bin
+.elif ${WORKPLACE} == "/tests/bin"
+TARGETDIRS!=	${FIND} . -type d -maxdepth 1 | ${SED} 's,^[.][/]*,,'
+test: 
+	${KYUA} $@
+build:
+	cd ${SRCDIR}/bin; make $@
+clean:
+	cd ${SRCDIR}/bin; make $@
+report:
+	${KYUA} report-html
+
+# /tests/bin/cmds
+.elif ${WORKPLACE:C,/[^/]*$,,} == "/tests/bin"
+test:
+	${ENV} PATH=${BINDIR}:${PATH} ${KYUA} $@
+build:
+	cd ${SRCDIR}/${WORKPLACE:C,^/tests/,,}; ${MAKE} $@
+clean:
+	cd ${SRCDIR}/${WORKPLACE:C,^/tests/,,}; ${MAKE} $@
+report:
+	${KYUA} report-html
 .endif
+
+build-recursive:
+. for dir in ${TARGETDIRS}
+	cd ${dir}; ${MAKE} build
+. endfor
+
+clean-recursive:
+. for dir in ${TARGETDIRS}
+	cd ${dir}; ${MAKE} clean
+. endfor
 
 .include	"ttt.install.mk"
-.include	"ttt.test.mk"

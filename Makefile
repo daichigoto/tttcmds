@@ -1,5 +1,5 @@
 # 
-#  Copyright (c) 2016 Daichi GOTO
+#  Copyright (c) 2016,2017 Daichi GOTO
 #  All rights reserved.
 #  
 #  Redistribution and use in source and binary forms, with or without
@@ -25,28 +25,4 @@
 #  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #  
 
-TGTDIRS=src 
-
 .include "Makefile.inc"
-
-autobuild:
-.if !exists(${TOPDIR}/bin/wait_filechanges)
-	${MAKE} clean
-	cd ${TOPDIR}/src/lib/libttt/; ${MAKE}
-	cd ${TOPDIR}/src/bin/wait_filechanges/; ${MAKE}
-.endif
-	${TOPDIR}/bin/wait_filechanges .
-	${MAKE} clean
-	-${MAKE}	
-	${MAKE} test
-	${MAKE} report
-	${MAKE} $@
-
-simplebuild:
-.if !exists(${TOPDIR}/bin/wait_filechanges)
-	cd ${TOPDIR}/src/lib/libttt/; ${MAKE}
-	cd ${TOPDIR}/src/bin/wait_filechanges/; ${MAKE}
-.endif
-	${TOPDIR}/bin/wait_filechanges .
-	-${MAKE}
-	${MAKE} $@

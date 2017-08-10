@@ -1,5 +1,5 @@
 # 
-#  Copyright (c) 2016 Daichi GOTO
+#  Copyright (c) 2016,2017 Daichi GOTO
 #  All rights reserved.
 #  
 #  Redistribution and use in source and binary forms, with or without
@@ -25,17 +25,4 @@
 #  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #  
 
-OBJS!=	ls *.h
-
-build:
-.for i in ${OBJS}
-	${CP} ${i} ${INCLUDEDIR}/${i}
-	${CHMOD} ${INCLUDEPERM} ${INCLUDEDIR}/${i}
-.endfor
-
-clean:
-.for i in ${OBJS}
-	${RM} -f ${INCLUDEDIR}/${i}
-.endfor
-
-.include "../Makefile.inc"
+.include "Makefile.inc"

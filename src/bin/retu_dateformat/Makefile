@@ -25,7 +25,7 @@
 #  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-.include "../Makefile.inc"
+.include "Makefile.inc"
 
 DATESRC=	${.CURDIR}/../../contrib/date
 .PATH:		${DATESRC}

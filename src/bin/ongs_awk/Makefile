@@ -78,9 +78,10 @@ clean:
 	${RM} -f ${BINDIR}/${i}
 .endfor
 
-.include "../Makefile.inc"
+.include "Makefile.inc"
 
-CFLAGS=		-O2 \
+CFLAGS=		-lm \
+		-O2 \
 		-pipe \
 		-DHAS_ISBLANK \
 		-I. \

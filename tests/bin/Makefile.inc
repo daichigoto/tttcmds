@@ -25,14 +25,4 @@
 #  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #  
 
-# Test operation
-.if !target(test)
-test:
-	${ENV} PATH=${BINDIR}:${PATH} \
-		${KYUA} test -k ${TESTDIR}/Kyuafile
-.endif
-
-.if !target(report)
-report:
-	cd ${TESTDIR}; ${KYUA} report
-.endif
+.include "../Makefile.inc"
