@@ -97,13 +97,13 @@ CFLAGS+=	-g -O0
 # /
 .if ${WORKPLACE} == "/"
 build:
-	cd ${SRCDIR}; make $@
+	cd ${SRCDIR}; ${MAKE} $@
 clean:
-	cd ${SRCDIR}; make $@
+	cd ${SRCDIR}; ${MAKE} $@
 test:
-	cd ${TESTDIR}; make $@
+	cd ${TESTDIR}; ${MAKE} $@
 report:
-	cd ${TESTDIR}; make $@
+	cd ${TESTDIR}; ${MAKE} $@
 
 # /src
 .elif ${WORKPLACE} == "/src"
@@ -160,11 +160,11 @@ ${DIRNAME}: ${OBJS}
 . endif
 . if exists(command.h)
 .c.o: command.h textsets.c
-	${MAKE} prebuild 2> /dev/null || true
+	${MAKE} prebuild 2> /dev/null || ${TRUE}
 	${CC} ${CFLAGS} -c $< -o $@
 . else
 .c.o:
-	${MAKE} prebuild 2> /dev/null || true
+	${MAKE} prebuild 2> /dev/null || ${TRUE}
 	${CC} ${CFLAGS} -c $< -o $@
 . endif
 . if !target(clean)
@@ -226,9 +226,9 @@ TARGETDIRS!=	${FIND} . -type d -maxdepth 1 | ${SED} 's,^[.][/]*,,'
 test:
 	${ENV} PATH=${BINDIR}:${PATH} ${KYUA} $@
 build:
-	cd ${SRCDIR}; make $@
+	cd ${SRCDIR}; ${MAKE} $@
 clean: 
-	cd ${SRCDIR}; make $@
+	cd ${SRCDIR}; ${MAKE} $@
 report:
 	${KYUA} report-html
 
@@ -238,9 +238,9 @@ TARGETDIRS!=	${FIND} . -type d -maxdepth 1 | ${SED} 's,^[.][/]*,,'
 test: 
 	${ENV} PATH=${BINDIR}:${PATH} ${KYUA} $@
 build:
-	cd ${SRCDIR}/bin; make $@
+	cd ${SRCDIR}/bin; ${MAKE} $@
 clean:
-	cd ${SRCDIR}/bin; make $@
+	cd ${SRCDIR}/bin; ${MAKE} $@
 report:
 	${KYUA} report-html
 
