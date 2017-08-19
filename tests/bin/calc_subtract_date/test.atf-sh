@@ -1,0 +1,80 @@
+#!/usr/bin/env atf-sh
+#
+#  Copyright (c) 2017 Daichi GOTO
+#  All rights reserved.
+#
+#  Redistribution and use in source and binary forms, with or without
+#  modifigation, are permitted provided that the following conditions are
+#  met:
+#
+#  1. Redistributions of source code must retain the above copyright
+#     notice, this list of conditions and the following disclaimer.
+#  2. Redistributions in binary form must reproduce the above copyright
+#     notice, this list of conditions and the following disclaimer in the
+#     documentation and/or other materials provided with the distribution.
+#
+#  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+#  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+#  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+#  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+#  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+#  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+#  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+#  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+#  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+#  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+#  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+#
+
+atf_test_case normal
+normal_head() {
+	atf_set "descr" "Verify the normal calculation"
+}
+
+normal_body() {
+	atf_check -s ignore \
+		-o inline:"0\n" -x subtract_date 20190225 20190225
+	atf_check -s ignore \
+		-o inline:"5\n" -x subtract_date 20190225 20190302
+	atf_check -s ignore \
+		-o inline:"-5\n" -x subtract_date 20190302 20190225
+	atf_check -s ignore \
+		-o inline:"6\n" -x subtract_date 20200225 20200302
+	atf_check -s ignore \
+		-o inline:"-6\n" -x subtract_date 20200302 20200225
+}
+
+atf_test_case secoutput
+secoutput_head() {
+	atf_set "descr" "Verify the output in seconds"
+}
+
+secoutput_body() {
+	atf_check -s ignore \
+		-o inline:"0\n" -x subtract_date -s 20190225 20190225
+	atf_check -s ignore \
+		-o inline:"432000\n" -x subtract_date -s 20190225 20190302
+	atf_check -s ignore \
+		-o inline:"518400\n" -x subtract_date -s 20200225 20200302
+}
+
+atf_test_case informat
+informat_head() {
+	atf_set "descr" "Verify the format specification"
+}
+
+informat_body() {
+	atf_check -s ignore \
+		-o inline:"0\n" \
+		-x subtract_date -f %m-%d-%Y 02-25-2019 02-25-2019
+	atf_check -s ignore \
+		-o inline:"5\n" \
+		-x subtract_date -f %Y/%m/%d 2019/02/25 2019/03/02
+}
+
+atf_init_test_cases()
+{
+	atf_add_test_case normal
+	atf_add_test_case secoutput
+	atf_add_test_case informat
+}
