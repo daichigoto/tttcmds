@@ -32,7 +32,7 @@ static void check_t(const char *, const char *, const char *);
 int
 main(int argc, char *argv[])
 {
-	getcmdargs(argc, argv, "f:shvD", 
+	getcmdargs(argc, argv, "f:pshvD", 
 	           CMDARGS_R_NONE|CMDARGS_A_NEED|CMDARGS_F_NONE);
 
 	if (2 != A_ARGC)
@@ -65,6 +65,8 @@ main(int argc, char *argv[])
 
 	long sec = tval_A - tval_B;
 
+	if (FLAG_p && sec >= 0) 
+		putchar('+');
 	if (FLAG_s)
 		/* output in seconds */
 		printf("%ld\n", sec);

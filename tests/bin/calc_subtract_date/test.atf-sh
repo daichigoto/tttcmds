@@ -72,9 +72,28 @@ informat_body() {
 		-x subtract_date -f %Y/%m/%d 2019/02/25 2019/03/02
 }
 
+atf_test_case plus
+plus_head() {
+	atf_set "descr" "Verify the -p treatment"
+}
+
+plus_body() {
+	atf_check -s ignore \
+		-o inline:"+0\n" -x subtract_date -p 20190225 20190225
+	atf_check -s ignore \
+		-o inline:"+5\n" -x subtract_date -p 20190225 20190302
+	atf_check -s ignore \
+		-o inline:"-5\n" -x subtract_date -p 20190302 20190225
+	atf_check -s ignore \
+		-o inline:"+6\n" -x subtract_date -p 20200225 20200302
+	atf_check -s ignore \
+		-o inline:"-6\n" -x subtract_date -p 20200302 20200225
+}
+
 atf_init_test_cases()
 {
 	atf_add_test_case normal
 	atf_add_test_case secoutput
 	atf_add_test_case informat
+	atf_add_test_case plus
 }

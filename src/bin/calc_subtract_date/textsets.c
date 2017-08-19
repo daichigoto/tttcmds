@@ -43,7 +43,7 @@ struct textset cmdtextsets[] = {
 
 	{ "command_synopsis", "en_",
 	  _CMD(CMDNAME) " "
-	  "[-f fmt] [-s] "
+	  "[-f fmt] [-p] [-s] "
 	  "[" _OPT("hvD") "] [--] date_B date_A" },
 
 	{ "command_description", "ja_JP", 
@@ -55,6 +55,7 @@ struct textset cmdtextsets[] = {
 	{ "command_options", "ja_JP", 
 	  _OPT("f") " fmt	\tdate_Aおよびdate_Bのフォーマットを指定\n"
 	            "		(既定値: %Y%m%d)\n"
+	  _OPT("p") "		正値の場合+を付与する\n"
 	  _OPT("s") "		差分を秒数で出力\n"
 	  _OPT("h") "		使い方表示\n"
 	  _OPT("v") "		バージョン表示\n"
@@ -65,6 +66,8 @@ struct textset cmdtextsets[] = {
 	  _OPT("f") " fmt	\tSpecify a format of the date_A and "
 	                       "the date_B\n"
 	            "		(default: %Y%m%d).\n"
+	  _OPT("p") "		Output '+' prefix when it is a positive "
+	                       "value.\n"
 	  _OPT("s") "		Output in seconds.\n"
 	  _OPT("h") "		Print the usage message.\n"
 	  _OPT("v") "		Print the version.\n"
@@ -92,6 +95,16 @@ struct textset cmdtextsets[] = {
 	  _S("432000")
 	  _P("calc_subtract_date -s 20200225 20200302")
 	  _S("518400")
+	  _P("calc_subtract_date -p 20190225 20190225")
+	  _S("+0")
+	  _P("calc_subtract_date -p 20190225 20190302")
+	  _S("+5")
+	  _P("calc_subtract_date -p 20190302 20190225")
+	  _S("-5")
+	  _P("calc_subtract_date -p 20200225 20200302")
+	  _S("+6")
+	  _P("calc_subtract_date -p 20200302 20200225")
+	  _S("-6")
 	  _P("") },
 
 	TEXTSET_END
