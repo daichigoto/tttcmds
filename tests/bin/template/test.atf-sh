@@ -28,14 +28,43 @@
 
 atf_test_case test1
 test1_head() {
-	atf_set ""
+	atf_set "descr" ""
 }
 
 test1_body() {
-	true
+	atf_check \
+		-s ignore \
+		-o empty \
+		-x true
+}
+
+atf_test_case test2
+test2_head() {
+	atf_set "descr" ""
+}
+
+test2_body() {
+	atf_check \
+		-s ignore \
+		-o inline:"true" \
+		-x printf true
+}
+
+atf_test_case test3
+test3_head() {
+	atf_set "descr" ""
+}
+
+test3_body() {
+	atf_check \
+		-s ignore \
+		-o file:$(atf_get_srcdir)/output_01.ssv \
+		-x cat $(atf_get_srcdir)/input_01.ssv
 }
 
 atf_init_test_cases()
 {
 	atf_add_test_case test1
+	atf_add_test_case test2
+	atf_add_test_case test3
 }
