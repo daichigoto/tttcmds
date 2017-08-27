@@ -88,6 +88,12 @@ diff_body() {
 		   "1/20" \
 		   "$(atf_get_srcdir)/data.ssv" \
 		   "$(atf_get_srcdir)/new.ssv"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/diff_6.out \
+		-x "retu_diff" \
+		   "1" \
+		   "$(atf_get_srcdir)/data2.ssv" \
+		   "$(atf_get_srcdir)/new2.ssv"
 }
 
 atf_init_test_cases()

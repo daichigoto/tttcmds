@@ -105,6 +105,17 @@ struct textset cmdtextsets[] = {
 	  _S("1 2 3 4 5 . @ @ @")
 	  _S("a b @ d e f G @ @")
 	  _S("A B C D E F @ @ @")
+	  _P("cat data2.ssv")
+	  _S("6")
+	  _S("0")
+	  _S("2")
+	  _P("cat new2.ssv")
+	  _S("3")
+	  _S("1")
+	  _S("6")
+	  _P("retu_deff 1 data2.ssv new2.ssv")
+	  _S("3")
+	  _S("1")
 	  _P("") },
 
 	TEXTSET_END
