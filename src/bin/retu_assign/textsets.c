@@ -77,8 +77,7 @@ struct textset cmdtextsets[] = {
 	  _ARG("N.f.K.A") "\t\t" _ARG("N") "列の値と" _ARG("f") "ファイル"
 	  	"の" _ARG("K") "列の値が一致する場合、" _ARG("f") 
 		"ファ\n\t\tイルの" _ARG("A") "列の値を" _ARG("N") 
-		"列に代入。一致しない場合には空デー\n\t\tタを出力"
-		"(左外部結合)\n"
+		"列に代入。一致しない場合には空デー\n\t\tタを出力\n"
 	  _ARG("N/M.f.K.A") "\t" _ARG("N.f.K.A") "と同じ処理を"
 	  	_ARG("M") "列まで適用\n"
 	  "\n"
@@ -112,8 +111,7 @@ struct textset cmdtextsets[] = {
 	  	"column of the file " _ARG("f") "\n\t\tto the " _ARG("N") 
 		"th column if the value of " _ARG("N") "th column\n\t\t"
 		"and the value of " _ARG("K")  "th column match. If not, "
-		"\n\t\tassing the empty value. "
-		"(a.k.a LEFT OUTER JOIN).\n"
+		"\n\t\tassing the empty value.\n"
 	  _ARG("N/M.f.K.A") "\t" "Process " _ARG("N") "th to " _ARG("M") 
 	  	"th columns in the same way as\n\t\t" _ARG("N.f.K.A") ".\n"
 	  "\n"
