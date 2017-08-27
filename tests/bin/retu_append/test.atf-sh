@@ -50,7 +50,24 @@ append_body() {
 		-x retu_append -d, 1/8.9 $(atf_get_srcdir)/data.ssv
 }
 
+atf_test_case remove
+remove_head() {
+	atf_set "descr" "a remove (-r) test"
+}
+
+remove_body() {
+	atf_check \
+		-s ignore \
+		-o file:$(atf_get_srcdir)/output_05.ssv \
+		-x retu_append -r 1.4 $(atf_get_srcdir)/data.ssv
+	atf_check \
+		-s ignore \
+		-o file:$(atf_get_srcdir)/output_06.ssv \
+		-x retu_append -r -d, 1/8.9 $(atf_get_srcdir)/data.ssv
+}
+
 atf_init_test_cases()
 {
 	atf_add_test_case append
+	atf_add_test_case remove
 }

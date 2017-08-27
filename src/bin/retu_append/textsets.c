@@ -44,6 +44,7 @@ struct textset cmdtextsets[] = {
 	{ "command_synopsis", "en_", 
 	  _CMD(CMDNAME) " "
 	  "[" _OPT("d") " " _ARG("delim") " ] "
+	  "[" _OPT("r") " ] "
 	  "[" _OPT("hvD") "] [" _OPT("-") "] "
 	  _ARG("N.A") "|"_ARG("N/M.A") " "
 	  "[" _ARG("N.A") "|"_ARG("N/M.A") "] "
@@ -76,6 +77,7 @@ struct textset cmdtextsets[] = {
 	{ "command_options", "ja_JP", 
 	  _OPT("d") " " _ARG("delim") "\t区切り文字列を指定"
 	                        "（デフォルトは''）\n"
+	  _OPT("r") "		付け足した元の列を削除\n"
 	  _OPT("h") "		使い方表示\n"
 	  _OPT("v") "		バージョン表示\n"
 	  _OPT("D") "		デバッグモード\n"
@@ -86,6 +88,7 @@ struct textset cmdtextsets[] = {
 	  _OPT("d") " " _ARG("delim") "\tUse " _ARG("delim")  
 	  			"as the delimiter string "
 				"(default is '')\n"
+	  _OPT("r") "		Remove the Ath column.\n"
 	  _OPT("h") "		Print the usage message.\n"
 	  _OPT("v") "		Print the version.\n"
 	  _OPT("D") "		Enable the debug mode.\n"
@@ -108,6 +111,12 @@ struct textset cmdtextsets[] = {
 	  _P("retu_append -d, 1/8.9 data.ssv")
 	  _S("1,9 2,9 3,9 9 5,9 6,9 7,9 8,9 9")
 	  _S("i b,i c,i d,i e,i f,i i h,i i")
+	  _P("retu_append -r 1.4 data.ssv")
+	  _S("1 2 3 5 6 7 8 9")
+	  _S("d b c e f @ h i")
+	  _P("retu_append -r -d, 1/8.9 data.ssv")
+	  _S("1,9 2,9 3,9 9 5,9 6,9 7,9 8,9")
+	  _S("i b,i c,i d,i e,i f,i i h,i")
 	  _P("") },
 
 	TEXTSET_END

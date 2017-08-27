@@ -32,15 +32,6 @@
 #include "ttt.h"
 
 #define TGT_GYO_PROCESS(GYO_BUFFER,NF) \
-	for (int i = 1; i < R_ARGC; i++) \
-		if (R_ARGV[i] > NF || \
-			NULL == GYO_BUFFER[R_ARGV[i]]) \
-		; \
-	if (R_ARGV[R_ARGC] > NF || \
-		NULL == GYO_BUFFER[R_ARGV[R_ARGC]]) \
-		; \
-	else \
-	  	; \
 	for (int i = 1; i <= R_ARGC; i++) { \
 		len1 = strlen(GYO_BUFFER[R_ARGV[i]]); \
 		len2 = strlen(GYO_BUFFER[appcols[i]]); \
@@ -70,8 +61,31 @@
 			\
 		} \
 	} \
-	for (int i = 1; i < NF; i++) \
-		printf("%s ", GYO_BUFFER[i]); \
-	if (0 != NF) \
-		printf("%s", GYO_BUFFER[NF]); \
+	spacenum = 0; \
+	for (int i = 1; i <= NF; i++) { \
+		match = 0; \
+		if (FLAG_r) { \
+			for (int j = 1; j <= R_ARGC; j++) { \
+				if (i == appcols[j]) { \
+					match = 1; \
+					break; \
+				} \
+			} \
+		} \
+		if (!match) { \
+			printf("%s", GYO_BUFFER[i]); \
+			if (FLAG_r) { \
+				if (spacenum < NF - appnum - 1) { \
+					putchar(' '); \
+					++spacenum; \
+				} \
+			} \
+			else { \
+				if (spacenum < NF - 1) { \
+					putchar(' '); \
+					++spacenum; \
+				} \
+			} \
+		} \
+	} \
 	putchar('\n');

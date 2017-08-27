@@ -30,7 +30,7 @@
 int
 main(int argc, char *argv[])
 {
-	getcmdargs(argc, argv, "d:hvD",
+	getcmdargs(argc, argv, "d:rhvD",
 	           CMDARGS_R_NEED|CMDARGS_R_ARGARG_1_NEED);
 
 	char *delim = "";
@@ -40,18 +40,24 @@ main(int argc, char *argv[])
 		delim_len = strlen(delim);
 	}
 
-	int appcols[R_ARGC+1];
+	int appcols[R_ARGC+1], appnum = 0, match;
 	for (int i = 1; i <= R_ARGC; i++) {
 		errno = 0;
 		appcols[i] = 
 			(int)strtol(R_ARGV_ARG1[i], (char **)NULL, 10);
+		match = 0;
+		for (int j = 1; j < i; j++)
+			if (appcols[j] == appcols[i])
+				match = 1;
+		if (!match)
+			++appnum;
 			
 		if (EINVAL == errno)
 			usage();
 	}
 
 	char *buf, *buf_p;
-	int len1, len2;
+	int len1, len2, spacenum;
 	FILEPROCESS_GYO
 
 	exit(EX_OK);
