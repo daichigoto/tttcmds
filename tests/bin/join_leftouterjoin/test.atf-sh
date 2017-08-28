@@ -1,0 +1,144 @@
+#!/usr/bin/env atf-sh
+#
+#  Copyright (c) 2017 Daichi GOTO
+#  All rights reserved.
+#
+#  Redistribution and use in source and binary forms, with or without
+#  modifigation, are permitted provided that the following conditions are
+#  met:
+#
+#  1. Redistributions of source code must retain the above copyright
+#     notice, this list of conditions and the following disclaimer.
+#  2. Redistributions in binary form must reproduce the above copyright
+#     notice, this list of conditions and the following disclaimer in the
+#     documentation and/or other materials provided with the distribution.
+#
+#  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+#  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+#  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+#  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+#  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+#  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+#  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+#  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+#  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+#  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+#  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+#
+
+atf_test_case normal
+normal_head() {
+	atf_set "descr" "Verify a normal leftouterjoin treatment"
+}
+
+normal_body() {
+	atf_check \
+		-s ignore \
+		-o file:$(atf_get_srcdir)/output_01.ssv \
+		-x "join_leftouterjoin 1=2" \
+		   "$(atf_get_srcdir)/left.ssv" \
+		   "$(atf_get_srcdir)/right.ssv"
+	atf_check \
+		-s ignore \
+		-o file:$(atf_get_srcdir)/output_02.ssv \
+		-x "join_leftouterjoin 1=2 2=1" \
+		   "$(atf_get_srcdir)/left.ssv" \
+		   "$(atf_get_srcdir)/right.ssv"
+}
+
+atf_test_case stdin
+stdin_head() {
+	atf_set "descr" "Verify a stdin input treatment"
+}
+
+stdin_body() {
+	atf_check \
+		-s ignore \
+		-o file:$(atf_get_srcdir)/output_01.ssv \
+		-x "cat $(atf_get_srcdir)/left.ssv |" \
+		   "join_leftouterjoin 1=2" \
+		   "-" \
+		   "$(atf_get_srcdir)/right.ssv"
+	atf_check \
+		-s ignore \
+		-o file:$(atf_get_srcdir)/output_01.ssv \
+		-x "cat $(atf_get_srcdir)/right.ssv |" \
+		   "join_leftouterjoin 1=2" \
+		   "$(atf_get_srcdir)/left.ssv" \
+		   "-"
+}
+
+atf_test_case remove
+remove_head() {
+	atf_set "descr" "Verify a remove(-r) option"
+}
+
+remove_body() {
+	atf_check \
+		-s ignore \
+		-o file:$(atf_get_srcdir)/output_03.ssv \
+		-x "join_leftouterjoin -r 1=2" \
+		   "$(atf_get_srcdir)/left.ssv" \
+		   "$(atf_get_srcdir)/right.ssv"
+	atf_check \
+		-s ignore \
+		-o file:$(atf_get_srcdir)/output_04.ssv \
+		-x "join_leftouterjoin -r 1=2 2=1" \
+		   "$(atf_get_srcdir)/left.ssv" \
+		   "$(atf_get_srcdir)/right.ssv"
+}
+
+atf_test_case rightoutput_empty
+rightoutput_empty_head() {
+	atf_set "descr" "Verify an empty right output treatment"
+}
+
+rightoutput_empty_body() {
+	atf_check \
+		-s ignore \
+		-o file:$(atf_get_srcdir)/output_05.ssv \
+		-x "join_leftouterjoin -r 1=2 2=1" \
+		   "$(atf_get_srcdir)/left2.ssv" \
+		   "$(atf_get_srcdir)/right2.ssv"
+}
+
+atf_test_case input_empty
+input_empty_head() {
+	atf_set "descr" "Verify an empty input treatment"
+}
+
+input_empty_body() {
+	atf_check \
+		-s ignore \
+		-o file:$(atf_get_srcdir)/empty.ssv \
+		-x "join_leftouterjoin 1=2 2=1" \
+		   "$(atf_get_srcdir)/empty.ssv" \
+		   "$(atf_get_srcdir)/right.ssv"
+	atf_check \
+		-s ignore \
+		-o file:$(atf_get_srcdir)/left.ssv \
+		-x "join_leftouterjoin 1=2 2=1" \
+		   "$(atf_get_srcdir)/left.ssv" \
+		   "$(atf_get_srcdir)/empty.ssv"
+	atf_check \
+		-s ignore \
+		-o file:$(atf_get_srcdir)/empty.ssv \
+		-x "join_leftouterjoin -r 1=2 2=1" \
+		   "$(atf_get_srcdir)/empty.ssv" \
+		   "$(atf_get_srcdir)/right.ssv"
+	atf_check \
+		-s ignore \
+		-o file:$(atf_get_srcdir)/left.ssv \
+		-x "join_leftouterjoin -r 1=2 2=1" \
+		   "$(atf_get_srcdir)/left.ssv" \
+		   "$(atf_get_srcdir)/empty.ssv"
+}
+
+atf_init_test_cases()
+{
+	atf_add_test_case normal
+	atf_add_test_case stdin
+	atf_add_test_case remove
+	atf_add_test_case rightoutput_empty
+	atf_add_test_case input_empty
+}
