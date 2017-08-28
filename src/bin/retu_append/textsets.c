@@ -47,7 +47,7 @@ struct textset cmdtextsets[] = {
 	  "[" _OPT("r") " ] "
 	  "[" _OPT("hvD") "] [" _OPT("-") "] "
 	  _ARG("N.A") "|"_ARG("N/M.A") " "
-	  "[" _ARG("N.A") "|"_ARG("N/M.A") "] "
+	  "[" _ARG("N.A") "|"_ARG("N/M.A") "]\n"
 	  "[" _ARG("file") " " _ETC "]" },
 	
 	{ "command_description", "ja_JP", 
