@@ -40,7 +40,7 @@ main(int argc, char *argv[])
 		delim_len = strlen(delim);
 	}
 
-	int appcols[R_ARGC+1], appnum = 0, match;
+	int appcols[R_ARGC+1], appnum = 1, match;
 	for (int i = 1; i <= R_ARGC; i++) {
 		errno = 0;
 		appcols[i] = 

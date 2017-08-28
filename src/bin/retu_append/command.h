@@ -75,7 +75,7 @@
 		if (!match) { \
 			printf("%s", GYO_BUFFER[i]); \
 			if (FLAG_r) { \
-				if (spacenum < NF - appnum - 1) { \
+				if (spacenum < NF - appnum) { \
 					putchar(' '); \
 					++spacenum; \
 				} \
