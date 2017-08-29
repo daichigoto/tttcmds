@@ -74,7 +74,11 @@ CFLAGS+=	-Wno-system-headers \
 CFLAGS+=	-Wno-system-headers
 .endif
 .if defined(DEBUG)
-CFLAGS+=	-g -O0
+CFLAGS=		-I. \
+		-I${SRCINCDIR} \
+		-L${LIBDIR} \
+		-g \
+		-O0
 .endif
 
 #			TARGET	build	clean	test	report
