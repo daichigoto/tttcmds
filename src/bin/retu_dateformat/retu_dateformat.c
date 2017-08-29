@@ -43,8 +43,8 @@ main(int argc, char *argv[])
                         usage();
 	}
 
-	char *str, *ssvstr;
-	int str_len, ssvstr_len, outfmt_len;
+	char *str, *ssvstr, *p;
+	int str_len, ssvstr_len, outfmt_len, index;
 	time_t tval;
 	struct tm *tm;
 
@@ -52,12 +52,16 @@ main(int argc, char *argv[])
 	time(&tval);
 	tm = localtime(&tval);
 
+	strptime("19700101000000","%Y%m%d%H%M%S",tm);
+
 	str_len = ssvstr_len = BUFFER_SIZE;
 	str = calloc(1, str_len * sizeof(char));
 	ssvstr = calloc(1, ssvstr_len * sizeof(char));
 
 	struct vary *v = NULL;
-	FILEPROCESS_RETU
+	FILEPROCESS_GYO
+//XXX
+//	FILEPROCESS_RETU
 
 	exit(EX_OK);
 }

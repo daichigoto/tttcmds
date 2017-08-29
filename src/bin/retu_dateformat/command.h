@@ -38,6 +38,56 @@ typedef unsigned char u_char;
 
 #include "vary.h"
 
+#define TGT_GYO_PROCESS(GYO_BUFFER,NF) \
+	for (int i = 1; i <= NF; i++) { \
+		if (GYO_BUFFER[i][0] == '\0' || \
+			(GYO_BUFFER[i][0] == '@' && \
+			 GYO_BUFFER[i][1] == '\0')) { \
+			 putchar('@'); \
+		} \
+		else if (!R_INDEX_EXIST[i]) { \
+			printf("%s", GYO_BUFFER[i]); \
+		} \
+		else { \
+			index = R_INDEX_TO_ARGV[i]; \
+			/*
+			 * buffer preparation
+			 */ \
+			if (str_len < strlen(GYO_BUFFER[i])) { \
+				str_len = strlen(GYO_BUFFER[i]); \
+				free(str); \
+				str = calloc(1, str_len*sizeof(char)+1); \
+			} \
+			outfmt_len = \
+				strlen(R_ARGV_ARG2[index]); \
+			if (ssvstr_len < outfmt_len * 2) { \
+				ssvstr_len = outfmt_len * 2; \
+				free(ssvstr); \
+				ssvstr = calloc(1, \
+					ssvstr_len*sizeof(char)+1); \
+			} \
+			ssvstr2str(str, GYO_BUFFER[i]); \
+			p = strptime(str, R_ARGV_ARG1[index], tm); \
+			if (NULL != p) { \
+				if (NULL != R_ARGV_ARG3[index]) { \
+					v = vary_append(v, \
+						R_ARGV_ARG3[index]);\
+					vary_apply(v, tm); \
+				} \
+				mktime(tm); \
+				(void)strftime(str, str_len, \
+					R_ARGV_ARG2[index], tm); \
+				str2ssvstr(ssvstr, str); \
+				printf("%s", ssvstr); \
+				vary_destroy(v); \
+			} \
+		} \
+		if (i == NF) \
+			putchar('\n'); \
+		else \
+			putchar(' '); \
+	}
+
 #define TGT_RETU_PROCESS(RETU_BUFFER,RETU_BUFFER_MAXLEN,INDEX) \
 	if (RETU_BUFFER_MAXLEN > str_len) { \
 		free(str); \
