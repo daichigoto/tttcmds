@@ -25,7 +25,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#define VERSION "20170407"
+#define VERSION "20170829"
 #define CMDNAME "retu_dateformat"
 #define ALIAS "dateformat datefmt"
 

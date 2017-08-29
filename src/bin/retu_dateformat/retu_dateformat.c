@@ -30,10 +30,18 @@
 int
 main(int argc, char *argv[])
 {
-	getcmdargs(argc, argv, "hvD",
+	getcmdargs(argc, argv, "3:hvD",
 	           CMDARGS_R_NEED|
 		   CMDARGS_R_ARGARG_1_NEED|
 		   CMDARGS_R_ARGARG_2_NEED);
+
+	int retu30h = 0;
+	if (FLAG_3) {
+		errno = 0;
+		retu30h = (int)strtol(FLAG_3_ARG, (char **)NULL, 10);
+                if (EINVAL == errno)
+                        usage();
+	}
 
 	char *str, *ssvstr;
 	int str_len, ssvstr_len, outfmt_len;

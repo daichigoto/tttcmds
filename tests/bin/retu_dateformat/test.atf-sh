@@ -336,6 +336,18 @@ shift_body() {
 		   "3.%Y%m%d.%Y%m%d"
 }
 
+atf_test_case 30hours
+30hours_head() {
+	atf_set "descr" "Verify a 30 hours system treatment"
+}
+
+30hours_body() {
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/output_30hours_01.ssv \
+		-x "cat $(atf_get_srcdir)/date.ssv |" \
+		   "retu_dateformat -3 3 1/2.%Y%m%d%H%M%S.%H:%M"
+}
+
 atf_init_test_cases()
 {
 	atf_add_test_case empty
@@ -348,4 +360,5 @@ atf_init_test_cases()
 	atf_add_test_case format
 	atf_add_test_case locale
 	atf_add_test_case shift
+	atf_add_test_case 30hours
 }
