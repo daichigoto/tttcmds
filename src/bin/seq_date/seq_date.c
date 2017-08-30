@@ -79,6 +79,7 @@ main(int argc, char *argv[])
 	time(&tval);
 	tval_last = tval;
 	lt = *localtime(&tval);
+	strptime("000000", "%H%M%S", &lt);
 	lt_last = lt;
 
 	t = strptime(first, in_fmt, &lt);
