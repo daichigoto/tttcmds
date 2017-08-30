@@ -52,6 +52,8 @@ main(int argc, char *argv[])
 	(void)setlocale(LC_TIME, "");
 	time(&tval_A);
 	lt_A = *localtime(&tval_A);
+	strptime("000000", "%H%M%S", &lt_A);
+
 	tval_B = tval_A;
 	lt_B = lt_A;
 
