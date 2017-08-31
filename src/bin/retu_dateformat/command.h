@@ -25,7 +25,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#define VERSION "20170829"
+#define VERSION "20170831"
 #define CMDNAME "retu_dateformat"
 #define ALIAS "dateformat datefmt"
 
@@ -53,7 +53,7 @@ typedef unsigned char u_char;
 			/*
 			 * buffer preparation
 			 */ \
-			if (str_len < strlen(GYO_BUFFER[i])) { \
+			if (str_len < (int)strlen(GYO_BUFFER[i])) { \
 				str_len = strlen(GYO_BUFFER[i]); \
 				free(str); \
 				str = calloc(1, str_len*sizeof(char)+1); \
@@ -67,19 +67,34 @@ typedef unsigned char u_char;
 					ssvstr_len*sizeof(char)+1); \
 			} \
 			ssvstr2str(str, GYO_BUFFER[i]); \
-			p = strptime(str, R_ARGV_ARG1[index], tm); \
-			if (NULL != p) { \
+			/*
+			 * str to struct tm
+			 */ \
+			HOURS30_INPUT_PRE(R_ARGV_ARG1[index]) \
+			p = strptime(str, R_ARGV_ARG1[index], &tm); \
+			HOURS30_INPUT_POST \
+			if (NULL == p) { \
+				printf("%s", GYO_BUFFER[i]); \
+			} \
+			else { \
+				if (FLAG_3) { \
+					HOURS30_OUTPUT_PRE(GYO_BUFFER) \
+				} \
 				if (NULL != R_ARGV_ARG3[index]) { \
 					v = vary_append(v, \
-						R_ARGV_ARG3[index]);\
-					vary_apply(v, tm); \
+						R_ARGV_ARG3[index]); \
+					vary_apply(v, &tm); \
+					vary_destroy(v); \
 				} \
-				mktime(tm); \
+				mktime(&tm); \
 				(void)strftime(str, str_len, \
-					R_ARGV_ARG2[index], tm); \
+					R_ARGV_ARG2[index], &tm); \
+				if (FLAG_3) { \
+					HOURS30_OUTPUT_POST( \
+						R_ARGV_ARG2[index]) \
+				} \
 				str2ssvstr(ssvstr, str); \
 				printf("%s", ssvstr); \
-				vary_destroy(v); \
 			} \
 		} \
 		if (i == NF) \
@@ -88,51 +103,110 @@ typedef unsigned char u_char;
 			putchar(' '); \
 	}
 
-#define TGT_RETU_PROCESS(RETU_BUFFER,RETU_BUFFER_MAXLEN,INDEX) \
-	if (RETU_BUFFER_MAXLEN > str_len) { \
-		free(str); \
-		str_len = RETU_BUFFER_MAXLEN; \
-		str = calloc(1, str_len * sizeof(char)); \
-	} \
-	/*
-	 * The ssvstr's buffer length that str2ssvstr(ssvstr, str)
-	 * requires is (strlen(str) * 2 + 1).
-	 */ \
-	outfmt_len = strlen(R_ARGV_ARG2[R_INDEX_TO_ARGV[INDEX]]); \
-	if ((outfmt_len * 2) + 1 > ssvstr_len) { \
-		free(ssvstr); \
-		ssvstr_len = (outfmt_len * 2) + 1; \
-		ssvstr = calloc(1, ssvstr_len * sizeof(char)); \
-	} \
-	if ('@' == RETU_BUFFER[0] && '\0' == RETU_BUFFER[1]) \
-		putchar('@'); \
-	else { \
-		ssvstr2str(str, RETU_BUFFER); \
-		if (NULL != strptime( \
-				str,  \
-				R_ARGV_ARG1[R_INDEX_TO_ARGV[INDEX]], \
-				tm)) { \
-			if (NULL != R_ARGV_ARG3[R_INDEX_TO_ARGV[INDEX]]) { \
-				v = vary_append(v, R_ARGV_ARG3 \
-						[R_INDEX_TO_ARGV[INDEX]]); \
-				vary_apply(v, tm); \
+#define HOURS30_INPUT_PRE(FMT) \
+	varry[1] = '0'; \
+	INDEX_OF_HH(FMT); \
+	if ((int)strlen(str) >= indexH +2) { \
+		strncpy(tgtH, str + indexH, 2); \
+		H = (int)strtol(tgtH, (char **)NULL, 10); \
+		if (H > 23) { \
+			sprintf(tgtH, "%02d", H - 24 * (H / 24)); \
+			strncpy(str + indexH, tgtH, 2); \
+			switch (H / 24) { \
+			case 1: \
+				varry[1] = '1'; \
+				break; \
+			case 2: \
+				varry[1] = '2'; \
+				break; \
+			case 3: \
+				varry[1] = '3'; \
+				break; \
+			case 4: \
+				varry[1] = '4'; \
+				break; \
 			} \
-			mktime(tm); \
-			(void)strftime( \
-				str, \
-				str_len, \
-				R_ARGV_ARG2[R_INDEX_TO_ARGV[INDEX]], \
-				tm); \
-			str2ssvstr(ssvstr, str); \
-			printf("%s", ssvstr); \
-			vary_destroy(v); \
-		} \
-		else { \
-			printf("%s", RETU_BUFFER); \
 		} \
 	}
 
-#define NOTGT_RETU_PROCESS(RETU_BUFFER,RETU_BUFFER_MAXLEN,INDEX) \
-	printf("%s",RETU_BUFFER);
+#define HOURS30_INPUT_POST \
+	v = vary_append(v, varry); \
+	vary_apply(v, &tm); \
+	vary_destroy(v);
 
-#define END_OF_LINE_RETU_PROCESS
+#define HOURS30_OUTPUT_PRE(GYO_BUFFER) \
+	hours30_output = 0; \
+	p_base = strptime(GYO_BUFFER[index_30hbase], "%Y%m%d", \
+		&tm_tomorrow); \
+	if (NULL != p_base) { \
+		/* base date + 1day */ \
+		v = vary_append(v, "+1d"); \
+		vary_apply(v, &tm_tomorrow); \
+		vary_destroy(v); \
+		mktime(&tm_tomorrow); \
+		(void)strftime(basedate, 8, "%Y%m%d", &tm_tomorrow); \
+		basedate[8] = '\0'; \
+		\
+		/* target date */ \
+		mktime(&tm); \
+		(void)strftime(tgtdate, 8, "%Y%m%d", &tm); \
+		tgtdate[8] = '\0'; \
+		\
+		if (0 == strcmp(basedate, tgtdate)) { \
+			hours30_output = 1; \
+			v = vary_append(v, "-1d"); \
+			vary_apply(v, &tm); \
+			vary_destroy(v); \
+		} \
+	} \
+
+#define HOURS30_OUTPUT_POST(FMT) \
+	if (hours30_output) { \
+		(void)strftime(tgtH, 2, "%H", &tm); \
+		tgtH[2] = '\0'; \
+		H = (int)strtol(tgtH, (char **)NULL, 10) + 24; \
+		sprintf(tgtH, "%02d", H); \
+		INDEX_OF_HH(FMT); \
+		strncpy(str + indexH, tgtH, 2); \
+	}
+
+#define INDEX_OF_HH(FMT) \
+	ptr = strstr(FMT, "%H"); \
+	if (NULL != ptr) { \
+		for (indexH = 0, loopend = 0, ptr2 = FMT; \
+			*ptr2 != '\0' && !loopend; ) { \
+			switch (*ptr2) { \
+			case '%': \
+				++ptr2; \
+				switch (*ptr2) { \
+				case 'H': \
+					loopend = 1; \
+					break; \
+				case 'u': case 'w': case '%': \
+					++indexH; \
+					++ptr2; \
+					break; \
+				case 'd': case 'e': case 'g': case 'I': \
+				case 'k': case 'l': case 'M': case 'm': \
+				case 'S': case 't': case 'U': case 'V': \
+				case 'W': case 'y': \
+					indexH += 2; \
+					++ptr2; \
+					break; \
+				case 'j': \
+					indexH += 3; \
+					++ptr2; \
+					break; \
+				case 'G': case 'Y': \
+					indexH += 4; \
+					++ptr2; \
+					break; \
+				} \
+				break; \
+			default: \
+				++indexH; \
+				++ptr2; \
+				break; \
+			} \
+		} \
+	}

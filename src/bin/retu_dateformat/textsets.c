@@ -58,7 +58,7 @@ struct textset cmdtextsets[] = {
 	  _ARG("N.f1.f2") "\t\t" _ARG("N") "列の日付データを" _ARG("f1")
 	  	"フォーマットで読み込み、" _ARG("f2") "\n\t\t"
 		"フォーマットに変換して出力する。フォーマットは\n\t\t"
-		"strptime(3)に準拠\n"
+		"strptime(3)に準拠(30時間制拡張を含む)\n"
 	  _ARG("N/M.f1.f2") "\t" _ARG("N.f1.f2") "と同じ処理を" 
 	  	_ARG("M") "列まで適用\n"
 	  _ARG("N.f1.f2.val") "\t" _ARG("N") "列の日付データを" _ARG("f1")
@@ -89,7 +89,8 @@ struct textset cmdtextsets[] = {
 	  _ARG("N.f1.f2") "\t\tConvert the date value of " _ARG("N") 
 	  	"th column to another.\n\t\t" _ARG("f1") " is the src "
 		"format and " _ARG("f2") " is the dst format\n\t\t"	
-		"based on strptime(3).\n"
+		"based on strptime(3) including 30 hours system\n\t\t"
+		"expansion.\n"
 	  _ARG("N/M.f1.f2") "\tProcess " _ARG("N") "th to " _ARG("M")
 		"th columns in the same way as\n\t\t" _ARG("N.f1.f2") ".\n"
 	  _ARG("N.f1.f2.val") "\tConvert the date value of " _ARG("N") 
@@ -117,7 +118,7 @@ struct textset cmdtextsets[] = {
 	  _OPT("3") " " _ARG("R") 
 	            "		変換後の表記を" _ARG("R") "列の日付を基準"
 		    		"とし、翌日の0時から\n\t\t"
-				"6時直前までを30時間表記として扱う\n"
+				"24時直前までを30時間表記として扱う\n"
 	  _OPT("h") "		使い方表示\n"
 	  _OPT("v") "		バージョン表示\n"
 	  _OPT("D") "		デバッグモード\n"
@@ -128,9 +129,9 @@ struct textset cmdtextsets[] = {
 	  _OPT("3") " " _ARG("R")
 	            "		Convert the output date from "
 		    		"0 o'clock to just\n\t\tbefore "
-				"6 o'clock of the next day of " 
+				"24 o'clock of the next day of " 
 				_ARG("R") "th column\n\t\tto 24 "
-				"o'clock to just before 30 o'clock as "
+				"o'clock to just before 48 o'clock as "
 				"\n\t\t30 hours system.\n"
 	  _OPT("h") "		Print the usage message.\n"
 	  _OPT("v") "		Print the version.\n"
@@ -139,23 +140,20 @@ struct textset cmdtextsets[] = {
 	  _ARG("file") "\t	Specify the file." },
 	
 	{ "command_example", "en_", 
-	  _P("cat date.ssv")
-	  _S("20161109121423 20161110085400")
+	  _P("echo 2016/11/09-12:14 2016/11/10-08:54 |")
+	  _P2("retu_dateformat 1.%Y/%m/%d-%H:%M.%Y%m%d%H%M%S \\")
+	  _P2("	          2.%Y/%m/%d-%H:%M.%Y%m%d%H%M%S | tee date.ssv")
+	  _S("20161109121400 20161110085400")
 	  _P("retu_dateformat 1.%Y%m%d%H%M%S.%Y/%m/%d-%H:%M \\")
 	  _P2("	          2.%Y%m%d%H%M%S.%Y/%m/%d-%H:%M date.ssv")
 	  _S("2016/11/09-12:14 2016/11/10-08:54")
-	  _P("cat date2.ssv")
+	  _P("retu_dateformat 1/2.%Y%m%d%H%M%S.%Y/%m/%d-%H:%M date.ssv")
 	  _S("2016/11/09-12:14 2016/11/10-08:54")
-	  _P("retu_dateformat 1.%Y/%m/%d-%H:%M.%Y%m%d%H%M%S \\")
-	  _P2("	          2.%Y/%m/%d-%H:%M.%Y%m%d%H%M%S date2.ssv")
-	  _S("20161109121401 20161110085401")
-	  _P("retu_dateformat 1/2.%Y%m%d%H%M%S.%Y/%m/%d-%H:%Mi date.ssv")
-	  _S("2016/11/09-12:14 2016/11/10-08:54")
-	  _P2("retu_dateformat 1.%Y%m%d%H%M%S.%s 2.%Y%m%d%H%M%S.%s date.ssv")
+	  _P("retu_dateformat 1.%Y%m%d%H%M%S.%s 2.%Y%m%d%H%M%S.%s date.ssv")
 	  _S("1478661263 1478735640")
 	  _P("retu_dateformat 1.%Y%m%d%H%M%S.%s 2.%Y%m%d%H%M%S.%s date.ssv |")
 	  _P2("retu_dateformat 1.%s.\"%m/%d %H:%M\" 2.%s.\"%m/%d %H:%M\"")
-	  _S("11/09_12.14 11/10_08.54")
+	  _S("11/09_12:14 11/10_08:54")
 	  _P("retu_dateformat 1/2.%Y%m%d%H%M%S.%A(%a) date.ssv")
 	  _S("Wednesday(Wed) Thursday(Thu)")
 	  _P("env LANG=ja_JP.UTF-8 \\")
@@ -166,10 +164,12 @@ struct textset cmdtextsets[] = {
 	  _P("retu_dateformat 1.%Y%m%d%H%M%S.%Y%m%d.+7d \\")
 	  _P2("	          2.%Y%m%d%H%M%S.%Y%m%d.-1m date.ssv")
 	  _S("20161116 20161010")
-	  _P("cat date3.ssv")
-	  _S("20170829032539 20170828032539 20170828")
-	  _P("retu_dateformat -3 3 1/2.%Y%m%d%H%M%S.%H:%M date3.ssv")
-	  _S("27:25 03:25")
+	  _P("echo 20170829292539 20170829752539 |")
+	  _P2("retu_dateformat 1/2.%Y%m%d%H%M%S.%m/%d-%H:%M")
+	  _S("08/30-05:25 09/01-03:25")
+	  _P("echo 20170829032539 20170828032539 20170828 |")
+	  _P2("retu_dateformat -3 3 1/2.%Y%m%d%H%M%S.%m/%d-%H:%M")
+	  _S("08/28-27:25 08/28-03:25 20170828")
 	  _P("") },
 
 	TEXTSET_END

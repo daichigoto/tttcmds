@@ -35,33 +35,33 @@ main(int argc, char *argv[])
 		   CMDARGS_R_ARGARG_1_NEED|
 		   CMDARGS_R_ARGARG_2_NEED);
 
-	int retu30h = 0;
+	int index_30hbase = 0;
 	if (FLAG_3) {
 		errno = 0;
-		retu30h = (int)strtol(FLAG_3_ARG, (char **)NULL, 10);
+		index_30hbase = (int)strtol(FLAG_3_ARG, (char **)NULL, 10);
                 if (EINVAL == errno)
                         usage();
 	}
 
-	char *str, *ssvstr, *p;
-	int str_len, ssvstr_len, outfmt_len, index;
+	int str_len, ssvstr_len, outfmt_len, index, indexH, 
+		hours30_output = 0, H, loopend = 0;
+	char *str, *ssvstr, *p, *ptr, *ptr2, *p_base, 
+		basedate[9], tgtdate[9], tgtH[3], varry[4] = "+0d";
 	time_t tval;
-	struct tm *tm;
+	struct tm tm, tm_tomorrow;
+	struct vary *v = NULL;
 
 	(void) setlocale(LC_TIME, "");
 	time(&tval);
-	tm = localtime(&tval);
-
-	strptime("19700101000000","%Y%m%d%H%M%S",tm);
+	tm = *localtime(&tval);
+	strptime("000000", "%H%M%S", &tm);
+	tm_tomorrow = tm;
 
 	str_len = ssvstr_len = BUFFER_SIZE;
 	str = calloc(1, str_len * sizeof(char));
 	ssvstr = calloc(1, ssvstr_len * sizeof(char));
 
-	struct vary *v = NULL;
 	FILEPROCESS_GYO
-//XXX
-//	FILEPROCESS_RETU
 
 	exit(EX_OK);
 }
