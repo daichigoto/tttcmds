@@ -245,6 +245,7 @@ build:
 	cd ${SRCDIR}/bin; ${MAKE} $@
 clean:
 	cd ${SRCDIR}/bin; ${MAKE} $@
+	make clean-recursive
 report:
 	${KYUA} report-html
 
@@ -256,6 +257,7 @@ build:
 	cd ${SRCDIR}/${WORKPLACE:C,^/tests/,,}; ${MAKE} $@
 clean:
 	cd ${SRCDIR}/${WORKPLACE:C,^/tests/,,}; ${MAKE} $@
+	${RM} -rf html
 report:
 	${KYUA} report-html
 .endif
