@@ -27,12 +27,6 @@
 
 #include "command.h"
 
-struct ssvline {
-	char		**data;
-	int		nf;
-	struct ssvline	*next;
-};
-
 static void ssv2ssvlines(char *);
 static struct ssvline ssv_firstline;
 
