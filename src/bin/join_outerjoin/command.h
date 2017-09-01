@@ -31,6 +31,13 @@
 
 #include "ttt.h"
 
+struct ssvline {
+	char		**data;
+	int		nf;
+	struct ssvline	*next;
+	int		outputed;
+};
+
 #define TGT_GYO_PROCESS(GYO_BUFFER,NF) \
 	leftnf = NF; \
 	match1 = 0; \
