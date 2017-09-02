@@ -259,6 +259,7 @@ clean:
 	cd ${SRCDIR}/${WORKPLACE:C,^/tests/,,}; ${MAKE} $@
 	${RM} -rf html
 report:
+	${RM} -rf html
 	${KYUA} report-html
 .endif
 
