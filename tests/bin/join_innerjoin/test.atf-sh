@@ -134,6 +134,32 @@ input_empty_body() {
 		   "$(atf_get_srcdir)/empty.ssv"
 }
 
+atf_test_case out_of_range
+out_of_range_head() {
+	atf_set "descr" "Verify an out of range treatment"
+}
+
+out_of_range_body() {
+	atf_check \
+		-s ignore \
+		-o file:$(atf_get_srcdir)/empty.ssv \
+		-x "join_innerjoin 3=1" \
+		   "$(atf_get_srcdir)/left.ssv" \
+		   "$(atf_get_srcdir)/right.ssv"
+	atf_check \
+		-s ignore \
+		-o file:$(atf_get_srcdir)/empty.ssv \
+		-x "join_innerjoin 1=4" \
+		   "$(atf_get_srcdir)/left.ssv" \
+		   "$(atf_get_srcdir)/right.ssv"
+	atf_check \
+		-s ignore \
+		-o file:$(atf_get_srcdir)/empty.ssv \
+		-x "join_innerjoin 3=4" \
+		   "$(atf_get_srcdir)/left.ssv" \
+		   "$(atf_get_srcdir)/right.ssv"
+}
+
 atf_init_test_cases()
 {
 	atf_add_test_case normal
@@ -141,4 +167,5 @@ atf_init_test_cases()
 	atf_add_test_case remove
 	atf_add_test_case rightoutput_empty
 	atf_add_test_case input_empty
+	atf_add_test_case out_of_range
 }

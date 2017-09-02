@@ -25,7 +25,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#define VERSION "20170828"
+#define VERSION "20170902"
 #define CMDNAME "join_rightouterjoin"
 #define ALIAS "rightjoin"
 
@@ -44,6 +44,10 @@
 			do { \
 				leftnf = p_ssvline->nf; \
 				for (int i = 1; i <= R_ARGC; i++) { \
+					if (p_ssvline->nf < R_ARGV[i] || \
+					    NF < rightkeys[i]) { \
+						break; \
+					} \
 					if (0 != strcmp( \
 					    p_ssvline->data[R_ARGV[i]], \
 					    GYO_BUFFER[rightkeys[i]])) \
@@ -59,7 +63,7 @@
 				} \
 				p_ssvline = p_ssvline->next; \
 			} \
-		while (NULL != p_ssvline); \
+			while (NULL != p_ssvline); \
 		if (!match1) { \
 			LEFT_PRINT_NONE; \
 			if (outputed) \
