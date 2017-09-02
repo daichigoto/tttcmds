@@ -94,11 +94,19 @@ extern struct textset deftextsets[];
 extern struct textset cmdtextsets[] __attribute__((__weak__));
 extern struct textset *textsets[];
 
+struct ssvline {
+	char		**data;
+	int		nf;
+	struct ssvline	*next;
+	int		outputed;
+};
+
 int getcmdargs(const int, char *[], const char *, int);
 int getcmdargs_unlinktmpf(void);
 char *gettext(const char *);
 int settext(const char *, const char *, const char *);
 int settime(struct tm *, const char *, const char *);
+void ssvfile2ssvlines(const char *, struct ssvline *);
 char *ssvstr2str(char *, char *);
 int ssvstr2str_len(char *);
 char *str2ssvstr(char *, char *);

@@ -27,9 +27,6 @@
 
 #include "command.h"
 
-static void ssv2ssvlines(char *);
-static struct ssvline ssv_firstline;
-
 int
 main(int argc, char *argv[])
 {
@@ -57,90 +54,12 @@ main(int argc, char *argv[])
 	if (2 != F_ARGC)
 		usage();
 
-	ssv2ssvlines(F_ARGV[2]);
+	struct ssvline ssv_firstline;
+	struct ssvline *p_ssvline;
+	ssvfile2ssvlines(F_ARGV[2], &ssv_firstline);
 	F_ARGC = 1;
 
-	struct ssvline *p_ssvline;
 	FILEPROCESS_GYO
 
 	exit(EX_OK);
-}
-
-void
-ssv2ssvlines(char *filename)
-{
-	struct ssvline *p_ssvline;
-	FILE *fp;
-	const int buflen = 4096;
-	int len;
-	char buf[buflen], *p;
-
-	fp = fopen(filename, "r");
-	if (NULL == fp)
-		err(errno, "%s", filename);
-
-	p_ssvline = &ssv_firstline;
-	p_ssvline->data = NULL;
-	p_ssvline->next = NULL;
-	p_ssvline->nf = 0;
-	while (NULL != fgets(buf, buflen, fp)) {
-		/*
-		 * Next ssvline
-		 */
-		if (NULL != p_ssvline->data) {
-			p_ssvline->next = 
-				calloc(1, sizeof(struct ssvline));
-			p_ssvline = p_ssvline->next;
-		}
-
-		/*
-		 * Check NF
-		 */
-		p = buf;
-		p_ssvline->nf = 0;
-		while ('\0' != *p) {
-			if (' ' == *p) {
-				++(p_ssvline->nf);
-				*p = '\0';
-			}
-			else if ('\n' == *p)
-				*p = '\0';
-			++p;
-		}
-		++(p_ssvline->nf);
-
-		/*
-		 * Copy data
-		 */
-		p = buf;
-		p_ssvline->data = 
-			calloc(1, sizeof(char *) * (p_ssvline->nf + 1));
-		for (int i = 1; i <= p_ssvline->nf; i++) {
-			len = strlen(p);
-			p_ssvline->data[i] =
-				calloc(1, sizeof(char) * (len + 1));
-			strcpy(p_ssvline->data[i], p);
-			while ('\0' != *p)
-				++p;
-			++p;
-		}
-	}
-	fclose(fp);
-
-	if (FLAG_D) {
-		p_ssvline = &ssv_firstline;
-		do {
-			for (int i = 1; i < p_ssvline->nf; i++) {
-				printf("%s ", p_ssvline->data[i]);
-			}
-			if (0 != p_ssvline->nf) {
-				printf("%s\n", 
-					p_ssvline->data[p_ssvline->nf]);
-				p_ssvline = p_ssvline->next;
-			}
-			else
-				break;
-		}
-		while (NULL != p_ssvline);
-	}
 }
