@@ -252,14 +252,15 @@ report:
 # /tests/bin/cmds
 .elif ${WORKPLACE:C,/[^/]*$,,} == "/tests/bin"
 test:
+	${MAKE} build
 	${ENV} PATH=${BINDIR}:${PATH} ${KYUA} $@
 build:
 	cd ${SRCDIR}/${WORKPLACE:C,^/tests/,,}; ${MAKE} $@
 clean:
 	cd ${SRCDIR}/${WORKPLACE:C,^/tests/,,}; ${MAKE} $@
 	${RM} -rf html
-report:
-	${RM} -rf html
+report: 
+	${MAKE} clean build
 	${KYUA} report-html
 .endif
 
