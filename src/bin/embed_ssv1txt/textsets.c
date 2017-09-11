@@ -47,7 +47,8 @@ struct textset cmdtextsets[] = {
 	  _OPT("t") " " _ARG("txtfile") " " 
 	  "[" _OPT("s") " " _ARG("s.ssv") "] "
 	  "[" _OPT("m") " " _ARG("max") "] "
-	  "[" _OPT("n") "] [" _OPT("hvD") "] [" _OPT("-") "]\n"
+	  "[" _OPT("n") "] [" _OPT("b") "] "
+	  "[" _OPT("hvD") "]\n[" _OPT("-") "] "
 	  _ARG("N.l") " " 
 	  "[" _ARG("N.l") " " _ETC "] "
 	  "[" _ARG("file") " " _ETC "]" },
@@ -85,6 +86,7 @@ struct textset cmdtextsets[] = {
 	  _OPT("t") " " _ARG("txtfile") "\tテキストデータファイルを指定(必須)\n" 
 	  _OPT("s") " " _ARG("s.ssv") "\tSSV置換規則ファイルを指定\n" 
 	  _OPT("m") " " _ARG("max") "\t\tSSV最大置換回数を指定\n" 
+	  _OPT("b") "		バックスラッシュを\n"
 	  _OPT("n") "		" _ARG("txtfile") "のEOF前の\\nを出力しない\n"
 	  _OPT("h") "		使い方表示\n"
 	  _OPT("v") "		バージョン表示\n"
