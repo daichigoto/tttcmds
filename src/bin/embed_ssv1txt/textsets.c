@@ -83,11 +83,19 @@ struct textset cmdtextsets[] = {
 	  "from the\nstandard input." },
 
 	{ "command_options", "ja_JP", 
-	  _OPT("t") " " _ARG("txtfile") "\tテキストデータファイルを指定(必須)\n" 
-	  _OPT("s") " " _ARG("s.ssv") "\tSSV置換規則ファイルを指定\n" 
-	  _OPT("m") " " _ARG("max") "\t\tSSV最大置換回数を指定\n" 
-	  _OPT("b") "		バックスラッシュを\n"
-	  _OPT("n") "		" _ARG("txtfile") "のEOF前の\\nを出力しない\n"
+	  _OPT("t") " " _ARG("txtfile") 
+	  			"\tテキストデータファイルを指定""(必須)\n" 
+	  _OPT("s") " " _ARG("s.ssv") 
+	  			"\tSSV置換規則ファイルを指定\n" 
+	  _OPT("m") " " _ARG("max") 
+	  			"\t\tSSV最大置換回数を指定\n" 
+	  _OPT("b") "		バックスラッシュ表記のエスケープ文字を"
+	  			"次のように\n"
+	            "		変換:\n"
+	            "			\\n	→	改行\n"
+	            "			\\\\	→	\\\n"
+	  _OPT("n") "		" _ARG("txtfile") "のEOF前の\\nを出力"
+	  			"しない\n"
 	  _OPT("h") "		使い方表示\n"
 	  _OPT("v") "		バージョン表示\n"
 	  _OPT("D") "		デバッグモード\n"
@@ -95,9 +103,17 @@ struct textset cmdtextsets[] = {
 	  _ARG("file") "\t	ファイルを指定" },
 	
 	{ "command_options", "en_", 
-	  _OPT("t") " " _ARG("txtfile") "\tSpecify the text data file (REQUIRED).\n"
-	  _OPT("s") " " _ARG("s.ssv") "\tSpecify the swap-rules ssv file.\n"
-	  _OPT("m") " " _ARG("max") "\tSpecify the number of maxium swap times.\n"
+	  _OPT("t") " " _ARG("txtfile") 
+	  			"\tSpecify the text data file (REQUIRED).\n"
+	  _OPT("s") " " _ARG("s.ssv") 
+	  			"\tSpecify the swap-rules ssv file.\n"
+	  _OPT("m") " " _ARG("max") 
+	  			"\tSpecify the number of maxium swap "
+				"times.\n"
+	  _OPT("b") "		Handle the backslash notation escape "
+	  			"charactors\n\t\tas follows:\n"
+	            "			\\n	->	<new-line>\n"
+	            "			\\\\	->	\\\n"
 	  _OPT("n") "		Do not print the \\n before EOF of the "
 				_ARG("txtfile") ".\n"
 	  _OPT("h") "		Print the usage message.\n"
@@ -155,6 +171,21 @@ struct textset cmdtextsets[] = {
 	  _S("  <tr><td>000003</td><td><!--L2--></td><td>PHILIPPINES</td></tr>")
 	  _S("  <tr><td>000004</td><td><!--L2--></td><td>CANADA</td></tr>")
 	  _S("  <tr><td>000005</td><td><!--L2--></td><td>TURKEY</td></tr>")
+	  _P("cat text.html")
+	  _S("<html>")
+	  _S("<body>")
+	  _S("	<textarea id='comment'>TEXT</textarea>")
+	  _S("</body>")
+	  _S("</html>")
+	  _P("cat text.ssv")
+	  _S("\\_\\\\_Hello\\n\\\\nWorld_\\\\\\_ Hello_World")
+	  _P("embed_ssv1txt -b -t text.html 1:TEXT text.ssv")
+	  _S("<html>")
+	  _S("<body>")
+	  _S("	<textarea id='comment'>_\\ Hello")
+	  _S("\\nWorld \\_</textarea>")
+	  _S("</body>")
+	  _S("</html>")
 	  _P("") },
 
 	TEXTSET_END

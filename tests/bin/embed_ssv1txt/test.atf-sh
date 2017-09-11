@@ -1,6 +1,6 @@
 #!/usr/bin/env atf-sh
 # 
-#  Copyright (c) 2016 Daichi GOTO
+#  Copyright (c) 2016,2017 Daichi GOTO
 #  All rights reserved.
 #  
 #  Redistribution and use in source and binary forms, with or without
@@ -102,10 +102,26 @@ ssv1txt_m_body() {
 		   "$(atf_get_srcdir)/farm.ssv"
 }
 
+atf_test_case ssv1txt_b
+ssv1txt_b_head() {
+	atf_set "descr" "Verify a ssv data embedding process with -b"
+}
+
+ssv1txt_b_body() {
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/escape_01.out \
+		-x "embed_ssv1txt" \
+		   "-b" \
+		   "-t $(atf_get_srcdir)/text.html" \
+		   "1:TEXT" \
+		   "$(atf_get_srcdir)/text.ssv"
+}
+
 atf_init_test_cases()
 {
 	atf_add_test_case ssv1txt
 	atf_add_test_case ssv1txt_n
 	atf_add_test_case ssv1txt_s
 	atf_add_test_case ssv1txt_m
+	atf_add_test_case ssv1txt_b
 }

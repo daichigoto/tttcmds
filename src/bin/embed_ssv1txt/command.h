@@ -25,7 +25,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#define VERSION "20170223"
+#define VERSION "20170911"
 #define CMDNAME "embed_ssv1txt"
 #define ALIAS "ssv1txt"
 
@@ -49,9 +49,9 @@ struct swaprules {
 				len = strlen(R_ARGV_ARG1[i]); \
 				if (0 == strncmp(R_ARGV_ARG1[i], \
 					tbuf + j, len)) { \
-					if (R_ARGV[i] <= NF) \
-						printf("%s", _ssvstr2str( \
-						GYO_BUFFER[R_ARGV[i]])); \
+					if (R_ARGV[i] <= NF) { \
+						PRINTOUT(GYO_BUFFER) \
+					} \
 					if (FLAG_m) \
 						--m; \
 					j += len - 1; \
@@ -63,3 +63,59 @@ struct swaprules {
 		if (!match) \
 			putchar(*(tbuf + j)); \
 	}	
+
+#define PRINTOUT(GYO_BUFFER) \
+	if (!FLAG_b) { \
+	 	printf("%s", _ssvstr2str(GYO_BUFFER[R_ARGV[i]])); \
+	} \
+	else { \
+		bbuf_p1 = GYO_BUFFER[R_ARGV[i]]; \
+		bbuf = calloc(1, 1+strlen(bbuf_p1)); \
+		bbuf_p2 = bbuf; \
+		while ('\0' != *bbuf_p1) { \
+			switch (*bbuf_p1) { \
+			case '\\': \
+				++bbuf_p1; \
+				switch (*bbuf_p1) { \
+				case '\\': \
+					*bbuf_p2 = '\\'; \
+					++bbuf_p1; \
+					++bbuf_p2; \
+					break; \
+				case ' ': \
+					*bbuf_p2 = ' '; \
+					++bbuf_p1; \
+					++bbuf_p2; \
+					break; \
+				case 'n': \
+					*bbuf_p2 = '\n'; \
+					++bbuf_p1; \
+					++bbuf_p2; \
+					break; \
+				case 'r': \
+					++bbuf_p1; \
+					break; \
+				default: \
+					*bbuf_p2 = '\\'; \
+					++bbuf_p2; \
+					*bbuf_p2 = *bbuf_p1; \
+					++bbuf_p1; \
+					++bbuf_p2; \
+					break; \
+				} \
+				break; \
+			case '_': \
+				*bbuf_p2 = ' '; \
+				++bbuf_p1; \
+				++bbuf_p2; \
+				break; \
+			default: \
+				*bbuf_p2 = *bbuf_p1; \
+				++bbuf_p1; \
+				++bbuf_p2; \
+				break; \
+			} \
+		} \
+	 	printf("%s", _ssvstr2str(bbuf)); \
+		free(bbuf); \
+	}

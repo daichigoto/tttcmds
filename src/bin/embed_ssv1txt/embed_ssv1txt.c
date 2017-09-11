@@ -30,11 +30,11 @@
 int
 main(int argc, char *argv[])
 {
-	getcmdargs(argc, argv, "t:s:m:nhvD", CMDARGS_DEFAULT);
+	getcmdargs(argc, argv, "bt:s:m:nhvD", CMDARGS_DEFAULT);
 
 	struct stat sb;
 	int tsize = 0, fd, rs = 0, len = 0, max, m, match;
-	char *tbuf;
+	char *tbuf, *bbuf, *bbuf_p1, *bbuf_p2;
 
 	/*
 	 * required option
