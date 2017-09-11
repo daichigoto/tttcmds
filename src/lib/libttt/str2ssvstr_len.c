@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Daichi GOTO
+ * Copyright (c) 2016,2017 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -43,6 +43,8 @@ str2ssvstr_len(char *str)
 		switch (*str_p) {
 		case '@':
 		case '_':
+		case '\n':
+		case '\r':
 			++i;
 			break;
 		case '\0':

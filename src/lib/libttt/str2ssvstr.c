@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Daichi GOTO
+ * Copyright (c) 2016,2017 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -54,6 +54,16 @@ str2ssvstr(char *ssvstr, char *str)
 			*ssvstr_p = '\\';
 			++ssvstr_p;
 			*ssvstr_p = *str_p;
+			break;
+		case '\n':
+			*ssvstr_p = '\\';
+			++ssvstr_p;
+			*ssvstr_p = 'n';
+			break;
+		case '\r':
+			*ssvstr_p = '\\';
+			++ssvstr_p;
+			*ssvstr_p = 'r';
 			break;
 		case '\0':
 			*ssvstr_p = '\0';
