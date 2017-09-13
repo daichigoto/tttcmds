@@ -82,11 +82,6 @@ struct swaprules {
 					++bbuf_p1; \
 					++bbuf_p2; \
 					break; \
-				case ' ': \
-					*bbuf_p2 = ' '; \
-					++bbuf_p1; \
-					++bbuf_p2; \
-					break; \
 				case 'n': \
 					*bbuf_p2 = '\n'; \
 					++bbuf_p1; \
