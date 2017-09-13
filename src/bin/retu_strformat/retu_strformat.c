@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Daichi GOTO
+ * Copyright (c) 2016,2017 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -33,8 +33,29 @@ main(int argc, char *argv[])
 	getcmdargs(argc, argv, "hvD",
 	           CMDARGS_R_NEED|CMDARGS_R_ARGARG_1_NEED);
 
-	char *str, *ssvstr, *fmt, *buf;
-	int str_len, ssvstr_len, fmt_len, buf_len, BUF_len;
+	char *str, *str2, *ssvstr, *ssvstr2, *fmt, *buf, *buf2, *p, *p2;
+	int str_len, str2_len, ssvstr_len, ssvstr2_len, fmt_len, 
+		buf_len, buf2_len, BUF_len;
+
+	int html5entity[1+R_ARGC];
+	for (int i = 1; i <= R_ARGC; i++) {
+		if (NULL == (p = strstr(R_ARGV_ARG1[i], "%h"))) 
+			html5entity[i] = 0;
+		else {
+			*(p + 1) = 's';
+			html5entity[i] = 1;
+		}
+	}
+
+	if (FLAG_D) {
+		for (int i = 1; i <= R_ARGC; i++)
+			fprintf(stderr, "html5entity[%d]: %d\n", 
+				i, html5entity[i]);
+		fprintf(stderr, "\n");
+		for (int i = 1; i <= R_ARGC; i++)
+			fprintf(stderr, "R_ARGV_ARG1[%d]: %s\n", 
+				i, R_ARGV_ARG1[i]);
+	}
 
 	str = ssvstr = NULL;
 	str_len = ssvstr_len = 0;

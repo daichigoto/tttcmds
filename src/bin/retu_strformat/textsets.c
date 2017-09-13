@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Daichi GOTO
+ * Copyright (c) 2016,2017 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -52,9 +52,15 @@ struct textset cmdtextsets[] = {
 	  "\n"
 	  _ARG("N.f") "\t\t" _ARG("N") "列の文字列を読み込み、" 
 	  	_ARG("f") "フォーマットに変換して\n\t\t出力する。"
-		"フォーマットはprintf(3)に準拠\n"
+		"フォーマットはsnprintf(3)に準拠\n"
 	  _ARG("N/M.f") "\t\t" _ARG("N.f") "と同じ処理を" _ARG("M")
 	  	"列まで適用\n"
+	  "\n"
+	  "フォーマットはsnprintf(3)に準拠するほか、次の拡張指定に対応。\n"
+	  "\n"
+	  _ARG("%h") "\t\t文字列。ただし、HTML5属性値として指定できる\n"
+	             "\t\tように空白、<、>、'、\"、`、=はHTML5エンティ\n"
+		     "\t\tティ名に変換\n"
 	  "\n"
 	  "ファイルの指定がないか、-が指定されている場合には標準入力を"
 	  "使用。" },
@@ -64,9 +70,17 @@ struct textset cmdtextsets[] = {
 	  "\n"
 	  _ARG("N.f") "\t\tConvert the string of " _ARG("N") 
 	  	"th column to another.\n\t\t" _ARG("f") " is the dst "
-		"format based on printf(3)\n"
+		"format based on snprintf(3)\n"
 	  _ARG("N/M.f") "\t\tProcess " _ARG("N") "th to " _ARG("M")
 		"th columns in the same way as\n\t\t" _ARG("N.f") ".\n"
+	  "\n"
+	  "The format conforms to snprintf(3) and some extensions as "
+	  "follows:\n"
+	  "\n"
+	  _ARG("%h") "		A string will be converted to HTML5 "
+	  			"attribute\n\t\tvalue (<, >, ', \", `, "
+				"= and space will be\n\t\tconverted to "
+				"HTML5 Entity Name).\n"
 	  "\n"
 	  "If " _ARG("file") " is a single dash (`-') or absent, it reads "
 	  "from the\nstandard input." },
@@ -90,6 +104,13 @@ struct textset cmdtextsets[] = {
 	  _S("aa <p>DATA:_bb</p> cc dd")
 	  _P("echo aa bb cc dd | retu_strformat 1/4.'<p>%s</p>'")
 	  _S("<p>aa</p> <p>bb</p> <p>cc</p> <p>dd</p>")
+	  _P("cat data.ssv")
+	  _S("_<>'\"`= @ @")
+	  _P("retu_strformat 1.'<input value=\"%s\">' data.ssv")
+	  _S("<input_value=\"_<>'\"`=\"> @ @")
+	  _P("retu_strformat 1.'<input value=\"%h\">' data.ssv")
+	  _S("<input_value=\"&nbsp;&lt;&gt;&apos;&quot;&grave;&equals;\"> "
+	     "@ @")
 	  _P("") },
 
 	TEXTSET_END

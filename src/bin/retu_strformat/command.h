@@ -25,7 +25,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#define VERSION "20170407"
+#define VERSION "20170913"
 #define CMDNAME "retu_strformat"
 #define ALIAS "strformat strfmt"
 
@@ -40,25 +40,120 @@
 		if (NULL != str) \
 			free(str); \
 		str = calloc(1, sizeof(char) * str_len); \
+		str2_len = str_len * 7; \
+		if (NULL != str2) \
+			free(str2); \
+		str2 = calloc(1, sizeof(char) * str2_len); \
 	} \
 	if (buf_len < fmt_len + str_len) { \
 		buf_len = fmt_len + str_len; \
 		if (NULL != buf) \
 			free(buf); \
 		buf = calloc(1, sizeof(char) * buf_len + 1); \
+		buf2_len = buf_len * 7; \
+		if (NULL != buf2) \
+			free(buf2); \
+		buf2 = calloc(1, sizeof(char) * buf2_len + 1); \
 	} \
 	if (ssvstr_len < 2 * (fmt_len + str_len)) { \
 		ssvstr_len = 2 * (fmt_len + str_len); \
 		if (NULL != ssvstr) \
 			free(ssvstr); \
 		ssvstr = calloc(1, sizeof(char) * ssvstr_len + 1); \
+		ssvstr2_len = ssvstr_len * 7; \
+		if (NULL != ssvstr2) \
+			free(ssvstr2); \
+		ssvstr2 = calloc(1, sizeof(char) * ssvstr2_len + 1); \
 	} \
-	ssvstr2str(str, RETU_BUFFER); \
-	snprintf(buf, buf_len + 1, fmt, str); \
-	str2ssvstr(ssvstr, buf); \
-	printf("%s", ssvstr); \
+	if (html5entity[R_INDEX_TO_ARGV[INDEX]]) { \
+		ssvstr2str(str, RETU_BUFFER); \
+		STR_TO_HTML5ENTITY(str,str2); \
+		snprintf(buf2, buf2_len + 1, fmt, str2); \
+		str2ssvstr(ssvstr2, buf2); \
+		printf("%s", ssvstr2); \
+	} \
+	else { \
+		ssvstr2str(str, RETU_BUFFER); \
+		snprintf(buf, buf_len + 1, fmt, str); \
+		str2ssvstr(ssvstr, buf); \
+		printf("%s", ssvstr); \
+	}
 
 #define NOTGT_RETU_PROCESS(RETU_BUFFER,RETU_BUFFER_MAXLEN,INDEX) \
 	printf("%s",RETU_BUFFER);
 
 #define END_OF_LINE_RETU_PROCESS
+
+#define STR_TO_HTML5ENTITY(STR,STR2) \
+	p = STR; \
+	p2 = STR2; \
+	while ('\0' != *p) { \
+		switch (*p) { \
+		case ' ': \
+			++p; \
+			*p2++ = '&'; \
+			*p2++ = 'n'; \
+			*p2++ = 'b'; \
+			*p2++ = 's'; \
+			*p2++ = 'p'; \
+			*p2++ = ';'; \
+			break; \
+		case '<': \
+			++p; \
+			*p2++ = '&'; \
+			*p2++ = 'l'; \
+			*p2++ = 't'; \
+			*p2++ = ';'; \
+			break; \
+		case '>': \
+			++p; \
+			*p2++ = '&'; \
+			*p2++ = 'g'; \
+			*p2++ = 't'; \
+			*p2++ = ';'; \
+			break; \
+		case '\'': \
+			++p; \
+			*p2++ = '&'; \
+			*p2++ = 'a'; \
+			*p2++ = 'p'; \
+			*p2++ = 'o'; \
+			*p2++ = 's'; \
+			*p2++ = ';'; \
+			break; \
+		case '"': \
+			++p; \
+			*p2++ = '&'; \
+			*p2++ = 'q'; \
+			*p2++ = 'u'; \
+			*p2++ = 'o'; \
+			*p2++ = 't'; \
+			*p2++ = ';'; \
+			break; \
+		case '`': \
+			++p; \
+			*p2++ = '&'; \
+			*p2++ = 'g'; \
+			*p2++ = 'r'; \
+			*p2++ = 'a'; \
+			*p2++ = 'v'; \
+			*p2++ = 'e'; \
+			*p2++ = ';'; \
+			break; \
+		case '=': \
+			++p; \
+			*p2++ = '&'; \
+			*p2++ = 'e'; \
+			*p2++ = 'q'; \
+			*p2++ = 'u'; \
+			*p2++ = 'a'; \
+			*p2++ = 'l'; \
+			*p2++ = 's'; \
+			*p2++ = ';'; \
+			break; \
+		default: \
+			*p2++ = *p++; \
+			break; \
+		} \
+	} \
+	*p2 = '\0';
