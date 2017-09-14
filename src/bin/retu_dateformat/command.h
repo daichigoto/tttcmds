@@ -74,7 +74,7 @@ typedef unsigned char u_char;
 			p = strptime(str, R_ARGV_ARG1[index], &tm); \
 			HOURS30_INPUT_POST \
 			if (NULL == p) { \
-				printf("%s", GYO_BUFFER[i]); \
+				putchar('@'); \
 			} \
 			else { \
 				if (FLAG_3) { \
