@@ -117,6 +117,18 @@ struct textset cmdtextsets[] = {
 	  _P("retu_append -r -d, 1/8.9 data.ssv")
 	  _S("1,9 2,9 3,9 9 5,9 6,9 7,9 8,9")
 	  _S("i b,i c,i d,i e,i f,i i h,i")
+	  _P("retu_append 1.2/4 data.ssv")
+	  _S("123 2 3 @ 5 6 7 8 9")
+	  _S("bcd b c d e f @ h i")
+	  _P("retu_append 1.2,3,4 data.ssv")
+	  _S("123 2 3 @ 5 6 7 8 9")
+	  _S("bcd b c d e f @ h i")
+	  _P("retu_append -r 1.2/4 data.ssv")
+	  _S("123 5 6 7 8 9")
+	  _S("bcd e f @ h i")
+	  _P("retu_append -d, -r 1.2/4 data.ssv")
+	  _S("1,2,3 5 6 7 8 9")
+	  _S("b,c,d e f @ h i")
 	  _P("") },
 
 	TEXTSET_END

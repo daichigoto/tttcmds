@@ -66,8 +66,33 @@ remove_body() {
 		-x retu_append -r -d, 1/8.9 $(atf_get_srcdir)/data.ssv
 }
 
+atf_test_case multi_appends
+multi_appends_head() {
+	atf_set "descr" "a multi-appends test"
+}
+
+multi_appends_body() {
+	atf_check \
+		-s ignore \
+		-o file:$(atf_get_srcdir)/multiappends_output_01.ssv \
+		-x retu_append 1.2,5,7 $(atf_get_srcdir)/data.ssv
+	atf_check \
+		-s ignore \
+		-o file:$(atf_get_srcdir)/multiappends_output_02.ssv \
+		-x retu_append 1.4/7 $(atf_get_srcdir)/data.ssv
+	atf_check \
+		-s ignore \
+		-o file:$(atf_get_srcdir)/multiappends_output_03.ssv \
+		-x retu_append -r 1.4/7 $(atf_get_srcdir)/data.ssv
+	atf_check \
+		-s ignore \
+		-o file:$(atf_get_srcdir)/multiappends_output_04.ssv \
+		-x retu_append -d, -r 1.4/7 $(atf_get_srcdir)/data.ssv
+}
+
 atf_init_test_cases()
 {
 	atf_add_test_case append
 	atf_add_test_case remove
+	atf_add_test_case multi_appends
 }

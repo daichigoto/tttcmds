@@ -25,67 +25,81 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#define VERSION "20170827"
+#define VERSION "20170915"
 #define CMDNAME "retu_append"
 #define ALIAS "append col_append"
 
 #include "ttt.h"
 
+#define NUM_CHECK(X) \
+	if ((int)X < 48 || 57 < (int)X) { \
+		usage(); \
+	}
+
 #define TGT_GYO_PROCESS(GYO_BUFFER,NF) \
 	for (int i = 1; i <= R_ARGC; i++) { \
-		len1 = strlen(GYO_BUFFER[R_ARGV[i]]); \
-		len2 = strlen(GYO_BUFFER[appcols[i]]); \
-		if (0 != strcmp("@", GYO_BUFFER[R_ARGV[i]]) && \
-		    0 != strcmp("@", GYO_BUFFER[appcols[i]]) ) { \
-		    	buf = calloc(1, len1 + delim_len + len2 + 1); \
-			buf_p = buf; \
-			memcpy(buf_p, GYO_BUFFER[R_ARGV[i]], len1); \
-			buf_p += len1; \
-			memcpy(buf_p, delim, delim_len); \
-			buf_p += delim_len; \
-			memcpy(buf_p, GYO_BUFFER[appcols[i]], len2); \
-			GYO_BUFFER[R_ARGV[i]] = buf; \
+		len = strlen(GYO_BUFFER[R_ARGV[i]]); \
+		for (int j = 1; j <= appcols_len[i]; j++) { \
+			if (appcols[i][j] > NF) \
+				usage(); \
+			len += strlen(GYO_BUFFER[appcols[i][j]]); \
+			len += delim_len; \
 		} \
-		else if (0 == strcmp("@", GYO_BUFFER[R_ARGV[i]]) && \
-		         0 != strcmp("@", GYO_BUFFER[appcols[i]]) ) { \
-			buf = calloc(1, len2 + 1); \
-			buf_p = buf; \
-			memcpy(buf_p, GYO_BUFFER[appcols[i]], len2); \
-			GYO_BUFFER[R_ARGV[i]] = buf; \
+		len -= delim_len; \
+		buf[i] = calloc(len + 1, sizeof(char)); \
+	} \
+	for (int i = 1; i <= R_ARGC; i++) { \
+		buf_p = buf[i]; \
+		if (0 != strcmp("@", GYO_BUFFER[R_ARGV[i]])) { \
+			len = strlen(GYO_BUFFER[R_ARGV[i]]); \
+			memcpy(buf_p, GYO_BUFFER[R_ARGV[i]], len); \
+			buf_p += len; \
 		} \
-		else if (0 != strcmp("@", GYO_BUFFER[R_ARGV[i]]) && \
-		         0 == strcmp("@", GYO_BUFFER[appcols[i]]) ) { \
-			\
+		for (int j = 1; j <= appcols_len[i]; j++) { \
+			if (0 != strcmp("@", GYO_BUFFER[appcols[i][j]])) { \
+				if ('\0' != buf[i][0]) { \
+					memcpy(buf_p, delim, delim_len); \
+					buf_p += delim_len; \
+				} \
+				len = strlen(GYO_BUFFER[appcols[i][j]]); \
+				memcpy(buf_p, GYO_BUFFER[appcols[i][j]], \
+					len); \
+				buf_p += len; \
+			} \
+		} \
+		if ('\0' == buf[i][0]) { \
+			buf[i][0] = '@'; \
+			buf[i][1] = '\0'; \
+		} \
+	} \
+	spaces = NF - remcols_num - 1; \
+	for (int i = 1; i <= NF; i++) { \
+		if (FLAG_r) { \
+			if (i > remcols_max || !remcols[i]) { \
+				if (R_INDEX_EXIST[i]) { \
+					printf("%s", \
+						buf[R_INDEX_TO_ARGV[i]]); \
+				} \
+				else { \
+					printf("%s", GYO_BUFFER[i]); \
+				} \
+				if (spaces > 0) { \
+					putchar(' '); \
+					--spaces; \
+				} \
+			} \
 		} \
 		else { \
-			\
-		} \
-	} \
-	spacenum = 0; \
-	for (int i = 1; i <= NF; i++) { \
-		match = 0; \
-		if (FLAG_r) { \
-			for (int j = 1; j <= R_ARGC; j++) { \
-				if (i == appcols[j]) { \
-					match = 1; \
-					break; \
-				} \
-			} \
-		} \
-		if (!match) { \
-			printf("%s", GYO_BUFFER[i]); \
-			if (FLAG_r) { \
-				if (spacenum < NF - appnum) { \
-					putchar(' '); \
-					++spacenum; \
-				} \
+			if (R_INDEX_EXIST[i]) { \
+				printf("%s", buf[R_INDEX_TO_ARGV[i]]); \
 			} \
 			else { \
-				if (spacenum < NF - 1) { \
-					putchar(' '); \
-					++spacenum; \
-				} \
+				printf("%s", GYO_BUFFER[i]); \
 			} \
+			if (i != NF) \
+				putchar(' '); \
 		} \
 	} \
+	for (int i = 1; i <= R_ARGC; i++) \
+		free(buf[i]); \
 	putchar('\n');

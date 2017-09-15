@@ -27,6 +27,8 @@
 
 #include "command.h"
 
+static void to_intarray(char *, int *, int *);
+
 int
 main(int argc, char *argv[])
 {
@@ -40,25 +42,145 @@ main(int argc, char *argv[])
 		delim_len = strlen(delim);
 	}
 
-	int appcols[R_ARGC+1], appnum = 1, match;
+	/*
+	 * target cols to int array - appcols[][], appcols_len[]
+	 */
+	int **appcols, appcols_len[R_ARGC+1];
+	appcols = (int **)calloc(R_ARGC+1, sizeof(int *));
+	for (int i = 0; i <= R_ARGC; i++) 
+		appcols[i] = (int *)calloc(4096, sizeof(int));
+
 	for (int i = 1; i <= R_ARGC; i++) {
-		errno = 0;
-		appcols[i] = 
-			(int)strtol(R_ARGV_ARG1[i], (char **)NULL, 10);
-		match = 0;
-		for (int j = 1; j < i; j++)
-			if (appcols[j] == appcols[i])
-				match = 1;
-		if (!match)
-			++appnum;
-			
-		if (EINVAL == errno)
-			usage();
+		to_intarray(R_ARGV_ARG1[i], appcols[i], &appcols_len[i]);
 	}
 
-	char *buf, *buf_p;
-	int len1, len2, spacenum;
+	/*
+	 * remove target cols - remcols[], remcols_max, remcols_num;
+	 */
+	int remcols_max = 0;
+	for (int i = 1; i <= R_ARGC; i++) {
+		for (int j = 1; j <= appcols_len[i]; j++) {
+			if (remcols_max < appcols[i][j])
+				remcols_max = appcols[i][j];
+		}
+	}
+	int remcols[remcols_max+1];
+	for (int i = 0; i <= remcols_max; i++)
+		remcols[i] = 0;
+	for (int i = 1; i <= R_ARGC; i++) {
+		for (int j = 1; j <= appcols_len[i]; j++) {
+			remcols[appcols[i][j]] = 1;
+		}
+	}
+	int remcols_num = 0;
+	for (int i = 1; i <= remcols_max; i++)
+		if (1 == remcols[i])
+			++remcols_num;
+
+	if (FLAG_D) {
+		fprintf(stderr, "remcols: ");
+		for (int i = 0; i <= remcols_max; i++)
+			fprintf(stderr, "%d ", remcols[i]);
+		fprintf(stderr, "\n");
+		fprintf(stderr, "remcols_max: %d\n", remcols_max);
+		fprintf(stderr, "remcols_num: %d\n", remcols_num);
+		
+		for (int i = 1; i <= R_ARGC; i++) {
+			fprintf(stderr, "appcols[%d][] --> ", i);
+			for (int j = 1; j <= appcols_len[i]; j++) 
+				fprintf(stderr, "%d ", appcols[i][j]);
+			fprintf(stderr, "\n");
+		}
+	}
+
+	char *buf[R_ARGC+1], *buf_p;
+	int len, spaces;
 	FILEPROCESS_GYO
 
 	exit(EX_OK);
+}
+
+static void
+to_intarray(char *cols, int *i_a, int *i_a_len)
+{
+	char *p;
+	int slash = 0, delim = 0;
+
+	/*
+	 * columns check
+	 */
+	p = cols;
+	while (*p != '\0') {
+		if ('/' == *p) {
+			++slash;
+		}
+		else if ((int)*p < 48 || 57 < (int)*p) {
+			++delim;
+		}
+		++p;
+	}
+
+	/*
+	 * a column
+	 */
+	if (0 == slash && 0 == delim) {
+		p = cols;
+		int col = 0;
+		while (*p != '\0') {
+			col = 10 * col + (int)(*p) - 48;
+			++p;
+		}
+		i_a[1] = col;
+		*i_a_len = 1;
+	}
+	/*
+	 * multi coulumns
+	 */
+	else if (0 == slash && 0 != delim) {
+		p = cols;
+		int col = 0, i = 1, len = 0;
+		while (1) {
+			if ((int)*p < 48 || 57 < (int)*p) {
+				if (0 == col)
+					usage();
+				i_a[i] = col;
+				if (*p == '\0') {
+					++len;
+					*i_a_len = len;
+					break;
+				}
+				col = 0;
+				++i;
+				++len;
+			}
+			else {
+				col = 10 * col + (int)(*p) - 48;
+			}
+			++p;
+		}
+	}
+	/*
+	 * multi coulumns by slash range
+	 */
+	else if (1 == slash) {
+		p = cols;
+		int start, end;
+		start = end = 0;
+		while (*p != '/') {
+			NUM_CHECK(*p)
+			start = 10 * start + (int)(*p) - 48;
+			++p;
+		}
+		++p;
+		while (*p != '\0') {
+			NUM_CHECK(*p)
+			end = 10 * end + (int)(*p) - 48;
+			++p;
+		}
+		for (int i = 1, j = start; j <= end; i++, j++)
+			i_a[i] = j;
+		*i_a_len = end - start + 1;
+	}
+	else
+		usage();
 }
