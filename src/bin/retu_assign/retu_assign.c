@@ -30,7 +30,7 @@
 int
 main(int argc, char *argv[])
 {
-	getcmdargs(argc, argv, "@:shvD",
+	getcmdargs(argc, argv, "@:f:shvD",
 	           CMDARGS_R_NEED|
 		   CMDARGS_R_ARGARG_1_NEED|
 		   CMDARGS_R_ARGARG_TO_SSVSTR); 
@@ -53,7 +53,10 @@ main(int argc, char *argv[])
 	char *filename;
 	for (int i = 1; i <= R_ARGC; i++) {
 		if (NULL == R_ARGV_ARG2[i] && NULL == R_ARGV_ARG3[i]) {
-			mode[R_ARGV[i]] = DO_ASSIGN;
+			if (FLAG_f)
+				mode[R_ARGV[i]] = DO_ASSIGN_WITH_F;
+			else
+				mode[R_ARGV[i]] = DO_ASSIGN_WITHOUT_F;
 		}
 		else if (NULL != R_ARGV_ARG2[i] && NULL == R_ARGV_ARG3[i]) {
 			if ('!' != R_ARGV_DELIM[i]) {
@@ -79,7 +82,62 @@ main(int argc, char *argv[])
 				cmdargs.r_argv_arg2[i],
 				cmdargs.r_argv_arg3[i],
 				cmdargs.r_argv_delim[i]);
+		}
+	}
 
+	/*
+	 * array setup for simple assing (with -f) process
+	 */
+	char **a_array;
+	int *i_to_ai, a_nf = 0;
+	if (FLAG_f) {
+		/*
+		 * R_ARGV_ARG1[] to i_to_ai[]
+		 */
+		i_to_ai = (int *)calloc(R_ARGC+1, sizeof(int));
+		for (int i = 1; i <= R_ARGC; i++) {
+			errno = 0;
+			i_to_ai[i] = (int)strtol(R_ARGV_ARG1[i], 
+				(char **)NULL, 10);
+			if (EINVAL == errno)
+				usage();
+		}
+
+		/*
+		 * file to a_array[][]
+		 */
+		FILE *fp = fopen(FLAG_f_ARG, "r");	
+		if (NULL == fp)
+			usage();
+		char a_buf[1024*64], *a_buf_p;
+		fgets(a_buf, 1024*64, fp);
+		fclose(fp);
+
+		a_buf_p = a_buf;
+		while (*a_buf_p != '\0') {
+			if (' ' == *a_buf_p)
+				++a_nf;
+			++a_buf_p;
+		}
+		if (a_buf[0] != '\n' && a_buf[0] != '\0')
+			++a_nf;
+		int len;
+		a_buf_p = a_buf;
+		a_array = (char **)calloc(a_nf+1, sizeof(char *));
+		for (int i = 1; i <= a_nf; i++) {
+			len = 0;
+			while (*a_buf_p != ' ' && 
+				*a_buf_p != '\n' && *a_buf_p != '\0') {
+				++a_buf_p;
+				++len;
+			}
+			a_array[i] = (char *)calloc(len+1, sizeof(char));
+			memcpy(a_array[i], a_buf_p-len, len);
+
+			if (*a_buf_p == '\n' || *a_buf_p == '\0')
+				break;
+
+			++a_buf_p;
 		}
 	}
 

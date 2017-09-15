@@ -44,6 +44,7 @@ struct textset cmdtextsets[] = {
 	{ "command_synopsis", "en_", 
 	  _CMD(CMDNAME) " " 
 	  "[" _OPT("@") " " _ARG("val") "] "
+	  "[" _OPT("f") " " _ARG("file") "] "
 	  "[" _OPT("s") "] "
 	  "[" _OPT("hvD") "] [" _OPT("-") "]\n" 
 	  _ARG("N.a") "|" _ARG("N.p.s") "|" 
@@ -59,9 +60,15 @@ struct textset cmdtextsets[] = {
 	{ "command_description", "ja_JP", 
 	  "いくつかの方法で列に値を割り当てることが可能。\n"
 	  "\n"
-	  ES_BOLD("単純代入") "\n"
+	  ES_BOLD("単純代入 (-f指定なし)") "\n"
 	  _ARG("N.a") "\t\t" _ARG("a") "を" _ARG("N") "列に代入\n"
 	  _ARG("N/M.a") "\t\t" _ARG("N.a") "と同じ処理を" _ARG("M") 
+	  	"列まで適用\n"
+	  "\n"
+	  ES_BOLD("単純代入 (-f指定あり)") "\n"
+	  _ARG("N.n") "\t\t" _ARG("file") "の1行目" _ARG("n") "列目の"
+	  	"値を" _ARG("N") "列に代入\n"
+	  _ARG("N/M.n") "\t\t" _ARG("N.a") "と同じ処理を" _ARG("M") 
 	  	"列まで適用\n"
 	  "\n"
 	  ES_BOLD("条件代入") "\n"
@@ -91,9 +98,16 @@ struct textset cmdtextsets[] = {
 	  "Assign values to specified columns in several ways as below.\n"
 	  ""
 	  "\n"
-	  ES_BOLD("SIMPLE ASSIGNMENT") "\n"
+	  ES_BOLD("SIMPLE ASSIGNMENT (without -f)") "\n"
 	  _ARG("N.a") "\t\tAssign " _ARG("a") " to " _ARG("N") "th "
 	  	"column.\n"
+	  _ARG("N/M.a") "\t\tProcess " _ARG("N") "th to " _ARG("M") "th "
+	  	"columns in the same way as\n\t\t" _ARG("N.a") ".\n"
+	  "\n"
+	  ES_BOLD("SIMPLE ASSIGNMENT (with -f)") "\n"
+	  _ARG("N.a") "\t\tAssign the value of 1st row " _ARG("n") 
+	  	"th column of the\n\t\t" _ARG("file") " to " _ARG("N") 
+		"th column.\n"
 	  _ARG("N/M.a") "\t\tProcess " _ARG("N") "th to " _ARG("M") "th "
 	  	"columns in the same way as\n\t\t" _ARG("N.a") ".\n"
 	  "\n"
@@ -124,6 +138,7 @@ struct textset cmdtextsets[] = {
 	{ "command_options", "ja_JP", 
 	  _OPT("@") " " _ARG("val") "\t\t結合代入で値がなかった場合に"
 	  			"出力する値\n\t\t(デフォルトは@)\n"
+	  _OPT("f") " " _ARG("file") "\t\t単純代入で使うファイルを指定\n"
 	  _OPT("s") "		" _ARG("a") "をSSV文字列として扱う\n"
 	  _OPT("h") "		使い方表示\n"
 	  _OPT("v") "		バージョン表示\n"
@@ -135,6 +150,8 @@ struct textset cmdtextsets[] = {
 	  _OPT("@") " " _ARG("val") "\t\tSpecify the " _ARG("val") " as "
 	  			"output value if the assignment "
 				"\n\t\tvalues are @ (default is @).\n"
+	  _OPT("f") " " _ARG("file") "\t\tSpecify the " _ARG("file") 
+	  			" for simple assignment.\n"
 	  _OPT("s") "		Handle " _ARG("a") "as a SSV string.\n"
 	  _OPT("h") "		Print the usage message.\n"
 	  _OPT("v") "		Print the version.\n"
@@ -195,6 +212,15 @@ struct textset cmdtextsets[] = {
 	  _S("000004 BLUEBERRY U.S. CANADA 0")
 	  _S("000005 MELON CHINA TURKEY 230")
 	  _S("000100 NONE NONE NONE 0")
+	  _P("retu_select 1 1 1 2 sales.ssv |") 
+	  _P2("retu_assign -@ NONE 2:name.ssv:1:2 3:farm.ssv:1:2,3 |") 
+	  _P2("retu_assign -f data.ssv 1.2 3.1 4.7") 
+	  _S("@ BANANA aa gg 100")
+	  _S("@ APPLE aa gg 220")
+	  _S("@ MIKAN aa gg 120")
+	  _S("@ BLUEBERRY aa gg 0")
+	  _S("@ MELON aa gg 230")
+	  _S("@ NONE aa gg 0")
 	  _P("retu_assign 1/11.@ data.ssv") 
 	  _S("\\@ \\@ \\@ \\@ \\@ \\@ \\@ \\@ \\@ \\@ \\@")
 	  _P("retu_assign -s 1/11.@ data.ssv") 

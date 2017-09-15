@@ -33,10 +33,11 @@
 #include "retu_assign.h"
 
 #define DO_NOTHING			0x0001
-#define DO_ASSIGN			0x0002
-#define DO_MATCH_SWAP			0x0004
-#define DO_NOTMATCH_SWAP		0x0008
-#define	DO_JOIN				0x0010
+#define DO_ASSIGN_WITH_F		0x0002
+#define DO_ASSIGN_WITHOUT_F		0x0004
+#define DO_MATCH_SWAP			0x0008
+#define DO_NOTMATCH_SWAP		0x0010
+#define	DO_JOIN				0x0020
 
 /*
  * argument process (argument process for join)
@@ -88,8 +89,10 @@
  * retu_assign main process
  */
 #define TGT_RETU_PROCESS(BUF,BUFLEN,I) { \
-	if (mode[I]&DO_ASSIGN) \
-		TGT_RETU_PROCESS_DO_ASSIGN(BUF,BUFLEN,I) \
+	if (mode[I]&DO_ASSIGN_WITH_F) \
+		TGT_RETU_PROCESS_DO_ASSIGN_WITH_F(BUF,BUFLEN,I) \
+	else if (mode[I]&DO_ASSIGN_WITHOUT_F) \
+		TGT_RETU_PROCESS_DO_ASSIGN_WITHOUT_F(BUF,BUFLEN,I) \
 	else if (mode[I]&(DO_MATCH_SWAP|DO_NOTMATCH_SWAP)) \
 		TGT_RETU_PROCESS_DO_SWAP(BUF,BUFLEN,I) \
 	else if (mode[I]&DO_JOIN) \
@@ -104,9 +107,15 @@
 #define END_OF_LINE_RETU_PROCESS
 
 /*
- * assign process
+ * assign process with -f
  */
-#define TGT_RETU_PROCESS_DO_ASSIGN(BUF,BUFLEN,I) \
+#define TGT_RETU_PROCESS_DO_ASSIGN_WITH_F(BUF,BUFLEN,I) \
+	printf("%s", a_array[i_to_ai[R_INDEX_TO_ARGV[I]]]);
+
+/*
+ * assign process without -f
+ */
+#define TGT_RETU_PROCESS_DO_ASSIGN_WITHOUT_F(BUF,BUFLEN,I) \
 	if (FLAG_s) { \
 		printf("%s", _ssvstr2str( \
 			R_ARGV_ARG1[R_INDEX_TO_ARGV[I]])); \
