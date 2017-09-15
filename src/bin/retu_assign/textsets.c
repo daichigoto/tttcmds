@@ -44,13 +44,16 @@ struct textset cmdtextsets[] = {
 	{ "command_synopsis", "en_", 
 	  _CMD(CMDNAME) " " 
 	  "[" _OPT("@") " " _ARG("val") "] "
-	  "[" _OPT("hvD") "] [" _OPT("-") "] " 
-	  _ARG("N.a") "|" _ARG("N.p.s") "|" _ARG("N!p!s") "|"
-	  _ARG("N.f.K.A")  "|" _ARG("N/M.a") "|\n" 
-	  _ARG("N/M.p.s") "|" _ARG("N/M!p!s") "|" _ARG("N/M.f.K.A") " "
-	  "[" _ARG("N.a") "|" _ARG("N.p.s") "|" _ARG("N!p!s") "|" 
-	      _ARG("N.f.K.A") "|" _ARG("N/M.a") "|" _ARG("N/M.p.s") "|\n" 
-	      _ARG("N/M!p!s") "|" _ARG("N/M.f.K.A") " " _ETC "] "
+	  "[" _OPT("s") "] "
+	  "[" _OPT("hvD") "] [" _OPT("-") "]\n" 
+	  _ARG("N.a") "|" _ARG("N.p.s") "|" 
+	  _ARG("N!p!s") "|" _ARG("N.f.K.A")  "|" 
+	  _ARG("N/M.a") "|" _ARG("N/M.p.s") "|" 
+	  _ARG("N/M!p!s") "|" _ARG("N/M.f.K.A") "\n"
+	  "[" _ARG("N.a") "|" _ARG("N.p.s") "|"
+	      _ARG("N!p!s") "|" _ARG("N.f.K.A") "|"
+	      _ARG("N/M.a") "|" _ARG("N/M.p.s") "|" 
+	      _ARG("N/M!p!s") "|" _ARG("N/M.f.K.A") " " _ETC "]\n"
 	  "[" _ARG("file") " " _ETC "]" },
 
 	{ "command_description", "ja_JP", 
@@ -121,6 +124,7 @@ struct textset cmdtextsets[] = {
 	{ "command_options", "ja_JP", 
 	  _OPT("@") " " _ARG("val") "\t\t結合代入で値がなかった場合に"
 	  			"出力する値\n\t\t(デフォルトは@)\n"
+	  _OPT("s") "		" _ARG("a") "をSSV文字列として扱う\n"
 	  _OPT("h") "		使い方表示\n"
 	  _OPT("v") "		バージョン表示\n"
 	  _OPT("D") "		デバッグモード\n"
@@ -131,6 +135,7 @@ struct textset cmdtextsets[] = {
 	  _OPT("@") " " _ARG("val") "\t\tSpecify the " _ARG("val") " as "
 	  			"output value if the assignment "
 				"\n\t\tvalues are @ (default is @).\n"
+	  _OPT("s") "		Handle " _ARG("a") "as a SSV string.\n"
 	  _OPT("h") "		Print the usage message.\n"
 	  _OPT("v") "		Print the version.\n"
 	  _OPT("D") "		Enable the debug mode.\n"
@@ -190,6 +195,10 @@ struct textset cmdtextsets[] = {
 	  _S("000004 BLUEBERRY U.S. CANADA 0")
 	  _S("000005 MELON CHINA TURKEY 230")
 	  _S("000100 NONE NONE NONE 0")
+	  _P("retu_assign 1/11.@ data.ssv") 
+	  _S("\\@ \\@ \\@ \\@ \\@ \\@ \\@ \\@ \\@ \\@ \\@")
+	  _P("retu_assign -s 1/11.@ data.ssv") 
+	  _S("@ @ @ @ @ @ @ @ @ @ @")
 	  _P("") },
 
 	TEXTSET_END

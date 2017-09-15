@@ -30,7 +30,7 @@
 int
 main(int argc, char *argv[])
 {
-	getcmdargs(argc, argv, "@:hvD",
+	getcmdargs(argc, argv, "@:shvD",
 	           CMDARGS_R_NEED|
 		   CMDARGS_R_ARGARG_1_NEED|
 		   CMDARGS_R_ARGARG_TO_SSVSTR); 

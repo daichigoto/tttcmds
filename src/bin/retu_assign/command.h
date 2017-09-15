@@ -25,7 +25,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#define VERSION "20170531"
+#define VERSION "20170915"
 #define CMDNAME "retu_assign"
 #define ALIAS "assign col_assign"
 
@@ -107,7 +107,13 @@
  * assign process
  */
 #define TGT_RETU_PROCESS_DO_ASSIGN(BUF,BUFLEN,I) \
-	printf("%s", R_ARGV_ARG1[R_INDEX_TO_ARGV[I]]);
+	if (FLAG_s) { \
+		printf("%s", _ssvstr2str( \
+			R_ARGV_ARG1[R_INDEX_TO_ARGV[I]])); \
+	} \
+	else { \
+		printf("%s", R_ARGV_ARG1[R_INDEX_TO_ARGV[I]]); \
+	}
 
 /*
  * swap process

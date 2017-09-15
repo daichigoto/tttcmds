@@ -311,6 +311,24 @@ atmark_body() {
  		   "$(atf_get_srcdir)/join_data.ssv"
 }
 
+atf_test_case ssvstr_assign
+ssvstr_assign_head() {
+	atf_set "descr" "Verify the SSV string assignment process"
+}
+
+ssvstr_assign_body() {
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/ssvstr_assign_output_01.ssv \
+		-x "retu_assign" \
+		   "1/12.@" \
+		   "$(atf_get_srcdir)/data_with_eor.in"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/ssvstr_assign_output_02.ssv \
+		-x "retu_assign -s" \
+		   "1/12.@" \
+		   "$(atf_get_srcdir)/data_with_eor.in"
+}
+
 atf_init_test_cases()
 {
 	atf_add_test_case empty
@@ -323,4 +341,5 @@ atf_init_test_cases()
 	atf_add_test_case swap_with_eor
 	atf_add_test_case join
 	atf_add_test_case atmark
+	atf_add_test_case ssvstr_assign
 }
