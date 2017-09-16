@@ -30,7 +30,7 @@
 int
 main(int argc, char *argv[])
 {
-	getcmdargs(argc, argv, "w:hvD",
+	getcmdargs(argc, argv, "nw:hvD",
 	           CMDARGS_R_NONE|CMDARGS_STDIN_TO_TMPFILE);
 
 	int wrap = 0;
@@ -47,7 +47,7 @@ main(int argc, char *argv[])
 	char p;
 	FILEPROCESS_CHAR
 
-	int i, j;
+	int i, j, col;
 	FILEPROCESS_GYO
 
 	getcmdargs_unlinktmpf();

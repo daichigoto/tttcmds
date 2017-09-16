@@ -246,6 +246,18 @@ wrap_body() {
 		-o file:$(atf_get_srcdir)/wrap_4.out \
 		-x "conv_ssv2ssv -w 100 $(atf_get_srcdir)/data_with_eor.in"
 }
+
+atf_test_case colnumber
+colnumber_head() {
+	atf_set "descr" "Verify a -n process"
+}
+
+colnumber_body() {
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/colnumber_output_01.ssv \
+		-x "conv_ssv2ssv -n" \
+		   "$(atf_get_srcdir)/data_with_eor.in" 
+}
 atf_init_test_cases()
 {
 	atf_add_test_case empty
@@ -258,4 +270,5 @@ atf_init_test_cases()
 	atf_add_test_case diff_retu_without_eor
 	atf_add_test_case some_stdins
 	atf_add_test_case wrap
+	atf_add_test_case colnumber
 }

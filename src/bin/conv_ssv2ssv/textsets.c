@@ -44,6 +44,7 @@ struct textset cmdtextsets[] = {
 
 	{ "command_synopsis", "en_", 
 	  _CMD(CMDNAME) " "
+	  "[" _OPT("n") "] "
 	  "[" _OPT("w") " " _ARG("cols") "] "
 	  "[" _OPT("hvD") "] [" _OPT("-") "] "
 	  "[" _ARG("file") " " _ETC "]" },
@@ -59,6 +60,7 @@ struct textset cmdtextsets[] = {
 
 	{ "command_options", "ja_JP", 
 	  _OPT("w") " " _ARG("cols") "\t\t指定した列数の後で折り返す\n"
+	  _OPT("n") "		値に列番号を付けて表示\n"
 	  _OPT("h") "		使い方表示\n"
 	  _OPT("v") "		バージョン表示\n"
 	  _OPT("D") "		デバッグモード\n"
@@ -68,6 +70,7 @@ struct textset cmdtextsets[] = {
 	{ "command_options", "en_", 
 	  _OPT("w") " " _ARG("cols") "\t\tWrap lines after the "
 	  			"specified column.\n"
+	  _OPT("n") "		Number the output values of columns.\n"
 	  _OPT("h") "		Print the usage message.\n"
 	  _OPT("v") "		Print the version.\n"
 	  _OPT("D") "		Enable the debug mode.\n"
@@ -99,6 +102,10 @@ struct textset cmdtextsets[] = {
 	  _S("a b c d")
 	  _S("@ a b c")
 	  _S("d @ @ @")
+	  _P("conv_ssv2ssv -n data1.ssv")
+	  _S("1:1 2:2 3:3 4:4 5:5 6:6 7:7 8:8 9:9")
+	  _S("1:a 2:b 3:c 4:d 5:@ 6:@ 7:@ 8:@ 9:@")
+	  _S("1:@ 2:a 3:b 4:c 5:d 6:@ 7:@ 8:@ 9:@")
 	  _P("") },
 
 	TEXTSET_END

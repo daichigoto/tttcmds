@@ -25,7 +25,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#define VERSION "20170503"
+#define VERSION "20170916"
 #define CMDNAME "conv_ssv2ssv"
 #define ALIAS "ssv2ssv"
 
@@ -49,11 +49,13 @@
 	p = C;
 
 #define TGT_GYO_PROCESS(GYO_BUFFER,NF) \
+	col = 1; \
 	if (FILEPROCESS_GYO_FILESIZE_IS_ZERO) \
 		goto tgt_gyo_process_end; \
 	if (FLAG_w) { \
 		j = 0; \
 		for (i = 1; i <= NF; i++) { \
+			PRINT_COLNUMBER \
 			printf("%s", GYO_BUFFER[i]); \
 			++j; \
 			if (j == wrap) { \
@@ -67,20 +69,26 @@
 		} \
 		++j; \
 		while (j < wrap) { \
+			PRINT_COLNUMBER \
 			printf("@ "); \
 			++j; \
 		} \
-		if (j == wrap) \
+		if (j == wrap) { \
+			PRINT_COLNUMBER \
 			printf("@"); \
+		} \
 		printf("\n"); \
 	} \
 	else { \
-		for (i = 1; i < retumax; i++) \
+		for (i = 1; i < retumax; i++) { \
+			PRINT_COLNUMBER \
 			if (i > NF) \
 				printf("@ "); \
 			else \
 				printf("%s ", GYO_BUFFER[i]); \
+		} \
 		if (retumax != 0) { \
+			PRINT_COLNUMBER \
 			if (i > NF) \
 				printf("@\n"); \
 			else \
@@ -88,3 +96,8 @@
 		} \
 	} \
 tgt_gyo_process_end:
+
+#define PRINT_COLNUMBER \
+	if (FLAG_n) { \
+		printf("%d:", col++); \
+	}
