@@ -97,9 +97,12 @@ CFLAGS=		-I. \
 #	tests/			OK	OK	OK	OK
 #		bin/		OK	OK	OK	OK
 #			cmd/	OK	OK	OK	OK
+#
+# all: build
 
 # /
 .if ${WORKPLACE} == "/"
+all:	build
 build:
 	cd ${SRCDIR}; ${MAKE} $@
 clean:
@@ -111,6 +114,7 @@ report:
 
 # /src
 .elif ${WORKPLACE} == "/src"
+all:	build
 build:
 	cd ${SRCDIR}/bin; ${MAKE} $@
 clean:
@@ -121,6 +125,7 @@ test:
 # /src/bin 
 .elif ${WORKPLACE} == "/src/bin"
 TARGETDIRS!=	${FIND} . -type d -maxdepth 1 | ${SED} 's,^[.][/]*,,'
+all:	build
 build:
 	cd ${SRCDIR}/include; ${MAKE} $@
 	cd ${SRCDIR}/lib; ${MAKE} $@
@@ -145,6 +150,7 @@ ALIAS!=		${GREP} '^\#define ALIAS' command.h 2> /dev/null | \
 CLEANFILES+=	${ALIAS:S,^,${BINDIR}/,}
 . endif
 . if !target(build)
+all:	build
 build: ${DIRNAME}
 . endif
 ${DIRNAME}: ${OBJS}
@@ -183,12 +189,14 @@ test: build
 # /src/lib
 .elif ${WORKPLACE} == "/src/lib"
 TARGETDIRS!=	${FIND} . -type d -maxdepth 1 | ${SED} 's,^[.][/]*,,'
+all:   build
 build: build-recursive
 clean: clean-recursive
 
 # /usr/include
 .elif ${WORKPLACE} == "/src/include"
 OBJS!=		${LS} | ${GREP} '[.]h$$' 2> /dev/null
+all:	build
 build:
 .for i in ${OBJS}
 	${CP} ${i} ${INCLUDEDIR}/${i}
@@ -211,6 +219,7 @@ SLIB?=		${LIBDIR}/${DIRNAME}.a
 DLIB?=		${LIBDIR}/${DIRNAME}.so.${LIBVERSION}
 LIBOBJS?=	${SRCDIR}/lib/${DIRNAME}/*.o
 . endif
+all:	build
 build: ${OBJS}
 	${RM} -f ${SLIB} ${DLIB}
 	${CC} ${CFLAGS} -o ${DLIB} -shared ${OBJS}
@@ -229,6 +238,7 @@ clean:
 TARGETDIRS!=	${FIND} . -type d -maxdepth 1 | ${SED} 's,^[.][/]*,,'
 test:
 	${ENV} PATH=${BINDIR}:${PATH} ${KYUA} $@
+all:	build
 build:
 	cd ${SRCDIR}; ${MAKE} $@
 clean: 
@@ -241,6 +251,7 @@ report:
 TARGETDIRS!=	${FIND} . -type d -maxdepth 1 | ${SED} 's,^[.][/]*,,'
 test: 
 	${ENV} PATH=${BINDIR}:${PATH} ${KYUA} $@
+all:	build
 build:
 	cd ${SRCDIR}/bin; ${MAKE} $@
 clean:
@@ -254,6 +265,7 @@ report:
 test:
 	${MAKE} build
 	${ENV} PATH=${BINDIR}:${PATH} ${KYUA} $@
+all:	build
 build:
 	cd ${SRCDIR}/${WORKPLACE:C,^/tests/,,}; ${MAKE} $@
 clean:
