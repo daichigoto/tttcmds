@@ -49,14 +49,21 @@ TESTDIR?=	${TOPDIR}/tests
 
 .include	"ttt.os.mk"
 
-.if defined(LOCALBASE)
-INSTALL_TOPDIR?=	${LOCALBASE}
-.else
-. if ${OS} == "Linux"
-INSTALL_TOPDIR?=	/usr
+.if ${OS} == "FreeBSD"
+# FreeBSD Ports Collection STAGEDIR
+. if exists(${TOPDIR}/../stage)
+STAGEDIR=		${TOPDIR}/../stage
+.  if !defined(PREFIX)
+PREFIX?=		/usr/local
+.  endif
+INSTALL_TOPDIR?=	${STAGEDIR}${PREFIX}
 . else
 INSTALL_TOPDIR?=	/usr/local
 . endif
+.elif ${OS} == "Linux"
+INSTALL_TOPDIR?=	/usr
+.else
+INSTALL_TOPDIR?=	/usr/local
 .endif
 
 INSTALL_BINDIR?=	${INSTALL_TOPDIR}/bin
