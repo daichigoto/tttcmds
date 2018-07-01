@@ -27,11 +27,13 @@
 
 .include	"ttt.os.mk"
 
-CMDS!=		${LS} -F ${BINDIR} | ${GREP} -v '@$$' | ${SED} 's/*$$//'
-LNKS!=		${LS} -l ${BINDIR} | ${GREP} -- '->' | \
+CMDS!=		${LS} -F ${BINDIR} | ${GREP} -v '^[.]' | \
+		${GREP} -v '@$$' | ${SED} 's/*$$//'
+LNKS!=		${LS} -l ${BINDIR} | ${GREP} -v '^[.]' | \
+		${GREP} -- '->' | \
 		${SED} 's/^.* \([^ ][^ ]*\) -> \([^ ][^ ]*\)/\2:\1/'
-LIBS!=		${LS} ${LIBDIR}
-INCS!=		${LS} ${INCLUDEDIR}
+LIBS!=		${LS} ${LIBDIR} | ${GREP} -v '^[.]'
+INCS!=		${LS} ${INCLUDEDIR} | ${GREP} -v '^[.]'
 
 INSTALL_OWNER?=	root
 .if ${OS} == "Linux"
