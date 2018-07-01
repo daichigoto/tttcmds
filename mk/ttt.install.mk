@@ -1,5 +1,5 @@
 # 
-#  Copyright (c) 2016 Daichi GOTO
+#  Copyright (c) 2016,2018 Daichi GOTO
 #  All rights reserved.
 #  
 #  Redistribution and use in source and binary forms, with or without
@@ -40,6 +40,7 @@ INSTALL_GROUP?=	root
 INSTALL_GROUP?=	wheel
 .endif
 
+INSTALL=echo install
 install:
 .for i in ${CMDS}
 	${INSTALL} -o ${INSTALL_OWNER} -g ${INSTALL_GROUP} \

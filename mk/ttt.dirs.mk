@@ -1,5 +1,5 @@
 # 
-#  Copyright (c) 2016,2017 Daichi GOTO
+#  Copyright (c) 2016,2017,2018 Daichi GOTO
 #  All rights reserved.
 #  
 #  Redistribution and use in source and binary forms, with or without
@@ -49,10 +49,14 @@ TESTDIR?=	${TOPDIR}/tests
 
 .include	"ttt.os.mk"
 
-.if ${OS} == "Linux"
-INSTALL_TOPDIR?=	/usr
+.if defined(LOCALBASE)
+INSTALL_TOPDIR?=	${LOCALBASE}
 .else
+. if ${OS} == "Linux"
+INSTALL_TOPDIR?=	/usr
+. else
 INSTALL_TOPDIR?=	/usr/local
+. endif
 .endif
 
 INSTALL_BINDIR?=	${INSTALL_TOPDIR}/bin
