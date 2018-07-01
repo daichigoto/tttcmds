@@ -129,11 +129,11 @@ all:	build
 build:
 	cd ${SRCDIR}/include; ${MAKE} $@
 	cd ${SRCDIR}/lib; ${MAKE} $@
-	make build-recursive
+	make build-foreachdir
 clean: 
 	cd ${SRCDIR}/include; ${MAKE} $@
 	cd ${SRCDIR}/lib; ${MAKE} $@
-	make clean-recursive
+	make clean-foreachdir
 test: 
 	cd ${TESTDIR}/bin; ${MAKE} $@
 
@@ -190,8 +190,8 @@ test: build
 .elif ${WORKPLACE} == "/src/lib"
 TARGETDIRS!=	${FIND} . -type d -maxdepth 1 | ${SED} 's,^[.][/]*,,'
 all:   build
-build: build-recursive
-clean: clean-recursive
+build: build-foreachdir
+clean: clean-foreachdir
 
 # /usr/include
 .elif ${WORKPLACE} == "/src/include"
@@ -256,7 +256,7 @@ build:
 	cd ${SRCDIR}/bin; ${MAKE} $@
 clean:
 	cd ${SRCDIR}/bin; ${MAKE} $@
-	make clean-recursive
+	make clean-foreachdir
 report:
 	${KYUA} report-html
 
@@ -276,12 +276,12 @@ report:
 	${KYUA} report-html
 .endif
 
-build-recursive:
+build-foreachdir:
 . for dir in ${TARGETDIRS}
 	cd ${dir}; ${MAKE} build
 . endfor
 
-clean-recursive:
+clean-foreachdir:
 . for dir in ${TARGETDIRS}
 	cd ${dir}; ${MAKE} clean
 . endfor
