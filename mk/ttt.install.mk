@@ -40,7 +40,6 @@ INSTALL_GROUP?=	root
 INSTALL_GROUP?=	wheel
 .endif
 
-INSTALL=echo install
 install:
 .for i in ${CMDS}
 	${INSTALL} -o ${INSTALL_OWNER} -g ${INSTALL_GROUP} \
