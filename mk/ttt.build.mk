@@ -129,11 +129,11 @@ all:	build
 build:
 	cd ${SRCDIR}/include; ${MAKE} $@
 	cd ${SRCDIR}/lib; ${MAKE} $@
-	make build-foreachdir
+	cd ${SRCDIR}/bin; ${MAKE} build-foreachdir
 clean: 
 	cd ${SRCDIR}/include; ${MAKE} $@
 	cd ${SRCDIR}/lib; ${MAKE} $@
-	make clean-foreachdir
+	${MAKE} clean-foreachdir
 test: 
 	cd ${TESTDIR}/bin; ${MAKE} $@
 
@@ -256,7 +256,7 @@ build:
 	cd ${SRCDIR}/bin; ${MAKE} $@
 clean:
 	cd ${SRCDIR}/bin; ${MAKE} $@
-	make clean-foreachdir
+	${MAKE} clean-foreachdir
 report:
 	${KYUA} report-html
 
@@ -278,12 +278,12 @@ report:
 
 build-foreachdir:
 . for dir in ${TARGETDIRS}
-	cd ${dir}; ${MAKE} build
+	( cd ${dir}; ${MAKE} build )
 . endfor
 
 clean-foreachdir:
 . for dir in ${TARGETDIRS}
-	cd ${dir}; ${MAKE} clean
+	( cd ${dir}; ${MAKE} clean )
 . endfor
 
 .include	"ttt.install.mk"
