@@ -35,11 +35,16 @@ LNKS!=		${LS} -l ${BINDIR} | ${GREP} -v '^[.]' | \
 LIBS!=		${LS} ${LIBDIR} | ${GREP} -v '^[.]'
 INCS!=		${LS} ${INCLUDEDIR} | ${GREP} -v '^[.]'
 
-INSTALL_OWNER?=	root
-.if ${OS} == "Linux"
-INSTALL_GROUP?=	root
+.if defined(STAGEDIR)
+INSTALL_OWNER!=	id -u
+INSTALL_GROUP!=	id -g
 .else
+INSTALL_OWNER?=	root
+. if ${OS} == "Linux"
+INSTALL_GROUP?=	root
+. else
 INSTALL_GROUP?=	wheel
+. endif
 .endif
 
 install:
