@@ -5,7 +5,7 @@ TTT COMMANDS is a development commands set to build information system
 that could handle large datasets rapidly and flexibly. This gives you 
 a way lit power to build a fast process system without some kind of 
 databases.  You would build the data process system using only TTT 
-COMMANDS, Unix-style basic commands and text datasets on your own favorit 
+COMMANDS, Unix-style basic commands and text datasets on your own favorite 
 operating systems.
 
 TTT COMMANDS is licensed under the **[2-clause BSD license](LICENSE)**.
