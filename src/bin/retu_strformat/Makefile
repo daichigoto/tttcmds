@@ -26,3 +26,10 @@
 #
 
 .include "Makefile.inc"
+
+# XXX
+# A memory boundary processing bug exists in the implementation of 
+# this command. As a workaround, I build it with the following option 
+# so that it works. Early fix is necessary.
+#
+CFLAGS+=	-g -O0
