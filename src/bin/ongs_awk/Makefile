@@ -1,5 +1,5 @@
 #
-#  Copyright (c) 2016 Daichi GOTO
+#  Copyright (c) 2016,2018 Daichi GOTO
 #  All rights reserved.
 #
 #  Redistribution and use in source and binary forms, with or without
@@ -25,10 +25,13 @@
 #  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
+.include	"../../../mk/ttt.os.mk"
+.include	"../../../mk/ttt.cmd.mk"
+.include	"../../../mk/ttt.dirs.mk"
+.include	"../../../mk/ttt.perm.mk"
+
 AWKSRC=		${.CURDIR}/../../contrib/one-true-awk
 .PATH:		${AWKSRC}
-
-.include	"../../../mk/ttt.os.mk"
 
 OUT=		ongs_awk
 ALIAS=		owk
@@ -36,49 +39,6 @@ ALIAS=		owk
 SRC=		awkgram.c awkgram.h ytab.h maketab proctab.c
 OBJS=		b.o lex.o lib.o main.o parse.o run.o tran.o \
 		awkgram.o proctab.o
-
-build: ytab.h ${OBJS}
-.if exists(${BINDIR}/${OUT})
-	${RM} -f ${BINDIR}/${OUT}
-.endif
-	${CC} ${CFLAGS} -o ${BINDIR}/${OUT} \
-		awkgram.o b.o lex.o lib.o main.o parse.o proctab.o \
-		run.o tran.o \
-		${SRCDIR}/lib/libttt/ssvstr2str.o \
-		${SRCDIR}/lib/libttt/str2ssvstr.o \
-		-lm
-	${CHMOD} ${BINPERM} ${BINDIR}/${OUT}
-.if ${OS} != "Darwin"
-	${OBJCOPY} -S ${BINDIR}/${OUT}
-.endif
-.for i in ${ALIAS}
-	${TEST} -L ${BINDIR}/${i} && ${RM} ${BINDIR}/${i} || ${TRUE}
-	cd ${BINDIR}; ${LN} -s ${OUT} ${i}
-.endfor
-.if ${OS} == "Darwin"
-	${RM} -rf maketab.dSYM
-.endif
-
-awkgram.c: awkgram.y
-	${YACC} -d -o awkgram.c ${AWKSRC}/awkgram.y
-
-ytab.h: awkgram.c
-	${LN} -sf awkgram.h ytab.h
-	${CC} ${CFLAGS} ${AWKSRC}/maketab.c -o maketab
-	./maketab > proctab.c
-	${CC} ${CFLAGS} -c awkgram.c -o awkgram.o
-	${CC} ${CFLAGS} -c proctab.c -o proctab.o
-	
-.c.o: 
-	${CC} ${CFLAGS} -c $< -o $@
-
-clean:
-	${RM} -f ${BINDIR}/${OUT} ${SRC} ${OBJS} 
-.for i in ${ALIAS}
-	${RM} -f ${BINDIR}/${i}
-.endfor
-
-.include "Makefile.inc"
 
 CFLAGS=		-lm \
 		-O2 \
@@ -107,7 +67,6 @@ CFLAGS=		-lm \
 		-Wno-knr-promoted-parameter \
 		-Wno-parentheses \
 		-Qunused-arguments
-
 .if ${OS} == "Linux"
 CFLAGS+=	-Wno-typedef-redefinition \
 		-Wno-gnu-designator \
@@ -117,3 +76,42 @@ CFLAGS+=	-Wno-nullability-completeness \
 		-Wno-macro-redefined \
 		-Wno-typedef-redefinition
 .endif
+
+FUNCS=		b lex lib main parse run tran
+
+build:
+	${YACC} -d -o awkgram.c ${AWKSRC}/awkgram.y
+	${LN} -sf awkgram.h ytab.h
+	${CC} ${CFLAGS} ${AWKSRC}/maketab.c -o maketab
+	./maketab > proctab.c
+	${CC} ${CFLAGS} -c awkgram.c -o awkgram.o
+	${CC} ${CFLAGS} -c proctab.c -o proctab.o
+.for i in ${FUNCS}
+	${CC} ${CFLAGS} -I${AWKSRC} -c ${AWKSRC}/${i}.c -o ${i}.o
+.endfor
+.if exists(${BINDIR}/${OUT})
+	${RM} -f ${BINDIR}/${OUT}
+.endif
+	${CC} ${CFLAGS} -o ${BINDIR}/${OUT} \
+		awkgram.o b.o lex.o lib.o main.o parse.o proctab.o \
+		run.o tran.o \
+		${SRCDIR}/lib/libttt/ssvstr2str.o \
+		${SRCDIR}/lib/libttt/str2ssvstr.o \
+		-lm
+	${CHMOD} ${BINPERM} ${BINDIR}/${OUT}
+.if ${OS} != "Darwin"
+	${OBJCOPY} -S ${BINDIR}/${OUT}
+.endif
+.for i in ${ALIAS}
+	${TEST} -L ${BINDIR}/${i} && ${RM} ${BINDIR}/${i} || ${TRUE}
+	cd ${BINDIR}; ${LN} -s ${OUT} ${i}
+.endfor
+.if ${OS} == "Darwin"
+	${RM} -rf maketab.dSYM
+.endif
+
+clean:
+	${RM} -f ${BINDIR}/${OUT} ${SRC} ${OBJS} 
+.for i in ${ALIAS}
+	${RM} -f ${BINDIR}/${i}
+.endfor
