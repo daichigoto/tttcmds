@@ -36,7 +36,6 @@ CFLAGS+=	-I. \
 		-O2 \
 		-pipe \
 		-std=gnu99 \
-		-Qunused-arguments \
 		-fno-omit-frame-pointer \
 		-fstack-protector \
 		-Wsystem-headers \
@@ -58,7 +57,6 @@ CFLAGS+=	-I. \
 		-Wnested-externs \
 		-Wredundant-decls \
 		-Wold-style-definition \
-		-Wmissing-variable-declarations \
 		-Wno-unused-parameter \
 		-Wno-pointer-sign \
 		-Wno-format-y2k \
@@ -66,7 +64,10 @@ CFLAGS+=	-I. \
 		-Wno-string-plus-int \
 		-Wno-unused-const-variable \
 		-Wno-incompatible-pointer-types-discards-qualifiers
-.if ${OS} == "Linux"
+.if ${CC:C/[-.0-9][-.0-9]*$$//} != "gcc"
+CFLAGS+=	-Qunused-arguments \
+		-Wmissing-variable-declarations
+.elif ${OS} == "Linux"
 CFLAGS+=	-Wno-system-headers \
 		-lbsd \
 		-ldb

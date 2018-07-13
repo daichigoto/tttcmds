@@ -28,6 +28,6 @@
 OS!=		uname
 
 .if ${OS} == "FreeBSD"
-OS_MAJOR_VERSION!=	uname -r | sed 's/[.].*$//'
-OS_MINOR_VERSION!=	uname -r | sed 's/-.*$//' | sed 's/[0-9][0-9]*[.]//'
+OS_MAJOR_VERSION!=	uname -r | sed 's/[.].*$$//'
+OS_MINOR_VERSION!=	uname -r | sed 's/-.*$$//' | sed 's/[0-9][0-9]*[.]//'
 .endif
