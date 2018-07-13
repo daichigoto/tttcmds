@@ -66,10 +66,13 @@ install:
 	*.so.[0-9]*) \
 		${INSTALL} -o ${INSTALL_OWNER} -g ${INSTALL_GROUP} \
 			-m ${LIBSOPERM} \
-				${LIBDIR}/${i} ${INSTALL_LIBDIR}/${i} \
+				${LIBDIR}/${i} ${INSTALL_LIBDIR}/${i}; \
 		cd ${INSTALL_LIBDIR}; \
 		${LN} -s ${i} \
-			$$(${ECHO} ${i} | ${SED} 's/[.][0-9][0-9.]*//') \
+			$$(${ECHO} ${i} | ${SED} 's/[.][0-9][0-9.]*//'); \
+		${LN} -s ${i} \
+			$$(${ECHO} ${i} | \
+			${SED} 's/[.][0-9][0-9]*[.][0-9][0-9]*$$//'); \
 		;; \
 	esac
 .endfor
