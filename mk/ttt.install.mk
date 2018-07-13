@@ -57,12 +57,19 @@ install:
 	${LN} -s $$(${ECHO} ${i} | ${SED} 's/:/ /')
 .endfor
 .for i in ${LIBS}
-	${INSTALL} -o ${INSTALL_OWNER} -g ${INSTALL_GROUP} \
-		-m ${LIBPERM} ${LIBDIR}/${i} ${INSTALL_LIBDIR}/${i}
 	case ${i} in \
+	*.a) \
+		${INSTALL} -o ${INSTALL_OWNER} -g ${INSTALL_GROUP} \
+			-m ${LIBPERM} ${LIBDIR}/${i} \
+				${INSTALL_LIBDIR}/${i} \
+		;; \
 	*.so.[0-9]*) \
+		${INSTALL} -o ${INSTALL_OWNER} -g ${INSTALL_GROUP} \
+			-m ${LIBSOPERM} \
+				${LIBDIR}/${i} ${INSTALL_LIBDIR}/${i} \
 		cd ${INSTALL_LIBDIR}; \
-		${LN} -s ${i} $$(${ECHO} ${i} | ${SED} 's/[.][0-9][0-9.]*//') \
+		${LN} -s ${i} \
+			$$(${ECHO} ${i} | ${SED} 's/[.][0-9][0-9.]*//') \
 		;; \
 	esac
 .endfor

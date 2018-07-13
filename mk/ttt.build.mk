@@ -210,7 +210,7 @@ clean:
 # /src/lib/libttt
 .elif ${WORKPLACE} == "/src/lib/libttt"
 OBJS!=		${LS} | ${GREP} '[.]c$$' 2> /dev/null | ${SED} 's/.c$$/.o/g'
-LIBVERSION?=	0
+LIBVERSION?=	0.0.0
 . if ${OS} == "Darwin"
 DLIB?=		${LIBDIR}/${DIRNAME}.${LIBVERSION}.dylib
 LIBOBJS?=	${SRCDIR}/lib/${DIRNAME}/*.o

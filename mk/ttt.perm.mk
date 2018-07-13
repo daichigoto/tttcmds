@@ -1,5 +1,5 @@
 # 
-#  Copyright (c) 2016 Daichi GOTO
+#  Copyright (c) 2016,2018 Daichi GOTO
 #  All rights reserved.
 #  
 #  Redistribution and use in source and binary forms, with or without
@@ -26,5 +26,6 @@
 #  
 
 BINPERM?=	555
-LIBPERM?=	444
+LIBPERM?=	644
+LIBSOPERM?=	755
 INCLUDEPERM?=	444
