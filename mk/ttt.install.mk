@@ -59,6 +59,12 @@ install:
 .for i in ${LIBS}
 	${INSTALL} -o ${INSTALL_OWNER} -g ${INSTALL_GROUP} \
 		-m ${LIBPERM} ${LIBDIR}/${i} ${INSTALL_LIBDIR}/${i}
+	case ${i} in \
+	*.so.[0-9]*) \
+		cd ${INSTALL_LIBDIR}; \
+		${LN} -s ${i} $$(${ECHO} ${i} | ${SED} 's/[.][0-9][0-9.]*//') \
+		;; \
+	esac
 .endfor
 .for i in ${INCS}
 	${INSTALL} -o ${INSTALL_OWNER} -g ${INSTALL_GROUP} \
