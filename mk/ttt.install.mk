@@ -32,8 +32,8 @@ CMDS!=		${LS} -F ${BINDIR} | ${GREP} -v '^[.]' | \
 LNKS!=		${LS} -l ${BINDIR} | ${GREP} -v '^[.]' | \
 		${GREP} -- '->' | \
 		${SED} 's/^.* \([^ ][^ ]*\) -> \([^ ][^ ]*\)/\2:\1/'
-LIBS!=		${LS} ${LIBDIR} | ${GREP} -v '^[.]' || true
-INCS!=		${LS} ${INCLUDEDIR} | ${GREP} -v '^[.]' || true
+LIBS!=		${LS} ${LIBDIR} | ${GREP} -v '^[.]' || ${TRUE}
+INCS!=		${LS} ${INCLUDEDIR} | ${GREP} -v '^[.]' || ${TRUE}
 
 .if defined(STAGEDIR)
 INSTALL_OWNER!=	id -u

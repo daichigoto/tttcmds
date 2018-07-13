@@ -73,7 +73,7 @@ CFLAGS+=	-Wno-system-headers \
 .elif ${OS} == "Darwin"
 CFLAGS+=	-Wno-system-headers
 .endif
-.if defined(DEBUG)
+.if defined(WITH_DEBUG)
 CFLAGS+=	-I. \
 		-I${SRCINCDIR} \
 		-L${LIBDIR} \
@@ -157,7 +157,7 @@ ${DIRNAME}: ${OBJS}
 	${RM} -f ${BINDIR}/${DIRNAME}
 	${CC} ${CFLAGS} -o ${BINDIR}/${DIRNAME} ${OBJS} ${LIBOBJS}
 . if ${OS} != "Darwin"
-.  if !defined(DEBUG)
+.  if !defined(WITH_DEBUG)
 	${OBJCOPY} -S ${BINDIR}/${DIRNAME}
 .  endif
 . endif
@@ -223,6 +223,9 @@ all:	build
 build: ${OBJS}
 	${RM} -f ${SLIB} ${DLIB}
 	${CC} ${CFLAGS} -o ${DLIB} -shared ${OBJS}
+. if !defined(WITH_DEBUG)
+	${OBJCOPY} -S ${DLIB}
+. endif
 	${CHMOD} ${LIBPERM} ${DLIB}
 . if ${OS} != "Darwin"
 	${AR} -crv ${SLIB} ${OBJS}
