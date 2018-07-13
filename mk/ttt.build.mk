@@ -30,7 +30,7 @@
 .include	"ttt.perm.mk"
 .include	"ttt.dirs.mk"
 
-CFLAGS=		-I. \
+CFLAGS+=	-I. \
 		-I${SRCINCDIR} \
 		-L${LIBDIR} \
 		-O2 \
@@ -74,7 +74,7 @@ CFLAGS+=	-Wno-system-headers \
 CFLAGS+=	-Wno-system-headers
 .endif
 .if defined(DEBUG)
-CFLAGS=		-I. \
+CFLAGS+=	-I. \
 		-I${SRCINCDIR} \
 		-L${LIBDIR} \
 		-g \
@@ -156,12 +156,12 @@ build: ${DIRNAME}
 ${DIRNAME}: ${OBJS}
 	${RM} -f ${BINDIR}/${DIRNAME}
 	${CC} ${CFLAGS} -o ${BINDIR}/${DIRNAME} ${OBJS} ${LIBOBJS}
-	${CHMOD} ${BINPERM} ${BINDIR}/${DIRNAME}
 . if ${OS} != "Darwin"
 .  if !defined(DEBUG)
 	${OBJCOPY} -S ${BINDIR}/${DIRNAME}
 .  endif
 . endif
+	${CHMOD} ${BINPERM} ${BINDIR}/${DIRNAME}
 . if ${ALIAS} != ""
 .  for i in ${ALIAS}
 	${TEST} -L ${BINDIR}/${i} && ${RM} ${BINDIR}/${i} || ${TRUE}
