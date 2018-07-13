@@ -35,16 +35,14 @@ CFLAGS+=	-I. \
 		-L${LIBDIR} \
 		-O2 \
 		-pipe \
-		-fno-omit-frame-pointer \
 		-std=gnu99 \
 		-Qunused-arguments \
+		-fno-omit-frame-pointer \
 		-fstack-protector \
 		-Wsystem-headers \
 		-Werror \
 		-Wall \
-		-Wno-format-y2k \
 		-W \
-		-Wno-unused-parameter \
 		-Wstrict-prototypes \
 		-Wmissing-prototypes \
 		-Wpointer-arith \
@@ -61,7 +59,9 @@ CFLAGS+=	-I. \
 		-Wredundant-decls \
 		-Wold-style-definition \
 		-Wmissing-variable-declarations \
+		-Wno-unused-parameter \
 		-Wno-pointer-sign \
+		-Wno-format-y2k \
 		-Wno-empty-body \
 		-Wno-string-plus-int \
 		-Wno-unused-const-variable \

@@ -1,5 +1,5 @@
 # 
-#  Copyright (c) 2016 Daichi GOTO
+#  Copyright (c) 2016,2018 Daichi GOTO
 #  All rights reserved.
 #  
 #  Redistribution and use in source and binary forms, with or without
@@ -26,3 +26,8 @@
 #  
 
 OS!=		uname
+
+.if ${OS} == "FreeBSD"
+OS_MAJOR_VERSION!=	uname -r | sed 's/[.].*$//'
+OS_MINOR_VERSION!=	uname -r | sed 's/-.*$//' | sed 's/[0-9][0-9]*[.]//'
+.endif

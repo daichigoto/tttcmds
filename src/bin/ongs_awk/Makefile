@@ -49,7 +49,6 @@ CFLAGS=		-lm \
 		-DFOPEN_MAX=64 \
 		-g \
 		-std=gnu99 \
-		-fstack-protector-strong \
 		-Wsystem-headers \
 		-Werror \
 		-Wno-pointer-sign \
@@ -61,7 +60,6 @@ CFLAGS=		-lm \
 		-Wno-parentheses-equality \
 		-Wno-unused-function \
 		-Wno-enum-conversion \
-		-Wno-unused-local-typedef \
 		-Wno-switch \
 		-Wno-switch-enum \
 		-Wno-knr-promoted-parameter \
@@ -76,6 +74,13 @@ CFLAGS+=	-Wno-nullability-completeness \
 		-Wno-macro-redefined \
 		-Wno-typedef-redefinition
 .endif
+
+# XXX
+# The following option has been removed to build with FreeBSD 10.*. 
+# I should undo it once FreeBSD 10.* support is finished.
+#
+#		-fstack-protector-strong \
+#		-Wno-unused-local-typedef \
 
 FUNCS=		b lex lib main parse run tran
 
