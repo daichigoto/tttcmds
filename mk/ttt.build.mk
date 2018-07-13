@@ -39,7 +39,6 @@ CFLAGS+=	-I. \
 		-fno-omit-frame-pointer \
 		-fstack-protector \
 		-Wsystem-headers \
-		-Werror \
 		-Wall \
 		-W \
 		-Wstrict-prototypes \
