@@ -210,7 +210,6 @@ clean:
 # /src/lib/libttt
 .elif ${WORKPLACE} == "/src/lib/libttt"
 OBJS!=		${LS} | ${GREP} '[.]c$$' 2> /dev/null | ${SED} 's/.c$$/.o/g'
-LIBVERSION?=	0.0.0
 . if ${OS} == "Darwin"
 DLIB?=		${LIBDIR}/${DIRNAME}.${LIBVERSION}.dylib
 LIBOBJS?=	${SRCDIR}/lib/${DIRNAME}/*.o
@@ -222,7 +221,8 @@ LIBOBJS?=	${SRCDIR}/lib/${DIRNAME}/*.o
 all:	build
 build: ${OBJS}
 	${RM} -f ${SLIB} ${DLIB}
-	${CC} ${CFLAGS} -o ${DLIB} -shared ${OBJS}
+	${CC} ${CFLAGS} -o ${DLIB} -shared ${OBJS} \
+		-Wl,-soname=${DIRNAME}.so.${LIBVERSION:C/[.][0-9][0-9]*[.][0-9][0-9]*$$//}
 . if !defined(WITH_DEBUG)
 	${OBJCOPY} -S ${DLIB}
 . endif
@@ -280,13 +280,13 @@ report:
 .endif
 
 build-foreachdir:
-. for dir in ${TARGETDIRS}
+.for dir in ${TARGETDIRS}
 	( cd ${dir}; ${MAKE} build )
-. endfor
+.endfor
 
 clean-foreachdir:
-. for dir in ${TARGETDIRS}
+.for dir in ${TARGETDIRS}
 	( cd ${dir}; ${MAKE} clean )
-. endfor
+.endfor
 
 .include	"ttt.install.mk"
