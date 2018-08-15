@@ -40,15 +40,16 @@ SRC=		awkgram.c awkgram.h ytab.h maketab proctab.c
 OBJS=		b.o lex.o lib.o main.o parse.o run.o tran.o \
 		awkgram.o proctab.o
 
-CFLAGS=		-lm \
+CFLAGS=		-I. \
+		-I${AWKSRC} \
+		-lm \
 		-O2 \
 		-pipe \
 		-DHAS_ISBLANK \
-		-I. \
-		-I${AWKSRC} \
 		-DFOPEN_MAX=64 \
-		-g \
-		-std=gnu99 \
+		-g
+.if ${COMPILER_TYPE} == "clang"
+CFLAGS+=	-std=gnu99 \
 		-Wsystem-headers \
 		-Werror \
 		-Wno-pointer-sign \
@@ -65,6 +66,7 @@ CFLAGS=		-lm \
 		-Wno-knr-promoted-parameter \
 		-Wno-parentheses \
 		-Qunused-arguments
+.endif
 .if ${OS} == "Linux"
 CFLAGS+=	-Wno-typedef-redefinition \
 		-Wno-gnu-designator \

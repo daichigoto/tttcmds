@@ -34,7 +34,10 @@ CFLAGS+=	-I. \
 		-I${SRCINCDIR} \
 		-L${LIBDIR} \
 		-O2 \
-		-pipe \
+		-pipe
+.if ${COMPILER_TYPE} == "clang"
+CFLAGS+=	-Qunused-arguments \
+		-Wmissing-variable-declarations \
 		-std=gnu99 \
 		-fno-omit-frame-pointer \
 		-fstack-protector \
@@ -63,10 +66,8 @@ CFLAGS+=	-I. \
 		-Wno-string-plus-int \
 		-Wno-unused-const-variable \
 		-Wno-incompatible-pointer-types-discards-qualifiers
-.if ${CC:C/[-.0-9][-.0-9]*$$//} != "gcc"
-CFLAGS+=	-Qunused-arguments \
-		-Wmissing-variable-declarations
-.elif ${OS} == "Linux"
+.endif
+.if ${OS} == "Linux"
 CFLAGS+=	-Wno-system-headers \
 		-lbsd \
 		-ldb
