@@ -1,5 +1,5 @@
 # 
-#  Copyright (c) 2016 Daichi GOTO
+#  Copyright (c) 2016,2018 Daichi GOTO
 #  All rights reserved.
 #  
 #  Redistribution and use in source and binary forms, with or without
@@ -37,7 +37,6 @@ MAKE?=		bsdmake
 
 AR?=		ar
 BASENAME=	basename
-CC?=		cc
 CHMOD?=		chmod
 CP?=		cp
 CUT?=		cut
@@ -57,3 +56,17 @@ SED?=		sed
 TEST?=		test
 TRUE?=		true
 YACC?=		yacc
+
+CC?=		cc
+
+__cc_version!=	${CC} --version 2>&1 | ${GREP} clang || true
+.if ${__cc_version} != ""
+COMPILER_TYPE=	clang
+.else
+__cc_version!=	${CC} --version 2>&1 | ${GREP} gcc || true
+. if ${__cc_version} != ""
+COMPILER_TYPE=	gcc
+. else
+COMPILER_TYPE=	unknown
+. endif
+.endif
