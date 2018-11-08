@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Daichi GOTO
+ * Copyright (c) 2017,2018 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -34,7 +34,7 @@ struct textset cmdtextsets[] = {
 
 	{ "command_alias", "en_", ALIAS },
 
-	{ "command_copyright", "en_", "2016,2017 ONGS Inc." },
+	{ "command_copyright", "en_", "2016-2018 ONGS Inc." },
 
 	{ "command_comment", "ja_JP",
 	  "日時形式を変換して出力" },
@@ -45,7 +45,7 @@ struct textset cmdtextsets[] = {
 	{ "command_synopsis", "en_", 
 	  _CMD(CMDNAME) " "
 	  "[" _OPT("3") " " _ARG("R") "] "
-	  "[" _OPT("hvD") "] [" _OPT("-") "]\n"
+	  "[" _OPT("ehvD") "] [" _OPT("-") "]\n"
 	  _ARG("N.f1.f2") "|" _ARG("N/M.f1.f2") "|"
 	  _ARG("N.f1.f2.val") "|" _ARG("N/M.f1.f2.val") "\n"
 	  "[" _ARG("N.f1.f2") "|" _ARG("N/M.f1.f2") "|" 
@@ -76,7 +76,6 @@ struct textset cmdtextsets[] = {
 		"\t\tH\t時\n"
 		"\t\tM\t分\n"
 		"\t\tS\t秒\n"
-	  _OPT("h") "		使い方表示\n"
 	  _ARG("N/M.f1.f2.val") "\t" _ARG("N.f1.f2.val") "と同じ処理を" 
 	  	_ARG("M") "列まで適用\n"
 	  "\n"
@@ -119,6 +118,8 @@ struct textset cmdtextsets[] = {
 	            "		変換後の表記を" _ARG("R") "列の日付を基準"
 		    		"とし、翌日の0時から\n\t\t"
 				"24時直前までを30時間表記として扱う\n"
+	  _OPT("e") "		値が変換できなかった場合に@ではなく値を"
+	  			"そのまま出力\n"
 	  _OPT("h") "		使い方表示\n"
 	  _OPT("v") "		バージョン表示\n"
 	  _OPT("D") "		デバッグモード\n"
@@ -133,6 +134,8 @@ struct textset cmdtextsets[] = {
 				_ARG("R") "th column\n\t\tto 24 "
 				"o'clock to just before 48 o'clock as "
 				"\n\t\t30 hours system.\n"
+	  _OPT("e") "		If it can not be converted, output the "
+	  			"original value.\n"
 	  _OPT("h") "		Print the usage message.\n"
 	  _OPT("v") "		Print the version.\n"
 	  _OPT("D") "		Enable the debug mode.\n"
@@ -170,6 +173,12 @@ struct textset cmdtextsets[] = {
 	  _P("echo 20170829032539 20170828032539 20170828 |")
 	  _P2("retu_dateformat -3 3 1/2.%Y%m%d%H%M%S.%m/%d-%H:%M")
 	  _S("08/28-27:25 08/28-03:25 20170828")
+	  _P("echo 2017-08-29.29:25:39 2017-08-29.75:25:39 |")
+	  _P2("retu_dateformat 1/2.%Y%m%d%H%M.%m/%d-%H:%M")
+	  _S("@ @")
+	  _P("echo 2017-08-29.29:25:39 2017-08-29.75:25:39 |")
+	  _P2("retu_dateformat -e 1/2.%Y%m%d%H%M.%m/%d-%H:%M")
+	  _S("2017-08-29.29:25:39 2017-08-29.75:25:39")
 	  _P("") },
 
 	TEXTSET_END

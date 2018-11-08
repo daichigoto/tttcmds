@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016,2017 Daichi GOTO
+ * Copyright (c) 2016,2017,2018 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -25,7 +25,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#define VERSION "20170914"
+#define VERSION "20181108"
 #define CMDNAME "retu_dateformat"
 #define ALIAS "dateformat datefmt"
 
@@ -74,7 +74,10 @@ typedef unsigned char u_char;
 			p = strptime(str, R_ARGV_ARG1[index], &tm); \
 			HOURS30_INPUT_POST \
 			if (NULL == p) { \
-				putchar('@'); \
+				if (FLAG_e) \
+					printf("%s", GYO_BUFFER[i]); \
+				else \
+					putchar('@'); \
 			} \
 			else { \
 				if (FLAG_3) { \

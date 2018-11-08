@@ -1,6 +1,6 @@
 #!/usr/bin/env atf-sh
 # 
-#  Copyright (c) 2016,2017 Daichi GOTO
+#  Copyright (c) 2016,2017,2018 Daichi GOTO
 #  All rights reserved.
 #  
 #  Redistribution and use in source and binary forms, with or without
@@ -352,6 +352,18 @@ atf_test_case 30hours
 		   "retu_dateformat 1/2.%Y%m%d%H%M%S.%m/%d-%H:%M"
 }
 
+atf_test_case echowhenunmatch
+echowhenunmatch_head() {
+	atf_set "descr" "Echo value when unmatched"
+}
+
+echowhenunmatch_body() {
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/echowhenunmatch_output_01.ssv \
+		-x "cat $(atf_get_srcdir)/echowhenunmatch_date_01.ssv |" \
+		   "retu_dateformat -e 1/3.%Y%m%d%H%M%S.%m/%d-%H:%M"
+}
+
 atf_init_test_cases()
 {
 	atf_add_test_case empty
@@ -365,4 +377,5 @@ atf_init_test_cases()
 	atf_add_test_case locale
 	atf_add_test_case shift
 	atf_add_test_case 30hours
+	atf_add_test_case echowhenunmatch
 }
