@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Daichi GOTO
+ * Copyright (c) 2017,2018 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -42,10 +42,29 @@ main(int argc, char *argv[])
 		   CMDARGS_F_NONE|
 		   CMDARGS_A_NONE);
 
+	if (FLAG_D) {
+		fprintf(stderr, "REQUEST_METHOD %s\n", 
+				getenv("REQUEST_METHOD"));
+		fprintf(stderr, "QUERY_STRING %s\n", 
+				getenv("QUERY_STRING"));
+		fprintf(stderr, "CONTENT_TYPE %s\n", 
+				getenv("CONTENT_TYPE"));
+		fprintf(stderr, "CONTENT_LENGTH %s\n", 
+				getenv("CONTENT_LENGTH"));
+	}
+
 	env_p = getenv("REQUEST_METHOD");
-	if (NULL == env_p)
-		usage();
-	if (0 == strcmp("GET", env_p))
+	if (NULL == env_p) {
+		env_p = getenv("CONTENT_LENGTH");
+		if (NULL == env_p) {
+			if (FLAG_D) 
+				fprintf(stderr, "unkown\n");
+			usage();
+		}
+		else
+			proc_post();
+	}
+	else if (0 == strcmp("GET", env_p))
 		proc_get();
 	else if (0 == strcmp("POST", env_p))
 		proc_post();
@@ -58,6 +77,9 @@ main(int argc, char *argv[])
 static void
 proc_get()
 {
+	if (FLAG_D) 
+		fprintf(stderr, "proc_get()\n");
+
 	env_p = getenv("QUERY_STRING");
 	if (NULL == env_p)
 		usage();
@@ -68,18 +90,21 @@ proc_get()
 static void
 proc_post()
 {
-	env_p = getenv("CONTENT_TYPE");
-	if (NULL == env_p)
-		usage();
+	if (FLAG_D) 
+		fprintf(stderr, "proc_post()\n");
 
 	char *content_length = getenv("CONTENT_LENGTH");
-	if (NULL == content_length)
+	if (NULL == content_length) {
+		fprintf(stderr, "no CONTENT_LENGTH\n");
 		usage();
+	}
 
 	errno = 0;
 	int bufsize = (int)strtol(content_length, (char **)NULL, 10);
-	if (EINVAL == errno)
+	if (EINVAL == errno) {
+		fprintf(stderr, "invalid CONTENT_LENGTH\n");
 		usage();
+	}
 
 	char buf[bufsize + 1];
 	buf[bufsize] = '\0';
@@ -87,18 +112,28 @@ proc_post()
 	while (rs != bufsize)
 		rs += read(STDIN_FILENO, buf+rs, bufsize-rs);
 
-	if (0 == strcmp("application/x-www-form-urlencoded", env_p))
+	env_p = getenv("CONTENT_TYPE");
+	if (NULL == env_p)
+		/* Assuming that the undefined is 
+		 * application/x-www-form-urlencoded */
+		proc_application_x_www_form_urlencoded(buf, bufsize);
+	else if (0 == strcmp("application/x-www-form-urlencoded", env_p))
 		proc_application_x_www_form_urlencoded(buf, bufsize);
 	else if (0 == strncmp("multipart/form-data", env_p, 19))
 		proc_multipart_form_data(buf, bufsize);
 	else
 		usage();
+
 }
 
 static void
 proc_application_x_www_form_urlencoded(char *p, int len)
 {
-	char buf[1+len];
+	if (FLAG_D) 
+		fprintf(stderr, 
+			"proc_application_x_www_form_urlencoded()\n");
+
+	char buf[1+len*2];
 	unsigned char c;
 	char *s;
 	s = buf;
@@ -164,11 +199,15 @@ proc_application_x_www_form_urlencoded(char *p, int len)
 		case '&':
 			*s = '\0';
 			printf("%s\n",_str2ssvstr(buf));
+			if (FLAG_D)
+				fprintf(stderr, "%s\n",_str2ssvstr(buf));
 			s = buf;
 			break;
 		case '=':
 			*s = '\0';
 			printf("%s ",_str2ssvstr(buf));
+			if (FLAG_D)
+				fprintf(stderr, "%s ",_str2ssvstr(buf));
 			s = buf;
 			break;
 		case '+':
@@ -179,17 +218,26 @@ proc_application_x_www_form_urlencoded(char *p, int len)
 			break;
 		}
 	}
-	if (s == buf)
+
+	if (s == buf) {
 		printf("@\n");
+		if (FLAG_D)
+			fprintf(stderr, "@\n");
+	}
 	else {
 		*s = '\0';
 		printf("%s\n",_str2ssvstr(buf));
+		if (FLAG_D)
+			fprintf(stderr, "%s\n",_str2ssvstr(buf));
 	}
 }
 
 static void
 proc_multipart_form_data(char *p, int len)
 {
+	if (FLAG_D) 
+		fprintf(stderr, "proc_multipart_form_data()\n");
+
 	char key[1+len], *k;
 	char content[1+len], *c;
 	char boundary[1+len], *b;
@@ -237,6 +285,8 @@ proc_multipart_form_data(char *p, int len)
 		}
 		*k = '\0';
 		printf("%s ", _str2ssvstr(key));
+		if (FLAG_D)
+			fprintf(stderr, "%s ", _str2ssvstr(key));
 	
 		/*
 		 * grab the , intcontent
@@ -257,6 +307,8 @@ proc_multipart_form_data(char *p, int len)
 		}
 		*c = '\0';
 		printf("%s\n", _str2ssvstr(content));
+		if (FLAG_D)
+			fprintf(stderr, "%s\n", _str2ssvstr(content));
 		p += boundary_len;
 		rs += boundary_len;
 
