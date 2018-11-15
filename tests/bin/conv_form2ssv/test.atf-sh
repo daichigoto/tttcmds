@@ -1,6 +1,6 @@
 #!/usr/bin/env atf-sh
 # 
-#  Copyright (c) 2017 Daichi GOTO
+#  Copyright (c) 2017,2018 Daichi GOTO
 #  All rights reserved.
 #  
 #  Redistribution and use in source and binary forms, with or without
@@ -72,9 +72,26 @@ post_multipart_form_data_body() {
 		   "conv_form2ssv"
 }
 
+atf_test_case empty_post_application_x_www_form_urlencoded
+empty_post_application_x_www_form_urlencoded_head() {
+	atf_set "descr" "Verify an empty POST application/x-www-form-urlencoded process"
+}
+
+empty_post_application_x_www_form_urlencoded_body() {
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/empty.out \
+		-x "cat /dev/null |" \
+		   "env" \
+		   "REQUEST_METHOD=POST" \
+		   "CONTENT_TYPE=application/x-www-form-urlencoded" \
+		   "CONTENT_LENGTH=0" \
+		   "conv_form2ssv"
+}
+
 atf_init_test_cases()
 {
 	atf_add_test_case get_application_x_www_form_urlencoded
 	atf_add_test_case post_application_x_www_form_urlencoded
 	atf_add_test_case post_multipart_form_data
+	atf_add_test_case empty_post_application_x_www_form_urlencoded
 }

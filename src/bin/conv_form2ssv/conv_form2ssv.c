@@ -133,6 +133,9 @@ proc_application_x_www_form_urlencoded(char *p, int len)
 		fprintf(stderr, 
 			"proc_application_x_www_form_urlencoded()\n");
 
+	if (0 == len)
+		return;
+
 	char buf[1+len*2];
 	unsigned char c;
 	char *s;
