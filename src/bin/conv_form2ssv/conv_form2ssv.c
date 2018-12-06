@@ -117,7 +117,8 @@ proc_post()
 		/* Assuming that the undefined is 
 		 * application/x-www-form-urlencoded */
 		proc_application_x_www_form_urlencoded(buf, bufsize);
-	else if (0 == strcmp("application/x-www-form-urlencoded", env_p))
+	else if (0 == strncmp("application/x-www-form-urlencoded", 
+				env_p, 33))
 		proc_application_x_www_form_urlencoded(buf, bufsize);
 	else if (0 == strncmp("multipart/form-data", env_p, 19))
 		proc_multipart_form_data(buf, bufsize);
