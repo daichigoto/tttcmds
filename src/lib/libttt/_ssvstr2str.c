@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Daichi GOTO
+ * Copyright (c) 2016,2018 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -31,7 +31,14 @@ char *
 _ssvstr2str(char *ssvstr)
 {
 	char *buf;
-	buf = calloc(1, sizeof(char) * (ssvstr2str_len(ssvstr) + 1));
+	/*
+	 * BEING CAREFUL
+	 *
+	 * In order to process the backquote character, it is necessary 
+	 * to set it to +2 which adds not only +1 of the null portion 
+	 * but also backquote character reference portion.
+	 */
+	buf = calloc(1, sizeof(char) * (ssvstr2str_len(ssvstr) + 2));
 	ssvstr2str(buf, ssvstr);
 
 	return buf;

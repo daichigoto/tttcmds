@@ -1,6 +1,6 @@
 #!/usr/bin/env atf-sh
 # 
-#  Copyright (c) 2016 Daichi GOTO
+#  Copyright (c) 2016,2018 Daichi GOTO
 #  All rights reserved.
 #  
 #  Redistribution and use in source and binary forms, with or without
@@ -287,15 +287,15 @@ some_stdins_body() {
 		   "- - -"
 }
 
-atf_test_case atmark
-atmark_head() {
-	atf_set "descr" "Verify an atmark process"
+atf_test_case boundary_error_check
+boundary_error_check_head() {
+	atf_set "descr" "Verify a boundary error check"
 }
 
-atmark_body() {
+boundary_error_check_body() {
 	atf_check -s ignore \
-		-o file:$(atf_get_srcdir)/atmark_1.out \
-		-x "echo |" \
+		-o file:$(atf_get_srcdir)/boundary_error_check_data.out \
+		-x "cat $(atf_get_srcdir)/boundary_error_check_data.in |" \
 		   "conv_ssv2txt"
 }
 
@@ -310,4 +310,5 @@ atf_init_test_cases()
 	atf_add_test_case longdata_without_eor
 	atf_add_test_case diff_retu_without_eor
 	atf_add_test_case some_stdins
+	atf_add_test_case boundary_error_check
 }
