@@ -20,7 +20,7 @@ Installation
 
 ### required packages installation
 
-* FreeBSD 11.x
+* FreeBSD 11+
 
         sudo pkg install kyua
 
@@ -39,7 +39,7 @@ Installation
 
 ### build and install
 
-* FreeBSD 11.x
+* FreeBSD 11+
 
         make clean build
         sudo make install
