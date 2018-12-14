@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016,2017 Daichi GOTO
+ * Copyright (c) 2016-2018 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -66,11 +66,9 @@ struct tttcmdargs cmdargs;
 }
 
 #define REALLOC_SARRAY(OLDLEN,NEWLEN,BUF) { \
-	c_pptr = (char **)realloc(BUF, sizeof(char *) * (NEWLEN)); \
+	c_pptr = realloc(BUF, sizeof(char *) * (NEWLEN)); \
 	if (NULL == c_pptr) \
 		err(errno, "getcmdargs#REALLOC_SARRAY"); \
-	memset(c_pptr + sizeof(char *)*(OLDLEN), 0, \
-		sizeof(char *) * ((NEWLEN)-(OLDLEN))); \
 	BUF = c_pptr; \
 }
 
