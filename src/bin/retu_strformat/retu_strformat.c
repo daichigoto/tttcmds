@@ -57,8 +57,12 @@ main(int argc, char *argv[])
 				i, R_ARGV_ARG1[i]);
 	}
 
-	str = ssvstr = NULL;
-	str_len = ssvstr_len = 0;
+	str = str2 = ssvstr = ssvstr2 = NULL;
+	fmt = buf = buf2 = p = p2 = NULL;
+
+	str_len = str2_len = ssvstr_len = ssvstr2_len = 0;
+	fmt_len = buf_len = buf2_len = BUF_len = 0;
+
 	FILEPROCESS_RETU
 
 	exit(EX_OK);

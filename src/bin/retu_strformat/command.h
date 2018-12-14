@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016,2017 Daichi GOTO
+ * Copyright (c) 2016-2018 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -25,7 +25,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#define VERSION "20170913"
+#define VERSION "20181214"
 #define CMDNAME "retu_strformat"
 #define ALIAS "strformat strfmt"
 
@@ -78,6 +78,8 @@
 		str2ssvstr(ssvstr, buf); \
 		printf("%s", ssvstr); \
 	}
+
+#define HOGE(RETU_BUFFER,RETU_BUFFER_MAXLEN,INDEX) \
 
 #define NOTGT_RETU_PROCESS(RETU_BUFFER,RETU_BUFFER_MAXLEN,INDEX) \
 	printf("%s",RETU_BUFFER);
