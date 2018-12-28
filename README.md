@@ -18,7 +18,7 @@ Download
 Installation
 ------------
 
-### required packages installation
+### Install some packages required for build
 
 * FreeBSD 11+
 
@@ -37,7 +37,7 @@ Installation
         # There is no kyua package for Ubuntu.
         # There is no ATF package for Ubuntu.
 
-### build and install
+### Build and install
 
 * FreeBSD 11+
 
@@ -53,5 +53,11 @@ Installation
 
         bmake clean build
         sudo bmake install
+
+### Install using packages
+
+* FreeBSD 11+
+
+	sudo pkg install tttcmds
 
 *Homepage:* https://github.com/daichigoto/tttcmds/
