@@ -25,7 +25,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#define VERSION "20181108"
+#define VERSION "20181228"
 #define CMDNAME "retu_dateformat"
 #define ALIAS "dateformat datefmt"
 
@@ -175,9 +175,11 @@ typedef unsigned char u_char;
 
 #define INDEX_OF_HH(FMT) \
 	ptr = strstr(FMT, "%H"); \
+	indexH = 0; \
 	if (NULL != ptr) { \
-		for (indexH = 0, loopend = 0, ptr2 = FMT; \
-			*ptr2 != '\0' && !loopend; ) { \
+		loopend = 0; \
+		ptr2 = FMT; \
+		while (*ptr2 != '\0' && !loopend) { \
 			switch (*ptr2) { \
 			case '%': \
 				++ptr2; \
