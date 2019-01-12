@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017,2018 Daichi GOTO
+ * Copyright (c) 2017-2019 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -35,6 +35,9 @@ main(int argc, char *argv[])
 		   CMDARGS_R_ARGARG_1_NEED|
 		   CMDARGS_R_ARGARG_2_NEED);
 
+	/*
+	 * Column number used as comparison basis for 30 hours
+	 */
 	int index_30hbase = 0;
 	if (FLAG_3) {
 		errno = 0;
@@ -42,6 +45,8 @@ main(int argc, char *argv[])
                 if (EINVAL == errno)
                         usage();
 	}
+	if (FLAG_D)
+		fprintf(stderr, "index_30hbase: %d\n", index_30hbase);
 
 	int str_len, ssvstr_len, outfmt_len, index, indexH, 
 		hours30_output = 0, H, loopend = 0;

@@ -366,6 +366,18 @@ atf_test_case 30hours
 		-o file:$(atf_get_srcdir)/30hours_output_02.ssv \
 		-x "cat $(atf_get_srcdir)/30hours_date_02.ssv |" \
 		   "retu_dateformat 1/2.%Y%m%d%H%M%S.%m/%d-%H:%M"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/30hours_output_03.ssv \
+		-x "cat $(atf_get_srcdir)/30hours_date_03.ssv |" \
+		   "retu_dateformat -3 2 1.%Y%m%d%H%M%S.%M"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/30hours_output_04.ssv \
+		-x "cat $(atf_get_srcdir)/30hours_date_04.ssv |" \
+		   "retu_dateformat -3 2 1.%Y%m%d%H%M%S.%S"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/30hours_output_05.ssv \
+		-x "cat $(atf_get_srcdir)/30hours_date_05.ssv |" \
+		   "retu_dateformat -3 2 1.%Y%m%d%H%M%S.%Y"
 }
 
 atf_test_case echowhenunmatch

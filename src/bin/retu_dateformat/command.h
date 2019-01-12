@@ -25,7 +25,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#define VERSION "20181228"
+#define VERSION "20190112"
 #define CMDNAME "retu_dateformat"
 #define ALIAS "dateformat datefmt"
 
@@ -107,9 +107,12 @@ typedef unsigned char u_char;
 	}
 
 #define HOURS30_INPUT_PRE(FMT) \
+	if (FLAG_D) \
+		fprintf(stderr, "HOURS30_INPUT_PRE(FMT): " \
+				"%s\n", FMT); \
 	varry[1] = '0'; \
 	INDEX_OF_HH(FMT); \
-	if ((int)strlen(str) >= indexH +2) { \
+	if (indexH >= 0 && (int)strlen(str) >= indexH + 2) { \
 		strncpy(tgtH, str + indexH, 2); \
 		H = (int)strtol(tgtH, (char **)NULL, 10); \
 		if (H > 23) { \
@@ -133,11 +136,16 @@ typedef unsigned char u_char;
 	}
 
 #define HOURS30_INPUT_POST \
+	if (FLAG_D) \
+		fprintf(stderr, "HOURS30_INPUT_POST():\n"); \
 	v = vary_append(v, varry); \
 	vary_apply(v, &tm); \
 	vary_destroy(v);
 
 #define HOURS30_OUTPUT_PRE(GYO_BUFFER) \
+	if (FLAG_D) \
+		fprintf(stderr, "HOURS30_OUTPUT_PRE(GYO_BUFFER): " \
+				"%s\n", GYO_BUFFER[index_30hbase]); \
 	hours30_output = 0; \
 	p_base = strptime(GYO_BUFFER[index_30hbase], "%Y%m%d", \
 		&tm_tomorrow); \
@@ -155,26 +163,46 @@ typedef unsigned char u_char;
 		(void)strftime(tgtdate, 8, "%Y%m%d", &tm); \
 		tgtdate[8] = '\0'; \
 		\
+		if (FLAG_D) \
+			fprintf(stderr, "HOURS30_OUTPUT_PRE(GYO_BUFFER): " \
+				"basedate + 1d: %s\n" \
+				"HOURS30_OUTPUT_PRE(GYO_BUFFER): " \
+				"tgtdate      : %s\n", basedate, tgtdate); \
 		if (0 == strcmp(basedate, tgtdate)) { \
 			hours30_output = 1; \
 			v = vary_append(v, "-1d"); \
 			vary_apply(v, &tm); \
 			vary_destroy(v); \
 		} \
-	} \
+	}
 
 #define HOURS30_OUTPUT_POST(FMT) \
-	if (hours30_output) { \
+	if (FLAG_D) \
+		fprintf(stderr, "HOURS30_OUTPUT_POST(FMT): " \
+				"%s\n" \
+				"HOURS30_OUTPUT_POST(FMT): " \
+				"indexH: %d\n" \
+				"HOURS30_OUTPUT_POST(FMT): " \
+				"str: %s\n", FMT, indexH, str); \
+	if (indexH >= 0 && hours30_output) { \
 		(void)strftime(tgtH, 2, "%H", &tm); \
 		tgtH[2] = '\0'; \
 		H = (int)strtol(tgtH, (char **)NULL, 10) + 24; \
 		sprintf(tgtH, "%02d", H); \
 		INDEX_OF_HH(FMT); \
-		strncpy(str + indexH, tgtH, 2); \
-	}
+		if (indexH >= 0) \
+			strncpy(str + indexH, tgtH, 2); \
+	} \
+	if (FLAG_D) \
+		fprintf(stderr, "HOURS30_OUTPUT_POST(FMT): " \
+				"str: %s\n", str); \
 
 #define INDEX_OF_HH(FMT) \
 	ptr = strstr(FMT, "%H"); \
+	if (FLAG_D) \
+		fprintf(stderr, "INDEX_OF_HH(FMT): " \
+				"ptr = strstr(FMT, \"%%H\")\n" \
+				"INDEX_OF_HH(FMT): ptr: %s\n", ptr); \
 	indexH = 0; \
 	if (NULL != ptr) { \
 		loopend = 0; \
@@ -214,4 +242,8 @@ typedef unsigned char u_char;
 				break; \
 			} \
 		} \
-	}
+	} \
+	else \
+		indexH = -1; \
+	if (FLAG_D) \
+		fprintf(stderr, "INDEX_OF_HH(FMT): indexH: %d\n", indexH);
