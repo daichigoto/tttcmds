@@ -89,7 +89,7 @@
 		fp_newbuf = realloc(fp_buf, \
 			(fp_buf_len + BUFFER_SIZE) * sizeof(char)); \
 		if (NULL == fp_newbuf) \
-			err(errno, "ttt_util.h#FILEPROCESS_RETU"); \
+			err(errno, "ttt_utils.h#FILEPROCESS_RETU"); \
 		memset(fp_newbuf + fp_buf_len, 0, BUFFER_SIZE); \
 		fp_buf_len += BUFFER_SIZE; \
 		fp_buf = fp_newbuf; \
@@ -182,7 +182,7 @@
 			(fp_buf_len + BUFFER_SIZE) * sizeof(char)); \
 		if (NULL == fp_newbuf) \
 			err(errno, \
-			    "ttt_util.h#" \
+			    "ttt_utils.h#" \
 			    "FILEPROCESS_GYO_BUFFER_EXPANSION"); \
 		memset(fp_newbuf + fp_buf_len, 0, BUFFER_SIZE); \
 		fp_buf_len += BUFFER_SIZE; \
@@ -199,7 +199,7 @@
  				(fp_nf + 1) * sizeof(char *)); \
 		if (NULL == fp_newbuf) \
 			err(errno, \
-			    "ttt_util.h#" \
+			    "ttt_utils.h#" \
 			    "FILEPROCESS_GYO_IBUFFER_EXPANSION"); \
 		memset(fp_newibuf + fp_ibuf_len, 0, fp_nf - fp_ibuf_len); \
 		fp_ibuf_len = fp_nf; \
@@ -226,7 +226,7 @@
 		                     (r_index_max + 1) * sizeof(int)); \
 		if (NULL == r_index_to_argv) \
 			err(errno, \
-			    "ttt_util.h#" \
+			    "ttt_utils.h#" \
 			    "FILEPROCESS_GYO_R_INDEX_EXPANSION"); \
 		memset(r_index_to_argv + R_INDEX_MAX + 1, 0, \
 			r_index_max - R_INDEX_MAX); \
@@ -239,7 +239,7 @@
 		                   (r_index_max + 1) * sizeof(int)); \
 		if (NULL == r_index_exist) \
 			err(errno, \
-			    "ttt_util.h#" \
+			    "ttt_utils.h#" \
 			    "FILEPROCESS_GYO_R_INDEX_EXPANSION"); \
 		memset(r_index_exist + R_INDEX_MAX + 1, 0, \
 			r_index_max - R_INDEX_MAX); \
