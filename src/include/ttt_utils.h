@@ -197,7 +197,7 @@
 #define FILEPROCESS_GYO_IBUFFER_EXPANSION { \
 	if (fp_ibuf_len < fp_nf) { \
 	 	fp_newibuf = calloc(fp_nf + 1, sizeof(char *)); \
-		if (NULL == fp_newbuf) \
+		if (NULL == fp_newibuf) \
 			err(errno, \
 			    "ttt_utils.h#" \
 			    "FILEPROCESS_GYO_IBUFFER_EXPANSION"); \
