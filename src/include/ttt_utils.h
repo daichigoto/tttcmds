@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Daichi GOTO
+ * Copyright (c) 2016, 2019 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -32,7 +32,7 @@
 	int fp_buf_i, fp_buf_len; \
 	char *fp_buf, *fp_p = NULL, *fp_newbuf, *fp_buf_end; \
 	fp_buf_len = BUFFER_SIZE; \
-	fp_buf = calloc(1, fp_buf_len * sizeof(char)); \
+	fp_buf = calloc(fp_buf_len, sizeof(char)); \
 	for (int fp_file_i = 1; fp_file_i <= F_ARGC; fp_file_i++) { \
 		fp_fp = fopen(F_ARGV[fp_file_i], "r"); \
 		if (NULL == fp_fp) \
@@ -86,12 +86,13 @@
 
 #define FILEPROCESS_RETU_BUFFER_EXPANSION { \
 	if (fp_p == fp_buf_end) { \
-		fp_newbuf = realloc(fp_buf, \
-			(fp_buf_len + BUFFER_SIZE) * sizeof(char)); \
+		fp_newbuf = \
+			calloc(fp_buf_len + BUFFER_SIZE, sizeof(char)); \
 		if (NULL == fp_newbuf) \
 			err(errno, "ttt_utils.h#FILEPROCESS_RETU"); \
-		memset(fp_newbuf + fp_buf_len, 0, BUFFER_SIZE); \
+		memcpy(fp_newbuf, fp_buf, fp_buf_len * sizeof(char)); \
 		fp_buf_len += BUFFER_SIZE; \
+		free(fp_buf); \
 		fp_buf = fp_newbuf; \
 		fp_buf_end = &fp_buf[fp_buf_len - 1]; \
 		fp_p = &fp_buf[fp_buf_i]; \
@@ -108,8 +109,8 @@
 	int *r_index_to_argv, *r_index_exist, r_index_max; \
 	fp_buf_len = BUFFER_SIZE; \
 	fp_ibuf_len = 32; \
-	fp_buf = calloc(1, fp_buf_len * sizeof(char)); \
-	fp_ibuf = calloc(1, (fp_ibuf_len+1) * sizeof(char *)); \
+	fp_buf = calloc(fp_buf_len, sizeof(char)); \
+	fp_ibuf = calloc(fp_ibuf_len + 1, sizeof(char *)); \
 	for (int fp_file_i = 1; \
 	     fp_file_i <= F_ARGC; fp_file_i++) { \
 		fp_fp = fopen(F_ARGV[fp_file_i], "r"); \
@@ -178,14 +179,15 @@
 
 #define FILEPROCESS_GYO_BUFFER_EXPANSION { \
 	if (fp_p == fp_buf_end) { \
-		fp_newbuf = realloc(fp_buf, \
-			(fp_buf_len + BUFFER_SIZE) * sizeof(char)); \
+		fp_newbuf = \
+			calloc(fp_buf_len + BUFFER_SIZE, sizeof(char)); \
 		if (NULL == fp_newbuf) \
 			err(errno, \
 			    "ttt_utils.h#" \
 			    "FILEPROCESS_GYO_BUFFER_EXPANSION"); \
-		memset(fp_newbuf + fp_buf_len, 0, BUFFER_SIZE); \
+		memcpy(fp_newbuf, fp_buf, fp_buf_len * sizeof(char)); \
 		fp_buf_len += BUFFER_SIZE; \
+		free(fp_buf); \
 		fp_buf = fp_newbuf; \
 		fp_buf_end = &fp_buf[fp_buf_len - 1]; \
 		fp_p = &fp_buf[fp_buf_i]; \
@@ -194,15 +196,14 @@
 
 #define FILEPROCESS_GYO_IBUFFER_EXPANSION { \
 	if (fp_ibuf_len < fp_nf) { \
-		fp_ibuf_len = fp_nf; \
-		fp_newibuf = realloc(fp_ibuf, \
- 				(fp_nf + 1) * sizeof(char *)); \
+	 	fp_newibuf = calloc(fp_nf + 1, sizeof(char *)); \
 		if (NULL == fp_newbuf) \
 			err(errno, \
 			    "ttt_utils.h#" \
 			    "FILEPROCESS_GYO_IBUFFER_EXPANSION"); \
-		memset(fp_newibuf + fp_ibuf_len, 0, fp_nf - fp_ibuf_len); \
+		memcpy(fp_newibuf, fp_ibuf, fp_ibuf_len * sizeof(char *)); \
 		fp_ibuf_len = fp_nf; \
+	 	free(fp_ibuf); \
 		fp_ibuf = fp_newibuf; \
 	} \
 }
@@ -222,30 +223,31 @@
 #define FILEPROCESS_GYO_R_INDEX_EXPANSION { \
 	if (R_INDEX_MAX < fp_nf) { \
 		r_index_max = fp_nf; \
-		r_index_to_argv = realloc(R_INDEX_TO_ARGV, \
-		                     (r_index_max + 1) * sizeof(int)); \
+		r_index_to_argv = \
+			calloc(r_index_max + 1, sizeof(int)); \
 		if (NULL == r_index_to_argv) \
 			err(errno, \
 			    "ttt_utils.h#" \
 			    "FILEPROCESS_GYO_R_INDEX_EXPANSION"); \
-		memset(r_index_to_argv + R_INDEX_MAX + 1, 0, \
-			r_index_max - R_INDEX_MAX); \
+		memcpy(r_index_to_argv, R_INDEX_TO_ARGV, \
+			(r_index_max + 1) * sizeof(int)); \
 		for (int fp_i = R_INDEX_MAX + 1; \
 			fp_i <= r_index_max + 1; fp_i++) \
 			r_index_to_argv[fp_i] = R_INDEX_IS_NONE; \
+		free(R_INDEX_TO_ARGV); \
 		R_INDEX_TO_ARGV = r_index_to_argv; \
 		; \
-		r_index_exist = realloc(R_INDEX_EXIST, \
-		                   (r_index_max + 1) * sizeof(int)); \
+		r_index_exist = calloc(r_index_max + 1, sizeof(int)); \
 		if (NULL == r_index_exist) \
 			err(errno, \
 			    "ttt_utils.h#" \
 			    "FILEPROCESS_GYO_R_INDEX_EXPANSION"); \
-		memset(r_index_exist + R_INDEX_MAX + 1, 0, \
-			r_index_max - R_INDEX_MAX); \
+		memcpy(r_index_exist, R_INDEX_EXIST, \
+			(r_index_max + 1) * sizeof(int)); \
 		for (int fp_i = R_INDEX_MAX + 1; \
 			fp_i <=r_index_max + 1; fp_i++) \
 			r_index_exist[fp_i] = R_INDEX_IS_NOT_EXISTENCE; \
+		free(R_INDEX_EXIST); \
 		R_INDEX_EXIST = r_index_exist; \
 		R_INDEX_MAX = r_index_max; \
 	} \
@@ -298,7 +300,7 @@
 		if (-1 == stat(F_ARGV[fp_file_i], &fp_st )) \
 			err(errno, "%s", F_ARGV[fp_file_i]); \
 		fp_size = fp_st.st_size; \
-		fp_buf = calloc(1, fp_size * sizeof(char)); \
+		fp_buf = calloc(fp_size, sizeof(char)); \
 		if (-1 == (fp_fd = open(F_ARGV[fp_file_i], O_RDONLY))) \
 			err(errno, "%s", F_ARGV[fp_file_i]); \
 		fp_rsize = 0; \
