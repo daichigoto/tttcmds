@@ -1,6 +1,6 @@
 #!/usr/bin/env atf-sh
 # 
-#  Copyright (c) 2016,2017 Daichi GOTO
+#  Copyright (c) 2016,2017,2019 Daichi GOTO
 #  All rights reserved.
 #  
 #  Redistribution and use in source and binary forms, with or without
@@ -330,6 +330,23 @@ swap_body() {
 		   "retu_select 1/9::0"
 }
 
+atf_test_case long
+long_head() {
+	atf_set "descr" "Verify a long data process"
+}
+
+long_body() {
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/long_data_1.out \
+		-x "retu_select 1 $(atf_get_srcdir)/long_data.in"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/long_data_2.out \
+		-x "retu_select 1/200000 $(atf_get_srcdir)/long_data.in"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/long_data_3.out \
+		-x "retu_select 200000 $(atf_get_srcdir)/long_data.in"
+}
+
 atf_init_test_cases()
 {
 	atf_add_test_case empty
@@ -343,4 +360,5 @@ atf_init_test_cases()
 	atf_add_test_case remove_first_line
 	atf_add_test_case zero
 	atf_add_test_case swap
+	atf_add_test_case long
 }
