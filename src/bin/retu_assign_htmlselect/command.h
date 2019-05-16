@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016,2017 Daichi GOTO
+ * Copyright (c) 2016,2017,2019 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -25,7 +25,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#define VERSION "20170120"
+#define VERSION "20190516"
 #define CMDNAME "retu_assign_htmlselect"
 #define ALIAS "assign_htmlselect col_assign_htmlselect"
 
@@ -41,13 +41,13 @@
 		goto next_gyo_process; \
 	} \
 	sel2 = calloc(1, sizeof(*sel2)); \
-	sel2->name = calloc(1, \
-		(strlen(GYO_BUFFER[R_ARGV[1]]) + 1) * sizeof(char)); \
+	sel2->name = calloc( \
+		(strlen(GYO_BUFFER[R_ARGV[1]]) + 1), sizeof(char)); \
 	strcpy(sel2->name, GYO_BUFFER[R_ARGV[1]]); \
 	value_len = len = 0; \
 	for (int j = 2; j <= R_ARGC; j++) \
 		value_len += strlen(GYO_BUFFER[R_ARGV[j]]) + delim_len; \
-	sel2->value = calloc(1, value_len * sizeof(char)); \
+	sel2->value = calloc(value_len + 1, sizeof(char)); \
 	for (int j = 2; j <= R_ARGC; j++) { \
 		if (0 == strcmp("@", GYO_BUFFER[R_ARGV[j]])) \
 			; \
