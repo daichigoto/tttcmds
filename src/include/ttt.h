@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016,2017 Daichi GOTO
+ * Copyright (c) 2016,2017,2019 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -59,6 +59,7 @@
 #define CMDARGS_A_NEED			0x00002000
 #define CMDARGS_R_MINIMUMNUM_IS_0	0x00010000
 #define CMDARGS_R_MINIMUMNUM_IS_1	0x00020000
+#define CMDARGS_DELIMITER_ONLY_1	0x00040000
 
 struct tttcmdargs {
 	char	*cmdname;

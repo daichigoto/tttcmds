@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Daichi GOTO
+ * Copyright (c) 2017,2019 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -34,7 +34,7 @@ struct textset cmdtextsets[] = {
 
 	{ "command_alias", "en_", ALIAS },
 
-        { "command_copyright", "en_", "2016,2017 ONGS Inc." },
+        { "command_copyright", "en_", "2016,2017,2019 ONGS Inc." },
 
 	{ "command_comment", "ja_JP", "列に値を割り当てる" },
 
@@ -45,6 +45,7 @@ struct textset cmdtextsets[] = {
 	  _CMD(CMDNAME) " " 
 	  "[" _OPT("@") " " _ARG("val") "] "
 	  "[" _OPT("f") " " _ARG("file") "] "
+	  "[" _OPT("m") " " _ARG("simple|condition|join") "]\n"
 	  "[" _OPT("s") "] "
 	  "[" _OPT("hvD") "] [" _OPT("-") "]\n" 
 	  _ARG("N.a") "|" _ARG("N.p.s") "|" 
@@ -111,7 +112,7 @@ struct textset cmdtextsets[] = {
 	  _ARG("N/M.a") "\t\tProcess " _ARG("N") "th to " _ARG("M") "th "
 	  	"columns in the same way as\n\t\t" _ARG("N.a") ".\n"
 	  "\n"
-	  ES_BOLD("CONDITION ASSIGNMENT") "\n"
+	  ES_BOLD("CONDITIONAL ASSIGNMENT") "\n"
 	  _ARG("N.p.s") "\t\tAssign " _ARG("s") " to the " _ARG("N") "th " 
 	  	"column if " _ARG("p") " and the value\n\t\tof " 
 		_ARG("N") "th column match. The delimiter is not '!'.\n"
@@ -139,6 +140,10 @@ struct textset cmdtextsets[] = {
 	  _OPT("@") " " _ARG("val") "\t\t結合代入で値がなかった場合に"
 	  			"出力する値\n\t\t(デフォルトは@)\n"
 	  _OPT("f") " " _ARG("file") "\t\t単純代入で使うファイルを指定\n"
+	  _OPT("m") " " _ARG("mode") "\t\t代入モードを指定\n"
+	  			"\t\tsimple\t\t- 単純代入\n"
+	  			"\t\tcondition\t- 条件代入\n"
+	  			"\t\tjoin\t\t- 結合代入\n"
 	  _OPT("s") "		" _ARG("a") "をSSV文字列として扱う\n"
 	  _OPT("h") "		使い方表示\n"
 	  _OPT("v") "		バージョン表示\n"
@@ -152,6 +157,10 @@ struct textset cmdtextsets[] = {
 				"\n\t\tvalues are @ (default is @).\n"
 	  _OPT("f") " " _ARG("file") "\t\tSpecify the " _ARG("file") 
 	  			" for simple assignment.\n"
+	  _OPT("m") " " _ARG("mode") "\t\tSpecify the assign mode.\n"
+	  			"\t\tsimple\t\t- SIMPLE ASSIGNMENT\n"
+	  			"\t\tcondition\t- CONDITIONAL ASSIGNMENT\n"
+	  			"\t\tjoin\t\t- JOIN ASSIGNMENT\n"
 	  _OPT("s") "		Handle " _ARG("a") "as a SSV string.\n"
 	  _OPT("h") "		Print the usage message.\n"
 	  _OPT("v") "		Print the version.\n"
@@ -212,6 +221,14 @@ struct textset cmdtextsets[] = {
 	  _S("000004 BLUEBERRY U.S. CANADA 0")
 	  _S("000005 MELON CHINA TURKEY 230")
 	  _S("000100 NONE NONE NONE 0")
+	  _P("retu_select 1 1 1 2 sales.ssv |") 
+	  _P2("retu_assign -m simple -@ NONE 2:name.ssv:1:2 3:farm.ssv:1:2,3") 
+	  _S("000003 name.ssv:1:2 farm.ssv:1:2,3 100")
+	  _S("000001 name.ssv:1:2 farm.ssv:1:2,3 220")
+	  _S("000002 name.ssv:1:2 farm.ssv:1:2,3 120")
+	  _S("000004 name.ssv:1:2 farm.ssv:1:2,3 0")
+	  _S("000005 name.ssv:1:2 farm.ssv:1:2,3 230")
+	  _S("000100 name.ssv:1:2 farm.ssv:1:2,3 0")
 	  _P("retu_select 1 1 1 2 sales.ssv |") 
 	  _P2("retu_assign -@ NONE 2:name.ssv:1:2 3:farm.ssv:1:2,3 |") 
 	  _P2("retu_assign -f data.ssv 1.2 3.1 4.7") 

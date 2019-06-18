@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016,2017 Daichi GOTO
+ * Copyright (c) 2016,2017,2019 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -27,13 +27,38 @@
 
 #include "command.h"
 
+int 
+has_option_m_with_simple(int argc, char *argv[])
+{
+	int i;
+	for (i = 1; i < argc; i++) {
+		if (0 == strcmp("-m", argv[i])) {
+			if (i + 1 < argc) {
+				if (0 == strcmp("simple", argv[i+1])) {
+					return 1;
+				}
+			}
+		}
+	}
+	return 0;
+}
+
 int
 main(int argc, char *argv[])
 {
-	getcmdargs(argc, argv, "@:f:shvD",
-	           CMDARGS_R_NEED|
-		   CMDARGS_R_ARGARG_1_NEED|
-		   CMDARGS_R_ARGARG_TO_SSVSTR); 
+	if (has_option_m_with_simple(argc, argv)) {
+		getcmdargs(argc, argv, "@:f:m:shvD",
+		           CMDARGS_R_NEED|
+			   CMDARGS_R_ARGARG_1_NEED|
+			   CMDARGS_R_ARGARG_TO_SSVSTR|
+			   CMDARGS_DELIMITER_ONLY_1); 
+	}
+	else {
+		getcmdargs(argc, argv, "@:f:m:shvD",
+		           CMDARGS_R_NEED|
+			   CMDARGS_R_ARGARG_1_NEED|
+			   CMDARGS_R_ARGARG_TO_SSVSTR);
+	}
 
 	char *at = "@";
 	if (FLAG_AT)
@@ -82,6 +107,52 @@ main(int argc, char *argv[])
 				cmdargs.r_argv_arg2[i],
 				cmdargs.r_argv_arg3[i],
 				cmdargs.r_argv_delim[i]);
+		}
+	}
+
+	/*
+	 * process mode overwrite by -m option
+	 */
+	if (FLAG_m) {
+		if (0 == strncmp("simple", FLAG_m_ARG, 6)) {
+			for (int i = 1; i <= R_ARGC; i++) {
+				if (FLAG_f)
+					mode[R_ARGV[i]] = DO_ASSIGN_WITH_F;
+				else
+					mode[R_ARGV[i]] = DO_ASSIGN_WITHOUT_F;
+			}
+		}
+		else if (0 == strncmp("condition", FLAG_m_ARG, 9)) {
+			for (int i = 1; i <= R_ARGC; i++) {
+				if ('!' != R_ARGV_DELIM[i]) {
+					mode[R_ARGV[i]] |= DO_MATCH_SWAP;
+					matchswap[R_ARGV[i]] = R_ARGV_ARG2[i];
+				}
+				else {
+					mode[R_ARGV[i]] |= DO_NOTMATCH_SWAP;
+					notmatchswap[R_ARGV[i]] = R_ARGV_ARG2[i];
+				}
+			}
+		}
+		else if (0 == strncmp("join", FLAG_m_ARG, 4)) {
+			for (int i = 1; i <= R_ARGC; i++) {
+				mode[R_ARGV[i]] = DO_JOIN;
+	
+				filename = calloc(1, sizeof(char) *
+					(strlen(cmdargs.r_argv_arg1[i]) + 1));
+				strcpy(filename, cmdargs.r_argv_arg1[i]);	
+				ssvstr2str(cmdargs.r_argv_arg1[i], filename);
+	
+				setcmdargs_from_FILENAME_RETU_RETU(
+					&r_cmdargs[R_ARGV[i]], 
+					cmdargs.r_argv_arg1[i],
+					cmdargs.r_argv_arg2[i],
+					cmdargs.r_argv_arg3[i],
+					cmdargs.r_argv_delim[i]);
+			}
+		}
+		else {
+			errx(EINVAL, "No such mode: %s", FLAG_m_ARG);
 		}
 	}
 
