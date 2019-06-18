@@ -99,6 +99,8 @@ getcmdargs(const int argc, char *argv[], const char *optargs, int flags)
 {
 	int i, j, k, range, *i_ptr, exclusion = 0, mincol = 1;
 	int single_delimiter_mode = 0;
+	int double_delimiter_mode = 0;
+	int triple_delimiter_mode = 0;
 	char buf[BUFFER_SIZE], *p1, *p2, delim, *c_ptr, **c_pptr, o;
 
 	if (flags&CMDARGS_R_MINIMUMNUM_IS_0)
@@ -106,6 +108,10 @@ getcmdargs(const int argc, char *argv[], const char *optargs, int flags)
 
 	if (flags&CMDARGS_DELIMITER_ONLY_1)
 		single_delimiter_mode = 1;
+	if (flags&CMDARGS_DELIMITER_ONLY_2)
+		double_delimiter_mode = 1;
+	if (flags&CMDARGS_DELIMITER_ONLY_3)
+		triple_delimiter_mode = 1;
 
 	/*
 	 * cmdargs initialization
@@ -400,8 +406,15 @@ retu_analysis:
 
 			++p1;
 			p2 = buf;
-			while (delim != *p1 && '\0' != *p1) {
-				*p2++ = *p1++;
+			if (double_delimiter_mode) {
+				while ('\0' != *p1) {
+					*p2++ = *p1++;
+				}
+			}
+			else {
+				while (delim != *p1 && '\0' != *p1) {
+					*p2++ = *p1++;
+				}
 			}
 			*p2++ = '\0';
 			cmdargs.r_argv_arg2[1+cmdargs.r_argc] =

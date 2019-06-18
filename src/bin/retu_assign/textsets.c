@@ -242,6 +242,8 @@ struct textset cmdtextsets[] = {
 	  _S("\\@ \\@ \\@ \\@ \\@ \\@ \\@ \\@ \\@ \\@ \\@")
 	  _P("retu_assign -s 1/11.@ data.ssv") 
 	  _S("@ @ @ @ @ @ @ @ @ @ @")
+	  _P("echo @ | retu_assign -m condition 1::=::=") 
+	  _S("=::=")
 	  _P("") },
 
 	TEXTSET_END

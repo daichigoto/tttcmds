@@ -43,6 +43,22 @@ has_option_m_with_simple(int argc, char *argv[])
 	return 0;
 }
 
+int 
+has_option_m_with_condition(int argc, char *argv[])
+{
+	int i;
+	for (i = 1; i < argc; i++) {
+		if (0 == strcmp("-m", argv[i])) {
+			if (i + 1 < argc) {
+				if (0 == strcmp("condition", argv[i+1])) {
+					return 1;
+				}
+			}
+		}
+	}
+	return 0;
+}
+
 int
 main(int argc, char *argv[])
 {
@@ -52,6 +68,13 @@ main(int argc, char *argv[])
 			   CMDARGS_R_ARGARG_1_NEED|
 			   CMDARGS_R_ARGARG_TO_SSVSTR|
 			   CMDARGS_DELIMITER_ONLY_1); 
+	}
+	else if (has_option_m_with_condition(argc, argv)) {
+		getcmdargs(argc, argv, "@:f:m:shvD",
+		           CMDARGS_R_NEED|
+			   CMDARGS_R_ARGARG_1_NEED|
+			   CMDARGS_R_ARGARG_TO_SSVSTR|
+			   CMDARGS_DELIMITER_ONLY_2); 
 	}
 	else {
 		getcmdargs(argc, argv, "@:f:m:shvD",

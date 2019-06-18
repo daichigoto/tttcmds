@@ -355,6 +355,11 @@ mode_body() {
 		   "retu_assign -m simple" \
 		   "2:name.ssv:1:2" \
 		   "4:name.ssv:1:3"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/mode_output_02.ssv \
+		-x "echo @ @ @ @ @ |" \
+		   "retu_assign -m condition" \
+		   "2::=::="
 }
 
 
