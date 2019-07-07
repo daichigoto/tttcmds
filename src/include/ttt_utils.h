@@ -32,7 +32,7 @@
 	int fp_buf_i, fp_buf_len; \
 	char *fp_buf, *fp_p = NULL, *fp_newbuf, *fp_buf_end; \
 	fp_buf_len = BUFFER_SIZE; \
-	fp_buf = calloc(sizeof(char), fp_buf_len); \
+	fp_buf = calloc(fp_buf_len, sizeof(char)); \
 	for (int fp_file_i = 1; fp_file_i <= F_ARGC; fp_file_i++) { \
 		fp_fp = fopen(F_ARGV[fp_file_i], "r"); \
 		if (NULL == fp_fp) \
@@ -87,7 +87,7 @@
 #define FILEPROCESS_RETU_BUFFER_EXPANSION { \
 	if (fp_p == fp_buf_end) { \
 		fp_newbuf = \
-			calloc(sizeof(char), fp_buf_len + BUFFER_SIZE); \
+			calloc(fp_buf_len + BUFFER_SIZE, sizeof(char)); \
 		if (NULL == fp_newbuf) \
 			err(errno, "ttt_utils.h#FILEPROCESS_RETU"); \
 		memcpy(fp_newbuf, fp_buf, fp_buf_len * sizeof(char)); \
@@ -109,8 +109,8 @@
 	int *r_index_to_argv, *r_index_exist, r_index_max; \
 	fp_buf_len = BUFFER_SIZE; \
 	fp_ibuf_len = 32; \
-	fp_buf = calloc(sizeof(char), fp_buf_len); \
-	fp_ibuf = calloc(sizeof(char *), fp_ibuf_len + 1); \
+	fp_buf = calloc(fp_buf_len, sizeof(char)); \
+	fp_ibuf = calloc(fp_ibuf_len + 1, sizeof(char *)); \
 	for (int fp_file_i = 1; \
 	     fp_file_i <= F_ARGC; fp_file_i++) { \
 		fp_fp = fopen(F_ARGV[fp_file_i], "r"); \
@@ -180,7 +180,7 @@
 #define FILEPROCESS_GYO_BUFFER_EXPANSION { \
 	if (fp_p == fp_buf_end) { \
 		fp_newbuf = \
-			calloc(sizeof(char), fp_buf_len + BUFFER_SIZE); \
+			calloc(fp_buf_len + BUFFER_SIZE, sizeof(char)); \
 		if (NULL == fp_newbuf) \
 			err(errno, \
 			    "ttt_utils.h#" \
@@ -196,7 +196,7 @@
 
 #define FILEPROCESS_GYO_IBUFFER_EXPANSION { \
 	if (fp_ibuf_len < fp_nf) { \
-	 	fp_newibuf = calloc(sizeof(char *), fp_nf + 1); \
+	 	fp_newibuf = calloc(fp_nf + 1, sizeof(char *)); \
 		if (NULL == fp_newibuf) \
 			err(errno, \
 			    "ttt_utils.h#" \
@@ -224,7 +224,7 @@
 	if (R_INDEX_MAX < fp_nf) { \
 		r_index_max = fp_nf; \
 		r_index_to_argv = \
-			calloc(sizeof(int), r_index_max + 1); \
+			calloc(r_index_max + 1, sizeof(int)); \
 		if (NULL == r_index_to_argv) \
 			err(errno, \
 			    "ttt_utils.h#" \
@@ -237,7 +237,7 @@
 		free(R_INDEX_TO_ARGV); \
 		R_INDEX_TO_ARGV = r_index_to_argv; \
 		; \
-		r_index_exist = calloc(sizeof(int), r_index_max + 1); \
+		r_index_exist = calloc(r_index_max + 1, sizeof(int)); \
 		if (NULL == r_index_exist) \
 			err(errno, \
 			    "ttt_utils.h#" \
@@ -300,7 +300,7 @@
 		if (-1 == stat(F_ARGV[fp_file_i], &fp_st )) \
 			err(errno, "%s", F_ARGV[fp_file_i]); \
 		fp_size = fp_st.st_size; \
-		fp_buf = calloc(sizeof(char), fp_size + 1); \
+		fp_buf = calloc(fp_size + 1, sizeof(char)); \
 		if (-1 == (fp_fd = open(F_ARGV[fp_file_i], O_RDONLY))) \
 			err(errno, "%s", F_ARGV[fp_file_i]); \
 		fp_rsize = 0; \
