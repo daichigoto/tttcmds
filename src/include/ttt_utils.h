@@ -300,7 +300,7 @@
 		if (-1 == stat(F_ARGV[fp_file_i], &fp_st )) \
 			err(errno, "%s", F_ARGV[fp_file_i]); \
 		fp_size = fp_st.st_size; \
-		fp_buf = calloc(sizeof(char), fp_size+1); \
+		fp_buf = calloc(sizeof(char), fp_size + 1); \
 		if (-1 == (fp_fd = open(F_ARGV[fp_file_i], O_RDONLY))) \
 			err(errno, "%s", F_ARGV[fp_file_i]); \
 		fp_rsize = 0; \
