@@ -119,19 +119,19 @@ getcmdargs(const int argc, char *argv[], const char *optargs, int flags)
 	memset(&cmdargs, 0, sizeof(struct tttcmdargs));
 
 	cmdargs.f_argc = 0;
-	cmdargs.f_argv = calloc(1, 2 * sizeof(char *));
+	cmdargs.f_argv = calloc(2, sizeof(char *));
 
 	cmdargs.a_argc = 0;
-	cmdargs.a_argv = calloc(1, 2 * sizeof(char *));
+	cmdargs.a_argv = calloc(2, sizeof(char *));
 
 	cmdargs.r_argv_max = 0;
-	cmdargs.r_argv = calloc(1, r_argv_max * sizeof(int));
-	cmdargs.r_argv_arg1 = calloc(1, r_argv_max * sizeof(char *));
-	cmdargs.r_argv_arg2 = calloc(1, r_argv_max * sizeof(char *));
-	cmdargs.r_argv_arg3 = calloc(1, r_argv_max * sizeof(char *));
-	cmdargs.r_argv_delim = calloc(1, r_argv_max * sizeof(char));
-	cmdargs.r_index_exist = calloc(1, r_argv_max * sizeof(int));
-	cmdargs.r_index_to_argv = calloc(1, r_argv_max * sizeof(int));
+	cmdargs.r_argv = calloc(r_argv_max, sizeof(int));
+	cmdargs.r_argv_arg1 = calloc(r_argv_max, sizeof(char *));
+	cmdargs.r_argv_arg2 = calloc(r_argv_max, sizeof(char *));
+	cmdargs.r_argv_arg3 = calloc(r_argv_max, sizeof(char *));
+	cmdargs.r_argv_delim = calloc(r_argv_max, sizeof(char));
+	cmdargs.r_index_exist = calloc(r_argv_max, sizeof(int));
+	cmdargs.r_index_to_argv = calloc(r_argv_max, sizeof(int));
 	for (i = 0; i < r_argv_max; i++) {
 		cmdargs.r_argv[i] = -1;
 		cmdargs.r_index_exist[i] = R_INDEX_IS_NOT_EXISTENCE;
@@ -388,7 +388,7 @@ retu_analysis:
 			}
 			*p2++ = '\0';
 			cmdargs.r_argv_arg1[1+cmdargs.r_argc] =
-				calloc(1, p2 - buf);
+				calloc(p2 - buf, sizeof(char));
 			stpncpy(cmdargs.r_argv_arg1[
 			                1+cmdargs.r_argc], buf, p2 - buf);
 
@@ -418,7 +418,7 @@ retu_analysis:
 			}
 			*p2++ = '\0';
 			cmdargs.r_argv_arg2[1+cmdargs.r_argc] =
-				calloc(1, p2 - buf);
+				calloc(p2 - buf, sizeof(char));
 			stpncpy(cmdargs.r_argv_arg2[
 			                1+cmdargs.r_argc], buf, p2 - buf);
 
@@ -441,7 +441,7 @@ retu_analysis:
 			}
 			*p2++ = '\0';
 			cmdargs.r_argv_arg3[1+cmdargs.r_argc] =
-				calloc(1, p2 - buf);
+				calloc(p2 - buf, sizeof(char));
 			stpncpy(cmdargs.r_argv_arg3[
 			                1+cmdargs.r_argc], buf, p2 - buf);
 
@@ -623,13 +623,13 @@ str_to_ssvstring_process:
 	if (flags&CMDARGS_R_ARGARG_TO_SSVSTR) {
 		char *ssvstr;
 		int ssvstr_len = 10, arglen;
-		ssvstr = calloc(1, ssvstr_len * sizeof(char));
+		ssvstr = calloc(ssvstr_len, sizeof(char));
 #define R_ARGSTR_TO_SSVSTR(X) \
 		if (NULL != X[i]) { \
 			arglen = strlen(X[i]) + 1; \
 			if (arglen * 2 - 1 > ssvstr_len) \
 				ssvstr_len = arglen * 2 - 1; \
-			ssvstr = calloc(1, ssvstr_len * sizeof(char)); \
+			ssvstr = calloc(ssvstr_len, sizeof(char)); \
 			str2ssvstr(ssvstr, X[i]); \
 			X[i] = ssvstr; \
 		} 
@@ -708,8 +708,8 @@ mktempfile(void)
 		home = "/tmp";
 
 	len = strlen(home) + strlen(TMPDIR_NAME) + 2;
-	dir = calloc(1, sizeof(char) * len);
-	dir2 = calloc(1, sizeof(char) * len);
+	dir = calloc(len, sizeof(char));
+	dir2 = calloc(len, sizeof(char));
 	sprintf(dir, "%s/%s", home, TMPDIR_NAME);
 
 	/*
@@ -742,7 +742,7 @@ mktempfile(void)
 	 * Create a temporary file
 	 */
 	len += strlen(TMPFILE_NAME) + 1;
-	tempfile = calloc(1, sizeof(char) * len);
+	tempfile = calloc(len, sizeof(char));
 	sprintf(tempfile, "%s/%s", dir, TMPFILE_NAME);
 
 	if (-1 == mkstemp(tempfile))

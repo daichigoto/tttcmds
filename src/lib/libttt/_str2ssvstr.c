@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Daichi GOTO
+ * Copyright (c) 2016,2019 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -31,7 +31,7 @@ char *
 _str2ssvstr(char *str)
 {
 	char *buf;
-	buf = calloc(1, sizeof(char) * (str2ssvstr_len(str) + 1));
+	buf = calloc(str2ssvstr_len(str) + 1, sizeof(char));
 	str2ssvstr(buf, str);
 
 	return buf;

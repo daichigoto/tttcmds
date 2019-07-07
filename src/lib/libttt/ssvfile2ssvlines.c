@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Daichi GOTO
+ * Copyright (c) 2017,2019 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -81,11 +81,11 @@ ssvfile2ssvlines(const char *filename, struct ssvline *ssv_firstline)
 		 */
 		p = buf;
 		p_ssvline->data =
-			calloc(1, sizeof(char *) * (p_ssvline->nf + 1));
+			calloc(p_ssvline->nf + 1, sizeof(char *));
 		for (int i = 1; i <= p_ssvline->nf; i++) {
 			len = strlen(p);
 			p_ssvline->data[i] =
-				calloc(1, sizeof(char) * (len + 1));
+				calloc(len + 1, sizeof(char));
 			strcpy(p_ssvline->data[i], p);
 			while ('\0' != *p)
 				++p;

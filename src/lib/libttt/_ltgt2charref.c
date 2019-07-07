@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Daichi GOTO
+ * Copyright (c) 2017,2019 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -39,7 +39,7 @@ _ltgt2charref(char *str)
 			len += 4; /* &gt; */
 		else
 			++len;
-	buf = calloc(1, sizeof(char) * (len + 1));
+	buf = calloc(len + 1, sizeof(char));
 	buf[len] = '\0';
 
 	for (i = 0, p = str; i < len; p++, i++)
