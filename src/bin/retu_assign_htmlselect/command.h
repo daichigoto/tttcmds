@@ -128,7 +128,7 @@ next_gyo_process:
 #define COPY_RETUBUFFER_TO_REFS(RETU_BUFFER,INDEX) { \
 	if (INDEX <= R_INDEX_MAX) { \
 		refs[INDEX] = \
-			calloc(1, (1 + strlen(RETU_BUFFER)) * \
+			calloc(1 + strlen(RETU_BUFFER), \
 				sizeof(char)); \
 		strcpy(refs[INDEX],RETU_BUFFER); \
 	} \

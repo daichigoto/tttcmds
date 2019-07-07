@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016,2017 Daichi GOTO
+ * Copyright (c) 2016,2017,2019 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -78,8 +78,8 @@ main(int argc, char *argv[])
 					++p;
 				*p = '\0';
 				s->r = n;
-				s->r_arg = calloc(1, 
-					(strlen(p2) + 1) * sizeof(char));
+				s->r_arg = calloc(strlen(p2) + 1, 
+						sizeof(char));
 				strcpy(s->r_arg, p2);
 				s->next = calloc(1, 
 					sizeof(struct swaprules));
@@ -90,8 +90,8 @@ main(int argc, char *argv[])
 		fclose(fp);
 
 		R_ARGC = gyo;
-		R_ARGV = calloc(1, (1 + gyo) * sizeof(int));
-		R_ARGV_ARG1 = calloc(1, (1 + gyo) * sizeof(char *));
+		R_ARGV = calloc(1 + gyo, sizeof(int));
+		R_ARGV_ARG1 = calloc(1 + gyo, sizeof(char *));
 		R_ARGV[0] = -1;
 		s = s_s;
 		for (int i = 1; i <= R_ARGC; i++) {
@@ -111,7 +111,7 @@ main(int argc, char *argv[])
 	 */
 	stat(FLAG_t_ARG, &sb);
 	tsize = sb.st_size;
-	tbuf = calloc(1, (tsize + 1) * sizeof(char));
+	tbuf = calloc(tsize + 1, sizeof(char));
 	
 	if (-1 == (fd = open(FLAG_t_ARG, O_RDONLY)))
 		err(errno, "%s", FLAG_t_ARG);

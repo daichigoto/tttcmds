@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016,2017 Daichi GOTO
+ * Copyright (c) 2016,2017,2019 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -56,7 +56,7 @@ main(int argc, char *argv[])
 		int count;
 		char *buf[retu + 1];
 		for (i = 1; i <= retu; i++)
-			buf[i] = calloc(1, sizeof(char) * (maxlen[i] + 1));
+			buf[i] = calloc(maxlen[i] + 1, sizeof(char));
 		FILEPROCESS_RETU
 	}
 	else {

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016,2017 Daichi GOTO
+ * Copyright (c) 2016,2017,2019 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -41,7 +41,7 @@ getatmarkline(int count, char *val)
 		at_len = strlen(at);
 	}
 
-	char *buf = calloc(1, sizeof(char) * (at_len * count * 2));
+	char *buf = calloc(at_len * count * 2, sizeof(char));
 	char *p;
 	p = buf;
 

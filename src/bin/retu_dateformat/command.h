@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016,2017,2018 Daichi GOTO
+ * Copyright (c) 2016,2017,2018,2019 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -56,15 +56,16 @@ typedef unsigned char u_char;
 			if (str_len < (int)strlen(GYO_BUFFER[i])) { \
 				str_len = strlen(GYO_BUFFER[i]); \
 				free(str); \
-				str = calloc(1, str_len*sizeof(char)+1); \
+				str = calloc(str_len + 1, \
+				  	sizeof(char)); \
 			} \
 			outfmt_len = \
 				strlen(R_ARGV_ARG2[index]); \
 			if (ssvstr_len < outfmt_len * 2) { \
 				ssvstr_len = outfmt_len * 2; \
 				free(ssvstr); \
-				ssvstr = calloc(1, \
-					ssvstr_len*sizeof(char)+1); \
+				ssvstr = calloc(ssvstr_len + 1, \
+					sizeof(char)); \
 			} \
 			ssvstr2str(str, GYO_BUFFER[i]); \
 			/*

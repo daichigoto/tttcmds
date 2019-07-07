@@ -63,8 +63,8 @@ main(int argc, char *argv[])
 	tm_tomorrow = tm;
 
 	str_len = ssvstr_len = BUFFER_SIZE;
-	str = calloc(1, str_len * sizeof(char));
-	ssvstr = calloc(1, ssvstr_len * sizeof(char));
+	str = calloc(str_len, sizeof(char));
+	ssvstr = calloc(ssvstr_len, sizeof(char));
 
 	FILEPROCESS_GYO
 

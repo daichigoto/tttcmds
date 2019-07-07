@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016-2018 Daichi GOTO
+ * Copyright (c) 2016-2019 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -39,31 +39,31 @@
 		str_len = BUF_len * 2; \
 		if (NULL != str) \
 			free(str); \
-		str = calloc(1, sizeof(char) * str_len); \
+		str = calloc(str_len, sizeof(char)); \
 		str2_len = str_len * 7; \
 		if (NULL != str2) \
 			free(str2); \
-		str2 = calloc(1, sizeof(char) * str2_len); \
+		str2 = calloc(str2_len, sizeof(char)); \
 	} \
 	if (buf_len < fmt_len + str_len) { \
 		buf_len = fmt_len + str_len; \
 		if (NULL != buf) \
 			free(buf); \
-		buf = calloc(1, sizeof(char) * buf_len + 1); \
+		buf = calloc(buf_len + 1, sizeof(char)); \
 		buf2_len = buf_len * 7; \
 		if (NULL != buf2) \
 			free(buf2); \
-		buf2 = calloc(1, sizeof(char) * buf2_len + 1); \
+		buf2 = calloc(buf2_len + 1, sizeof(char)); \
 	} \
 	if (ssvstr_len < 2 * (fmt_len + str_len)) { \
 		ssvstr_len = 2 * (fmt_len + str_len); \
 		if (NULL != ssvstr) \
 			free(ssvstr); \
-		ssvstr = calloc(1, sizeof(char) * ssvstr_len + 1); \
+		ssvstr = calloc(ssvstr_len + 1, sizeof(char)); \
 		ssvstr2_len = ssvstr_len * 7; \
 		if (NULL != ssvstr2) \
 			free(ssvstr2); \
-		ssvstr2 = calloc(1, sizeof(char) * ssvstr2_len + 1); \
+		ssvstr2 = calloc(ssvstr2_len + 1, sizeof(char)); \
 	} \
 	if (html5entity[R_INDEX_TO_ARGV[INDEX]]) { \
 		ssvstr2str(str, RETU_BUFFER); \

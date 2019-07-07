@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Daichi GOTO
+ * Copyright (c) 2016,2019 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -36,9 +36,9 @@ main(int argc, char *argv[])
 	int i = 1, j;
 	char **data_p;
 
-	data_p = calloc(1, sizeof(char *) * (R_ARGC+1));
+	data_p = calloc(R_ARGC + 1, sizeof(char *));
 	for (j = 0; j <= R_ARGC+1; j++)
-		data_p[j] = calloc(1, sizeof(char) * 64);
+		data_p[j] = calloc(64, sizeof(char));
 
 	FILEPROCESS_RETU
 

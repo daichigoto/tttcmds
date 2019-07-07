@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Daichi GOTO
+ * Copyright (c) 2017,2019 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -55,10 +55,11 @@
 		p_ssvline->outputed = 0; \
 		p_ssvline->nf = retumax; \
 		p_ssvline->data = \
-			calloc(1, sizeof(char *) * (p_ssvline->nf + 1)); \
+			calloc(p_ssvline->nf + 1, sizeof(char *)); \
 		for (int i = 1; i <= retumax; i++) { \
 			if (i > NF) { \
-				p_ssvline->data[i] = calloc(1, 2); \
+				p_ssvline->data[i] = \
+			 		calloc(2, sizeof(char)); \
 				p_ssvline->data[i][0] = '@'; \
 				p_ssvline->data[i][1] = '\0'; \
 			} \

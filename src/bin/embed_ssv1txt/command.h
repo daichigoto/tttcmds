@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016,2017 Daichi GOTO
+ * Copyright (c) 2016,2017,2019 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -70,7 +70,7 @@ struct swaprules {
 	} \
 	else { \
 		bbuf_p1 = GYO_BUFFER[R_ARGV[i]]; \
-		bbuf = calloc(1, 1+strlen(bbuf_p1)); \
+		bbuf = calloc(1 + strlen(bbuf_p1), sizeof(char)); \
 		bbuf_p2 = bbuf; \
 		while ('\0' != *bbuf_p1) { \
 			switch (*bbuf_p1) { \

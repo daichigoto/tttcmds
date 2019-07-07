@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016,2017 Daichi GOTO
+ * Copyright (c) 2016,2017,2019 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -62,9 +62,9 @@
 
 #define COPY_BUF_TO_DATAP(BUF,NF) { \
 	nf = NF; \
-	data_p = calloc(1, (NF + 1) * sizeof(char *)); \
+	data_p = calloc(NF + 1, sizeof(char *)); \
 	for (i = 1; i <= NF; i++) { \
-		data_p[i] = calloc(1, sizeof(char) * strlen(BUF[i]+1)); \
+		data_p[i] = calloc(strlen(BUF[i]) + 1, sizeof(char)); \
 		strcpy(data_p[i], BUF[i]); \
 	} \
 }

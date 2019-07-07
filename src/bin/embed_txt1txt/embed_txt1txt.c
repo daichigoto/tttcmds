@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016,2017 Daichi GOTO
+ * Copyright (c) 2016,2017,2019 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -54,7 +54,7 @@ main(int argc, char *argv[])
 		if (-1 == (fd = open(R_ARGV_ARG2[i], O_RDONLY)))
 			err(errno, "%s", R_ARGV_ARG2[i]);
 
-		text[i] = calloc(1, (st.st_size + 1) * sizeof(char));
+		text[i] = calloc(st.st_size + 1, sizeof(char));
 		text[i][st.st_size] = '\0';
 
 		rsize = 0;

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Daichi GOTO
+ * Copyright (c) 2017,2019 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -71,7 +71,7 @@
 #define COPY_RETUBUFFER_TO_REFS(RETU_BUFFER,INDEX) { \
 	if (INDEX <= R_INDEX_MAX) { \
 		refs[INDEX] = \
-			calloc(1, (1 + strlen(RETU_BUFFER)) * \
+			calloc(1 + strlen(RETU_BUFFER), \
 					sizeof(char)); \
 		strcpy(refs[INDEX],RETU_BUFFER); \
 	} \

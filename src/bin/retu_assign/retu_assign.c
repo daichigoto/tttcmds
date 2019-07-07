@@ -119,8 +119,9 @@ main(int argc, char *argv[])
 		else if (NULL != R_ARGV_ARG2[i] && NULL != R_ARGV_ARG3[i]) {
 			mode[R_ARGV[i]] = DO_JOIN;
 
-			filename = calloc(1, sizeof(char) *
-				(strlen(cmdargs.r_argv_arg1[i]) + 1));
+			filename = calloc(
+				strlen(cmdargs.r_argv_arg1[i]) + 1,
+				sizeof(char));
 			strcpy(filename, cmdargs.r_argv_arg1[i]);	
 			ssvstr2str(cmdargs.r_argv_arg1[i], filename);
 
@@ -161,8 +162,9 @@ main(int argc, char *argv[])
 			for (int i = 1; i <= R_ARGC; i++) {
 				mode[R_ARGV[i]] = DO_JOIN;
 	
-				filename = calloc(1, sizeof(char) *
-					(strlen(cmdargs.r_argv_arg1[i]) + 1));
+				filename = calloc(
+					strlen(cmdargs.r_argv_arg1[i]) + 1,
+					sizeof(char));
 				strcpy(filename, cmdargs.r_argv_arg1[i]);	
 				ssvstr2str(cmdargs.r_argv_arg1[i], filename);
 	
