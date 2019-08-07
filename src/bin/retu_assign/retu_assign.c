@@ -258,7 +258,7 @@ main(int argc, char *argv[])
 		hashtables[i] = dbopen(NULL, O_CREAT|O_RDWR, 0644, 
 			DB_HASH, NULL);
 		if (NULL == hashtables[i])
-			err(errno, "retu_assign: dbopen failed"); 
+			err(errno, CMDNAME ": dbopen failed"); 
 
 		hash_key.data = "\0";
 		hash_key.size = 1;
