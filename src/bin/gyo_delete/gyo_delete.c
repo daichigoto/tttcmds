@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016,2017 Daichi GOTO
+ * Copyright (c) 2016,2017,2019 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -76,7 +76,7 @@ main(int argc, char *argv[])
 		hashtables[i] = dbopen(NULL, O_CREAT|O_RDWR, 0644,
 			DB_HASH, NULL);
 		if (NULL == hashtables[i])
-			err(errno, "retu_assign: dbopen failed");
+			err(errno, CMDNAME ": dbopen failed");
 
 		FILEPROCESS_RETU
 	}
