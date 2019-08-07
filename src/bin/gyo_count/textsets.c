@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Daichi GOTO
+ * Copyright (c) 2016,2019 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -33,6 +33,8 @@ struct textset cmdtextsets[] = {
 	{ "command_name", "en_", CMDNAME },
 
 	{ "command_alias", "en_", ALIAS },
+
+	{ "command_copyright", "en_", "2016,2019 ONGS Inc." },
 
 	{ "command_comment", "ja_JP", "行数をカウントする" },
 

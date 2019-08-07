@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Daichi GOTO
+ * Copyright (c) 2016,2019 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -25,15 +25,8 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#define VERSION "20161102"
+#define VERSION "20190807"
 #define CMDNAME "gyo_count"
 #define ALIAS "gyo row_count"
 
 #include "ttt.h"
-
-#define TGT_CHAR_PROCESS(C) \
-	if (C == '\n') \
-		++i; \
-	else if (C == EOF && (p != '\n' && p != EOF)) \
-		++i; \
-	p = C;

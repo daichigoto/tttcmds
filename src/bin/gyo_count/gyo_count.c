@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Daichi GOTO
+ * Copyright (c) 2016,2019 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -27,16 +27,44 @@
 
 #include "command.h"
 
+#define	BUFLEN	65536
+
 int
 main(int argc, char *argv[])
 {
 	getcmdargs(argc, argv, "hvD", CMDARGS_R_NONE);
 
-	int i = 0;
-	char p = EOF;
-	FILEPROCESS_CHAR
+	int fd, nr, fsize, lines;
+	char buf[BUFLEN], *p;
 
-	printf("%d\n", i);
+	lines = 0;
+	fsize = 0;
+
+	for (int file_i = 1; file_i <= F_ARGC; file_i++) {
+		fd = open(F_ARGV[file_i], O_RDONLY);
+	
+		nr = read(fd, buf, BUFLEN);
+		fsize += nr;
+		while (0 < nr) {
+			p = buf;
+			for (int i = 0; i < nr; i++, p++) {
+				if ('\n' == *p) {
+					++lines;
+				}
+			}
+			nr = read(fd, buf, BUFLEN); 
+			fsize += nr;
+		}
+		close(fd);
+
+		if (0 == fsize) {
+		}
+		else if ('\n' != *(--p)) {
+			++lines;
+		}
+	}
+
+	printf("%d\n", lines);
 
 	exit(EX_OK);
 }
