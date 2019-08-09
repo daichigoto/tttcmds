@@ -25,7 +25,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#define VERSION "20190618"
+#define VERSION "20190808"
 #define CMDNAME "retu_assign"
 #define ALIAS "assign col_assign"
 
@@ -78,11 +78,11 @@
 		v_p += buf_len; \
 	} \
 	strncpy(v_p, "\0", 1); \
-	hash_key.data = GYO_BUFFER[R_ARGV[1]]; \
-	hash_key.size = strlen(hash_key.data) + 1; \
-	hash_val.data = value; \
-	hash_val.size = value_len + 1; \
-	hashtables[i]->put(hashtables[i], &hash_key, &hash_val, 0); \
+	b_key.data = GYO_BUFFER[R_ARGV[1]]; \
+	b_key.size = strlen(b_key.data) + 1; \
+	b_val.data = value; \
+	b_val.size = value_len + 1; \
+	btrees[i]->put(btrees[i], &b_key, &b_val, 0); \
 }
 
 /*
@@ -142,18 +142,18 @@
  * join process
  */
 #define TGT_RETU_PROCESS_DO_JOIN(BUF,BUFLEN,I) { \
-	hash_key.data = BUF; \
-	hash_key.size = strlen(BUF) + 1; \
-  	memset(&hash_val, 0, sizeof(DBT)); \
-	if (0 == hashtables[I]->get(hashtables[I], \
-		&hash_key, &hash_val, 0)) { \
-		printf("%s",hash_val.data); \
+	b_key.data = BUF; \
+	b_key.size = strlen(BUF) + 1; \
+  	memset(&b_val, 0, sizeof(DBT)); \
+	if (0 == btrees[I]->get(btrees[I], \
+		&b_key, &b_val, 0)) { \
+		printf("%s",b_val.data); \
 	} \
 	else { \
-		hash_key.data = "\0"; \
-		hash_key.size = 1; \
-		hashtables[I]->get(hashtables[I], \
-			&hash_key, &hash_val, 0); \
-		printf("%s",hash_val.data); \
+		b_key.data = "\0"; \
+		b_key.size = 1; \
+		btrees[I]->get(btrees[I], \
+			&b_key, &b_val, 0); \
+		printf("%s",b_val.data); \
 	} \
 }

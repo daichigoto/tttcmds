@@ -47,9 +47,9 @@ main(int argc, char *argv[])
 	struct tttcmdargs cmdargs_org;
 	char *r_argv[4];
 
-	DB *hashtables[R_ARGC + 1];
-	DBT hash_key, hash_val;
-	memset(hashtables, 0, (R_ARGC + 1) * sizeof(DB *));
+	DB *btrees[R_ARGC + 1];
+	DBT b_key, b_val;
+	memset(btrees, 0, (R_ARGC + 1) * sizeof(DB *));
 
 	int match_count = 1;
 	while (NULL != R_ARGV_ARG1[match_count])
@@ -63,7 +63,7 @@ main(int argc, char *argv[])
 			usage();
 
 		if (NULL == cmdargs_org.r_argv_arg2[i]) {
-			hashtables[i] = NULL;
+			btrees[i] = NULL;
 			continue;
 		}
 
@@ -73,9 +73,8 @@ main(int argc, char *argv[])
 		r_argv[3] = NULL;
 		getcmdargs(3, r_argv, "", CMDARGS_R_NEED);
 
-		hashtables[i] = dbopen(NULL, O_CREAT|O_RDWR, 0644,
-			DB_HASH, NULL);
-		if (NULL == hashtables[i])
+		btrees[i] = dbopen(NULL, O_RDWR, 0, DB_BTREE, NULL);
+		if (NULL == btrees[i])
 			err(errno, CMDNAME ": dbopen failed");
 
 		FILEPROCESS_RETU

@@ -240,9 +240,9 @@ main(int argc, char *argv[])
 	/*
 	 * hashtable setup for join process
 	 */
-	DB *hashtables[R_INDEX_MAX + 1];
-	DBT hash_key, hash_val;
-	memset(hashtables, 0, (R_INDEX_MAX + 1) * sizeof(DB *));
+	DB *btrees[R_INDEX_MAX + 1];
+	DBT b_key, b_val;
+	memset(btrees, 0, (R_INDEX_MAX + 1) * sizeof(DB *));
 
 	struct tttcmdargs cmdargs_org;
 	cmdargs_org = cmdargs;
@@ -255,17 +255,16 @@ main(int argc, char *argv[])
 		cmdargs = r_cmdargs[i];
 
 		r_argc = cmdargs.r_argc;
-		hashtables[i] = dbopen(NULL, O_CREAT|O_RDWR, 0644, 
-			DB_HASH, NULL);
-		if (NULL == hashtables[i])
+		btrees[i] = dbopen(NULL, O_RDWR, 0, DB_BTREE, NULL);
+		if (NULL == btrees[i])
 			err(errno, CMDNAME ": dbopen failed"); 
 
-		hash_key.data = "\0";
-		hash_key.size = 1;
-		hash_val.data = getatmarkline(r_argc - 1, at);
-		hash_val.size = strlen(hash_val.data);
+		b_key.data = "\0";
+		b_key.size = 1;
+		b_val.data = getatmarkline(r_argc - 1, at);
+		b_val.size = strlen(b_val.data);
 
-		hashtables[i]->put(hashtables[i], &hash_key, &hash_val, 0);
+		btrees[i]->put(btrees[i], &b_key, &b_val, 0);
 
 		char *value, *v_p;
 		int buf_len, value_len;

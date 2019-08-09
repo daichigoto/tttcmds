@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016,2017 Daichi GOTO
+ * Copyright (c) 2016,2017,2019 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -25,7 +25,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#define VERSION "20170201"
+#define VERSION "20190808"
 #define CMDNAME "gyo_delete"
 #define ALIAS "gyodel row_delete"
 
@@ -40,11 +40,11 @@
 
 #define TGT_RETU_PROCESS(BUF,BUFLEN,INDEX) \
 	fp_no_output = 1; \
-	hash_key.data = BUF; \
-	hash_key.size = strlen(hash_key.data) + 1; \
-	hash_val.data = "1"; \
-	hash_val.size = 2; \
-	hashtables[i]->put(hashtables[i], &hash_key, &hash_val, 0);
+	b_key.data = BUF; \
+	b_key.size = strlen(b_key.data) + 1; \
+	b_val.data = "1"; \
+	b_val.size = 2; \
+	btrees[i]->put(btrees[i], &b_key, &b_val, 0);
 
 #define NOTGT_RETU_PROCESS(BUF,BUFLEN,INDEX) \
 	fp_no_output = 1; \
@@ -70,11 +70,11 @@
 			   !('@' == R_ARGV_ARG1[i][0] && \
 			    '\0' == R_ARGV_ARG1[i][1])) \
 				goto gyo_not_match; \
-			if (NULL != hashtables[i]) { \
-				hash_key.data = GYO_BUFFER[R_ARGV[i]]; \
-				hash_key.size = strlen(hash_key.data) + 1; \
-				if (1 == hashtables[i]->get(hashtables[i], \
-					&hash_key, &hash_val, 0)) \
+			if (NULL != btrees[i]) { \
+				b_key.data = GYO_BUFFER[R_ARGV[i]]; \
+				b_key.size = strlen(b_key.data) + 1; \
+				if (1 == btrees[i]->get(btrees[i], \
+					&b_key, &b_val, 0)) \
 					goto gyo_not_match; \
 			} \
 			else { \
@@ -129,11 +129,11 @@
 			   !('@' == R_ARGV_ARG1[i][0] && \
 			    '\0' == R_ARGV_ARG1[i][1])) \
 				continue; \
-			if (NULL != hashtables[i]) { \
-				hash_key.data = GYO_BUFFER[R_ARGV[i]]; \
-				hash_key.size = strlen(hash_key.data) + 1; \
-				if (0 == hashtables[i]->get(hashtables[i], \
-					&hash_key, &hash_val, 0)) \
+			if (NULL != btrees[i]) { \
+				b_key.data = GYO_BUFFER[R_ARGV[i]]; \
+				b_key.size = strlen(b_key.data) + 1; \
+				if (0 == btrees[i]->get(btrees[i], \
+					&b_key, &b_val, 0)) \
 					goto gyo_match; \
 			} \
 			else { \
