@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Daichi GOTO
+ * Copyright (c) 2016,2019 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -33,14 +33,19 @@ main(int argc, char *argv[])
 	getcmdargs(argc, argv, "hvD", 
 	           CMDARGS_STDIN_TO_TMPFILE|
 	           CMDARGS_R_NEED|
-		   CMDARGS_R_ARGARG_1_NEED|CMDARGS_R_ARGARG_2_NEED);
+		   CMDARGS_R_ARGARG_1_NEED|
+		   CMDARGS_R_ARGARG_2_NEED);
 
 	/*
 	 * setup the label and value sets
 	 */
         DB *hashtable;
         DBT hash_key, hash_val;
-	hashtable = dbopen(NULL, O_CREAT|O_RDWR, 0644, DB_HASH, NULL);
+
+	// BD_BTREE cannot be used because the length of the key value 
+	// is not fixed. You need to use BD_HASH.
+	hashtable = dbopen(NULL, O_RDWR, 0, DB_HASH, NULL);
+
 	for (int i = 0; i < R_ARGC; i++) {
 		hash_key.data = cmdargs.r_argv_arg1[i+1];
 		hash_key.size = strlen(hash_key.data) + 1;
