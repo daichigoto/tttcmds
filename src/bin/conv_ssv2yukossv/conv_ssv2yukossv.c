@@ -41,7 +41,6 @@ main(int argc, char *argv[])
 	char	line_buf[LINE_BUF_MAX];
 	int	line_len;
 
-	char	id_buf[LINE_BUF_MAX];
 	int	id_len;
 
 	// Create btree storage
@@ -52,8 +51,16 @@ main(int argc, char *argv[])
 		err(errno, "%s", F_ARGV[1]);
 
 	while (NULL != fgets(line_buf, LINE_BUF_MAX, fp)) {
-		// Store the value of the first and the second 
-		// column as ID
+		// Remove the line feed from the line
+		char *p_to_linefeed;
+		line_len = strlen(line_buf);
+		p_to_linefeed = line_buf + line_len - 1;
+		if ('\n' == *p_to_linefeed)
+			*p_to_linefeed = '\0';
+		else
+			++line_len;
+
+		// The 1st and 2nd columns is a btree's ID.
 		char *p;
 		p = line_buf;
 		id_len = 0;
@@ -69,26 +76,13 @@ main(int argc, char *argv[])
 			++id_len;
 			++p;
 		}
-		memcpy(id_buf, line_buf, id_len * sizeof(char));
-		*(id_buf + id_len) = '\0';
 
-		/*
-		 * Remove the line feed from the line
-		 */
-		char *p_to_linefeed;
-		line_len = strlen(line_buf);
-		p_to_linefeed = line_buf + line_len - 1;
-		if ('\n' == *p_to_linefeed)
-			*p_to_linefeed = '\0';
-
-		/*
-		 * Store the row in btree with ID as an uniq key.
-		 * The same ID's data will be overwritten.
-		 */
-		key.data = id_buf;
-		key.size = id_len + 1;
+		// Store the row in btree with ID as an uniq key.
+		// The same ID's data will be overwritten.
+		key.data = line_buf;
+		key.size = id_len;
 		val.data = line_buf;
-		val.size = line_len + 1;
+		val.size = line_len;
 
 		btree->put(btree, &key, &val, 0);
 	}
