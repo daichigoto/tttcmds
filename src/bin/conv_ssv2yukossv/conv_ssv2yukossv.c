@@ -27,6 +27,16 @@
 
 #include "command.h"
 
+#define	LINE_BUF_MAX	1048576
+
+#define	IS_NOT_SEPARATOR(p)			\
+	' ' != *p && '\n' != *p && '\0' != *p
+
+#define	IS_YUKO(p)				\
+	if ((char)0xE6 == *p && 		\
+	    (char)0x9C == *(p + 1) && 		\
+	    (char)0x89 == *(p + 2)) 
+
 static inline void print_line(char *, int);
 
 int

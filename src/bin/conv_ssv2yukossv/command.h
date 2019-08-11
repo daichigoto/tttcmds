@@ -25,7 +25,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#define VERSION "20190809"
+#define VERSION "20190811"
 #define CMDNAME "conv_ssv2yukossv"
 #define ALIAS "ssv2yukossv mkyuko"
 
@@ -37,13 +37,3 @@
 #endif
 
 #include "ttt.h"
-
-#define	LINE_BUF_MAX	1048576
-
-#define	IS_NOT_SEPARATOR(p)			\
-	' ' != *p && '\n' != *p && '\0' != *p
-
-#define	IS_YUKO(p)				\
-	if ((char)0xE6 == *p && 		\
-	    (char)0x9C == *(p + 1) && 		\
-	    (char)0x89 == *(p + 2)) 
