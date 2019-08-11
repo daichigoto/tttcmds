@@ -38,7 +38,7 @@
 
 #include "ttt.h"
 
-#define	LINE_BUF_MAX	4096
+#define	LINE_BUF_MAX	1048576
 
 #define	IS_NOT_SEPARATOR(p)			\
 	' ' != *p && '\n' != *p && '\0' != *p
