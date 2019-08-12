@@ -72,6 +72,34 @@ empty_body() {
 		   "$(atf_get_srcdir)/empty.in"
 }
 
+atf_test_case opt_s_empty
+opt_s_empty_head() {
+	atf_set "descr" "Verify an empty file (with -s)"
+}
+
+opt_s_empty_body() {
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/empty_1.out \
+		-x "gyo_select -s 1=k $(atf_get_srcdir)/empty.in"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/empty_1.out \
+		-x "gyo_select -s 1=k < $(atf_get_srcdir)/empty.in"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/empty_1.out \
+		-x "cat $(atf_get_srcdir)/empty.in |" \
+		   "gyo_select -s 1=k"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/empty_1.out \
+		-x "cat $(atf_get_srcdir)/empty.in |" \
+		   "gyo_select -s 1=k -"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/empty_1.out \
+		-x "gyo_select -s 1=k" \
+		   "$(atf_get_srcdir)/empty.in" \
+		   "$(atf_get_srcdir)/empty.in" \
+		   "$(atf_get_srcdir)/empty.in"
+}
+
 atf_test_case a_with_eor
 a_with_eor_head() {
 	atf_set "descr" "Verify a normal file including a LF before EoF"
@@ -107,6 +135,34 @@ a_with_eor_body() {
 	atf_check -s ignore \
 		-o file:$(atf_get_srcdir)/a_with_eor_1.out \
 		-x "gyo_select 5=k 1=k 3=k" \
+		   "$(atf_get_srcdir)/a_with_eor.in" \
+		   "$(atf_get_srcdir)/a_with_eor.in"
+}
+
+atf_test_case opt_s_a_with_eor
+opt_s_a_with_eor_head() {
+	atf_set "descr" "Verify a normal file including a LF before EoF (with -s)"
+}
+
+opt_s_a_with_eor_body() {
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/a_with_eor_1.out \
+		-x "gyo_select -s 1=k $(atf_get_srcdir)/a_with_eor.in"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/a_with_eor_1.out \
+		-x "gyo_select -s 1=k < $(atf_get_srcdir)/a_with_eor.in"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/a_with_eor_1.out \
+		-x "cat $(atf_get_srcdir)/a_with_eor.in |" \
+		   "gyo_select -s 1=k"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/a_with_eor_1.out \
+		-x "cat $(atf_get_srcdir)/a_with_eor.in |" \
+		   "gyo_select -s 1=k -"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/a_with_eor_1.out \
+		-x "gyo_select -s 1=k" \
+		   "$(atf_get_srcdir)/a_with_eor.in" \
 		   "$(atf_get_srcdir)/a_with_eor.in" \
 		   "$(atf_get_srcdir)/a_with_eor.in"
 }
@@ -150,6 +206,34 @@ a_without_eor_body() {
 		   "$(atf_get_srcdir)/a_without_eor.in"
 }
 
+atf_test_case opt_s_a_without_eor
+opt_s_a_without_eor_head() {
+	atf_set "descr" "Verify a normal file excluding a LF before EoF (with -s)"
+}
+
+opt_s_a_without_eor_body() {
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/a_without_eor_1.out \
+		-x "gyo_select -s 1=k $(atf_get_srcdir)/a_without_eor.in"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/a_without_eor_1.out \
+		-x "gyo_select -s 1=k < $(atf_get_srcdir)/a_without_eor.in"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/a_without_eor_1.out \
+		-x "cat $(atf_get_srcdir)/a_without_eor.in |" \
+		   "gyo_select -s 1=k"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/a_without_eor_1.out \
+		-x "cat $(atf_get_srcdir)/a_without_eor.in |" \
+		   "gyo_select -s 1=k -"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/a_without_eor_1.out \
+		-x "gyo_select -s 1=k" \
+		   "$(atf_get_srcdir)/a_without_eor.in" \
+		   "$(atf_get_srcdir)/a_without_eor.in" \
+		   "$(atf_get_srcdir)/a_without_eor.in"
+}
+
 atf_test_case fl_with_eor
 fl_with_eor_head() {
 	atf_set "descr" "Verify a one column file including a LF before EoF"
@@ -168,6 +252,26 @@ fl_with_eor_body() {
 	atf_check -s ignore \
 		-o file:$(atf_get_srcdir)/fl_with_eor_4.out \
 		-x "gyo_select 2= $(atf_get_srcdir)/fl_with_eor.in"
+}
+
+atf_test_case opt_s_fl_with_eor
+opt_s_fl_with_eor_head() {
+	atf_set "descr" "Verify a one column file including a LF before EoF (with -s)"
+}
+
+opt_s_fl_with_eor_body() {
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/opt_s_fl_with_eor_1.out \
+		-x "gyo_select -s 1= $(atf_get_srcdir)/fl_with_eor.in"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/fl_with_eor_2.out \
+		-x "gyo_select -s 1=b $(atf_get_srcdir)/fl_with_eor.in"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/fl_with_eor_3.out \
+		-x "gyo_select -s 1=k $(atf_get_srcdir)/fl_with_eor.in"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/fl_with_eor_4.out \
+		-x "gyo_select -s 2= $(atf_get_srcdir)/fl_with_eor.in"
 }
 
 atf_test_case data_with_eor
@@ -213,6 +317,41 @@ data_with_eor_body() {
 		   "$(atf_get_srcdir)/a_with_eor.in"
 }
 
+atf_test_case opt_s_data_with_eor
+opt_s_data_with_eor_head() {
+	atf_set "descr" "Verify a normal file including a LF before EoF (with -s)"
+}
+
+opt_s_data_with_eor_body() {
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/data_with_eor_1.out \
+		-x "gyo_select -s 1=k $(atf_get_srcdir)/data_with_eor.in"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/data_with_eor_1.out \
+		-x "gyo_select -s 1=k < $(atf_get_srcdir)/data_with_eor.in"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/data_with_eor_1.out \
+		-x "cat $(atf_get_srcdir)/data_with_eor.in |" \
+		   "gyo_select -s 1=k"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/data_with_eor_1.out \
+		-x "cat $(atf_get_srcdir)/data_with_eor.in |" \
+		   "gyo_select -s 1=k -"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/data_with_eor_1.out \
+		-x "gyo_select -s 1=k" \
+		   "$(atf_get_srcdir)/data_with_eor.in" \
+		   "$(atf_get_srcdir)/data_with_eor.in" \
+		   "$(atf_get_srcdir)/data_with_eor.in"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/opt_s_data_with_eor_4.out \
+		-x "gyo_select -s 2=bb" \
+		   "$(atf_get_srcdir)/data_with_eor.in" \
+		   "$(atf_get_srcdir)/a_with_eor.in" \
+		   "$(atf_get_srcdir)/empty.in" \
+		   "$(atf_get_srcdir)/a_with_eor.in"
+}
+
 atf_test_case data_without_eor
 data_without_eor_head() {
 	atf_set "descr" "Verify a normal file including a LF before EoF"
@@ -250,6 +389,41 @@ data_without_eor_body() {
 	atf_check -s ignore \
 		-o file:$(atf_get_srcdir)/data_without_eor_4.out \
 		-x "gyo_select 2=bb" \
+		   "$(atf_get_srcdir)/data_without_eor.in" \
+		   "$(atf_get_srcdir)/a_without_eor.in" \
+		   "$(atf_get_srcdir)/empty.in" \
+		   "$(atf_get_srcdir)/a_without_eor.in"
+}
+
+atf_test_case opt_s_data_without_eor
+opt_s_data_without_eor_head() {
+	atf_set "descr" "Verify a normal file including a LF before EoF (with -s)"
+}
+
+opt_s_data_without_eor_body() {
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/data_without_eor_1.out \
+		-x "gyo_select -s 1=k $(atf_get_srcdir)/data_without_eor.in"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/data_without_eor_1.out \
+		-x "gyo_select -s 1=k < $(atf_get_srcdir)/data_without_eor.in"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/data_without_eor_1.out \
+		-x "cat $(atf_get_srcdir)/data_without_eor.in |" \
+		   "gyo_select -s 1=k"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/data_without_eor_1.out \
+		-x "cat $(atf_get_srcdir)/data_without_eor.in |" \
+		   "gyo_select -s 1=k -"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/data_without_eor_1.out \
+		-x "gyo_select -s 1=k" \
+		   "$(atf_get_srcdir)/data_without_eor.in" \
+		   "$(atf_get_srcdir)/data_without_eor.in" \
+		   "$(atf_get_srcdir)/data_without_eor.in"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/opt_s_data_without_eor_4.out \
+		-x "gyo_select -s 2=bb" \
 		   "$(atf_get_srcdir)/data_without_eor.in" \
 		   "$(atf_get_srcdir)/a_without_eor.in" \
 		   "$(atf_get_srcdir)/empty.in" \
@@ -332,6 +506,34 @@ greaterthan_body() {
 		   "$(atf_get_srcdir)/date_with_eor.in"
 }
 
+atf_test_case opt_s_greaterthan
+opt_s_greaterthan_head() {
+	atf_set "descr" "Verify GREATERTHAN condition (with -s)"
+}
+
+opt_s_greaterthan_body() {
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/date_with_eor_1.out \
+		-x "gyo_select -s 3'>'20130202" \
+		   "$(atf_get_srcdir)/date_with_eor.in"
+}
+
+atf_test_case opt_s_greaterthan_or_equal_to
+opt_s_greaterthan_or_equal_to_head() {
+	atf_set "descr" "Verify GREATERTHAN condition (with -s)"
+}
+
+opt_s_greaterthan_or_equal_to_body() {
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/opt_s_date_with_eor_1.out \
+		-x "gyo_select -s 3'>='20150202" \
+		   "$(atf_get_srcdir)/date_with_eor.in"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/opt_s_date_with_eor_1.out \
+		-x "gyo_select -s 3'=>'20150202" \
+		   "$(atf_get_srcdir)/date_with_eor.in"
+}
+
 atf_test_case lesserthan
 lesserthan_head() {
 	atf_set "descr" "Verify LESSERTHAN condition"
@@ -345,6 +547,34 @@ lesserthan_body() {
 	atf_check -s ignore \
 		-o file:$(atf_get_srcdir)/date_with_eor_4.out \
 		-x "gyo_select 3'<'20170101 5'<'20160404" \
+		   "$(atf_get_srcdir)/date_with_eor.in"
+}
+
+atf_test_case opt_s_lesserthan
+opt_s_lesserthan_head() {
+	atf_set "descr" "Verify LESSERTHAN condition (with -s)"
+}
+
+opt_s_lesserthan_body() {
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/date_with_eor_3.out \
+		-x "gyo_select -s 3'<'20130203" \
+		   "$(atf_get_srcdir)/date_with_eor.in"
+}
+
+atf_test_case opt_s_lesserthan_or_equal_to
+opt_s_lesserthan_or_equal_to_head() {
+	atf_set "descr" "Verify LESSERTHAN condition (with -s)"
+}
+
+opt_s_lesserthan_or_equal_to_body() {
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/opt_s_date_with_eor_3.out \
+		-x "gyo_select -s 3'<='20140202" \
+		   "$(atf_get_srcdir)/date_with_eor.in"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/opt_s_date_with_eor_3.out \
+		-x "gyo_select -s 3'=<'20140202" \
 		   "$(atf_get_srcdir)/date_with_eor.in"
 }
 
@@ -501,6 +731,22 @@ atmark_body() {
 		   "$(atf_get_srcdir)/price2.tag"
 }
 
+atf_test_case opt_s_atmark
+opt_s_atmark_head() {
+	atf_set "descr" "Verify an atmark process (with -s)"
+}
+
+opt_s_atmark_body() {
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/atmark_3.out \
+		-x "gyo_select -s 1." \
+		   "$(atf_get_srcdir)/price2.tag"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/atmark_4.out \
+		-x "gyo_select -s 2." \
+		   "$(atf_get_srcdir)/price2.tag"
+}
+
 atf_test_case select
 select_head() {
 	atf_set "descr" "Verify a select process"
@@ -586,6 +832,20 @@ not_match_body() {
 		-x "gyo_select 2! 3! 4! $(atf_get_srcdir)/data_with_eor.in"
 }
 
+atf_test_case opt_s_not_match
+opt_s_not_match_head() {
+	atf_set "descr" "Verify a not-match condition process (with -s)"
+}
+
+opt_s_not_match_body() {
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/opt_s_not_match_1.out \
+		-x "gyo_select -s 2!bb $(atf_get_srcdir)/data_with_eor.in"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/opt_s_not_match_2.out \
+		-x "gyo_select -s 2! $(atf_get_srcdir)/data_with_eor.in"
+}
+
 atf_test_case long
 long_head() {
 	atf_set "descr" "Verify a long data process"
@@ -601,6 +861,23 @@ long_body() {
 	atf_check -s ignore \
 		-o file:$(atf_get_srcdir)/long_data_2.out \
 		-x "gyo_select 2=3 $(atf_get_srcdir)/long_data.in"
+}
+
+atf_test_case opt_s_long
+opt_s_long_head() {
+	atf_set "descr" "Verify a long data process"
+}
+
+opt_s_long_body() {
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/opt_s_long_data_1.out \
+		-x "gyo_select -s 2=2 $(atf_get_srcdir)/long_data.in"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/opt_s_long_data_1.out \
+		-x "gyo_select -s 200000=200000 $(atf_get_srcdir)/long_data.in"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/long_data_2.out \
+		-x "gyo_select -s 2=3 $(atf_get_srcdir)/long_data.in"
 }
 
 atf_init_test_cases()
@@ -627,4 +904,18 @@ atf_init_test_cases()
 	atf_add_test_case zero
 	atf_add_test_case not_match
 	atf_add_test_case long
+
+	atf_add_test_case opt_s_empty
+	atf_add_test_case opt_s_a_with_eor
+	atf_add_test_case opt_s_a_without_eor
+	atf_add_test_case opt_s_fl_with_eor
+	atf_add_test_case opt_s_data_with_eor
+	atf_add_test_case opt_s_data_without_eor
+	atf_add_test_case opt_s_greaterthan
+	atf_add_test_case opt_s_lesserthan
+	atf_add_test_case opt_s_greaterthan_or_equal_to
+	atf_add_test_case opt_s_lesserthan_or_equal_to
+	atf_add_test_case opt_s_atmark
+	atf_add_test_case opt_s_not_match
+	atf_add_test_case opt_s_long
 }
