@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016,2017 Daichi GOTO
+ * Copyright (c) 2016,2017,2019 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -34,7 +34,7 @@ struct textset cmdtextsets[] = {
 
 	{ "command_alias", "en_", ALIAS },
 
-	{ "command_copyright", "en_", "2016,2017 ONGS Inc." },
+	{ "command_copyright", "en_", "2016,2017,2019 ONGS Inc." },
 
 	{ "command_comment", "ja_JP",
 	  "条件に一致しない行を出力する" },
@@ -62,7 +62,21 @@ struct textset cmdtextsets[] = {
 	      _ARG("N<key") "|" _ARG("N/M<key") "|" 
 	      _ARG("N.f.K") "|" _ARG("N/M.f.K") " " _ETC "] "
 	  "[" _ARG("N") "|" _ARG("N/M") " " _ETC "] "
-	  "[" _ARG("file") " " _ETC "]" },
+	  "[" _ARG("file") " " _ETC "]\n" 
+	  "\n"
+	  _CMD(CMDNAME) " "
+	  _OPT("s")  " "
+	  "[" _OPT("hvD") "] [" _OPT("-") "] "
+	  _ARG("N=key") "|"
+	  _ARG("N!key") "|"
+	  _ARG("N>key") "|"
+	  _ARG("N<key") "|"
+	  _ARG("N>=key") "|\n" 
+	  _ARG("N<=key") "|"
+	  _ARG("N=>key") "|"
+	  _ARG("N=<key") " "
+	  "[" _ARG("file") " " _ETC "]" 
+	},
 
 	{ "command_description", "ja_JP", 
 	  "条件に一致しない行を出力する。\n"
@@ -84,6 +98,24 @@ struct textset cmdtextsets[] = {
 	  			"例まで適用\n"
 	  _ARG("N/M<key") "\t	" _ARG("N<key") "と同じ処理を" _ARG("M")
 	  			"例まで適用\n"
+	  "\n"
+	  ES_BOLD("単純等価条件 (-s指定時)") "\n"
+	  _ARG("N=key") "\t	" _ARG("N") "列の値が" _ARG("key")
+	  			"に一致(デリミタは!、>、<、/以外の1文字)\n"
+	  _ARG("N!key") "\t	" _ARG("N") "列の値が" _ARG("key")
+	  			"に一致しない\n"
+	  _ARG("N>key") "\t	" _ARG("N") "列の値が" _ARG("key")
+	  			"よりも大きい\n"
+	  _ARG("N<key") "\t	" _ARG("N") "列の値が" _ARG("key")
+	  			"よりも小さい\n"
+	  _ARG("N>=key") "\t	" _ARG("N") "列の値が" _ARG("key")
+	  			"と同じか大きい\n"
+	  _ARG("N<=key") "\t	" _ARG("N") "列の値が" _ARG("key")
+	  			"と同じか小さい\n"
+	  _ARG("N=>key") "\t	" _ARG("N") "列の値が" _ARG("key")
+	  			"と同じか大きい\n"
+	  _ARG("N=<key") "\t	" _ARG("N") "列の値が" _ARG("key")
+	  			"と同じか小さい\n"
 	  "\n"
 	  ES_BOLD("結合条件") "\n"
 	  _ARG("N.f.K") "\t	" _ARG("N") "列の値と" _ARG("f") "ファイル"
@@ -127,6 +159,30 @@ struct textset cmdtextsets[] = {
 	  			_ARG("M") "th columns in the same way\n"
 				"\t\tas " _ARG("N<key") ".\n"
 	  "\n"
+	  ES_BOLD("SIMPLE EQUALITY/INEQUALITY CONDITION (with -s)") "\n"
+	  _ARG("N=key") "\t	The value of " _ARG("N") "th column and "
+	  			"the " _ARG("key") " match\n"
+				"\t\t(the delimiter is a character other "
+				"than !, >, <\n\t\tand /).\n"
+	  _ARG("N!key") "\t	The value of " _ARG("N") "th column and "
+	  			"the " _ARG("key") " don't match.\n"
+	  _ARG("N>key") "\t	The value of " _ARG("N") "th column is "
+	  			"greater than the " _ARG("key") ".\n"
+	  _ARG("N<key") "\t	The value of " _ARG("N") "th column is "
+	  			"lesser than the " _ARG("key") ".\n"
+	  _ARG("N>=key") "\t	The value of " _ARG("N") "th column is "
+	  			"the same as or greater \n"
+				"\t\tthan the " _ARG("key") ".\n"
+	  _ARG("N<=key") "\t	The value of " _ARG("N") "th column is "
+	  			"the same as or lesser \n"
+				"\t\tthan the " _ARG("key") ".\n"
+	  _ARG("N=>key") "\t	The value of " _ARG("N") "th column is "
+	  			"the same as or greater \n"
+				"\t\tthan the " _ARG("key") ".\n"
+	  _ARG("N=<key") "\t	The value of " _ARG("N") "th column is "
+	  			"the same as or lesser \n"
+				"\t\tthan the " _ARG("key") ".\n"
+	  "\n"
 	  ES_BOLD("JOIN CONDITION") "\n"
 	  _ARG("N.f.K") "\t	The value of " _ARG("N") "th column and "
 	  			"the value of " _ARG("K") "th\n\t\tcolumn "
@@ -157,6 +213,7 @@ struct textset cmdtextsets[] = {
 	  			"処理\n"
 	  _OPT("@") " " _ARG("val") "\t\t値がなかった場合に出力する値"
 	  			"(デフォルトは@)\n"
+	  _OPT("s") "		単純等価条件で動作\n"
 	  _OPT("h") "		使い方表示\n"
 	  _OPT("v") "		バージョン表示\n"
 	  _OPT("D") "		デバッグモード\n"
@@ -176,6 +233,8 @@ struct textset cmdtextsets[] = {
 	  _OPT("@") " " _ARG("val") "\t\tSpecify the " _ARG("val") " as "
 	  			"output value if all values are @"
 				"\n\t\t(default is @).\n"
+	  _OPT("s") "		Operates in the simple "
+	  			"equality/inequality condition.\n"
 	  _OPT("h") "		Print the usage message.\n"
 	  _OPT("v") "		Print the version.\n"
 	  _OPT("D") "		Enable the debug mode.\n"

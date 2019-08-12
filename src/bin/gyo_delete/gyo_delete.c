@@ -30,11 +30,22 @@
 int
 main(int argc, char *argv[])
 {
-	getcmdargs(argc, argv, "a!o!1nNe@:hvD", 
+	getcmdargs(argc, argv, "a!o!1nNe@:shvD", 
 	           CMDARGS_R_NEED|
 		   CMDARGS_R_ARGARG_TO_SSVSTR|
 		   CMDARGS_R_MINIMUMNUM_IS_0);
 
+	/*
+	 * Simple Equality/Inequality Condition
+	 */
+	if (FLAG_s) {
+		simple_comparison(argc, argv);	 	
+		exit(EX_OK);
+	}
+
+	/*
+	 * Process option -@
+	 */
 	int match_or_not = 1;
 	int nf = 0;
 	char *val = "@";

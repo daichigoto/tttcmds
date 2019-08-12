@@ -25,7 +25,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#define VERSION "20190808"
+#define VERSION "20190812"
 #define CMDNAME "gyo_delete"
 #define ALIAS "gyodel row_delete"
 
@@ -37,6 +37,8 @@
 #endif
 
 #include "ttt.h"
+
+void simple_comparison(int, char**);
 
 #define TGT_RETU_PROCESS(BUF,BUFLEN,INDEX) \
 	fp_no_output = 1; \
