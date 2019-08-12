@@ -27,7 +27,7 @@
 
 #include "command.h"
 
-#define	LINE_BUF_MAX	1048576
+#define	LINE_BUF_MAX	3145728
 
 #define	IS_NOT_SEPARATOR(p)			\
 	' ' != *p && '\n' != *p && '\0' != *p
