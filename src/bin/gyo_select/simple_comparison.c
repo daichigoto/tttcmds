@@ -68,54 +68,41 @@ simple_comparison(int argc, char *argv[])
 	}
 
 	// Condition determination
-	char *target_argv = argv[argc - 1 - F_ARGC];
-	char *p = target_argv;
-	while (IS_NUM(p))
-		++p;
-
-	if (' ' == *p || '\n' == *p || '\0' == *p)
-		usage();
+	char *target_argv = R_ARGV_ARG1[1];
+	char delim = R_ARGV_DELIM[1];
 
 	enum COMPARISON_TYPE comp_type;
-	if ('!' == *p) {
+	if ('!' == delim) {
 		comp_type = NOT_EQUAL_TO;
-		++p;
 	}
-	else if ('=' == *p && '>' == *(p + 1)) {
+	else if ('=' == delim && '>' == *target_argv) {
 		comp_type = GREATER_THAN_OR_EQUAL_TO;
-		++p;
-		++p;
+		++target_argv;
 	}
-	else if ('>' == *p && '=' == *(p + 1)) {
+	else if ('>' == delim && '=' == *target_argv) {
 		comp_type = GREATER_THAN_OR_EQUAL_TO;
-		++p;
-		++p;
+		++target_argv;
 	}
-	else if ('>' == *p) {
+	else if ('>' == delim) {
 		comp_type = GREATER_THAN;
-		++p;
 	}
-	else if ('=' == *p && '<' == *(p + 1)) {
+	else if ('=' == delim && '<' == *target_argv) {
 		comp_type = LESS_THAN_OR_EQUAL_TO;
-		++p;
-		++p;
+		++target_argv;
 	}
-	else if ('<' == *p && '=' == *(p + 1)) {
+	else if ('<' == delim && '=' == *target_argv) {
 		comp_type = LESS_THAN_OR_EQUAL_TO;
-		++p;
-		++p;
+		++target_argv;
 	}
-	else if ('<' == *p) {
+	else if ('<' == delim) {
 		comp_type = LESS_THAN;
-		++p;
 	}
 	else {
 		comp_type = EQUAL_TO;
-		++p;
 	}
 
 	// Keyword extraction
-	char *keyword = _str2ssvstr(p);
+	char *keyword = target_argv;
 
 	// Target row number
 	int target_retu = R_ARGV[1];
