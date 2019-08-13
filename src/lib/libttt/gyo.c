@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016,2019 Daichi GOTO
+ * Copyright (c) 2019 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -25,8 +25,42 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#define VERSION "20190813"
-#define CMDNAME "gyo_count"
-#define ALIAS "gyo row_count"
-
 #include "ttt.h"
+
+#define BUFLEN	65536
+
+int
+gyo(const char *fpath)
+{
+ 	int fd, nr, fsize, lines;
+	char buf[BUFLEN], *p;
+
+	lines = 0;
+	fsize = 0;
+
+	fd = open(fpath, O_RDONLY);
+	if (-1 == fd) 
+		err(errno, "%s", fpath);
+
+	nr = read(fd, buf, BUFLEN);
+	fsize += nr;
+	while (0 < nr) {
+		p = buf;
+		for (int i = 0; i < nr; i++, p++) {
+			if ('\n' == *p) {
+				++lines;
+			}
+		}
+		nr = read(fd, buf, BUFLEN); 
+		fsize += nr;
+	}
+	close(fd);
+
+	if (0 == fsize) {
+	}
+	else if ('\n' != *(--p)) {
+		++lines;
+	}
+
+	return (lines);
+}

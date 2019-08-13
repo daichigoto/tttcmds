@@ -108,6 +108,7 @@ struct ssvline {
 int getcmdargs(const int, char *[], const char *, int);
 int getcmdargs_unlinktmpf(void);
 char *gettext(const char *);
+int gyo(const char *);
 int settext(const char *, const char *, const char *);
 int settime(struct tm *, const char *, const char *);
 void ssvfile2ssvlines(const char *, struct ssvline *);
