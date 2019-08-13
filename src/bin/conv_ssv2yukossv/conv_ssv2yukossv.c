@@ -31,11 +31,25 @@
 
 #define	IS_NOT_SEPARATOR(p)			\
 	' ' != *p && '\n' != *p && '\0' != *p
-
+/*
+ * UTF-8:
+ * 	有効 == 0xe6 0x9c 0x89 0xe5 0x8a 0xb9
+ * 	無効 == 0xe7 0x84 0xa1 0xe5 0x8a 0xb9
+ * 	NUL  == 0x00
+ * 	LF   == 0x0a
+ *	SP   == 0x20
+ */
 #define	IS_YUKO(p)				\
-	if ((char)0xE6 == *p && 		\
-	    (char)0x9C == *(p + 1) && 		\
-	    (char)0x89 == *(p + 2)) 
+	if ((char)0xe6 == *p && 		\
+	    (char)0x9c == *(p + 1) && 		\
+	    (char)0x89 == *(p + 2) &&		\
+	    (char)0xe5 == *(p + 3) &&		\
+	    (char)0x8a == *(p + 4) &&		\
+	    (char)0xb9 == *(p + 5) &&		\
+	    ((char)0x20 == *(p + 6) || 		\
+	     (char)0x0a == *(p + 6) || 		\
+	     (char)0x00 == *(p + 6))		\
+		) 
 
 static inline void print_line(char *, int);
 
@@ -103,8 +117,8 @@ main(int argc, char *argv[])
 	 * The valid in this case means that the value in the fourth 
 	 * column is "有効" in UTF-8.
 	 * 	UTF-8:
-	 * 		有効 == 0xE6 0x9C 0x89
-	 * 		無効 == 0xE7 0x84 0xA1
+	 * 		有効 == 0xe6 0x9c 0x89 0xe5 0x8a 0xb9 
+	 * 		無効 == 0xe7 0x84 0xa1 0xe5 0x8a 0xb9 
 	 */
 	char *previous_line;
 	int key_len;

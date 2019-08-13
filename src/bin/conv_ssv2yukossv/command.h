@@ -25,7 +25,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#define VERSION "20190811"
+#define VERSION "20190814"
 #define CMDNAME "conv_ssv2yukossv"
 #define ALIAS "ssv2yukossv mkyuko"
 

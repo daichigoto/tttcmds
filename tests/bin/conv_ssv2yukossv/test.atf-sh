@@ -39,6 +39,18 @@ yukossv_body() {
 		-o file:$(atf_get_srcdir)/data_1.out \
 		-x "cat $(atf_get_srcdir)/data.ssv |" \
 		   "conv_ssv2yukossv"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/data_2.out \
+		-x "cat $(atf_get_srcdir)/data.tag |" \
+		   "conv_ssv2yukossv"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/data_3.out \
+		-x "cat $(atf_get_srcdir)/data2.ssv |" \
+		   "conv_ssv2yukossv"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/data_4.out \
+		-x "cat $(atf_get_srcdir)/data2.tag |" \
+		   "conv_ssv2yukossv"
 }
 
 atf_test_case option_d
