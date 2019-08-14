@@ -34,6 +34,8 @@ struct textset cmdtextsets[] = {
 
 	{ "command_alias", "en_", ALIAS },
 
+        { "command_copyright", "en_", "2016,2019 ONGS Inc." },
+
 	{ "command_comment",
 	  "ja_JP", "TAGデータをSSVデータへ変換して出力" },
 
