@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Daichi GOTO
+ * Copyright (c) 2016,2019 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -27,14 +27,106 @@
 
 #include "command.h"
 
+#define BUFLEN  65536
+
 int
 main(int argc, char *argv[])
 {
 	getcmdargs(argc, argv, "hvD", CMDARGS_R_NONE);
 
-	int tagouted = 0;
-	char p = EOF;
-	FILEPROCESS_CHAR
+	int	rfd;
+	int	wfd;
+
+	ssize_t	nr, nw;
+	int	off;
+
+	char	buf[BUFLEN];
+	char	*p;
+
+	bool	outputed;	// Holds whether data is output or not
+	bool	tagremoved;	// Holds whether tag is removed or not
+
+	wfd = fileno(stdout);
+
+	/*
+	 * Process the first file
+	 */
+	rfd = open(F_ARGV[1], O_RDONLY);
+	if (-1 == rfd)
+		err(EX_NOINPUT, "%s", F_ARGV[1]);
+
+	tagremoved = false;
+	outputed = false;
+	nw = 0;
+	while ((nr = read(rfd, buf, BUFLEN)) > 0) {
+		for (off = 0; nr; nr -= nw, off += nw) {
+			// Skip tags
+			if (!tagremoved) {
+				p = buf;
+				while ('\n' != *p && '\0' != *p) {
+					++p;
+					++off;
+				}
+				if ('\n' == *p) {
+					++off;
+					tagremoved = true;
+				}
+				nr -= off;
+			}
+
+			// If the read data is all tags, move to the next 
+			// read without outputting
+			if (0 >= nr)
+				break;
+
+			if ((nw = write(wfd, buf + off, (size_t)nr)) < 0)
+				err(1, "stdout");
+			outputed = true;
+		}
+	}
+
+	// If there is no line feed at the end of the file, an additional 
+	// line break is output.
+	if (outputed && '\n' != buf[off + nr - 1])
+		putchar('\n');
+
+	close(rfd);
+
+	// Flush the standard output before processing the next file. 
+	// If this processing is not performed, the output may go wrong.
+	fflush(stdout);
+
+	/*
+	 * Process second and subsequent files
+	 */
+	for (int file_i = 2; file_i <= F_ARGC; file_i++) {
+		rfd = open(F_ARGV[file_i], O_RDONLY);
+		if (-1 == rfd)
+			err(EX_NOINPUT, "%s", F_ARGV[1]);
+
+		outputed = false;
+		nw = 0;
+		while ((nr = read(rfd, buf, BUFLEN)) > 0) {
+			for (off = 0; nr; nr -= nw, off += nw) {
+				if ((nw = write(wfd, buf + off, 
+						(size_t)nr)) < 0)
+					err(1, "stdout");
+				outputed = true;
+			}
+		}
+
+		// If there is no line feed at the end of the file, an 
+		// additional line break is output.
+		if (outputed && '\n' != buf[off + nr - 1])
+			putchar('\n');
+
+		close(rfd);
+
+		// Flush the standard output before processing the next 
+		// file.  If this processing is not performed, the output 
+		// may go wrong.
+		fflush(stdout);
+	}
 
 	exit(EX_OK);
 }

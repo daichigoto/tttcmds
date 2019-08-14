@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Daichi GOTO
+ * Copyright (c) 2016,2019 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -25,21 +25,8 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#define VERSION "20161103"
+#define VERSION "20190814"
 #define CMDNAME "conv_tag2ssv"
 #define ALIAS "tag2ssv"
 
 #include "ttt.h"
-
-#define TGT_CHAR_PROCESS(C) \
-	if (tagouted) { \
-		if (EOF != C) \
-			putchar(C); \
-		else if ('\n' != p && EOF != p) \
-			putchar('\n'); \
-		p = C; \
-	} \
-	else { \
-		if ('\n' == C || EOF == C) \
-			tagouted = 1; \
-	}
