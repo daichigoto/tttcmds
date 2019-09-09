@@ -154,7 +154,7 @@ do_swap_print(FILE *fp)
 				++p;
 			}
 			// Since there is no line data left, everything 
-			// is set to access "@"
+			// is set to access "@" or swaped string.
 			else {
 				if (IS_LF(p))
 					*p = '\0';
@@ -162,9 +162,9 @@ do_swap_print(FILE *fp)
 				for (++retu_i; retu_i <= R_INDEX_MAX; 
 					retu_i++) {
 					if (R_INDEX_EXIST[retu_i]) {
-						if (NULL != R_ARGV_ARG2[retu_i])
+						if (NULL != R_ARGV_ARG2[R_INDEX_TO_ARGV[retu_i]])
 							retu_to_string[retu_i] = 
-								R_ARGV_ARG2[retu_i];
+								R_ARGV_ARG2[R_INDEX_TO_ARGV[retu_i]];
 						else
 							retu_to_string[retu_i] = 
 								atmark;

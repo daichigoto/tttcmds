@@ -328,6 +328,10 @@ swap_body() {
 		-o file:$(atf_get_srcdir)/swap_2.out \
 		-x "echo |" \
 		   "retu_select 1/9::0"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/swap_3.out \
+		-x "echo 1 |" \
+		   "retu_select 9::0"
 }
 
 atf_test_case long
