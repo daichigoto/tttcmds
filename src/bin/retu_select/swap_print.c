@@ -95,9 +95,21 @@ swap_print(void)
 	// If option -e is specified, only one line is output if 
 	// there is no output.
 	if (FLAG_e && ! outputed) {
-		for (int i = 1; i < R_ARGC; i++)
-			printf("@ ");
-		printf("@\n");
+		int outputed_retu_count = 0;
+		for (int i = 1; i <=R_INDEX_MAX; i++) {
+			if (R_INDEX_EXIST[i]) {
+				if (NULL != R_ARGV_ARG2[R_INDEX_TO_ARGV[i]])
+					printf("%s", 
+					   R_ARGV_ARG2[R_INDEX_TO_ARGV[i]]);
+				else 
+					printf("@");
+				++outputed_retu_count;
+				if (R_ARGC == outputed_retu_count)
+					putchar('\n');
+				else
+					putchar(' ');
+			}
+		}
 	}
 }
 
