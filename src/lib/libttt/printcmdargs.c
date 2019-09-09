@@ -126,28 +126,28 @@ printcmdargs(void)
 
 	if (NULL != R_ARGV_ARG1) {
 		putchar('\n');
-		for (i = 0; i <= R_ARGC; i++)
+		for (i = 0; i <= R_INDEX_MAX; i++)
 			fprintf(stderr,"R_ARGV_ARG1[%d]\t%s\n",
 				i, R_ARGV_ARG1[i]);
 	}
 
 	if (NULL != R_ARGV_ARG2) {
 		putchar('\n');
-		for (i = 0; i <= R_ARGC; i++)
+		for (i = 0; i <= R_INDEX_MAX; i++)
 			fprintf(stderr,"R_ARGV_ARG2[%d]\t%s\n",
 				i, R_ARGV_ARG2[i]);
 	}
 
 	if (NULL != R_ARGV_ARG3) {
 		putchar('\n');
-		for (i = 0; i <= R_ARGC; i++)
+		for (i = 0; i <= R_INDEX_MAX; i++)
 			fprintf(stderr,"R_ARGV_ARG3[%d]\t%s\n",
 				i, R_ARGV_ARG3[i]);
 	}
 
 	if (NULL != R_ARGV_DELIM) {
 		putchar('\n');
-		for (i = 0; i <= R_ARGC; i++)
+		for (i = 0; i <= R_INDEX_MAX; i++)
 			if ('\0' == R_ARGV_DELIM[i])
 				fprintf(stderr,"R_ARGV_DELIM[%d]\t\\0\n",
 					i);
