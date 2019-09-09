@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016,2017 Daichi GOTO
+ * Copyright (c) 2016,2017,2019 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -25,43 +25,11 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#define VERSION "20170201"
+#define VERSION "20190909"
 #define CMDNAME "retu_select"
 #define ALIAS "retusel col_select"
 
 #include "ttt.h"
 
-#define TGT_GYO_PROCESS(GYO_BUFFER,NF) \
-	if (0 != NF) { \
-		if (FLAG_1 && first_line) \
-			first_line = 0; \
-		else { \
-			for (int i = 1; i < R_ARGC; i++) \
-				if (R_ARGV[i] > NF || \
-					NULL == GYO_BUFFER[R_ARGV[i]]) \
-					PRINT("@", i, " ") \
-				else \
-					PRINT(GYO_BUFFER[R_ARGV[i]], \
-						i, " ") \
-			if (R_ARGV[R_ARGC] > NF || \
-				NULL == GYO_BUFFER[R_ARGV[R_ARGC]]) \
-				PRINT("@", R_ARGC, "\n") \
-			else \
-				PRINT(GYO_BUFFER[R_ARGV[R_ARGC]], \
-					R_ARGC, "\n") \
-			outputed = 1; \
-		} \
-	}
-
-#define PRINT(TARGET,INDEX,DELIMITER) { \
-	if (NULL != R_ARGV_ARG1[INDEX] && \
-	    NULL != R_ARGV_ARG2[INDEX]) { \
-		if (0 == strcmp(TARGET, R_ARGV_ARG1[INDEX])) \
-			printf("%s%s", R_ARGV_ARG2[INDEX], DELIMITER); \
-		else \
-			printf("%s%s", TARGET, DELIMITER); \
-	} \
-	else { \
-		printf("%s%s", TARGET, DELIMITER); \
-	} \
-}
+void fast_print(void);
+void swap_print(void);
