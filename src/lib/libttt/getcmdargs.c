@@ -352,6 +352,8 @@ retu_analysis:
 				}
 				if (range > cmdargs.r_index_max)
 					cmdargs.r_index_max = range;
+				if (range > cmdargs.r_argv_max)
+					cmdargs.r_argv_max = range;
 				/*
 				 * Array expansion
 				 */
