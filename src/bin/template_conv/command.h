@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Daichi GOTO
+ * Copyright (c) 2016, 2021 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -25,7 +25,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#define VERSION "20161103"
+#define VERSION "20210801"
 #define CMDNAME "template_conv"
 #define ALIAS ""
 
