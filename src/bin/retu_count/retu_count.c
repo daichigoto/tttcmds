@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Daichi GOTO
+ * Copyright (c) 2016,2021 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -33,7 +33,7 @@ main(int argc, char *argv[])
 	getcmdargs(argc, argv, "fnhvD", CMDARGS_R_NONE);
 
 	int retu = 0, preretu = -1, allnum = 0, filenum = 0;
-	char p = EOF;
+	int p = EOF;
 	FILEPROCESS_CHAR
 
 	exit(EX_OK);
