@@ -679,7 +679,6 @@ static void
 stdintotempfile(void)
 {
 	FILE *fp_i, *fp_o;
-	char b;
 
 	mktempfile();
 	fp_i = fopen(STDIN_FILE, "r");
@@ -689,8 +688,16 @@ stdintotempfile(void)
 	if (NULL == fp_o) \
 		err(errno, "%s", tempfile); \
 
-	while (EOF != (b = fgetc(fp_i)))
-		fputc(b, fp_o);
+	/*
+	 * The data obtained by fgetc() should not be compared with EOF as char.
+	 * EOF (-1) and data (0xFF) cannot be compared in char type, because 
+	 * EOF (-1) is the same as 0xFF in char type. By storing the data in 
+	 * the int type and comparing it, we can correctly distinguish between 
+	 * data and EOF.
+	 */
+  int b;
+	while (EOF != (b = (int)fgetc(fp_i)))
+		fputc((char)b, fp_o);
 
 	fclose(fp_o);
 	fclose(fp_i);
