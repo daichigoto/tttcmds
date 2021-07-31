@@ -58,7 +58,7 @@
 				FILEPROCESS_RETU_BUFFER_EXPANSION \
 			} \
 			else { \
-				if (EOF != fp_b) fp_b = *fp_p; \
+				fp_b = intbuf; \
 			} \
 			*fp_p = '\0'; \
 			if (fp_r_i <= R_INDEX_MAX && \
