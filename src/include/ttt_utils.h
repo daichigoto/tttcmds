@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016, 2019 Daichi GOTO
+ * Copyright (c) 2016, 2019, 2021 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -27,6 +27,7 @@
 
 #define FILEPROCESS_RETU { \
 	FILE *fp_fp; \
+  int intbuf; \
 	int fp_no_output = 0; \
 	int fp_b = 0, fp_r_i = 1; \
 	int fp_buf_i, fp_buf_len; \
@@ -37,17 +38,17 @@
 		fp_fp = fopen(F_ARGV[fp_file_i], "r"); \
 		if (NULL == fp_fp) \
 			err(errno, "%s", F_ARGV[fp_file_i]); \
-		while (EOF != (fp_b = fgetc(fp_fp))) { \
+		while (EOF != (fp_b = intbuf = fgetc(fp_fp))) { \
 			fp_p = fp_buf; \
 			fp_buf_i = 0; \
 			fp_buf_end = &fp_buf[fp_buf_len - 1]; \
 			*fp_p = fp_b; \
 			while (' ' != *fp_p && \
-			       '\n' != *fp_p && EOF != *fp_p) { \
+			       '\n' != *fp_p && EOF != intbuf) { \
 				++fp_p; \
 				++fp_buf_i; \
 				FILEPROCESS_RETU_BUFFER_EXPANSION \
-				*fp_p = fgetc(fp_fp); \
+				*fp_p = intbuf = fgetc(fp_fp); \
 			} \
 			if ((' ' == fp_b && *fp_p == fp_b) || \
 			    ('\n' == fp_b && *fp_p == fp_b)) { \
@@ -57,7 +58,7 @@
 				FILEPROCESS_RETU_BUFFER_EXPANSION \
 			} \
 			else { \
-				fp_b = *fp_p; \
+				if (EOF != fp_b) fp_b = *fp_p; \
 			} \
 			*fp_p = '\0'; \
 			if (fp_r_i <= R_INDEX_MAX && \
