@@ -102,6 +102,7 @@
 #define FILEPROCESS_GYO { \
 	FILE *fp_fp; \
 	struct stat fp_sb; \
+  int intbuf; \
 	int fp_b = 0, fp_r_i = 1, fled = 0; \
 	int fp_buf_i, fp_buf_len, fp_ibuf_len, fp_nf; \
 	char *fp_buf, *fp_buf_end, **fp_ibuf; \
@@ -121,7 +122,7 @@
 		fp_buf_i = fp_nf = 0; \
 		fp_buf_end = &fp_buf[fp_buf_len - 1]; \
 		while (1) { \
-			fp_b = fgetc(fp_fp); \
+			fp_b = intbuf = fgetc(fp_fp); \
 			if (EOF == fp_b) { \
 				if (fled) { fled = 0; break; } \
 				else fp_nf -= 1; \
@@ -129,11 +130,11 @@
 			fled = 0; \
 			*fp_p = fp_b; \
 			while (' ' != *fp_p && \
-			       '\n' != *fp_p && EOF != *fp_p) { \
+			       '\n' != *fp_p && EOF != intbuf) { \
 				++fp_p; \
 				++fp_buf_i; \
 				FILEPROCESS_GYO_BUFFER_EXPANSION \
-				*fp_p = fgetc(fp_fp); \
+				*fp_p = intbuf = fgetc(fp_fp); \
 			} \
 			if ((' ' == fp_b && *fp_p == fp_b) || \
 			    ('\n' == fp_b && *fp_p == fp_b) || \
@@ -144,7 +145,7 @@
 				FILEPROCESS_GYO_BUFFER_EXPANSION \
 			} \
 			else { \
-				fp_b = *fp_p; \
+				if (EOF != fp_b) fp_b = *fp_p; \
 			} \
 			*fp_p = '\0'; \
 			++fp_nf; \
