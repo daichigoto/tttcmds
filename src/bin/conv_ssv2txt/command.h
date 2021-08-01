@@ -25,11 +25,13 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#define VERSION "20170109"
+#define VERSION "20210801"
 #define CMDNAME "conv_ssv2txt"
 #define ALIAS "ssv2txt"
 
 #include "ttt.h"
+
+int width_in_terminal(const char *);
 
 /*
  * count the max length for each column
@@ -67,7 +69,7 @@
  */
 #define NOTGT_RETU_PROCESS(BUF,BUFLEN,I) \
 	ssvstr2str(buf[I], BUF); \
-	len = strlen(buf[I]); \
+	len = width_in_terminal(buf[I]); \
 	count = maxlen[I] - len; \
 	for (i = 0; i < count; i++) \
 		putchar(' '); \

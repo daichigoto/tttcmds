@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016,2017,2019 Daichi GOTO
+ * Copyright (c) 2016,2017,2019,2021 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -69,4 +69,42 @@ main(int argc, char *argv[])
 	getcmdargs_unlinktmpf();
 
 	exit(EX_OK);
+}
+
+/*
+ * Returns the width (number of half-width characters) in the terminal.
+ */
+int
+width_in_terminal(const char *buf)
+{
+	const char *p;
+	p = buf;
+
+	// Store the width of the string in the terminal (counted by the number 
+	// of half-width characters).
+	int width_in_terminal = 0;
+
+	// Applies the current locale, required for mblen() to work properly.
+	setlocale(LC_CTYPE, "");
+
+	while('\0' != *p){
+		int char_bytes = mblen(p, MB_CUR_MAX);
+
+		// Determine the width of the characters and add them up.
+		// (Simple implementation. To make it accurate, it is necessary to 
+		//  perform the judgment process strictly for each encoding.)
+		if (1 == char_bytes) {
+
+			// 1 byte is assumed to be a half-width character.
+			width_in_terminal += 1;
+		}
+		else {
+			// 2 or more bytes are assumed to be a full-width character.
+			width_in_terminal += 2;
+		}
+
+		p += char_bytes;
+	}
+
+	return width_in_terminal;
 }
