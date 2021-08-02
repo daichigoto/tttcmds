@@ -25,6 +25,23 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+/*
+ * File Format Specifications
+ * ==========================
+ *
+ * CSV (Commma-separated values)
+ * -----------------------------
+ *   Request for Comments: 4180
+ *   Common Format and MIME Type for Comma-Separated Values (CSV) Files
+ *     https://datatracker.ietf.org/doc/html/rfc4180
+ *
+ *   [*] However, it does not support line feeds within a record.
+ *
+ * TSV (Tab-separated values)
+ * --------------------------
+ *   Definition of tab-separated-values (tsv), Internet Assigned Numbers Authority
+ *     https://www.iana.org/assignments/media-types/text/tab-separated-values 
+ */
 #include "command.h"
 
 static int csv2tsv(const char *, int);
