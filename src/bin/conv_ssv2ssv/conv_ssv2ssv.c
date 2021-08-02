@@ -25,6 +25,24 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+/*
+ * File Format Specifications
+ * ==========================
+ *
+ * SSV (extended Space-separated values)
+ * -------------------------------------
+ *   Based on the below TSV, with some modifications as follows:
+ *     delimiter:    [tab] -> [space]
+ *     empty record: ''    -> '@'
+ *     quoted chars: ' '   -> '_'
+ *                   '_'   -> '\_'
+ *                   '@'   -> '\@'
+ *
+ * TSV (Tab-separated values)
+ * --------------------------
+ *   Definition of tab-separated-values (tsv), Internet Assigned Numbers Authority
+ *     https://www.iana.org/assignments/media-types/text/tab-separated-values 
+ */
 #include "command.h"
 
 int
