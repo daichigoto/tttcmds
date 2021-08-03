@@ -25,7 +25,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#define VERSION "20210802"
+#define VERSION "20210803"
 #define CMDNAME "conv_csv2tsv"
 #define ALIAS "csv2tsv"
 

@@ -28,7 +28,7 @@
 
 atf_test_case csv2tsv
 csv2tsv_head() {
-	atf_set "descr" "Verify a value embedding process"
+	atf_set "descr" "Verify a csv2tsv process"
 }
 
 csv2tsv_body() {
@@ -42,7 +42,24 @@ csv2tsv_body() {
 		   "conv_csv2tsv"
 }
 
+atf_test_case empty
+empty_head() {
+	atf_set "descr" "Verify an empty file process"
+}
+
+empty_body() {
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/empty.tsv \
+		-x "conv_csv2tsv" \
+		   "$(atf_get_srcdir)/empty.csv"
+	atf_check -s ignore \
+		-o file:$(atf_get_srcdir)/empty.tsv \
+		-x "cat $(atf_get_srcdir)/empty.csv |" \
+		   "conv_csv2tsv"
+}
+
 atf_init_test_cases()
 {
 	atf_add_test_case csv2tsv
+	atf_add_test_case empty
 }

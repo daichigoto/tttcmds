@@ -62,6 +62,10 @@ main(int argc, char *argv[])
 static int
 csv2tsv(const char *buf, int bufsize)
 {
+	// When the target is empty, no processing is done.
+	if (0 == bufsize)
+		return 0;
+
 	const char	*p, *end;
 	p = buf;
 	end = &buf[bufsize - 1];
