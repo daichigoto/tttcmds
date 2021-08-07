@@ -222,10 +222,14 @@ LIBOBJS?=	${SRCDIR}/lib/${DIRNAME}/*.o
 all:	build
 build: ${OBJS}
 	${RM} -f ${SLIB} ${DLIB}
+. if ${OS} == "FreeBSD"
 	${CC} ${CFLAGS} -o ${DLIB} -shared ${OBJS} \
 		-Wl,-soname=${DIRNAME}.so.${LIBVERSION:C/[.][0-9][0-9]*[.][0-9][0-9]*$$//}
-. if !defined(WITH_DEBUG)
+.  if !defined(WITH_DEBUG)
 	${OBJCOPY} -S ${DLIB}
+.  endif
+. elif ${OS} == "Darwin"
+	${CC} ${CFLAGS} -o ${DLIB} -shared ${OBJS} -Wl
 . endif
 	${CHMOD} ${LIBPERM} ${DLIB}
 . if ${OS} != "Darwin"

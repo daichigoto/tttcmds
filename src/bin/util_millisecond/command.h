@@ -29,4 +29,5 @@
 #define CMDNAME "util_millisecond"
 #define ALIAS "millisec"
 
+#include <sys/time.h>
 #include "ttt.h"
