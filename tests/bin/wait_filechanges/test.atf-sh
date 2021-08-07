@@ -35,9 +35,9 @@ basic_body() {
 	atf_check -s ignore \
 		-o empty \
 		-x "touch $(atf_get_srcdir)/mon;" \
-		   "(sleep 0.1 && touch $(atf_get_srcdir)/mon) &" \
+		   "(sleep 0.5 && touch $(atf_get_srcdir)/mon) &" \
 		   "wait_filechanges $(atf_get_srcdir)/mon;" \
-		   "sleep 0.1; rm $(atf_get_srcdir)/mon"
+		   "sleep 0.5; rm $(atf_get_srcdir)/mon"
 }
 
 atf_test_case recursive
@@ -48,9 +48,9 @@ recursive_head() {
 recursive_body() {
 	atf_check -s ignore \
 		-o empty \
-		-x "(sleep 0.1 && touch $(atf_get_srcdir)/recursive.in/dir2/dir2/file2) &" \
+		-x "(sleep 0.5 && touch $(atf_get_srcdir)/recursive.in/dir2/dir2/file2) &" \
 		   "wait_filechanges $(atf_get_srcdir)/recursive.in;" \
-		   "sleep 0.1; rm $(atf_get_srcdir)/recursive.in/dir2/dir2/file2"
+		   "sleep 0.5; rm $(atf_get_srcdir)/recursive.in/dir2/dir2/file2"
 }
 
 atf_init_test_cases()
