@@ -80,12 +80,12 @@ csv2ssv(const char *buf, int bufsize)
 	end = &buf[bufsize - 1];
 
 	// Indicates the state during parsing.
-	typedef enum RECORD_STATUS { 
-		RECORD_END,
-		IN_RECORD,
-		IN_QUOTED_RECORD
+	typedef enum FIELD_STATUS { 
+		FIELD_END,
+		IN_FIELD,
+		IN_QUOTED_FIELD
 	} record_status;
-	record_status	rs = RECORD_END;
+	record_status	rs = FIELD_END;
 
 	record_outputed = false;
 	while (1) {
@@ -93,38 +93,38 @@ csv2ssv(const char *buf, int bufsize)
 			if (! record_outputed) {
 				putchar('@');
 			}
-			rs = RECORD_END;
+			rs = FIELD_END;
 			putssvchar('\n');
 		}
 		else {
 			switch (rs) {
-			case RECORD_END:
+			case FIELD_END:
 				if (',' == *p) {
 					putchar('@');
 				}
 				else if ('"' == *p) {
-					rs = IN_QUOTED_RECORD;
+					rs = IN_QUOTED_FIELD;
 				}
 				else {
-					rs = IN_RECORD;
+					rs = IN_FIELD;
 					putssvchar(*p);
 				}
 				break;
-			case IN_RECORD:
+			case IN_FIELD:
 				if (',' == *p) {
-					rs = RECORD_END;
+					rs = FIELD_END;
 				}
 				else {
 					putssvchar(*p);
 				}
 				break;
-			case IN_QUOTED_RECORD:
+			case IN_QUOTED_FIELD:
 				if ('"' == *p) {
 					if (p == end) {
-						rs = RECORD_END;
+						rs = FIELD_END;
 					}
 					else if (',' == *(p+1)) {
-						rs = RECORD_END;
+						rs = FIELD_END;
 						++p;
 					}
 					else if ('"' == *(p+1)) {
@@ -139,12 +139,12 @@ csv2ssv(const char *buf, int bufsize)
 			}
 
 			switch (rs) {
-			case RECORD_END:
+			case FIELD_END:
 				putchar(' ');
 				record_outputed = false;
 				break;
-			case IN_RECORD:
-			case IN_QUOTED_RECORD:
+			case IN_FIELD:
+			case IN_QUOTED_FIELD:
 				break;
 			}
 		}
