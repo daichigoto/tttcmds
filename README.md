@@ -24,7 +24,7 @@ Installation
 
         sudo pkg install kyua
 
-* Darwin 16.0.0 (you need a [brew](http://brew.sh/))
+* Darwin 16.0.0+ (you need a [brew](http://brew.sh/))
 
         brew install bsdmake
         brew install kyua
@@ -44,7 +44,7 @@ Installation
         make clean build
         sudo make install
 
-* Darwin 16.0.0
+* Darwin 16.0.0+
 
         bsdmake clean build
         sudo bsdmake install
