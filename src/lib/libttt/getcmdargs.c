@@ -48,6 +48,24 @@ struct tttcmdargs cmdargs;
 		usage();
 
 #define REALLOC_IARRAY(OLDLEN,NEWLEN,BUF) { \
+	i_ptr = calloc(NEWLEN, sizeof(int)); \
+	if (NULL == i_ptr) \
+		err(errno, "getcmdargs#REALLOC_IARRAY#calloc"); \
+	memcpy(i_ptr, BUF, sizeof(int) * OLDLEN); \
+	free(BUF); \
+	BUF = i_ptr; \
+}
+
+#define REALLOC_CARRAY(OLDLEN,NEWLEN,BUF) { \
+	c_ptr = calloc(NEWLEN, sizeof(char)); \
+	if (NULL == c_ptr) \
+		err(errno, "getcmdargs#REALLOC_CARRAY#calloc"); \
+	memcpy(c_ptr, BUF, sizeof(char) * OLDLEN); \
+	free(BUF); \
+	BUF = c_ptr; \
+}
+
+#define XXX_REALLOC_IARRAY(OLDLEN,NEWLEN,BUF) { \
 	i_ptr = realloc(BUF, sizeof(int) * (NEWLEN)); \
 	if (NULL == i_ptr) \
 		err(errno, "getcmdargs#REALLOC_IARRAY"); \
@@ -56,7 +74,7 @@ struct tttcmdargs cmdargs;
 	BUF = i_ptr; \
 }
 
-#define REALLOC_CARRAY(OLDLEN,NEWLEN,BUF) { \
+#define XXX_REALLOC_CARRAY(OLDLEN,NEWLEN,BUF) { \
 	c_ptr = realloc(BUF, sizeof(char) * (NEWLEN)); \
 	if (NULL == c_ptr) \
 		err(errno, "getcmdargs#REALLOC_CARRAY"); \
