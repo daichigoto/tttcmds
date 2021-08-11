@@ -65,24 +65,10 @@ struct tttcmdargs cmdargs;
 	BUF = c_ptr; \
 }
 
-#define XXX_REALLOC_IARRAY(OLDLEN,NEWLEN,BUF) { \
-	i_ptr = realloc(BUF, sizeof(int) * (NEWLEN)); \
-	if (NULL == i_ptr) \
-		err(errno, "getcmdargs#REALLOC_IARRAY"); \
-	memset(i_ptr + sizeof(int)*(OLDLEN), 0, \
-		sizeof(int) * ((NEWLEN)-(OLDLEN))); \
-	BUF = i_ptr; \
-}
-
-#define XXX_REALLOC_CARRAY(OLDLEN,NEWLEN,BUF) { \
-	c_ptr = realloc(BUF, sizeof(char) * (NEWLEN)); \
-	if (NULL == c_ptr) \
-		err(errno, "getcmdargs#REALLOC_CARRAY"); \
-	memset(c_ptr + sizeof(char)*(OLDLEN), 0, \
-		sizeof(char) * ((NEWLEN)-(OLDLEN))); \
-	BUF = c_ptr; \
-}
-
+/* XXX
+ * I want to change from realloc to calloc implementation, but have not 
+ * been successful. Future self, please rewrite it sometime soon.
+ */
 #define REALLOC_SARRAY(OLDLEN,NEWLEN,BUF) { \
 	c_pptr = realloc(BUF, sizeof(char *) * (NEWLEN)); \
 	if (NULL == c_pptr) \
