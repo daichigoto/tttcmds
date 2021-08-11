@@ -245,7 +245,7 @@ clean:
 .elif ${WORKPLACE} == "/tests"
 TARGETDIRS!=	${FIND} . -type d -maxdepth 1 | ${SED} 's,^[.][/]*,,'
 test:
-	${ENV} PATH=${BINDIR}:${PATH} ${KYUA} $@
+	${ENV} PATH="${BINDIR}:${PATH}" ${KYUA} $@
 all:	build
 build:
 	cd ${SRCDIR}; ${MAKE} $@
@@ -258,7 +258,7 @@ report:
 .elif ${WORKPLACE} == "/tests/bin"
 TARGETDIRS!=	${FIND} . -type d -maxdepth 1 | ${SED} 's,^[.][/]*,,'
 test: 
-	${ENV} PATH=${BINDIR}:${PATH} ${KYUA} $@
+	${ENV} PATH="${BINDIR}:${PATH}" ${KYUA} $@
 all:	build
 build:
 	cd ${SRCDIR}/bin; ${MAKE} $@
@@ -272,7 +272,7 @@ report:
 .elif ${WORKPLACE:C,/[^/]*$,,} == "/tests/bin"
 test:
 	${MAKE} build
-	${ENV} PATH=${BINDIR}:${PATH} ${KYUA} $@
+	${ENV} PATH="${BINDIR}:${PATH}" ${KYUA} $@
 all:	build
 build:
 	cd ${SRCDIR}/${WORKPLACE:C,^/tests/,,}; ${MAKE} $@
