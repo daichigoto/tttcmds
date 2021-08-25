@@ -67,18 +67,6 @@ include		$(TOPDIR)/ttt.win.dirs.mk
 # all: build
 
 ifeq ($(WORKPLACE),/src/bin)
-# TARGETDIRS!=	${FIND} . -type d -maxdepth 1 | ${SED} 's,^[.][/]*,,'
-# all:	build
-# build:
-# 	cd ${SRCDIR}/include; ${MAKE} $@
-# 	cd ${SRCDIR}/lib; ${MAKE} $@
-# 	cd ${SRCDIR}/bin; ${MAKE} build-foreachdir
-# clean: 
-# 	cd ${SRCDIR}/include; ${MAKE} $@
-# 	cd ${SRCDIR}/lib; ${MAKE} $@
-# 	${MAKE} clean-foreachdir
-# test: 
-# 	cd ${TESTDIR}/bin; ${MAKE} $@
 endif
 
 # # /src/bin/cmds
@@ -130,15 +118,10 @@ endif
 # 	cd ${TESTDIR}/${WORKPLACE:C,^/src/,,}; ${MAKE} $@
 # . endif
 
-# # /src/lib
-# .elif ${WORKPLACE} == "/src/lib"
-# TARGETDIRS!=	${FIND} . -type d -maxdepth 1 | ${SED} 's,^[.][/]*,,'
-# all:   build
-# build: build-foreachdir
-# clean: clean-foreachdir
+ifeq ($(WORKPLACE),/src/lib)
+endif
 
-# # /usr/include
-# .elif ${WORKPLACE} == "/src/include"
+ifeq ($(WORKPLACE),/src/include)
 # OBJS!=		${LS} | ${GREP} '[.]h$$' 2> /dev/null
 # all:	build
 # build:
@@ -150,6 +133,7 @@ endif
 # .for i in ${OBJS}
 # 	${RM} -f ${INCLUDEDIR}/${i}
 # .endfor
+endif
 
 # # /src/lib/libttt
 # .elif ${WORKPLACE} == "/src/lib/libttt"
