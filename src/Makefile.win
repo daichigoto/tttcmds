@@ -29,10 +29,10 @@ include		./../mk/ttt.win.dirs.mk
 all:	build
 
 build:
-#	cd ./bin; $(MAKE) $@
+	cd ./bin; $(MAKE) $@
 
 clean:
-#	cd ./bin; $(MAKE) $@
+	cd ./bin; $(MAKE) $@
 
 test: 
-#	cd $(TESTDIR); $(MAKE) $@
+	cd $(TESTDIR); $(MAKE) $@
