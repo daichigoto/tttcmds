@@ -24,3 +24,5 @@
 #  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 MAKE+=		-f Makefile.win
+
+FIND=		'C:\msys64\usr\bin\find.exe'
