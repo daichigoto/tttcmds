@@ -707,9 +707,11 @@ stdintotempfile(void)
 	fclose(fp_o);
 	fclose(fp_i);
 
-	for (int i = 1; i <= cmdargs.f_argc; i++)
-		if (STDIN_FILE == cmdargs.f_argv[i])
+	for (int i = 1; i <= cmdargs.f_argc; i++) {
+		if (0 == strcmp(STDIN_FILE, cmdargs.f_argv[i])) {
 			cmdargs.f_argv[i] = tempfile;
+		}
+	}
 }
 
 static void
