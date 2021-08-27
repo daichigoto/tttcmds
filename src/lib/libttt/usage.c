@@ -116,7 +116,7 @@ upperstring(char *text)
 	char *p = text;
 
 	for (int i = 0; i < BUFFER_SIZE - 1; i++, p++) {
-		buf[i] = (char)(toupper(*p));
+		buf[i] = toupper((signed char)(*p));
 
 		if ('\0' == *p)
 			break;
