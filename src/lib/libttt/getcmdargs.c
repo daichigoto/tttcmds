@@ -687,11 +687,11 @@ stdintotempfile(void)
 
 	mktempfile();
 	fp_i = fopen(STDIN_FILE, "r");
-	if (NULL == fp_i) \
-		err(errno, "%s", STDIN_FILE); \
+	if (NULL == fp_i)
+		err(errno, "%s", STDIN_FILE);
 	fp_o = fopen(tempfile, "w");
-	if (NULL == fp_o) \
-		err(errno, "%s", tempfile); \
+	if (NULL == fp_o)
+		err(errno, "%s", tempfile);
 
 	/*
 	 * The data obtained by fgetc() should not be compared with EOF as char.
