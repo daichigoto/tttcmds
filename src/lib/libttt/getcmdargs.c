@@ -562,10 +562,11 @@ argarg_analysis:
 		cmdargs.a_argv[cmdargs.a_argc+1] = argv[i];
 	}
 	if (NULL == cmdargs.a_argv[1]) {
-		if (flags&CMDARGS_A_NEED && !FLAG_h && !FLAG_v)
+		if (flags&CMDARGS_A_NEED && !FLAG_h && !FLAG_v) {
 			fprintf(stderr,
 			    "You must specify at least an argument.\n\n");
 			usage();
+		}
 	}
 
 	/*
