@@ -1,5 +1,4 @@
-# 
-#  Copyright (c) 2016,2017,2018 Daichi GOTO
+#  Copyright (c) 2016,2017,2018,2021 Daichi GOTO
 #  All rights reserved.
 #  
 #  Redistribution and use in source and binary forms, with or without
@@ -23,7 +22,6 @@
 #  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT 
 #  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE 
 #  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-#  
 
 .include	"ttt.os.mk"
 .include	"ttt.cmd.mk"
@@ -35,38 +33,15 @@ CFLAGS+=	-I. \
 		-L${LIBDIR} \
 		-O2 \
 		-pipe
+
 .if ${COMPILER_TYPE} == "clang"
-CFLAGS+=	-Qunused-arguments \
-		-Wmissing-variable-declarations \
-		-std=gnu99 \
-		-fno-omit-frame-pointer \
+CFLAGS+=	-std=gnu99 \
 		-fstack-protector \
-		-Wsystem-headers \
+		-Qunused-arguments \
 		-Wall \
-		-W \
-		-Wstrict-prototypes \
-		-Wmissing-prototypes \
-		-Wpointer-arith \
-		-Wreturn-type \
-		-Wcast-qual \
-		-Wwrite-strings \
-		-Wswitch \
-		-Wshadow \
-		-Wunused-parameter \
-		-Wcast-align \
-		-Wchar-subscripts \
-		-Winline \
-		-Wnested-externs \
-		-Wredundant-decls \
-		-Wold-style-definition \
-		-Wno-unused-parameter \
-		-Wno-pointer-sign \
-		-Wno-format-y2k \
-		-Wno-empty-body \
-		-Wno-string-plus-int \
-		-Wno-unused-const-variable \
-		-Wno-incompatible-pointer-types-discards-qualifiers
+		-W
 .endif
+
 .if ${OS} == "Linux"
 CFLAGS+=	-Wno-system-headers \
 		-lbsd \
@@ -74,6 +49,7 @@ CFLAGS+=	-Wno-system-headers \
 .elif ${OS} == "Darwin"
 CFLAGS+=	-Wno-system-headers
 .endif
+
 .if defined(WITH_DEBUG)
 CFLAGS+=	-I. \
 		-I${SRCINCDIR} \
