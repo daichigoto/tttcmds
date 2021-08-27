@@ -23,7 +23,15 @@
 #  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE 
 #  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-MAKE+=		-f Makefile.win
-
 CC=		'C:\msys64\usr\bin\clang.exe'
-FIND=		'C:\msys64\usr\bin\find.exe'
+
+CFLAGS=		-O2 \
+		-pipe \
+		-std=gnu99 \
+		-fstack-protector \
+		-Qunused-arguments \
+		-Wall \
+		-W 
+
+CFLAGS+=	-Wno-typedef-redefinition \
+		-Wno-incompatible-pointer-types-discards-qualifiers

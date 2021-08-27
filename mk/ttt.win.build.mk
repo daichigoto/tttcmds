@@ -47,25 +47,6 @@ endif
 
 include		$(TOPDIR)/ttt.win.dirs.mk
 
-#			TARGET	build	clean	test	report
-# tttcmd/			OK	OK	OK	OK
-#	bin/			-	-	-	-
-#	include/		-	-	-	-
-#	lib/			-	-	-	-
-#	mk/			-	-	-	-
-#	src/			OK	OK	OK	-
-#		bin/		OK	OK	OK	-
-#			cmd/	OK	OK	OK	-
-#		contrib/	-	-	-	-
-#		include/	OK	OK	-	-
-#		lib/		OK	OK	-	-
-#			libttt/	OK	OK	-	-
-#	tests/			OK	OK	OK	OK
-#		bin/		OK	OK	OK	OK
-#			cmd/	OK	OK	OK	OK
-#
-# all: build
-
 ifeq ($(WORKPLACE),/src/bin)
 endif
 
@@ -122,22 +103,11 @@ ifeq ($(WORKPLACE),/src/lib)
 endif
 
 ifeq ($(WORKPLACE),/src/include)
-# OBJS!=		${LS} | ${GREP} '[.]h$$' 2> /dev/null
-# all:	build
-# build:
-# .for i in ${OBJS}
-# 	${CP} ${i} ${INCLUDEDIR}/${i}
-# 	${CHMOD} ${INCLUDEPERM} ${INCLUDEDIR}/${i}
-# .endfor
-# clean:
-# .for i in ${OBJS}
-# 	${RM} -f ${INCLUDEDIR}/${i}
-# .endfor
 endif
 
-# # /src/lib/libttt
-# .elif ${WORKPLACE} == "/src/lib/libttt"
+ifeq ($(WORKPLACE),/src/lib/libttt)
 # OBJS!=		${LS} | ${GREP} '[.]c$$' 2> /dev/null | ${SED} 's/.c$$/.o/g'
+#
 # . if ${OS} == "Darwin"
 # DLIB?=		${LIBDIR}/${DIRNAME}.${LIBVERSION}.dylib
 # LIBOBJS?=	${SRCDIR}/lib/${DIRNAME}/*.o
@@ -146,7 +116,9 @@ endif
 # DLIB?=		${LIBDIR}/${DIRNAME}.so.${LIBVERSION}
 # LIBOBJS?=	${SRCDIR}/lib/${DIRNAME}/*.o
 # . endif
+# 
 # all:	build
+#
 # build: ${OBJS}
 # 	${RM} -f ${SLIB} ${DLIB}
 # . if ${OS} == "FreeBSD"
@@ -163,10 +135,12 @@ endif
 # 	${AR} -crv ${SLIB} ${OBJS}
 # 	${CHMOD} ${LIBPERM} ${SLIB}
 # . endif
+# 
 # .c.o:
 # 	${CC} ${CFLAGS} -fPIC -c $< -o $@
 # clean:
 # 	${RM} -f ${DLIB} ${SLIB} ${LIBOBJS}
+endif
 
 # # /tests
 # .elif ${WORKPLACE} == "/tests"
