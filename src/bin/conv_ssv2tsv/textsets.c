@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018 Daichi GOTO
+ * Copyright (c) 2018,2021 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -71,16 +71,16 @@ struct textset cmdtextsets[] = {
 	  _ARG("file")"\t	Specify the file." },
 
 	{ "command_example", "en_", 
-	  _P("cat data.ssv")
-	  _S("1\t2\t3\t\t")
-	  _S("@\tb b\t\t _ ")
-	  _P("sed -e 's,    ,\\\\t,g' -e 's,$,\\\\n,' data")
-	  _S("1\\t2\\t\\t4\\n")
-	  _S("@\\tb b\\t\\t _ \\n")
-	  _P("conv_tsv2ssv data.ssv")
-	  _S("1 2 @ 4")
-	  _S("\\@ b_b @ _\\__")
-	  _P("") },
+	  _P1("cat data.ssv")
+	  _ST("1\t2\t3\t\t")
+	  _ST("@\tb b\t\t _ ")
+	  _P1("sed -e 's,    ,\\\\t,g' -e 's,$,\\\\n,' data")
+	  _ST("1\\t2\\t\\t4\\n")
+	  _ST("@\\tb b\\t\\t _ \\n")
+	  _P1("conv_tsv2ssv data.ssv")
+	  _ST("1 2 @ 4")
+	  _ST("\\@ b_b @ _\\__")
+	  _P1("") },
 
 	TEXTSET_END
 };

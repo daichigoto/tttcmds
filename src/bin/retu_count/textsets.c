@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Daichi GOTO
+ * Copyright (c) 2016,2021 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -70,32 +70,32 @@ struct textset cmdtextsets[] = {
 	  _ARG("file") "\t	Specify the file." },
 	 
 	{ "command_example", "en_", 
-	  _P("cat data1.ssv")
-	  _S("1 2 3 4 5 6 7 8 9")
-	  _S("a b c d")
-	  _S(" a b c d")
-	  _P("retu_count data1.ssv")
-	  _S("9")
-	  _S("4")
-	  _S("5")
-	  _P("retu_count -n data1.ssv")
-	  _S("1: 9")
-	  _S("2: 4")
-	  _S("3: 5")
-	  _P("cat data2.ssv")
-	  _S("A")
-	  _S("B")
-	  _P("retu_count data1.ssv data2.ssv")
-	  _S("9")
-	  _S("4")
-	  _S("5")
-	  _S("1")
-	  _P("retu_count -n -f data1.ssv data2.ssv")
-	  _S("data1.ssv:1:1: 9")
-	  _S("data1.ssv:2:2: 4")
-	  _S("data1.ssv:3:3: 5")
-	  _S("data2.ssv:1:4: 1")
-	  _P("") },
+	  _P1("cat data1.ssv")
+	  _ST("1 2 3 4 5 6 7 8 9")
+	  _ST("a b c d")
+	  _ST(" a b c d")
+	  _P1("retu_count data1.ssv")
+	  _ST("9")
+	  _ST("4")
+	  _ST("5")
+	  _P1("retu_count -n data1.ssv")
+	  _ST("1: 9")
+	  _ST("2: 4")
+	  _ST("3: 5")
+	  _P1("cat data2.ssv")
+	  _ST("A")
+	  _ST("B")
+	  _P1("retu_count data1.ssv data2.ssv")
+	  _ST("9")
+	  _ST("4")
+	  _ST("5")
+	  _ST("1")
+	  _P1("retu_count -n -f data1.ssv data2.ssv")
+	  _ST("data1.ssv:1:1: 9")
+	  _ST("data1.ssv:2:2: 4")
+	  _ST("data1.ssv:3:3: 5")
+	  _ST("data2.ssv:1:4: 1")
+	  _P1("") },
 
 	TEXTSET_END
 };

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Daichi GOTO
+ * Copyright (c) 2017,2021 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -96,31 +96,31 @@ struct textset cmdtextsets[] = {
 	  "POST.\n" },
 
 	{ "command_example", "en_", 
-	  _P("cat program.cgi")
-	  _S("#!/bin/sh")
-	  _S("")
-	  _S("conv_form2ssv > /tmp/form.ssv")
-	  _S("cat<<EOF")
-	  _S("<html>")
-	  _S("<body>")
-	  _S(" <table>")
-	  _S("  <tbody>")
-	  _S("   <tr>")
-	  _S("    <th>ID</th>")
-	  _S("    <th>CONTENT</th>")
-	  _S("   </tr>")
-	  _S("   <tr>")
-	  _S("    <td>$(gyosel 1=ID      /tmp/form.ssv | retusel 2)</td>")
-	  _S("    <td>$(gyosel 1=CONTENT /tmp/form.ssv | retusel 2)</td>")
-	  _S("   </tr>")
-	  _S("  </tbody>")
-	  _S("</table>")
-	  _S("</body>")
-	  _S("</html>")
-	  _S("EOF")
-	  _S("")
-	  _S("rm /tmp/form.ssv")
-	  _P("") },
+	  _P1("cat program.cgi")
+	  _ST("#!/bin/sh")
+	  _ST("")
+	  _ST("conv_form2ssv > /tmp/form.ssv")
+	  _ST("cat<<EOF")
+	  _ST("<html>")
+	  _ST("<body>")
+	  _ST(" <table>")
+	  _ST("  <tbody>")
+	  _ST("   <tr>")
+	  _ST("    <th>ID</th>")
+	  _ST("    <th>CONTENT</th>")
+	  _ST("   </tr>")
+	  _ST("   <tr>")
+	  _ST("    <td>$(gyosel 1=ID      /tmp/form.ssv | retusel 2)</td>")
+	  _ST("    <td>$(gyosel 1=CONTENT /tmp/form.ssv | retusel 2)</td>")
+	  _ST("   </tr>")
+	  _ST("  </tbody>")
+	  _ST("</table>")
+	  _ST("</body>")
+	  _ST("</html>")
+	  _ST("EOF")
+	  _ST("")
+	  _ST("rm /tmp/form.ssv")
+	  _P1("") },
 
 	TEXTSET_END
 };

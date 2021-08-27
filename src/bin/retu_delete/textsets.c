@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016,2017 Daichi GOTO
+ * Copyright (c) 2016,2017,2021 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -85,27 +85,27 @@ struct textset cmdtextsets[] = {
 	  _ARG("file") "\t	Specify the file." },
 	
 	{ "command_example", "en_", 
-	  _P("cat data.ssv")
-	  _S("1 2 3 4 5 6 7 8 9")
-	  _S("a b c d e f g h i")
-	  _S("A B C D E F G H I")
-	  _P("retu_delete 2 4 6 data.ssv")
-	  _S("1 3 5 7 8 9")
-	  _S("a c e g h i")
-	  _S("A C E G H I")
-	  _P("retu_delete 1/10 data.ssv")
-	  _P("retu_delete 10 data.ssv")
-	  _S("1 2 3 4 5 6 7 8 9")
-	  _S("a b c d e f g h i")
-	  _S("A B C D E F G H I")
-	  _P("cat price.tag")
-	  _S("ID PRICE")
-	  _S("000001 12800")
-	  _S("000002 9800")
-	  _P("retu_delete -1 3 price.tag")
-	  _S("000001 12800")
-	  _S("000002 9800")
-	  _P("") },
+	  _P1("cat data.ssv")
+	  _ST("1 2 3 4 5 6 7 8 9")
+	  _ST("a b c d e f g h i")
+	  _ST("A B C D E F G H I")
+	  _P1("retu_delete 2 4 6 data.ssv")
+	  _ST("1 3 5 7 8 9")
+	  _ST("a c e g h i")
+	  _ST("A C E G H I")
+	  _P1("retu_delete 1/10 data.ssv")
+	  _P1("retu_delete 10 data.ssv")
+	  _ST("1 2 3 4 5 6 7 8 9")
+	  _ST("a b c d e f g h i")
+	  _ST("A B C D E F G H I")
+	  _P1("cat price.tag")
+	  _ST("ID PRICE")
+	  _ST("000001 12800")
+	  _ST("000002 9800")
+	  _P1("retu_delete -1 3 price.tag")
+	  _ST("000001 12800")
+	  _ST("000002 9800")
+	  _P1("") },
 
 	TEXTSET_END
 };

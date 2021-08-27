@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Daichi GOTO
+ * Copyright (c) 2016,2021 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -89,15 +89,15 @@ struct textset cmdtextsets[] = {
 	  _ARG("file") "\t	Specify the file." },
 	
 	{ "command_example", "en_", 
-	  _P("echo 1 2 3 4 5 6 7 8 9 | retu_numformat 1/5.'%06g'")
-	  _S("000001 000002 000003 000004 000005 6 7 8 9")
-	  _P("echo 1 2 3 4 5 6 7 8 9 | retu_numformat 1/3.'[ %06g ]'")
-	  _S("[_000001_] [_000002_] [_000003_] 4 5 6 7 8 9")
-	  _P("echo aa bb cc dd ee ff | retu_numformat 1/6.'%06g'")
-	  _S("aa bb cc dd ee ff")
-	  _P("echo 1 bb cc 3 ee ff | retu_numformat 1/6.'%06g'")
-	  _S("000001 bb cc 000003 ee ff")
-	  _P("") },
+	  _P1("echo 1 2 3 4 5 6 7 8 9 | retu_numformat 1/5.'%06g'")
+	  _ST("000001 000002 000003 000004 000005 6 7 8 9")
+	  _P1("echo 1 2 3 4 5 6 7 8 9 | retu_numformat 1/3.'[ %06g ]'")
+	  _ST("[_000001_] [_000002_] [_000003_] 4 5 6 7 8 9")
+	  _P1("echo aa bb cc dd ee ff | retu_numformat 1/6.'%06g'")
+	  _ST("aa bb cc dd ee ff")
+	  _P1("echo 1 bb cc 3 ee ff | retu_numformat 1/6.'%06g'")
+	  _ST("000001 bb cc 000003 ee ff")
+	  _P1("") },
 
 	TEXTSET_END
 };

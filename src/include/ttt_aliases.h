@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Daichi GOTO
+ * Copyright (c) 2016,2021 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,9 +26,9 @@
  */
 
 #define _(X,Y,Z) settext(X,Y,Z)
-#define _P(X) ES_PROMPT1(X)
+#define _P1(X) ES_PROMPT1(X)
 #define _P2(X) ES_PROMPT2(X)
-#define _S(X) ES_STDOUT(X)
+#define _ST(X) ES_STDOUT(X)
 #define _CMD(X) ES_CMD(X)
 #define _OPT(X) ES_OPT(X)
 #define _ARG(X) ES_ARG(X)

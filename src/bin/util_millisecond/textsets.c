@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Daichi GOTO
+ * Copyright (c) 2017,2021 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -63,11 +63,11 @@ struct textset cmdtextsets[] = {
 	  _OPT("-") "		Specify the end of options." },
 	
 	{ "command_example", "en_",
-	  _P("util_millisecond")
-	  _S("1485498984677")
-	  _P("util_millisecond")
-	  _S("1485499033709")
-	  _P("") },
+	  _P1("util_millisecond")
+	  _ST("1485498984677")
+	  _P1("util_millisecond")
+	  _ST("1485499033709")
+	  _P1("") },
 
 	TEXTSET_END
 };

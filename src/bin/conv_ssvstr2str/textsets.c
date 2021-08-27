@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Daichi GOTO
+ * Copyright (c) 2016,2021 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -66,17 +66,17 @@ struct textset cmdtextsets[] = {
 	  _ARG("ssvstr") "\t	Specify the SSV string.\n" },
 	
 	{ "command_example", "en_", 
-	  _P("conv_ssvstr2str '@'")
-	  _S("")
-	  _P("conv_ssvstr2str '\\@' '\\@\\@' '\\\\@' 'a\\@b'")
-	  _S("@ @@ \\@ a@b")
-	  _P("conv_str2ssvstr ._. ,___,")
-	  _S(". . ,   ,")
-	  _P("conv_str2ssvstr '\\_' '\\_\\_\\_'")
-	  _S("_ ___")
-	  _P("conv_str2ssvstr 'a_b_\\@_\\_\\__c_' '@' '\\\\@'")
-	  _S("a b @ __ c   \\@")
-	  _P("") },
+	  _P1("conv_ssvstr2str '@'")
+	  _ST("")
+	  _P1("conv_ssvstr2str '\\@' '\\@\\@' '\\\\@' 'a\\@b'")
+	  _ST("@ @@ \\@ a@b")
+	  _P1("conv_str2ssvstr ._. ,___,")
+	  _ST(". . ,   ,")
+	  _P1("conv_str2ssvstr '\\_' '\\_\\_\\_'")
+	  _ST("_ ___")
+	  _P1("conv_str2ssvstr 'a_b_\\@_\\_\\__c_' '@' '\\\\@'")
+	  _ST("a b @ __ c   \\@")
+	  _P1("") },
 
 	TEXTSET_END
 };

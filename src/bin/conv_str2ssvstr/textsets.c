@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Daichi GOTO
+ * Copyright (c) 2016,2021 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -66,17 +66,17 @@ struct textset cmdtextsets[] = {
 	  _ARG("str") "\t	Specify the string.\n" },
 	
 	{ "command_example", "en_", 
-	  _P("conv_str2ssvstr ''")
-	  _S("@")
-	  _P("conv_str2ssvstr @ @@ '\\@' a@b")
-	  _S("\\@ \\@\\@ \\\\@ a\\@b")
-	  _P("conv_str2ssvstr ' ' '   '")
-	  _S("_ ___")
-	  _P("conv_str2ssvstr _ ___")
-	  _S("\\_ \\_\\_\\_")
-	  _P("conv_str2ssvstr 'a b @ __ c ' '' '\\@'")
-	  _S("a_b_\\@_\\_\\__c_ @ \\\\@")
-	  _P("") },
+	  _P1("conv_str2ssvstr ''")
+	  _ST("@")
+	  _P1("conv_str2ssvstr @ @@ '\\@' a@b")
+	  _ST("\\@ \\@\\@ \\\\@ a\\@b")
+	  _P1("conv_str2ssvstr ' ' '   '")
+	  _ST("_ ___")
+	  _P1("conv_str2ssvstr _ ___")
+	  _ST("\\_ \\_\\_\\_")
+	  _P1("conv_str2ssvstr 'a b @ __ c ' '' '\\@'")
+	  _ST("a_b_\\@_\\_\\__c_ @ \\\\@")
+	  _P1("") },
 
 	TEXTSET_END
 };

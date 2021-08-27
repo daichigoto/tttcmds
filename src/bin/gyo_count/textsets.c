@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016,2019 Daichi GOTO
+ * Copyright (c) 2016,2019,2021 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -68,19 +68,19 @@ struct textset cmdtextsets[] = {
 	  _ARG("file") "\t	Specify the file." },
 
 	{ "command_example", "en_", 
-	  _P("cat data.txt")
-	  _S("1")
-	  _S("2")
-	  _S("3")
-	  _P("gyo_count data.txt")
-	  _S("3")
-	  _P("gyo_count data.txt data.txt")
-	  _S("6")
-	  _P("printf \"\\n\" | gyo_count")
-	  _S("1")
-	  _P("printf \"\" | gyo_count")
-	  _S("0")
-	  _P("") },
+	  _P1("cat data.txt")
+	  _ST("1")
+	  _ST("2")
+	  _ST("3")
+	  _P1("gyo_count data.txt")
+	  _ST("3")
+	  _P1("gyo_count data.txt data.txt")
+	  _ST("6")
+	  _P1("printf \"\\n\" | gyo_count")
+	  _ST("1")
+	  _P1("printf \"\" | gyo_count")
+	  _ST("0")
+	  _P1("") },
 
 	TEXTSET_END
 };

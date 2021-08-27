@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Daichi GOTO
+ * Copyright (c) 2017,2021 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -98,39 +98,39 @@ struct textset cmdtextsets[] = {
 	  _ARG("file_right") "	Specify the right SSV data." },
 
 	{ "command_example", "en_", 
-	  _P("cat left.ssv")
-	  _S("001 AAA")
-	  _S("002 AAA")
-	  _S("003 BBB")
-	  _S("001 AAA")
-	  _P("cat right.ssv")
-	  _S("AAA 002 a")
-	  _S("CCC 003 c")
-	  _S("CCC 003 d")
-	  _S("AAA 004 a")
-	  _P("join_leftouterjoin 1=2 left.ssv right.ssv")
-	  _S("001 AAA @ @ @")
-	  _S("002 AAA AAA 002 a")
-	  _S("003 BBB CCC 003 c")
-	  _S("003 BBB CCC 003 d")
-	  _S("001 AAA @ @ @")
-	  _P("join_leftouterjoin -r 1=2 left.ssv right.ssv")
-	  _S("001 AAA @ @")
-	  _S("002 AAA AAA a")
-	  _S("003 BBB CCC c")
-	  _S("003 BBB CCC d")
-	  _S("001 AAA @ @")
-	  _P("join_leftouterjoin 1=2 2=1 left.ssv right.ssv")
-	  _S("001 AAA @ @ @")
-	  _S("002 AAA AAA 002 a")
-	  _S("003 BBB @ @ @")
-	  _S("001 AAA @ @ @")
-	  _P("join_leftouterjoin -r 1=2 2=1 left.ssv right.ssv")
-	  _S("001 AAA @")
-	  _S("002 AAA a")
-	  _S("003 BBB @")
-	  _S("001 AAA @")
-	  _P("") },
+	  _P1("cat left.ssv")
+	  _ST("001 AAA")
+	  _ST("002 AAA")
+	  _ST("003 BBB")
+	  _ST("001 AAA")
+	  _P1("cat right.ssv")
+	  _ST("AAA 002 a")
+	  _ST("CCC 003 c")
+	  _ST("CCC 003 d")
+	  _ST("AAA 004 a")
+	  _P1("join_leftouterjoin 1=2 left.ssv right.ssv")
+	  _ST("001 AAA @ @ @")
+	  _ST("002 AAA AAA 002 a")
+	  _ST("003 BBB CCC 003 c")
+	  _ST("003 BBB CCC 003 d")
+	  _ST("001 AAA @ @ @")
+	  _P1("join_leftouterjoin -r 1=2 left.ssv right.ssv")
+	  _ST("001 AAA @ @")
+	  _ST("002 AAA AAA a")
+	  _ST("003 BBB CCC c")
+	  _ST("003 BBB CCC d")
+	  _ST("001 AAA @ @")
+	  _P1("join_leftouterjoin 1=2 2=1 left.ssv right.ssv")
+	  _ST("001 AAA @ @ @")
+	  _ST("002 AAA AAA 002 a")
+	  _ST("003 BBB @ @ @")
+	  _ST("001 AAA @ @ @")
+	  _P1("join_leftouterjoin -r 1=2 2=1 left.ssv right.ssv")
+	  _ST("001 AAA @")
+	  _ST("002 AAA a")
+	  _ST("003 BBB @")
+	  _ST("001 AAA @")
+	  _P1("") },
 
 	TEXTSET_END
 };

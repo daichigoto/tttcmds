@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Daichi GOTO
+ * Copyright (c) 2017,2021 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -100,31 +100,31 @@ struct textset cmdtextsets[] = {
 	  _ARG("file") "\t	Specify the file." },
 	
 	{ "command_example", "en_", 
-	  _P("echo 1 @ 3 | retu_assign_htmlcheckbox 1/3")
-	  _S("<input_type=\"checkbox\"_value=\"1\"_checked> "
+	  _P1("echo 1 @ 3 | retu_assign_htmlcheckbox 1/3")
+	  _ST("<input_type=\"checkbox\"_value=\"1\"_checked> "
 	     "<input_type=\"checkbox\"\n_value=\"1\"> "
 	     "<input_type=\"checkbox\"_value=\"1\">")
-	  _P("echo 1 @ 3 |")
+	  _P1("echo 1 @ 3 |")
 	  _P2("retu_assign_htmlcheckbox \\")
 	  _P2("\t1/3 \\")
 	  _P2("\t1._attr_.name.nam1 \\")
 	  _P2("\t2._attr_.name.'nam 2' \\")
 	  _P2("\t2._attr_.id.uniq")
-	  _S("<input_type=\"checkbox\"_value=\"1\"_name=\"nam1\"_checked> "
+	  _ST("<input_type=\"checkbox\"_value=\"1\"_name=\"nam1\"_checked> "
 	     "<input_typ\ne=\"checkbox\"_value=\"1\"_name=\"nam_2\"_id=\"uniq\"> "
 	     "<input_type=\"chec\nkbox\"_value=\"1\">")
-	  _P("echo 1 @ 3 | retu_assign_htmlcheckbox -c 3 1/3")
-	  _S("<input_type=\"checkbox\"_value=\"3\"> "
+	  _P1("echo 1 @ 3 | retu_assign_htmlcheckbox -c 3 1/3")
+	  _ST("<input_type=\"checkbox\"_value=\"3\"> "
 	     "<input_type=\"checkbox\"_value=\"\n3\"> "
 	     "<input_type=\"checkbox\"_value=\"3\"_checked>")
-	  _P("echo '1 @ \\@ _ \\_ \" @' |")
+	  _P1("echo '1 @ \\@ _ \\_ \" @' |")
 	  _P2("retu_assign_htmlcheckbox -r \\")
 	  _P2("\t7 \\")
 	  _P2("\t7._attr_.name.nam7 \\")
 	  _P2("\t7._attr_.id.'\\1:\\2:\\3:\\4:\\5:\\6'")
-	  _S("1 @ \\@ _ \\_ \" <input_type=\"checkbox\"_value=\"\"_"
+	  _ST("1 @ \\@ _ \\_ \" <input_type=\"checkbox\"_value=\"\"_"
 	     "name=\"nam7\"_id=\"1:\n:@:_:\\_:&quot;\">")
-	  _P("") },
+	  _P1("") },
 
 	TEXTSET_END
 };

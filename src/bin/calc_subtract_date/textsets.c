@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Daichi GOTO
+ * Copyright (c) 2017,2021 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -75,37 +75,37 @@ struct textset cmdtextsets[] = {
 	  _OPT("-") "		Specify the end of options." },
 	
 	{ "command_example", "en_",
-	  _P("calc_subtract_date 20190225 20190225")
-	  _S("0")
-	  _P("calc_subtract_date 20190225 20190302")
-	  _S("5")
-	  _P("calc_subtract_date 20190302 20190225")
-	  _S("-5")
-	  _P("calc_subtract_date 20200225 20200302")
-	  _S("6")
-	  _P("calc_subtract_date 20200302 20200225")
-	  _S("-6")
-	  _P("calc_subtract_date -f %m-%d-%Y 02-25-2019 02-25-2019")
-	  _S("0")
-	  _P("calc_subtract_date -f %Y/%m/%d 2019/02/25 2019/03/02")
-	  _S("5")
-	  _P("calc_subtract_date -s 20190225 20190225")
-	  _S("0")
-	  _P("calc_subtract_date -s 20190225 20190302")
-	  _S("432000")
-	  _P("calc_subtract_date -s 20200225 20200302")
-	  _S("518400")
-	  _P("calc_subtract_date -p 20190225 20190225")
-	  _S("+0")
-	  _P("calc_subtract_date -p 20190225 20190302")
-	  _S("+5")
-	  _P("calc_subtract_date -p 20190302 20190225")
-	  _S("-5")
-	  _P("calc_subtract_date -p 20200225 20200302")
-	  _S("+6")
-	  _P("calc_subtract_date -p 20200302 20200225")
-	  _S("-6")
-	  _P("") },
+	  _P1("calc_subtract_date 20190225 20190225")
+	  _ST("0")
+	  _P1("calc_subtract_date 20190225 20190302")
+	  _ST("5")
+	  _P1("calc_subtract_date 20190302 20190225")
+	  _ST("-5")
+	  _P1("calc_subtract_date 20200225 20200302")
+	  _ST("6")
+	  _P1("calc_subtract_date 20200302 20200225")
+	  _ST("-6")
+	  _P1("calc_subtract_date -f %m-%d-%Y 02-25-2019 02-25-2019")
+	  _ST("0")
+	  _P1("calc_subtract_date -f %Y/%m/%d 2019/02/25 2019/03/02")
+	  _ST("5")
+	  _P1("calc_subtract_date -s 20190225 20190225")
+	  _ST("0")
+	  _P1("calc_subtract_date -s 20190225 20190302")
+	  _ST("432000")
+	  _P1("calc_subtract_date -s 20200225 20200302")
+	  _ST("518400")
+	  _P1("calc_subtract_date -p 20190225 20190225")
+	  _ST("+0")
+	  _P1("calc_subtract_date -p 20190225 20190302")
+	  _ST("+5")
+	  _P1("calc_subtract_date -p 20190302 20190225")
+	  _ST("-5")
+	  _P1("calc_subtract_date -p 20200225 20200302")
+	  _ST("+6")
+	  _P1("calc_subtract_date -p 20200302 20200225")
+	  _ST("-6")
+	  _P1("") },
 
 	TEXTSET_END
 };

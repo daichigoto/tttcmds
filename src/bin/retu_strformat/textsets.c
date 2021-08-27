@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016,2017 Daichi GOTO
+ * Copyright (c) 2016,2017,2021 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -100,18 +100,18 @@ struct textset cmdtextsets[] = {
 	  _ARG("file") "\t	Specify the file." },
 	
 	{ "command_example", "en_", 
-	  _P("echo aa bb cc dd | retu_strformat 2.'<p>DATA: %s</p>'")
-	  _S("aa <p>DATA:_bb</p> cc dd")
-	  _P("echo aa bb cc dd | retu_strformat 1/4.'<p>%s</p>'")
-	  _S("<p>aa</p> <p>bb</p> <p>cc</p> <p>dd</p>")
-	  _P("cat data.ssv")
-	  _S("_<>'\"`= @ @")
-	  _P("retu_strformat 1.'<input value=\"%s\">' data.ssv")
-	  _S("<input_value=\"_<>'\"`=\"> @ @")
-	  _P("retu_strformat 1.'<input value=\"%h\">' data.ssv")
-	  _S("<input_value=\"&nbsp;&lt;&gt;&apos;&quot;&grave;&equals;\"> "
+	  _P1("echo aa bb cc dd | retu_strformat 2.'<p>DATA: %s</p>'")
+	  _ST("aa <p>DATA:_bb</p> cc dd")
+	  _P1("echo aa bb cc dd | retu_strformat 1/4.'<p>%s</p>'")
+	  _ST("<p>aa</p> <p>bb</p> <p>cc</p> <p>dd</p>")
+	  _P1("cat data.ssv")
+	  _ST("_<>'\"`= @ @")
+	  _P1("retu_strformat 1.'<input value=\"%s\">' data.ssv")
+	  _ST("<input_value=\"_<>'\"`=\"> @ @")
+	  _P1("retu_strformat 1.'<input value=\"%h\">' data.ssv")
+	  _ST("<input_value=\"&nbsp;&lt;&gt;&apos;&quot;&grave;&equals;\"> "
 	     "@ @")
-	  _P("") },
+	  _P1("") },
 
 	TEXTSET_END
 };

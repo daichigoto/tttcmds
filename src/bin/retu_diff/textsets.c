@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016,2017 Daichi GOTO
+ * Copyright (c) 2016,2017,2021 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -87,36 +87,36 @@ struct textset cmdtextsets[] = {
 	  _ARG("file_new") "	Specify the target data." },
 
 	{ "command_example", "en_", 
-	  _P("cat data.ssv")
-	  _S("1 2 3 4 5 @ 7 8 9")
-	  _S("a b @ d e f g h i")
-	  _S("A B C D E F @ H I")
-	  _P("cat new.ssv")
-	  _S("1 2 3 4 5 . @ @ @")
-	  _S("a b @ d e f G @ @")
-	  _S("A B C D E F @ @ @")
-	  _P("retu_diff 1/5 data.ssv new.ssv")
-	  _P("retu_deff 1/6 data.ssv new.ssv")
-	  _S("1 2 3 4 5 . @ @ @")
-	  _P("retu_deff 1/7 data.ssv new.ssv")
-	  _S("1 2 3 4 5 . @ @ @")
-	  _S("a b @ d e f G @ @")
-	  _P("retu_deff 1/8 data.ssv new.ssv")
-	  _S("1 2 3 4 5 . @ @ @")
-	  _S("a b @ d e f G @ @")
-	  _S("A B C D E F @ @ @")
-	  _P("cat data2.ssv")
-	  _S("6")
-	  _S("0")
-	  _S("2")
-	  _P("cat new2.ssv")
-	  _S("3")
-	  _S("1")
-	  _S("6")
-	  _P("retu_deff 1 data2.ssv new2.ssv")
-	  _S("3")
-	  _S("1")
-	  _P("") },
+	  _P1("cat data.ssv")
+	  _ST("1 2 3 4 5 @ 7 8 9")
+	  _ST("a b @ d e f g h i")
+	  _ST("A B C D E F @ H I")
+	  _P1("cat new.ssv")
+	  _ST("1 2 3 4 5 . @ @ @")
+	  _ST("a b @ d e f G @ @")
+	  _ST("A B C D E F @ @ @")
+	  _P1("retu_diff 1/5 data.ssv new.ssv")
+	  _P1("retu_deff 1/6 data.ssv new.ssv")
+	  _ST("1 2 3 4 5 . @ @ @")
+	  _P1("retu_deff 1/7 data.ssv new.ssv")
+	  _ST("1 2 3 4 5 . @ @ @")
+	  _ST("a b @ d e f G @ @")
+	  _P1("retu_deff 1/8 data.ssv new.ssv")
+	  _ST("1 2 3 4 5 . @ @ @")
+	  _ST("a b @ d e f G @ @")
+	  _ST("A B C D E F @ @ @")
+	  _P1("cat data2.ssv")
+	  _ST("6")
+	  _ST("0")
+	  _ST("2")
+	  _P1("cat new2.ssv")
+	  _ST("3")
+	  _ST("1")
+	  _ST("6")
+	  _P1("retu_deff 1 data2.ssv new2.ssv")
+	  _ST("3")
+	  _ST("1")
+	  _P1("") },
 
 	TEXTSET_END
 };

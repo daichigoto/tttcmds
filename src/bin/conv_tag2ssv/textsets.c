@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Daichi GOTO
+ * Copyright (c) 2016,2021 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -70,16 +70,16 @@ struct textset cmdtextsets[] = {
 	  _ARG("file") "\t	Specify the file." },
 	
 	{ "command_example", "en_", 
-	  _P("cata data.tag")
-	  _S("PRODUCT_ID PRICE")
-	  _S("001292 546")
-	  _S("001232 289")
-	  _S("001221 98")
-	  _P("conv_tag2ssv data.tag")
-	  _S("001292 546")
-	  _S("001232 289")
-	  _S("001221 98")
-	  _P("") },
+	  _P1("cata data.tag")
+	  _ST("PRODUCT_ID PRICE")
+	  _ST("001292 546")
+	  _ST("001232 289")
+	  _ST("001221 98")
+	  _P1("conv_tag2ssv data.tag")
+	  _ST("001292 546")
+	  _ST("001232 289")
+	  _ST("001221 98")
+	  _P1("") },
 
 	TEXTSET_END
 };

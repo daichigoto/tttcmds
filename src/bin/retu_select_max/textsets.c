@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016,2017 Daichi GOTO
+ * Copyright (c) 2016,2017,2021 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -129,33 +129,33 @@ struct textset cmdtextsets[] = {
 	  _ARG("file") "\t	Specify the file." },
 
 	{ "command_example", "en_", 
-	  _P("cat date.ssv")
-	  _S("20170101 20150505 20161010")
-	  _S("20150101 20150505 20151010")
-	  _S("100000000 200000000 3000000")
-	  _P("retu_select_max 1/3")
-	  _S("20170101 20150505 3000000")
-	  _P("retu_select_max -N 1/3")
-	  _S("100000000 200000000 20161010")
-	  _P("cat data.tag")
-	  _S("ID PRICE")
-	  _S("000001 12980")
-	  _S("000002 9800")
-	  _P("retu_select_max 1/2 data.tag")
-	  _S("ID PRICE")
-	  _P("retu_select_max -1 1/2 data.tag")
-	  _S("000002 9800")
-	  _P("retu_select_max -1 -N 1/2 data.tag")
-	  _S("000002 12980")
-	  _P("retu_select_max -1 -N 1.+1.%03d data.tag")
-	  _S("003")
-	  _P("retu_select_max -1 -N 1.+5.%010d data.tag")
-	  _S("0000000012")
-	  _P("echo | retu_select_max 5")
-          _S("@")
-	  _P("echo | retu_select_max -@ 000001 5")
-          _S("000001")
-	  _P("") },
+	  _P1("cat date.ssv")
+	  _ST("20170101 20150505 20161010")
+	  _ST("20150101 20150505 20151010")
+	  _ST("100000000 200000000 3000000")
+	  _P1("retu_select_max 1/3")
+	  _ST("20170101 20150505 3000000")
+	  _P1("retu_select_max -N 1/3")
+	  _ST("100000000 200000000 20161010")
+	  _P1("cat data.tag")
+	  _ST("ID PRICE")
+	  _ST("000001 12980")
+	  _ST("000002 9800")
+	  _P1("retu_select_max 1/2 data.tag")
+	  _ST("ID PRICE")
+	  _P1("retu_select_max -1 1/2 data.tag")
+	  _ST("000002 9800")
+	  _P1("retu_select_max -1 -N 1/2 data.tag")
+	  _ST("000002 12980")
+	  _P1("retu_select_max -1 -N 1.+1.%03d data.tag")
+	  _ST("003")
+	  _P1("retu_select_max -1 -N 1.+5.%010d data.tag")
+	  _ST("0000000012")
+	  _P1("echo | retu_select_max 5")
+          _ST("@")
+	  _P1("echo | retu_select_max -@ 000001 5")
+          _ST("000001")
+	  _P1("") },
 
 	TEXTSET_END
 };

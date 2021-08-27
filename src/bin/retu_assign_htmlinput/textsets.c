@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016,2017 Daichi GOTO
+ * Copyright (c) 2016,2017,2021 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -94,25 +94,25 @@ struct textset cmdtextsets[] = {
 	  _ARG("file") "\t	Specify the file." },
 	
 	{ "command_example", "en_", 
-	  _P("echo 1 @ 3 | retu_assign_htmlinput 1/3")
-	  _S("<input_value=\"1\"> <input> <input_value=\"3\">")
-	  _P("echo 1 @ 3 |")
+	  _P1("echo 1 @ 3 | retu_assign_htmlinput 1/3")
+	  _ST("<input_value=\"1\"> <input> <input_value=\"3\">")
+	  _P1("echo 1 @ 3 |")
 	  _P2("assign_htmlinput \\")
 	  _P2("\t1/3 \\")
 	  _P2("\t1._attr_.name.nam1 \\")
 	  _P2("\t2._attr_.name.'nam 2' \\")
 	  _P2("\t2._attr_.id.uniq")
-	  _S("<input_name=\"nam1\"_value=\"1\"> "
+	  _ST("<input_name=\"nam1\"_value=\"1\"> "
 	     "<input_name=\"nam_2\"_id=\"uniq\"> "
 	     "<in\nput_value=\"3\">")
-	  _P("echo '1 @ \\@ _ \\_ \" @' |")
+	  _P1("echo '1 @ \\@ _ \\_ \" @' |")
 	  _P2("retu_assign_htmlinput -r \\")
 	  _P2("\t7 \\")
 	  _P2("\t7._attr_.name.nam7 \\")
 	  _P2("\t7._attr_.id.'\\1:\\2:\\3:\\4:\\5:\\6'")
-	  _S("1 @ \\@ _ \\_ \" <input_value=\"\"_name=\"nam7\"_"
+	  _ST("1 @ \\@ _ \\_ \" <input_value=\"\"_name=\"nam7\"_"
 	     "id=\"1::@:_:\\_:&quot;\">")
-	  _P("") },
+	  _P1("") },
 
 	TEXTSET_END
 };

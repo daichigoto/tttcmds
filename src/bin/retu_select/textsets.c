@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016,2017 Daichi GOTO
+ * Copyright (c) 2016,2017,2021 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -112,41 +112,41 @@ struct textset cmdtextsets[] = {
 	  _ARG("file") "\t	Specify the file." },
 
 	{ "command_example", "en_", 
-	  _P("cat data1.ssv")
-	  _S("1 2 3 4 5 6 7 8 9")
-	  _P("retu_select 9 7 3 4 2 1 8 3 1 1 1 data1.ssv")
-	  _S("9 7 3 4 2 1 8 3 1 1 1")
-	  _P("retu_select 2/5 2/5 2/5 data1.ssv")
-	  _S("2 3 4 5 2 3 4 5 2 3 4 5")
-	  _P("retu_select 9/1 data1.ssv")
-	  _S("9 8 7 6 5 4 3 2 1")
-	  _P("retu_select 0 0 1 10 10 data1.ssv")
-	  _S("@ @ 1 @ @")
-	  _P("cat data2.ssv")
-	  _S("A")
-	  _P("retu_select 1/9 data1.ssv data2.ssv")
-	  _S("1 2 3 4 5 6 7 8 9")
-	  _S("A @ @ @ @ @ @ @ @")
-	  _P("retu_select 1:A:1 2/9 data1.ssv data2.ssv")
-	  _S("1 2 3 4 5 6 7 8 9")
-	  _S("1 @ @ @ @ @ @ @ @")
-	  _P("retu_select 1/9::0 data1.ssv data2.ssv")
-	  _S("1 2 3 4 5 6 7 8 9")
-	  _S("A 0 0 0 0 0 0 0 0")
-	  _P("retu_select 1/15 data1.ssv data2.ssv")
-	  _S("1 2 3 4 5 6 7 8 9 @ @ @ @ @ @")
-	  _S("A @ @ @ @ @ @ @ @ @ @ @ @ @ @")
-	  _P("cat price.tag")
-	  _S("ID PRICE")
-	  _S("000001 12800")
-	  _S("000002 9800")
-	  _P("retu_select -1 1/3 price.tag")
-	  _S("000001 12800 @")
-	  _S("000002 9800 @")
-	  _P("printf '' | retu_select 1/10")
-	  _P("printf '' | retu_select -e 1/10..NON")
-	  _S("NON NON NON NON NON NON NON NON NON NON")
-	  _P("") },
+	  _P1("cat data1.ssv")
+	  _ST("1 2 3 4 5 6 7 8 9")
+	  _P1("retu_select 9 7 3 4 2 1 8 3 1 1 1 data1.ssv")
+	  _ST("9 7 3 4 2 1 8 3 1 1 1")
+	  _P1("retu_select 2/5 2/5 2/5 data1.ssv")
+	  _ST("2 3 4 5 2 3 4 5 2 3 4 5")
+	  _P1("retu_select 9/1 data1.ssv")
+	  _ST("9 8 7 6 5 4 3 2 1")
+	  _P1("retu_select 0 0 1 10 10 data1.ssv")
+	  _ST("@ @ 1 @ @")
+	  _P1("cat data2.ssv")
+	  _ST("A")
+	  _P1("retu_select 1/9 data1.ssv data2.ssv")
+	  _ST("1 2 3 4 5 6 7 8 9")
+	  _ST("A @ @ @ @ @ @ @ @")
+	  _P1("retu_select 1:A:1 2/9 data1.ssv data2.ssv")
+	  _ST("1 2 3 4 5 6 7 8 9")
+	  _ST("1 @ @ @ @ @ @ @ @")
+	  _P1("retu_select 1/9::0 data1.ssv data2.ssv")
+	  _ST("1 2 3 4 5 6 7 8 9")
+	  _ST("A 0 0 0 0 0 0 0 0")
+	  _P1("retu_select 1/15 data1.ssv data2.ssv")
+	  _ST("1 2 3 4 5 6 7 8 9 @ @ @ @ @ @")
+	  _ST("A @ @ @ @ @ @ @ @ @ @ @ @ @ @")
+	  _P1("cat price.tag")
+	  _ST("ID PRICE")
+	  _ST("000001 12800")
+	  _ST("000002 9800")
+	  _P1("retu_select -1 1/3 price.tag")
+	  _ST("000001 12800 @")
+	  _ST("000002 9800 @")
+	  _P1("printf '' | retu_select 1/10")
+	  _P1("printf '' | retu_select -e 1/10..NON")
+	  _ST("NON NON NON NON NON NON NON NON NON NON")
+	  _P1("") },
 
 	TEXTSET_END
 };

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016,2017 Daichi GOTO
+ * Copyright (c) 2016,2017,2021 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -73,31 +73,31 @@ struct textset cmdtextsets[] = {
 	  _ARG("file")"\t	Specify the file." },
 
 	{ "command_example", "en_", 
-	  _P("cat data1.ssv")
-	  _S("000001 EUROPEAN_PEAR \\@CHINA")
-	  _S("000002 FRENCH_BEAN \\@CHINA")
-	  _S("000003 @ JAPAN")
-	  _P("cat data2.ssv")
-	  _S("0 0 0 1 2")
-	  _S("0 0 0 2 3")
-	  _S("0 0 0 3 4")
-	  _P("cat data1.ssv |")
+	  _P1("cat data1.ssv")
+	  _ST("000001 EUROPEAN_PEAR \\@CHINA")
+	  _ST("000002 FRENCH_BEAN \\@CHINA")
+	  _ST("000003 @ JAPAN")
+	  _P1("cat data2.ssv")
+	  _ST("0 0 0 1 2")
+	  _ST("0 0 0 2 3")
+	  _ST("0 0 0 3 4")
+	  _P1("cat data1.ssv |")
 	  _P2("conv_ssv2txt - data2.ssv")
-	  _S("000001 EUROPEAN PEAR @CHINA")
-	  _S("000002 FRENCH BEAN @CHINA")
-	  _S("000003 JAPAN")
-	  _S("0 0 0 1 2")
-	  _S("0 0 0 2 3")
-	  _S("0 0 0 3 4")
-	  _P("cat data1.ssv |")
+	  _ST("000001 EUROPEAN PEAR @CHINA")
+	  _ST("000002 FRENCH BEAN @CHINA")
+	  _ST("000003 JAPAN")
+	  _ST("0 0 0 1 2")
+	  _ST("0 0 0 2 3")
+	  _ST("0 0 0 3 4")
+	  _P1("cat data1.ssv |")
 	  _P2("conv_ssv2txt -t - data2.ssv")
-	  _S("000001 EUROPEAN PEAR @CHINA")
-	  _S("000002   FRENCH BEAN @CHINA")
-	  _S("000003                JAPAN")
-	  _S("     0             0      0 1 2")
-	  _S("     0             0      0 2 3")
-	  _S("     0             0      0 3 4")
-	  _P("") },
+	  _ST("000001 EUROPEAN PEAR @CHINA")
+	  _ST("000002   FRENCH BEAN @CHINA")
+	  _ST("000003                JAPAN")
+	  _ST("     0             0      0 1 2")
+	  _ST("     0             0      0 2 3")
+	  _ST("     0             0      0 3 4")
+	  _P1("") },
 
 	TEXTSET_END
 };

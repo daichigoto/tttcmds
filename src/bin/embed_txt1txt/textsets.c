@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Daichi GOTO
+ * Copyright (c) 2016,2021 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -86,35 +86,35 @@ struct textset cmdtextsets[] = {
 	  _ARG("file") "\t	Specify the file." },
 	
 	{ "command_example", "en_", 
-	  _P("cat main.html")
-	  _S("<html>")
-	  _S("<body>")
-	  _S("	<thead>")
-	  _S("		<!--HEAD-->")
-	  _S("	</thead>")
-	  _S("	<tbody>")
-	  _S("		<!--BODY-->")
-	  _S("	</tbody>")
-	  _S("</body>")
-	  _S("</html>")
-	  _P("cat thead.html")
-	  _S("<tr><th>NAME1</th><th>NAME2</th><th>NAME3</th></tr>")
-	  _P("cat tbody.html")
-	  _S("<tr><td>a</td><td>b</td><td>c</td></tr>")
-	  _P("cat main.html |")
-	  _P("embed_txt1txt -n \\")
+	  _P1("cat main.html")
+	  _ST("<html>")
+	  _ST("<body>")
+	  _ST("	<thead>")
+	  _ST("		<!--HEAD-->")
+	  _ST("	</thead>")
+	  _ST("	<tbody>")
+	  _ST("		<!--BODY-->")
+	  _ST("	</tbody>")
+	  _ST("</body>")
+	  _ST("</html>")
+	  _P1("cat thead.html")
+	  _ST("<tr><th>NAME1</th><th>NAME2</th><th>NAME3</th></tr>")
+	  _P1("cat tbody.html")
+	  _ST("<tr><td>a</td><td>b</td><td>c</td></tr>")
+	  _P1("cat main.html |")
+	  _P1("embed_txt1txt -n \\")
 	  _P2("	1,'<!--HEAD-->',thead.html 2,'<!--BODY-->',tbody.html")
-	  _S("<html>")
-	  _S("<body>")
-	  _S("	<thead>")
-	  _S("		<tr><th>NAME1</th><th>NAME2</th><th>NAME3</th></tr>")
-	  _S("	</thead>")
-	  _S("	<tbody>")
-	  _S("		<tr><td>a</td><td>b</td><td>c</td></tr>")
-	  _S("	</tbody>")
-	  _S("</body>")
-	  _S("</html>")
-	  _P("") },
+	  _ST("<html>")
+	  _ST("<body>")
+	  _ST("	<thead>")
+	  _ST("		<tr><th>NAME1</th><th>NAME2</th><th>NAME3</th></tr>")
+	  _ST("	</thead>")
+	  _ST("	<tbody>")
+	  _ST("		<tr><td>a</td><td>b</td><td>c</td></tr>")
+	  _ST("	</tbody>")
+	  _ST("</body>")
+	  _ST("</html>")
+	  _P1("") },
 
 	TEXTSET_END
 };

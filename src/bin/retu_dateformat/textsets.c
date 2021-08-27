@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017-2019 Daichi GOTO
+ * Copyright (c) 2017-2019,2021 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -143,43 +143,43 @@ struct textset cmdtextsets[] = {
 	  _ARG("file") "\t	Specify the file." },
 	
 	{ "command_example", "en_", 
-	  _P("echo 2016/11/09-12:14 2016/11/10-08:54 |")
+	  _P1("echo 2016/11/09-12:14 2016/11/10-08:54 |")
 	  _P2("retu_dateformat 1.%Y/%m/%d-%H:%M.%Y%m%d%H%M%S \\")
 	  _P2("	          2.%Y/%m/%d-%H:%M.%Y%m%d%H%M%S | tee date.ssv")
-	  _S("20161109121400 20161110085400")
-	  _P("retu_dateformat 1.%Y%m%d%H%M%S.%Y/%m/%d-%H:%M \\")
+	  _ST("20161109121400 20161110085400")
+	  _P1("retu_dateformat 1.%Y%m%d%H%M%S.%Y/%m/%d-%H:%M \\")
 	  _P2("	          2.%Y%m%d%H%M%S.%Y/%m/%d-%H:%M date.ssv")
-	  _S("2016/11/09-12:14 2016/11/10-08:54")
-	  _P("retu_dateformat 1/2.%Y%m%d%H%M%S.%Y/%m/%d-%H:%M date.ssv")
-	  _S("2016/11/09-12:14 2016/11/10-08:54")
-	  _P("retu_dateformat 1.%Y%m%d%H%M%S.%s 2.%Y%m%d%H%M%S.%s date.ssv")
-	  _S("1478661263 1478735640")
-	  _P("retu_dateformat 1.%Y%m%d%H%M%S.%s 2.%Y%m%d%H%M%S.%s date.ssv |")
+	  _ST("2016/11/09-12:14 2016/11/10-08:54")
+	  _P1("retu_dateformat 1/2.%Y%m%d%H%M%S.%Y/%m/%d-%H:%M date.ssv")
+	  _ST("2016/11/09-12:14 2016/11/10-08:54")
+	  _P1("retu_dateformat 1.%Y%m%d%H%M%S.%s 2.%Y%m%d%H%M%S.%s date.ssv")
+	  _ST("1478661263 1478735640")
+	  _P1("retu_dateformat 1.%Y%m%d%H%M%S.%s 2.%Y%m%d%H%M%S.%s date.ssv |")
 	  _P2("retu_dateformat 1.%s.\"%m/%d %H:%M\" 2.%s.\"%m/%d %H:%M\"")
-	  _S("11/09_12:14 11/10_08:54")
-	  _P("retu_dateformat 1/2.%Y%m%d%H%M%S.%A(%a) date.ssv")
-	  _S("Wednesday(Wed) Thursday(Thu)")
-	  _P("env LANG=ja_JP.UTF-8 \\")
+	  _ST("11/09_12:14 11/10_08:54")
+	  _P1("retu_dateformat 1/2.%Y%m%d%H%M%S.%A(%a) date.ssv")
+	  _ST("Wednesday(Wed) Thursday(Thu)")
+	  _P1("env LANG=ja_JP.UTF-8 \\")
 	  _P2("retu_dateformat 1/2.%Y%m%d%H%M%S.%A(%a) date.ssv")
-	  _S("水曜日(水) 木曜日(木)")
-	  _P("retu_dateformat 1/2.%Y%m%d%H%M%S.%Y%m%d date.ssv")
-	  _S("20161109 20161110")
-	  _P("retu_dateformat 1.%Y%m%d%H%M%S.%Y%m%d.+7d \\")
+	  _ST("水曜日(水) 木曜日(木)")
+	  _P1("retu_dateformat 1/2.%Y%m%d%H%M%S.%Y%m%d date.ssv")
+	  _ST("20161109 20161110")
+	  _P1("retu_dateformat 1.%Y%m%d%H%M%S.%Y%m%d.+7d \\")
 	  _P2("	          2.%Y%m%d%H%M%S.%Y%m%d.-1m date.ssv")
-	  _S("20161116 20161010")
-	  _P("echo 20170829292539 20170829752539 |")
+	  _ST("20161116 20161010")
+	  _P1("echo 20170829292539 20170829752539 |")
 	  _P2("retu_dateformat 1/2.%Y%m%d%H%M%S.%m/%d-%H:%M")
-	  _S("08/30-05:25 09/01-03:25")
-	  _P("echo 20170829032539 20170828032539 20170828 |")
+	  _ST("08/30-05:25 09/01-03:25")
+	  _P1("echo 20170829032539 20170828032539 20170828 |")
 	  _P2("retu_dateformat -3 3 1/2.%Y%m%d%H%M%S.%m/%d-%H:%M")
-	  _S("08/28-27:25 08/28-03:25 20170828")
-	  _P("echo 2017-08-29.29:25:39 2017-08-29.75:25:39 |")
+	  _ST("08/28-27:25 08/28-03:25 20170828")
+	  _P1("echo 2017-08-29.29:25:39 2017-08-29.75:25:39 |")
 	  _P2("retu_dateformat 1/2.%Y%m%d%H%M.%m/%d-%H:%M")
-	  _S("@ @")
-	  _P("echo 2017-08-29.29:25:39 2017-08-29.75:25:39 |")
+	  _ST("@ @")
+	  _P1("echo 2017-08-29.29:25:39 2017-08-29.75:25:39 |")
 	  _P2("retu_dateformat -e 1/2.%Y%m%d%H%M.%m/%d-%H:%M")
-	  _S("2017-08-29.29:25:39 2017-08-29.75:25:39")
-	  _P("") },
+	  _ST("2017-08-29.29:25:39 2017-08-29.75:25:39")
+	  _P1("") },
 
 	TEXTSET_END
 };

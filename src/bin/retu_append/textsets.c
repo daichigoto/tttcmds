@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Daichi GOTO
+ * Copyright (c) 2017,2021 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -96,40 +96,40 @@ struct textset cmdtextsets[] = {
 	  _ARG("file") "\t	Specify the file." },
 
 	{ "command_example", "en_", 
-	  _P("cat data.ssv")
-	  _S("1 2 3 @ 5 6 7 8 9")
-	  _S("@ b c d e f @ h i")
-	  _P("retu_append 1.2 data.ssv")
-	  _S("12 2 3 @ 5 6 7 8 9")
-	  _S("b b c d e f @ h i")
-	  _P("retu_append 1.4 data.ssv")
-	  _S("1 2 3 @ 5 6 7 8 9")
-	  _S("d b c d e f @ h i")
-	  _P("retu_append 1/8.9 data.ssv")
-	  _S("19 29 39 9 59 69 79 89 9")
-	  _S("i bi ci di ei fi i hi i")
-	  _P("retu_append -d, 1/8.9 data.ssv")
-	  _S("1,9 2,9 3,9 9 5,9 6,9 7,9 8,9 9")
-	  _S("i b,i c,i d,i e,i f,i i h,i i")
-	  _P("retu_append -r 1.4 data.ssv")
-	  _S("1 2 3 5 6 7 8 9")
-	  _S("d b c e f @ h i")
-	  _P("retu_append -r -d, 1/8.9 data.ssv")
-	  _S("1,9 2,9 3,9 9 5,9 6,9 7,9 8,9")
-	  _S("i b,i c,i d,i e,i f,i i h,i")
-	  _P("retu_append 1.2/4 data.ssv")
-	  _S("123 2 3 @ 5 6 7 8 9")
-	  _S("bcd b c d e f @ h i")
-	  _P("retu_append 1.2,3,4 data.ssv")
-	  _S("123 2 3 @ 5 6 7 8 9")
-	  _S("bcd b c d e f @ h i")
-	  _P("retu_append -r 1.2/4 data.ssv")
-	  _S("123 5 6 7 8 9")
-	  _S("bcd e f @ h i")
-	  _P("retu_append -d, -r 1.2/4 data.ssv")
-	  _S("1,2,3 5 6 7 8 9")
-	  _S("b,c,d e f @ h i")
-	  _P("") },
+	  _P1("cat data.ssv")
+	  _ST("1 2 3 @ 5 6 7 8 9")
+	  _ST("@ b c d e f @ h i")
+	  _P1("retu_append 1.2 data.ssv")
+	  _ST("12 2 3 @ 5 6 7 8 9")
+	  _ST("b b c d e f @ h i")
+	  _P1("retu_append 1.4 data.ssv")
+	  _ST("1 2 3 @ 5 6 7 8 9")
+	  _ST("d b c d e f @ h i")
+	  _P1("retu_append 1/8.9 data.ssv")
+	  _ST("19 29 39 9 59 69 79 89 9")
+	  _ST("i bi ci di ei fi i hi i")
+	  _P1("retu_append -d, 1/8.9 data.ssv")
+	  _ST("1,9 2,9 3,9 9 5,9 6,9 7,9 8,9 9")
+	  _ST("i b,i c,i d,i e,i f,i i h,i i")
+	  _P1("retu_append -r 1.4 data.ssv")
+	  _ST("1 2 3 5 6 7 8 9")
+	  _ST("d b c e f @ h i")
+	  _P1("retu_append -r -d, 1/8.9 data.ssv")
+	  _ST("1,9 2,9 3,9 9 5,9 6,9 7,9 8,9")
+	  _ST("i b,i c,i d,i e,i f,i i h,i")
+	  _P1("retu_append 1.2/4 data.ssv")
+	  _ST("123 2 3 @ 5 6 7 8 9")
+	  _ST("bcd b c d e f @ h i")
+	  _P1("retu_append 1.2,3,4 data.ssv")
+	  _ST("123 2 3 @ 5 6 7 8 9")
+	  _ST("bcd b c d e f @ h i")
+	  _P1("retu_append -r 1.2/4 data.ssv")
+	  _ST("123 5 6 7 8 9")
+	  _ST("bcd e f @ h i")
+	  _P1("retu_append -d, -r 1.2/4 data.ssv")
+	  _ST("1,2,3 5 6 7 8 9")
+	  _ST("b,c,d e f @ h i")
+	  _P1("") },
 
 	TEXTSET_END
 };

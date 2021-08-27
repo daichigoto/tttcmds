@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Daichi GOTO
+ * Copyright (c) 2016,2021 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -80,16 +80,16 @@ struct textset cmdtextsets[] = {
 	  _ARG("file") "\t	Specify the file." },
 	
 	{ "command_example", "en_", 
-	  _P("cat data.txt")
-	  _S("Redistribution and use in source and binary forms, with or")
-	  _S("without modification, are permitted provided that the")
-	  _S("following conditions are met:")
-	  _P("cat data.txt |")
+	  _P1("cat data.txt")
+	  _ST("Redistribution and use in source and binary forms, with or")
+	  _ST("without modification, are permitted provided that the")
+	  _ST("following conditions are met:")
+	  _P1("cat data.txt |")
 	  _P2("embed_value1txt 1.and.AND 2.or.OR 3.are.ARE")
-	  _S("Redistribution AND use in source AND binary fORms, with OR")
-	  _S("without modification, ARE permitted provided that the")
-	  _S("following conditions ARE met:")
-	  _P("") },
+	  _ST("Redistribution AND use in source AND binary fORms, with OR")
+	  _ST("without modification, ARE permitted provided that the")
+	  _ST("following conditions ARE met:")
+	  _P1("") },
 
 	TEXTSET_END
 };

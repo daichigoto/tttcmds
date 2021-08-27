@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Daichi GOTO
+ * Copyright (c) 2016,2021 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -75,14 +75,14 @@ struct textset cmdtextsets[] = {
 	  _ARG("dir") "		Specify the directory." },
 	
 	{ "command_example", "en_",
-	  _P("while wait_filechanges .")
+	  _P1("while wait_filechanges .")
 	  _P2("do")
 	  _P2("	make clean")
 	  _P2("	make")
 	  _P2("	make test")
 	  _P2("done")
-	  _S("...")
-	  _P("") },
+	  _ST("...")
+	  _P1("") },
 
 	TEXTSET_END
 };

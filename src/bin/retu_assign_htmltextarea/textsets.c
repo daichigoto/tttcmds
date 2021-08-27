@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Daichi GOTO
+ * Copyright (c) 2017,2021 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -94,22 +94,22 @@ struct textset cmdtextsets[] = {
 	  _ARG("file") "\t	Specify the file." },
 	
 	{ "command_example", "en_", 
-	  _P("echo 1 @ | retu_assign_htmltextarea 1/2")
-	  _S("<textarea>1</textarea> <textarea></textarea>")
-	  _P("echo 1 @ |")
+	  _P1("echo 1 @ | retu_assign_htmltextarea 1/2")
+	  _ST("<textarea>1</textarea> <textarea></textarea>")
+	  _P1("echo 1 @ |")
 	  _P2("assign_htmltextarea \\")
 	  _P2("\t1._attr_.name.nam1 \\")
 	  _P2("\t2._attr_.name.'nam 2' \\")
 	  _P2("\t2._attr_.id.uniq")
-	  _S("<textarea_name=\"nam1\">1</textarea> "
+	  _ST("<textarea_name=\"nam1\">1</textarea> "
 	     "<textarea_name=\"nam_2\"_id=\"uniq\">\n</textarea>")
-	  _P("echo '1 @ \\@ _ \\_ \" @' |")
+	  _P1("echo '1 @ \\@ _ \\_ \" @' |")
 	  _P2("retu_assign_htmltextarea -r \\")
 	  _P2("\t7._attr_.name.nam7 \\")
 	  _P2("\t7._attr_.id.'\\1:\\2:\\3:\\4:\\5:\\6'")
-	  _S("1 @ \\@ _ \\_ \" <textarea_name=\"nam7\"_"
+	  _ST("1 @ \\@ _ \\_ \" <textarea_name=\"nam7\"_"
 	     "id=\"1::@:_:\\_:&quot;\"></textarea>")
-	  _P("") },
+	  _P1("") },
 
 	TEXTSET_END
 };
