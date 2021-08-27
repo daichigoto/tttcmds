@@ -285,7 +285,7 @@ retu_analysis:
 			 */
 			p1 = &argv[i][0];	
 			p2 = buf;
-			while (isdigit(*p1)) {
+			while (isdigit((signed char)*p1)) {
 				*p2++ = *p1++;
 			}
 			*p2 = '\0';
