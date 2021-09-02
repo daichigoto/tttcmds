@@ -25,20 +25,16 @@
 
 CMD=		$(DIRNAME).exe
 
-SRCS=		$(wildcard *.c)
-OBJS=		$(SRCS:.c=.o)
-HEADERS=	command.h
+test: build
+	env PATH="$(BINDIR):$(PATH)" kyua.exe $@
 
-build: $(CMD)
+report:
+	$(MAKE) clean build
+	kyua.exe report-html
 
-$(CMD): $(OBJS)
-	$(CC) $(CFLAGS) -o $(CMD) $(OBJS) $(LINKFLAGS)
-
-.c.o:
-	$(CC) $(CFLAGS) -c $< -o $@
+build:
+	cd $(SRCDIR)/bin/$(DIRNAME); $(MAKE) $@
 
 clean:
-	rm -f $(CMD) $(OBJS)
-
-test:
-	cd $(TESTDIR)/bin/$(DIRNAME); $(MAKE) $@
+	cd $(SRCDIR)/bin/$(DIRNAME); $(MAKE) $@
+	rm -rf html

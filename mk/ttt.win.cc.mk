@@ -25,7 +25,8 @@
 
 CC=		'C:\msys64\usr\bin\clang.exe'
 
-CFLAGS=		-O2 \
+CFLAGS=		-I$(SRCINCDIR) \
+		-O2 \
 		-pipe \
 		-std=gnu99 \
 		-fstack-protector \
@@ -35,3 +36,5 @@ CFLAGS=		-O2 \
 
 CFLAGS+=	-Wno-typedef-redefinition \
 		-Wno-incompatible-pointer-types-discards-qualifiers
+
+LINKFLAGS=	$(wildcard $(SRCLIBDIR)/libttt/*.o)

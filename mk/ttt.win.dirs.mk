@@ -52,6 +52,7 @@ BINDIR=		$(TOPDIR)/bin
 LIBDIR=		$(TOPDIR)/lib
 SRCDIR=		$(TOPDIR)/src
 SRCINCDIR=	$(SRCDIR)/include
+SRCLIBDIR=	$(SRCDIR)/lib
 INCLUDEDIR=	$(TOPDIR)/include
 TESTDIR=	$(TOPDIR)/tests
 MKDIR=		$(TOPDIR)/mk

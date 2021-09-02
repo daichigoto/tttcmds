@@ -25,5 +25,4 @@
 
 MAKE+=		-f Makefile.win
 
-CC=		'C:\msys64\usr\bin\clang.exe'
 FIND=		'C:\msys64\usr\bin\find.exe'
