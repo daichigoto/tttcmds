@@ -26,7 +26,7 @@
 include		./../../mk/ttt.win.dirs.mk
 include		./../../mk/ttt.win.perm.mk
 
-HEADER_FILES=	$(shell ls | grep '[.]h$$' 2> /dev/null)
+HEADER_FILES=	$(wildcard *.h)
 
 all:	build
 
