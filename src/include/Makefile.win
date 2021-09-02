@@ -38,6 +38,12 @@ install:
 		install -m $(INCLUDEPERM) $${i} $(INCLUDEDIR); \
 	done
 
+uninstall:
+	for i in $(HEADER_FILES); \
+	do \
+		rm -f $(INCLUDEDIR)/$${i}; \
+	done
+
 clean:
 	for i in $(HEADER_FILES); \
 	do \
