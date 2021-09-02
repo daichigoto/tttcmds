@@ -46,7 +46,7 @@ TOPDIR=		$(shell echo $(CURDIR) | sed 's,/[^/]*/[^/]*/[^/]*$$,/,')
 endif
 
 WORKPLACE=	$(subst $(TOPDIR),,/$(CURDIR))
-DIRNAME=	$(shell basename $(WORKPLACE))
+DIRNAME=	$(notdir $(WORKPLACE))
 
 BINDIR=		$(TOPDIR)/bin
 LIBDIR=		$(TOPDIR)/lib
