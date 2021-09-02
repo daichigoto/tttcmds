@@ -26,16 +26,16 @@
 include		./../mk/ttt.win.dirs.mk
 include		./../mk/ttt.win.cmd.mk
 
+all:	test
+
 test:
 	env PATH="$(BINDIR):$(PATH)" kyua.exe $@
 
-all:	build
+report:
+	kyua.exe report-html
 
 build:
 	cd $(SRCDIR); $(MAKE) $@
 
 clean:
 	cd $(SRCDIR); $(MAKE) $@
-
-report:
-	kyua report-html
