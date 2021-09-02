@@ -23,17 +23,15 @@
 #  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE 
 #  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-include		./../../../mk/ttt.win.cc.mk
 include		./../../../mk/ttt.win.dirs.mk
 include		./../../../mk/ttt.win.perm.mk
+include		./../../../mk/ttt.win.cc.mk
 
 SRCS=		$(wildcard *.c)
 OBJS=		$(SRCS:.c=.o)
 LIB=		libttt.dll
 
-LIBDIR=		./../../../lib
-
-CFLAGS+=	-I./../../include
+CFLAGS+=	-I$(SRCINCDIR)
 
 all:	build
 
