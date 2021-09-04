@@ -65,7 +65,7 @@ main(int argc, char *argv[])
 		while (NULL != fgets(buf, BUFSIZ, fp)) {
 			if (2 <= strlen(buf)) {
 				p = buf;
-				while (isdigit(*p))
+				while (isdigit((signed char)*p))
 					++p;
 				*p = '\0';
 				errno = 0;
