@@ -25,16 +25,12 @@
 
 CMD=		$(DIRNAME).exe
 
-test: build
-	env PATH="$(BINDIR):$(PATH)" kyua.exe $@
-
-report:
-	$(MAKE) clean build
+test: clean build
+	env PATH="$(BINDIR):$(PATH)" kyua.exe $@ || true
 	kyua.exe report-html
 
 build:
 	cd $(SRCDIR)/bin/$(DIRNAME); $(MAKE) $@
 
 clean:
-	cd $(SRCDIR)/bin/$(DIRNAME); $(MAKE) $@
 	rm -rf html
