@@ -27,7 +27,6 @@ CMD=		$(DIRNAME).exe
 
 SRCS=		$(wildcard *.c)
 OBJS=		$(SRCS:.c=.o)
-HEADERS=	command.h
 
 _aliases=	$(shell	grep '#define ALIAS' command.h		| \
 			sed 's/#define ALIAS //'		| \
@@ -42,13 +41,15 @@ $(CMD): $(OBJS)
 .c.o:
 	$(CC) $(CFLAGS) -c $< -o $@
 
-install: 
+install: build $(BINDIR)/$(CMD)
+
+$(BINDIR)/$(CMD): $(CMD)
 	for i in $(CMD) $(ALIASES); \
 	do \
 		install -m $(BINPERM) $(CMD) $(BINDIR)/$${i}; \
 	done
 
-uninstall:
+uninstall: 
 	for i in $(CMD) $(ALIASES); \
 	do \
 		rm -f $(BINDIR)/$${i}; \
@@ -57,5 +58,5 @@ uninstall:
 clean:
 	rm -f $(CMD) $(OBJS)
 
-test:
+test: install
 	cd $(TESTDIR)/bin/$(DIRNAME); $(MAKE) $@
