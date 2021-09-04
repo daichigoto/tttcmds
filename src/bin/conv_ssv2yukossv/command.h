@@ -30,7 +30,7 @@
 #define ALIAS "ssv2yukossv mkyuko"
 
 #include <limits.h>
-#ifdef __linux__
+#if defined(__MSYS__) || defined(__linux__)
 #include <db_185.h>
 #else
 #include <db.h>
