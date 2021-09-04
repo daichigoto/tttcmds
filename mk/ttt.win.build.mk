@@ -29,6 +29,11 @@ SRCS=		$(wildcard *.c)
 OBJS=		$(SRCS:.c=.o)
 HEADERS=	command.h
 
+_aliases=	$(shell	grep '#define ALIAS' command.h		| \
+			sed 's/#define ALIAS //'		| \
+			sed 's/"//g'				)
+ALIASES=	$(_aliases:=.exe)
+
 build: $(CMD)
 
 $(CMD): $(OBJS)
@@ -36,6 +41,18 @@ $(CMD): $(OBJS)
 
 .c.o:
 	$(CC) $(CFLAGS) -c $< -o $@
+
+install: 
+	for i in $(CMD) $(ALIASES); \
+	do \
+		install -m $(BINPERM) $(CMD) $(BINDIR)/$${i}; \
+	done
+
+uninstall:
+	for i in $(CMD) $(ALIASES); \
+	do \
+		rm -f $(BINDIR)/$${i}; \
+	done
 
 clean:
 	rm -f $(CMD) $(OBJS)
