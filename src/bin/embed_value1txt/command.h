@@ -32,7 +32,7 @@
 #include <sys/types.h>
 #include <fcntl.h>
 #include <limits.h>
-#ifdef __linux__
+#if defined(__MSYS__) || defined(__linux__)
 #include <db_185.h>
 #else
 #include <db.h>
