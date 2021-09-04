@@ -33,7 +33,7 @@ _aliases=	$(shell	grep '#define ALIAS' command.h		| \
 			sed 's/"//g'				)
 ALIASES=	$(_aliases:=.exe)
 
-build: $(CMD)
+build: install-required-packages $(CMD)
 
 $(CMD): $(OBJS)
 	$(CC) $(CFLAGS) -o $(CMD) $(OBJS) $(LINKFLAGS)
@@ -60,3 +60,13 @@ clean:
 
 test: install
 	cd $(TESTDIR)/bin/$(DIRNAME); $(MAKE) $@
+
+install-required-packages:
+#--------------------------------------------------------------------
+# Berkeley DB 4 (1.85 compatible API)
+#--------------------------------------------------------------------
+ifdef NEED_BDB185
+ ifneq ($(wildcard /usr/include/db_185.h),/usr/include/db_185.h)
+	pacman -S --noconfirm libdb-devel
+ endif
+endif

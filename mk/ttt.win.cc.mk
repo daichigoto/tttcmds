@@ -38,3 +38,7 @@ CFLAGS+=	-Wno-typedef-redefinition \
 		-Wno-incompatible-pointer-types-discards-qualifiers
 
 LINKFLAGS=	$(wildcard $(SRCLIBDIR)/libttt/*.o)
+
+ifdef NEED_BDB185
+LINKFLAGS+=	-ldb
+endif
