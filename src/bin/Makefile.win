@@ -35,7 +35,7 @@ build:
 	cd ./../lib; $(MAKE) $@
 	for i in $(TARGET_DIRS); \
 	do \
-		( cd $${i}; $(MAKE) $@ ); \
+		( cd $${i}; $(MAKE) install ); \
 	done
 
 clean:
