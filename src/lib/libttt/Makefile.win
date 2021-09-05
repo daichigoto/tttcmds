@@ -43,4 +43,4 @@ build: $(OBJS)
 	install.exe -m $(LIBPERM) $(LIB) $(LIBDIR)
 
 clean:
-	rm -f $(OBJS) $(LIB) $(LIBPERM)/$(LIB)
+	rm -f $(OBJS) $(LIB) $(LIBDIR)/$(LIB)
