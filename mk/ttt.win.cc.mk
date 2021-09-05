@@ -40,5 +40,6 @@ CFLAGS+=	-Wno-typedef-redefinition \
 LINKFLAGS=	$(wildcard $(SRCLIBDIR)/libttt/*.o)
 
 ifdef NEED_BDB185
-LINKFLAGS+=	-ldb
+#LINKFLAGS+=	-ldb
+LINKFLAGS+=	/usr/lib/libdb.a
 endif

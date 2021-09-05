@@ -30,7 +30,7 @@ test: clean build
 	kyua.exe report-html
 
 build:
-	cd $(SRCDIR)/bin/$(DIRNAME); $(MAKE) $@
+	cd $(SRCDIR)/bin/$(DIRNAME); $(MAKE) install
 
 clean:
 	rm -rf html
