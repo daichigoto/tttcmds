@@ -63,6 +63,13 @@ test: install
 
 install-required-packages:
 #--------------------------------------------------------------------
+# libttt
+#--------------------------------------------------------------------
+ifneq ($(wildcard $(SRCLIBDIR)/libttt/getcmdargs.o),$(SRCLIBDIR)/libttt/getcmdargs.o)
+	cd $(SRCLIBDIR)/libttt/; $(MAKE) build
+endif
+
+#--------------------------------------------------------------------
 # Berkeley DB 4 (1.85 compatible API)
 #--------------------------------------------------------------------
 ifdef NEED_BDB185
