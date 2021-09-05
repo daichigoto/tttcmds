@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Daichi GOTO
+ * Copyright (c) 2019,2021 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -27,7 +27,11 @@
 
 #include "command.h"
 
+#if defined(__MSYS__) || defined(__linux__)
+#define	LINE_BUF_MAX	4096
+#else
 #define	LINE_BUF_MAX	3145728
+#endif
 
 #define	IS_NOT_SEPARATOR(p)			\
 	' ' != *p && '\n' != *p && '\0' != *p
@@ -68,7 +72,7 @@ main(int argc, char *argv[])
 	int	id_len;
 
 	// Create btree storage
-	btree = dbopen(NULL, O_RDWR, 0, DB_BTREE, NULL);
+	btree = dbopen(NULL, O_CREAT | O_RDWR, 0, DB_BTREE, NULL);
 
 	fp = fopen(F_ARGV[1], "r");
 	if (NULL == fp)
