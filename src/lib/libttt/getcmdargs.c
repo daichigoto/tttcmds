@@ -686,7 +686,7 @@ stdintotempfile(void)
 	FILE *fp_i, *fp_o;
 
 	mktempfile();
-	/* fp_i = fopen(STDIN_FILE, "r"); */
+
 	fp_i = stdin;
 	if (NULL == fp_i)
 		err(errno, "%s", STDIN_FILE);
