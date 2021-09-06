@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Daichi GOTO
+ * Copyright (c) 2019,2021 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -27,7 +27,14 @@
 
 #include "command.h"
 
+#if defined(__MSYS__)
+// MSYS2 (Cygwin) crashes when memory usage increases (detailed cause
+// unknown). It appears to crash when the total memory usage exceeds 2MB.
+// For this reason, I keep the buffer size small.
+#define LINE_BUF_MAX    524288
+#else
 #define	LINE_BUF_MAX	3145728
+#endif
 
 #define	IS_NUM(p) 					\
 	(48 <= *p && *p <= 57)
@@ -59,7 +66,7 @@ static void process_greater_than_or_equal_to(char *, char *, int);
 static void process_less_than_or_equal_to(char *, char *, int);
 
 void
-simple_comparison(int argc, char *argv[])
+simple_comparison()
 {
 	// Only one column can be processed with option -s
 	if (1 != R_ARGC) {

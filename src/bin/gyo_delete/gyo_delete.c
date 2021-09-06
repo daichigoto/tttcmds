@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016,2017,2019 Daichi GOTO
+ * Copyright (c) 2016,2017,2019,2021 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -39,7 +39,7 @@ main(int argc, char *argv[])
 	 * Simple Equality/Inequality Condition
 	 */
 	if (FLAG_s) {
-		simple_comparison(argc, argv);	 	
+		simple_comparison();	 	
 		exit(EX_OK);
 	}
 
@@ -84,7 +84,7 @@ main(int argc, char *argv[])
 		r_argv[3] = NULL;
 		getcmdargs(3, r_argv, "", CMDARGS_R_NEED);
 
-		btrees[i] = dbopen(NULL, O_RDWR, 0, DB_BTREE, NULL);
+		btrees[i] = dbopen(NULL, O_CREAT | O_RDWR, 0, DB_BTREE, NULL);
 		if (NULL == btrees[i])
 			err(errno, CMDNAME ": dbopen failed");
 
