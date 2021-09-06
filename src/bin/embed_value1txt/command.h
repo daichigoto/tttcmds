@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016,2019 Daichi GOTO
+ * Copyright (c) 2016,2019,2021 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -42,14 +42,15 @@
 
 #define TGT_BUFFER_PROCESS(BUF,SIZE) \
 	int match; \
+	int res; \
 	for (int i = 0; i < SIZE; i++) { \
 		match = 0; \
-		while (0 == hashtable->seq(hashtable, \
-			&hash_key, &hash_val, R_NEXT)) { \
-			if (0 == strncmp(&BUF[i], hash_key.data, \
-				hash_key.size-1)) { \
-				printf("%s", hash_val.data); \
-				i += hash_key.size - 2; \
+		for (res = db->seq(db, &key, &val, R_FIRST); \
+		     0 == res; \
+		     res = db->seq(db, &key, &val, R_NEXT)) { \
+			if (0 == strncmp(&BUF[i], key.data, key.size-1)) { \
+				printf("%s", (char *)(val.data)); \
+				i += key.size - 2; \
 				match = 1; \
 				break; \
 			} \

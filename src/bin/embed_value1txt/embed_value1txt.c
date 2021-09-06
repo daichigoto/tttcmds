@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016,2019 Daichi GOTO
+ * Copyright (c) 2016,2019,2021 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -27,6 +27,9 @@
 
 #include "command.h"
 
+static inline void print_dbt(DBT *);
+static inline void println_dbt(DBT *);
+
 int
 main(int argc, char *argv[])
 {
@@ -39,22 +42,55 @@ main(int argc, char *argv[])
 	/*
 	 * setup the label and value sets
 	 */
-        DB *hashtable;
-        DBT hash_key, hash_val;
+        DB *db;
+        DBT key, val;
 
 	// BD_BTREE cannot be used because the length of the key value 
 	// is not fixed. You need to use BD_HASH.
-	hashtable = dbopen(NULL, O_RDWR, 0, DB_HASH, NULL);
+	db = dbopen(NULL, O_CREAT | O_RDWR, 0, DB_HASH, NULL);
 
 	for (int i = 0; i < R_ARGC; i++) {
-		hash_key.data = cmdargs.r_argv_arg1[i+1];
-		hash_key.size = strlen(hash_key.data) + 1;
-		hash_val.data = cmdargs.r_argv_arg2[i+1];
-		hash_val.size = strlen(hash_val.data) + 1;
-		hashtable->put(hashtable, &hash_key, &hash_val, 0);
+		key.data = cmdargs.r_argv_arg1[i+1];
+		key.size = strlen(key.data) + 1;
+		val.data = cmdargs.r_argv_arg2[i+1];
+		val.size = strlen(val.data) + 1;
+		db->put(db, &key, &val, 0);
+	}
+
+	if (FLAG_D) {
+		while (0 == db->seq(db, &key, &val, R_NEXT)) {
+			print_dbt(&key);		
+			println_dbt(&val);		
+		}
 	}
 
 	FILEPROCESS_ALLBUFFER
 
 	exit(EX_OK);
+}
+
+static inline void
+print_dbt(DBT *dbt_p)
+{
+        char buf[4096];
+        int len = 0;
+
+        if (4096 > dbt_p->size) {
+                len = dbt_p->size;
+        }
+        else {
+                len = 4096 - 1;
+        }
+
+        memcpy(buf, dbt_p->data, len);
+        buf[len] = '\0';
+
+        fprintf(stderr, "[%zu %s]", dbt_p->size, buf);
+}
+
+static inline void
+println_dbt(DBT *dbt_p)
+{
+        print_dbt(dbt_p);
+        fprintf(stderr, "\n");
 }
