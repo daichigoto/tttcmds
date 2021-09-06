@@ -27,14 +27,7 @@
 
 #include "command.h"
 
-#if defined(__MSYS__)
-// MSYS2 (Cygwin) crashes when memory usage increases (detailed cause
-// unknown). It appears to crash when the total memory usage exceeds 2MB.
-// For this reason, I keep the buffer size small.
-#define LINE_BUF_MAX    524288
-#else
 #define	LINE_BUF_MAX	3145728
-#endif
 
 #define	IS_NUM(p) 					\
 	(48 <= *p && *p <= 57)
@@ -193,7 +186,14 @@ simple_comparison()
 #define	PROCESS_PRE_TREATMENT					\
 	FILE *fp;						\
 								\
-	char line_buf[LINE_BUF_MAX];				\
+	/*							\
+	 * MSYS2 (Cygwin) stack memory is limited to a few MB	\
+	 * and crashes quickly. To avoid consuming the stack	\
+	 * memory, large buffers should be allocated in the	\
+	 * heap memory.						\
+	 */							\
+	char *line_buf;						\
+        line_buf = calloc(LINE_BUF_MAX, sizeof(char *));	\
 	char *p;						\
 								\
 	int keyword_len = strlen(keyword);			\
