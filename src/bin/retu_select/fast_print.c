@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Daichi GOTO
+ * Copyright (c) 2019,2021 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -55,7 +55,12 @@ fast_print(void)
 
 	// Process the first file
 	int file_i = 1;
-	char line_buf[LINE_BUF_MAX];
+
+	// MSYS2 (Cygwin) stack memory is limited to a few MB and crashes 
+	// quickly. To avoid consuming the stack memory, large buffers 
+	// should be allocated in the heap memory.
+	char *line_buf;
+	line_buf = calloc(LINE_BUF_MAX, sizeof(char *));
 
 	fp = fopen(F_ARGV[file_i], "r");
 	if (NULL == fp)
@@ -92,7 +97,12 @@ fast_print(void)
 static inline void
 do_fast_print(FILE *fp)
 {
-	char line_buf[LINE_BUF_MAX];
+	// MSYS2 (Cygwin) stack memory is limited to a few MB and crashes 
+	// quickly. To avoid consuming the stack memory, large buffers 
+	// should be allocated in the heap memory.
+	char *line_buf;
+	line_buf = calloc(LINE_BUF_MAX, sizeof(char *));
+
 	char *p;
 	char *retu_p;
 
