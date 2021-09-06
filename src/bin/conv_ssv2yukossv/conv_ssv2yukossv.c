@@ -27,8 +27,11 @@
 
 #include "command.h"
 
-#if defined(__MSYS__) || defined(__linux__)
-#define	LINE_BUF_MAX	4096
+#if defined(__MSYS__)
+// MSYS2 (Cygwin) crashes when memory usage increases (detailed cause 
+// unknown). It appears to crash when the total memory usage exceeds 2MB. 
+// For this reason, I keep the buffer size small.
+#define	LINE_BUF_MAX	524288
 #else
 #define	LINE_BUF_MAX	3145728
 #endif
@@ -56,6 +59,8 @@
 		) 
 
 static inline void print_line(char *, int);
+static inline void print_dbt(DBT *);
+static inline void println_dbt(DBT *);
 
 int
 main(int argc, char *argv[])
@@ -72,7 +77,7 @@ main(int argc, char *argv[])
 	int	id_len;
 
 	// Create btree storage
-	btree = dbopen(NULL, O_CREAT | O_RDWR, 0, DB_BTREE, NULL);
+	btree = dbopen(NULL, O_CREAT | O_RDWR, 0666, DB_BTREE, NULL);
 
 	fp = fopen(F_ARGV[1], "r");
 	if (NULL == fp)
@@ -124,6 +129,53 @@ main(int argc, char *argv[])
 	 * 		有効 == 0xe6 0x9c 0x89 0xe5 0x8a 0xb9 
 	 * 		無効 == 0xe7 0x84 0xa1 0xe5 0x8a 0xb9 
 	 */
+// MSYS2, Linux - Normal Code
+#if defined(__MSYS__) || defined(__linux__)
+	bool first_line = true;
+	int previous_1st_colm_len;
+	char previous_1st_colm[4096];
+	char previous_line[LINE_BUF_MAX];
+	char *p = NULL;
+
+	while (0 == btree->seq(btree, &key, &val, R_NEXT)) {
+		// BEGIN
+		if (first_line) {
+			p = key.data;
+			previous_1st_colm_len = 0;
+			while (IS_NOT_SEPARATOR(p)) {
+				++previous_1st_colm_len;
+				++p;
+			}
+			memcpy(previous_1st_colm, key.data, previous_1st_colm_len);
+			memcpy(previous_line, val.data, val.size);
+
+			first_line = false;
+			continue;
+		}
+		// ID is the same as previous line
+		else if (0 == strncmp(previous_1st_colm, key.data, previous_1st_colm_len)) {
+			memcpy(previous_line, val.data, val.size);
+			continue;
+		}
+		// ID is different from the previous line.
+		// Check the 4th column and print if valid.
+		else {
+			print_line(previous_line, FLAG_d);
+
+			p = key.data;
+			previous_1st_colm_len = 0;
+			while (IS_NOT_SEPARATOR(p)) {
+				++previous_1st_colm_len;
+				++p;
+			}
+			memcpy(previous_1st_colm, key.data, previous_1st_colm_len);
+			memcpy(previous_line, val.data, val.size);
+		}
+	}
+	// END
+	print_line(previous_line, FLAG_d);
+#else
+// FreeBSD, Mac - High Speed Processing Code
 	char *previous_line;
 	int key_len;
 
@@ -156,6 +208,7 @@ main(int argc, char *argv[])
 	}
 	// END
 	print_line(previous_line, FLAG_d);
+#endif
 
 	exit(EX_OK);
 }
@@ -213,4 +266,30 @@ print_line(char *line, int delete_flag)
 			printf("%s\n", p);
 		}
 	}
+}
+
+static inline void
+print_dbt(DBT *dbt_p)
+{
+	char buf[4096];
+	int len = 0;
+
+	if (4096 > dbt_p->size) {
+		len = dbt_p->size;
+	}
+	else {
+		len = 4096 - 1;
+	}
+
+	memcpy(buf, dbt_p->data, len);
+	buf[len] = '\0';
+
+	fprintf(stderr, "[%d %s]", len, buf);
+}
+
+static inline void
+println_dbt(DBT *dbt_p)
+{
+	print_dbt(dbt_p);
+	fprintf(stderr, "\n");
 }
