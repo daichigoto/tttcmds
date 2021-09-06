@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Daichi GOTO
+ * Copyright (c) 2016,2021 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -29,7 +29,7 @@
 #include <sys/types.h>
 #include <fcntl.h>
 #include <limits.h>
-#ifdef __linux__
+#if defined(__MSYS__) || defined(__linux__)
 #include <db_185.h>
 #else
 #include <db.h>

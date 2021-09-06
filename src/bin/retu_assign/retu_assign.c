@@ -255,7 +255,7 @@ main(int argc, char *argv[])
 		cmdargs = r_cmdargs[i];
 
 		r_argc = cmdargs.r_argc;
-		btrees[i] = dbopen(NULL, O_RDWR, 0, DB_BTREE, NULL);
+		btrees[i] = dbopen(NULL, O_CREAT | O_RDWR, 0, DB_BTREE, NULL);
 		if (NULL == btrees[i])
 			err(errno, CMDNAME ": dbopen failed"); 
 
