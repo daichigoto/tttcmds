@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Daichi GOTO
+ * Copyright (c) 2019,2021 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -59,7 +59,7 @@ static void process_greater_than_or_equal_to(char *, char *, int);
 static void process_less_than_or_equal_to(char *, char *, int);
 
 void
-simple_comparison(int argc, char *argv[])
+simple_comparison()
 {
 	// Only one column can be processed with option -s
 	if (1 != R_ARGC) {
@@ -183,10 +183,19 @@ simple_comparison(int argc, char *argv[])
 	}
 }
 
+	/* char line_buf[LINE_BUF_MAX];				\ */
+
 #define	PROCESS_PRE_TREATMENT					\
 	FILE *fp;						\
 								\
-	char line_buf[LINE_BUF_MAX];				\
+	/*							\
+	 * MSYS2 (Cygwin) stack memory is limited to a few MB 	\
+	 * and crashes quickly. To avoid consuming the stack 	\
+	 * memory, large buffers should be allocated in the 	\
+	 * heap memory.						\
+	 */							\
+	char *line_buf;						\
+	line_buf = calloc(LINE_BUF_MAX, sizeof(char *)); 	\
 	char *p;						\
 								\
 	int keyword_len = strlen(keyword);			\

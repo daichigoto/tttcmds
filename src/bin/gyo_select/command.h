@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016,2017,2019 Daichi GOTO
+ * Copyright (c) 2016,2017,2019,2021 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -30,7 +30,7 @@
 #define ALIAS "gyosel row_select"
 
 #include <limits.h>
-#ifdef __linux__
+#if defined(__MSYS__) || defined(__linux__)
 #include <db_185.h>
 #else
 #include <db.h>
@@ -38,7 +38,7 @@
 
 #include "ttt.h"
 
-void simple_comparison(int, char**);
+void simple_comparison();
 
 #define TGT_RETU_PROCESS(BUF,BUFLEN,INDEX) \
 	fp_no_output = 1; \
