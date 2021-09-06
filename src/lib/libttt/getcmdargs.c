@@ -686,7 +686,8 @@ stdintotempfile(void)
 	FILE *fp_i, *fp_o;
 
 	mktempfile();
-	fp_i = fopen(STDIN_FILE, "r");
+	/* fp_i = fopen(STDIN_FILE, "r"); */
+	fp_i = stdin;
 	if (NULL == fp_i)
 		err(errno, "%s", STDIN_FILE);
 	fp_o = fopen(tempfile, "w");
@@ -700,7 +701,7 @@ stdintotempfile(void)
 	 * the int type and comparing it, we can correctly distinguish between 
 	 * data and EOF.
 	 */
-  int b;
+	int b;
 	while (EOF != (b = (int)fgetc(fp_i)))
 		fputc((char)b, fp_o);
 
