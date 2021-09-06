@@ -34,3 +34,6 @@ build:
 
 clean:
 	rm -rf html
+
+open: test
+	win msedge $(CURDIR)/html/index.html
