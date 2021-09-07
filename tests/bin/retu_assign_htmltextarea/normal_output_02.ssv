@@ -1,1 +1,1 @@
-<textarea_name="nam1">1</textarea> <textarea_name="nam_2"_id="uniq"></textarea>
+<textarea_name="nam1">1</textarea> <textarea_id="uniq"_name="nam_2"></textarea>
