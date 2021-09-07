@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016,2017 Daichi GOTO
+ * Copyright (c) 2016,2017,2021 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -49,10 +49,11 @@ main(int argc, char *argv[])
         DBT hash_key, hash_val;
         memset(hashtables, 0, (R_INDEX_MAX + 1) * sizeof(DB *));
 	for (int i = 1; i <= R_ARGC; i++) {
-		if (NULL == hashtables[R_ARGV[i]])
+		if (NULL == hashtables[R_ARGV[i]]) {
 			hashtables[R_ARGV[i]] = 
-				dbopen(NULL, O_CREAT|O_RDWR, 0644, 
-					DB_HASH, NULL);
+				dbopen(NULL, O_CREAT | O_RDWR, 0, 
+					DB_BTREE, NULL);
+		}
 
 		if (NULL == cmdargs.r_argv_arg1[i] &&
 		    NULL == cmdargs.r_argv_arg2[i] &&
