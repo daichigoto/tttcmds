@@ -35,5 +35,9 @@ build:
 clean:
 	rm -rf html
 
-open: test
+open: 
+	if [ ! -e html ]; \
+	then \
+		$(MAKE) test; \
+	fi
 	win msedge $(CURDIR)/html/index.html
