@@ -35,7 +35,13 @@
 	fp_buf_len = BUFFER_SIZE; \
 	fp_buf = calloc(fp_buf_len, sizeof(char)); \
 	for (int fp_file_i = 1; fp_file_i <= F_ARGC; fp_file_i++) { \
-		fp_fp = fopen(F_ARGV[fp_file_i], "r"); \
+		/* Process for Windows where /dev/stdin does not exist. */ \
+		if (0 == strncmp("/dev/stdin", F_ARGV[fp_file_i], 10)) { \
+			fp_fp = stdin; \
+		} \
+		else { \
+			fp_fp = fopen(F_ARGV[fp_file_i], "r"); \
+		} \
 		if (NULL == fp_fp) \
 			err(errno, "%s", F_ARGV[fp_file_i]); \
 		while (EOF != (fp_b = intbuf = fgetc(fp_fp))) { \
@@ -115,7 +121,13 @@
 	fp_ibuf = calloc(fp_ibuf_len + 1, sizeof(char *)); \
 	for (int fp_file_i = 1; \
 	     fp_file_i <= F_ARGC; fp_file_i++) { \
-		fp_fp = fopen(F_ARGV[fp_file_i], "r"); \
+		/* Process for Windows where /dev/stdin does not exist. */ \
+		if (0 == strncmp("/dev/stdin", F_ARGV[fp_file_i], 10)) { \
+			fp_fp = stdin; \
+		} \
+		else { \
+			fp_fp = fopen(F_ARGV[fp_file_i], "r"); \
+		} \
 		if (NULL == fp_fp) \
 			err(errno, "%s", F_ARGV[fp_file_i]); \
 		stat(F_ARGV[fp_file_i], &fp_sb); \
@@ -259,7 +271,13 @@
 	FILE *fp_fp; \
 	int fp_b = 0; \
 	for (int fp_file_i = 1; fp_file_i <= F_ARGC; fp_file_i++) { \
-		fp_fp = fopen(F_ARGV[fp_file_i], "r"); \
+		/* Process for Windows where /dev/stdin does not exist. */ \
+		if (0 == strncmp("/dev/stdin", F_ARGV[fp_file_i], 10)) { \
+			fp_fp = stdin; \
+		} \
+		else { \
+			fp_fp = fopen(F_ARGV[fp_file_i], "r"); \
+		} \
 		if (NULL == fp_fp) \
 			err(errno, "%s", F_ARGV[fp_file_i]); \
 		while (1) { \
@@ -277,7 +295,13 @@
 	int fp_b = 0; \
 	char fp_bpre; \
 	for (int fp_file_i = 1; fp_file_i <= F_ARGC; fp_file_i++) { \
-		fp_fp = fopen(F_ARGV[fp_file_i], "r"); \
+		/* Process for Windows where /dev/stdin does not exist. */ \
+		if (0 == strncmp("/dev/stdin", F_ARGV[fp_file_i], 10)) { \
+			fp_fp = stdin; \
+		} \
+		else { \
+			fp_fp = fopen(F_ARGV[fp_file_i], "r"); \
+		} \
 		if (NULL == fp_fp) \
 			err(errno, "%s", F_ARGV[fp_file_i]); \
 		while (1) { \
