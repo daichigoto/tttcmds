@@ -33,7 +33,11 @@ _aliases=	$(shell	grep '#define ALIAS' command.h		| \
 			sed 's/"//g'				)
 ALIASES=	$(_aliases:=.exe)
 
-build: install-required-packages $(CMD)
+ifndef
+prebuild:
+endif
+
+build: install-required-packages prebuild $(CMD)
 
 $(CMD): $(OBJS)
 	$(CC) $(CFLAGS) -o $(CMD) $(OBJS) $(LINKFLAGS)
