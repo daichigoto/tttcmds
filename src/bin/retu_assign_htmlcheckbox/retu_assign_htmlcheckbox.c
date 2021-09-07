@@ -35,22 +35,24 @@ main(int argc, char *argv[])
 	/*
 	 * set the checked value
 	 */
-	char *val = "1";
+	char *checked_value = "1";
 	char *ssvval = "1";
 	if (FLAG_c) {
-		val = FLAG_c_ARG;
+		checked_value = FLAG_c_ARG;
 		ssvval = _str2ssvstr(FLAG_c_ARG);
 	}
 
 	/*
 	 * column specifics setup
 	 */
-        DB *hashtables[R_INDEX_MAX + 1];
-        DBT hash_key, hash_val;
-        memset(hashtables, 0, (R_INDEX_MAX + 1) * sizeof(DB *));
+        DB *db[R_INDEX_MAX + 1];
+        DBT key, val;
+        memset(db, 0, (R_INDEX_MAX + 1) * sizeof(DB *));
 	for (int i = 1; i <= R_ARGC; i++) {
-		if (NULL == hashtables[R_ARGV[i]]) {
-			hashtables[R_ARGV[i]] = 
+		if (NULL == db[R_ARGV[i]]) {
+		 	// To make the output order of attributes 
+			// reproducible, use BTREE as the database type.
+			db[R_ARGV[i]] = 
 				dbopen(NULL, O_CREAT | O_RDWR, 0, 
 					DB_BTREE, NULL);
 		}
@@ -66,13 +68,11 @@ main(int argc, char *argv[])
 			usage();
 
 		if (0 == strncmp(cmdargs.r_argv_arg1[i], "_attr_", 6)) {
-			hash_key.data = cmdargs.r_argv_arg2[i];
-			hash_key.size = strlen(hash_key.data) + 1;
-			hash_val.data = _str2ssvstr(cmdargs.r_argv_arg3[i]);
-			hash_val.size = strlen(hash_val.data) + 1;
-			hashtables[R_ARGV[i]]->put(
-				hashtables[R_ARGV[i]], 
-				&hash_key, &hash_val, 0);
+			key.data = cmdargs.r_argv_arg2[i];
+			key.size = strlen(key.data) + 1;
+			val.data = _str2ssvstr(cmdargs.r_argv_arg3[i]);
+			val.size = strlen(val.data) + 1;
+			db[R_ARGV[i]]->put(db[R_ARGV[i]], &key, &val, 0);
 
 			for (int j = i; j < R_ARGC; j++) {
 				cmdargs.r_argv[j] = cmdargs.r_argv[j+1];

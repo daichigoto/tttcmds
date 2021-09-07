@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Daichi GOTO
+ * Copyright (c) 2017,2021 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -45,21 +45,21 @@
 	else \
 		printf("<input_type=\"checkbox\"_value=\"%s\"", \
 			_quote2charref(ssvval)); \
-	if (0 == hashtables[INDEX]->seq( \
-		hashtables[INDEX], &hash_key, &hash_val, R_FIRST)) { \
+	if (0 == db[INDEX]->seq( \
+		db[INDEX], &key, &val, R_FIRST)) { \
 		if (FLAG_r) \
 			PRINT_REFERENCED_STRING(INDEX) \
 		else \
-			printf("_%s=\"%s\"", hash_key.data, \
-				_quote2charref(hash_val.data)); \
+			printf("_%s=\"%s\"", (char *)(key.data), \
+				_quote2charref(val.data)); \
 	} \
-	while (0 == hashtables[INDEX]->seq( \
-		hashtables[INDEX], &hash_key, &hash_val, R_NEXT)) { \
+	while (0 == db[INDEX]->seq( \
+		db[INDEX], &key, &val, R_NEXT)) { \
 		if (FLAG_r) \
 			PRINT_REFERENCED_STRING(INDEX) \
 		else \
-			printf("_%s=\"%s\"", hash_key.data, \
-				_quote2charref(hash_val.data)); \
+			printf("_%s=\"%s\"", (char *)(key.data), \
+				_quote2charref(val.data)); \
 	} \
 	if (0 == strcmp(ssvval, RETU_BUFFER)) \
 		printf("_checked"); \
@@ -80,8 +80,8 @@
 }
 
 #define PRINT_REFERENCED_STRING(INDEX) { \
-	printf("_%s=\"", hash_key.data); \
-	p = hash_val.data; \
+	printf("_%s=\"", (char *)(key.data)); \
+	p = val.data; \
 	while ('\0' != *p) { \
 		if ('\\' != *p) \
 			putchar(*p); \
