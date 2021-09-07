@@ -262,7 +262,7 @@ main(int argc, char *argv[])
 		b_key.data = "\0";
 		b_key.size = 1;
 		b_val.data = getatmarkline(r_argc - 1, at);
-		b_val.size = strlen(b_val.data);
+		b_val.size = strlen(b_val.data) + 1;
 
 		btrees[i]->put(btrees[i], &b_key, &b_val, 0);
 

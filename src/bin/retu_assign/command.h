@@ -147,13 +147,13 @@
   	memset(&b_val, 0, sizeof(DBT)); \
 	if (0 == btrees[I]->get(btrees[I], \
 		&b_key, &b_val, 0)) { \
-		printf("%s",b_val.data); \
+		printf("%s",(char *)(b_val.data)); \
 	} \
 	else { \
 		b_key.data = "\0"; \
 		b_key.size = 1; \
 		btrees[I]->get(btrees[I], \
 			&b_key, &b_val, 0); \
-		printf("%s",b_val.data); \
+		printf("%s",(char *)(b_val.data)); \
 	} \
 }
