@@ -44,7 +44,7 @@ main(int argc, char *argv[])
 			// reproducible, use BTREE as the database type.
 			db[R_ARGV[i]] = 
 				dbopen(NULL, O_CREAT|O_RDWR, 0644, 
-					DB_HASH, NULL);
+					DB_BTREE, NULL);
 		}
 
 		if (NULL == cmdargs.r_argv_arg1[i] &&
