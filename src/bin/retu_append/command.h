@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Daichi GOTO
+ * Copyright (c) 2017,2021 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -42,10 +42,9 @@
 		for (int j = 1; j <= appcols_len[i]; j++) { \
 			if (appcols[i][j] > NF) \
 				usage(); \
-			len += strlen(GYO_BUFFER[appcols[i][j]]); \
 			len += delim_len; \
+			len += strlen(GYO_BUFFER[appcols[i][j]]); \
 		} \
-		len -= delim_len; \
 		buf[i] = calloc(len + 1, sizeof(char)); \
 	} \
 	for (int i = 1; i <= R_ARGC; i++) { \
