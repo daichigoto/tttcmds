@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016,2017,2019 Daichi GOTO
+ * Copyright (c) 2016,2017,2019,2021 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -38,7 +38,10 @@
 #include <sysexits.h>
 #include <locale.h>
 #include <ctype.h>
+#if defined(__MSYS__)
+#define __XSI_VISIBLE 1
 #include <time.h>
+#endif
 #include <errno.h>
 #include <err.h>
 
