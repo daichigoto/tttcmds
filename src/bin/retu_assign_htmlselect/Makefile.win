@@ -36,6 +36,8 @@ OTHEROBJS=	getatmarkline.o \
 		setcmdargs_from_FILENAME_RETU_RETU.o
 LINKFLAGS+=	$(OTHEROBJS)
 
+all: build
+
 prebuild: getatmarkline.o
 
 getatmarkline.o: ./../retu_assign/getatmarkline.c
