@@ -38,10 +38,7 @@
 #include <sysexits.h>
 #include <locale.h>
 #include <ctype.h>
-#if defined(__MSYS__)
-#define __XSI_VISIBLE 1
 #include <time.h>
-#endif
 #include <errno.h>
 #include <err.h>
 

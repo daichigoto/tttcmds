@@ -38,6 +38,7 @@ main(int argc, char *argv[])
 	 * with    -c: first date is required.
 	 * without -c: first date and last date are required.
 	 */
+
 	const char *first, *last;
 	if ((!FLAG_c && 2 != F_ARGC) || (FLAG_c && 1 != F_ARGC))
 		usage();
@@ -143,10 +144,15 @@ check_t(const char *t, const char *date, const char *fmt)
 		warnx("illegal time format");
 		usage();
 	}
-	else if ('\0' != *t)
+	else if ('\0' != *t) {
+#if defined(__MSYS__)
+//		exit(EX_DATAERR);
+#else
 		fprintf(stderr, "Warning: Ignoring %ld extraneous"
 			" characters in date string (%s)\n",
 			(long) strlen(t), t);
+#endif
+	}
 /*-
  * Copyright (c) 1985, 1987, 1988, 1993
  *      The Regents of the University of California.  All rights reserved.
