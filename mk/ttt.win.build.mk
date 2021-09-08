@@ -33,8 +33,12 @@ _aliases=	$(shell	grep '#define ALIAS' command.h		| \
 			sed 's/"//g'				)
 ALIASES=	$(_aliases:=.exe)
 
-ifndef
+ifndef prebuild
 prebuild:
+endif
+
+ifndef preclean
+preclean:
 endif
 
 build: install-required-packages prebuild $(CMD)
@@ -59,7 +63,7 @@ uninstall:
 		rm -f $(BINDIR)/$${i}; \
 	done
 
-clean:
+clean: preclean
 	rm -f $(CMD) $(OBJS)
 
 test: install
