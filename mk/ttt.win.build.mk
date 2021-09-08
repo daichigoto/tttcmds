@@ -33,6 +33,8 @@ _aliases=	$(shell	grep '#define ALIAS' command.h		| \
 			sed 's/"//g'				)
 ALIASES=	$(_aliases:=.exe)
 
+all: build
+
 ifndef prebuild
 prebuild:
 endif
