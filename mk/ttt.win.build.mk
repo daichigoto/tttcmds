@@ -23,10 +23,10 @@
 #  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE 
 #  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-CMD=		$(DIRNAME).exe
+CMD?=		$(DIRNAME).exe
 
-SRCS=		$(wildcard *.c)
-OBJS=		$(SRCS:.c=.o)
+SRCS?=		$(wildcard *.c)
+OBJS?=		$(SRCS:.c=.o)
 
 _aliases=	$(shell	grep '#define ALIAS' command.h		| \
 			sed 's/#define ALIAS //'		| \
@@ -43,10 +43,17 @@ ifndef preclean
 preclean:
 endif
 
+
+ifneq ($(CMD),)
 build: install-required-packages prebuild $(CMD)
 
 $(CMD): $(OBJS)
 	$(CC) $(CFLAGS) -o $(CMD) $(OBJS) $(LINKFLAGS)
+else
+build: install-required-packages prebuild $(OBJS)
+
+$(CMD): 
+endif
 
 .c.o:
 	$(CC) $(CFLAGS) -c $< -o $@
