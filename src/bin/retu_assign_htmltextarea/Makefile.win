@@ -36,6 +36,7 @@ OTHEROBJS=	getatmarkline.o \
 		retucnt.o \
 		strtoargv.o \
 		setcmdargs_from_FILENAME_RETU_RETU.o
+LINKFLAGS+=	$(OTHEROBJS)
 
 prebuild: getatmarkline.o
 
@@ -48,7 +49,4 @@ getatmarkline.o: ./../retu_assign/getatmarkline.c
 
 preclean:
 	rm -f $(OTHEROBJS)
-
 include		./../../../mk/ttt.win.build.mk
-
-LINKFLAGS+=	$(OTHEROBJS)
