@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Daichi GOTO
+ * Copyright (c) 2017,2021 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -91,10 +91,17 @@ check_t(const char *t, const char *date, const char *fmt)
 		warnx("illegal time format");
 		usage();
 	}
-	else if ('\0' != *t)
+	else if ('\0' != *t) {
+#if defined(__MSYS__)
+	// The cause is unknown.  In MSYS2, a stack error occurs when
+	// processing is performed here. For this reason, no processing
+	// will be performed here.
+#else
 		fprintf(stderr, "Warning: Ignoring %ld extraneous"
 			" characters in date string (%s)\n",
 			(long) strlen(t), t);
+#endif
+	}
 /*-
  * Copyright (c) 1985, 1987, 1988, 1993
  *      The Regents of the University of California.  All rights reserved.
