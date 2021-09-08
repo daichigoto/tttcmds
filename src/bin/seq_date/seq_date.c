@@ -146,7 +146,9 @@ check_t(const char *t, const char *date, const char *fmt)
 	}
 	else if ('\0' != *t) {
 #if defined(__MSYS__)
-//		exit(EX_DATAERR);
+	 // The cause is unknown.  In MSYS2, a stack error occurs when 
+	 // processing is performed here. For this reason, no processing 
+	 // will be performed here.
 #else
 		fprintf(stderr, "Warning: Ignoring %ld extraneous"
 			" characters in date string (%s)\n",
