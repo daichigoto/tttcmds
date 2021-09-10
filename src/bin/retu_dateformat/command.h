@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016,2017,2018,2019 Daichi GOTO
+ * Copyright (c) 2016,2017,2018,2019,2021 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -89,6 +89,7 @@ typedef unsigned char u_char;
 						R_ARGV_ARG3[index]); \
 					vary_apply(v, &tm); \
 					vary_destroy(v); \
+					v = NULL; \
 				} \
 				mktime(&tm); \
 				(void)strftime(str, str_len, \
@@ -141,7 +142,8 @@ typedef unsigned char u_char;
 		fprintf(stderr, "HOURS30_INPUT_POST():\n"); \
 	v = vary_append(v, varry); \
 	vary_apply(v, &tm); \
-	vary_destroy(v);
+	vary_destroy(v); \
+	v = NULL;
 
 #define HOURS30_OUTPUT_PRE(GYO_BUFFER) \
 	if (FLAG_D) \
@@ -155,6 +157,7 @@ typedef unsigned char u_char;
 		v = vary_append(v, "+1d"); \
 		vary_apply(v, &tm_tomorrow); \
 		vary_destroy(v); \
+		v = NULL; \
 		mktime(&tm_tomorrow); \
 		(void)strftime(basedate, 8, "%Y%m%d", &tm_tomorrow); \
 		basedate[8] = '\0'; \
@@ -174,6 +177,7 @@ typedef unsigned char u_char;
 			v = vary_append(v, "-1d"); \
 			vary_apply(v, &tm); \
 			vary_destroy(v); \
+			v = NULL; \
 		} \
 	}
 
