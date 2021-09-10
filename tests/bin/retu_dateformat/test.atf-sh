@@ -219,24 +219,17 @@ longdata_without_eor_head() {
 longdata_without_eor_body() {
 	OS=$(uname)
 	case "$OS" in
-	Darwin)
-		atf_check -s ignore \
-		-o file:$(atf_get_srcdir)/longdata_without_eor_1_darwin.out \
-		-x "retu_dateformat" \
-		   "1.%Y%m%d%H%M%S.%Y/%m/%d\ %H:%M" \
-		   "$(atf_get_srcdir)/longdata_without_eor.in"
-		;;
 	FreeBSD)
 		if [ "$(uname -U)" -gt 1200000 ]
 		then
 			atf_check -s ignore \
-			-o file:$(atf_get_srcdir)/longdata_without_eor_1_darwin.out \
+			-o file:$(atf_get_srcdir)/longdata_without_eor_1.out \
 			-x "retu_dateformat" \
 			   "1.%Y%m%d%H%M%S.%Y/%m/%d\ %H:%M" \
 			   "$(atf_get_srcdir)/longdata_without_eor.in"
 		else
 			atf_check -s ignore \
-			-o file:$(atf_get_srcdir)/longdata_without_eor_1.out \
+			-o file:$(atf_get_srcdir)/longdata_without_eor_1_old.out \
 			-x "retu_dateformat" \
 			   "1.%Y%m%d%H%M%S.%Y/%m/%d\ %H:%M" \
 		   	"$(atf_get_srcdir)/longdata_without_eor.in"
@@ -352,12 +345,12 @@ shift_body() {
 		   "3.%Y%m%d.%Y%m%d"
 }
 
-atf_test_case 30hours
-30hours_head() {
+atf_test_case hours30
+hours30_head() {
 	atf_set "descr" "Verify a 30 hours system treatment"
 }
 
-30hours_body() {
+hours30_body() {
 	atf_check -s ignore \
 		-o file:$(atf_get_srcdir)/30hours_output_01.ssv \
 		-x "cat $(atf_get_srcdir)/30hours_date_01.ssv |" \
@@ -416,7 +409,7 @@ atf_init_test_cases()
 	atf_add_test_case format
 	atf_add_test_case locale
 	atf_add_test_case shift
-	atf_add_test_case 30hours
+	atf_add_test_case hours30
 	atf_add_test_case echowhenunmatch
 	atf_add_test_case bug_check
 }
