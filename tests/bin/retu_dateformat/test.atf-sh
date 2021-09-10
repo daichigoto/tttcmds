@@ -232,7 +232,7 @@ longdata_without_eor_body() {
 			-o file:$(atf_get_srcdir)/longdata_without_eor_1_old.out \
 			-x "retu_dateformat" \
 			   "1.%Y%m%d%H%M%S.%Y/%m/%d\ %H:%M" \
-		   	"$(atf_get_srcdir)/longdata_without_eor.in"
+		   	   "$(atf_get_srcdir)/longdata_without_eor.in"
 		fi
 		;;
 	*)
