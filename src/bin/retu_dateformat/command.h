@@ -146,9 +146,10 @@ typedef unsigned char u_char;
 	v = NULL;
 
 #define HOURS30_OUTPUT_PRE(GYO_BUFFER) \
-	if (FLAG_D) \
+	if (FLAG_D) { \
 		fprintf(stderr, "HOURS30_OUTPUT_PRE(GYO_BUFFER): " \
 				"%s\n", GYO_BUFFER[index_30hbase]); \
+	} \
 	hours30_output = 0; \
 	p_base = strptime(GYO_BUFFER[index_30hbase], "%Y%m%d", \
 		&tm_tomorrow); \
@@ -159,19 +160,20 @@ typedef unsigned char u_char;
 		vary_destroy(v); \
 		v = NULL; \
 		mktime(&tm_tomorrow); \
-		(void)strftime(basedate, 8, "%Y%m%d", &tm_tomorrow); \
+		(void)strftime(basedate, 9, "%Y%m%d", &tm_tomorrow); \
 		basedate[8] = '\0'; \
 		\
 		/* target date */ \
 		mktime(&tm); \
-		(void)strftime(tgtdate, 8, "%Y%m%d", &tm); \
+		(void)strftime(tgtdate, 9, "%Y%m%d", &tm); \
 		tgtdate[8] = '\0'; \
 		\
-		if (FLAG_D) \
+		if (FLAG_D) { \
 			fprintf(stderr, "HOURS30_OUTPUT_PRE(GYO_BUFFER): " \
-				"basedate + 1d: %s\n" \
-				"HOURS30_OUTPUT_PRE(GYO_BUFFER): " \
-				"tgtdate      : %s\n", basedate, tgtdate); \
+				"basedate + 1d: %s\n", basedate); \
+			fprintf(stderr, "HOURS30_OUTPUT_PRE(GYO_BUFFER): " \
+				"tgtdate      : %s\n", tgtdate); \
+		} \
 		if (0 == strcmp(basedate, tgtdate)) { \
 			hours30_output = 1; \
 			v = vary_append(v, "-1d"); \
