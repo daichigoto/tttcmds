@@ -206,11 +206,9 @@ typedef unsigned char u_char;
 		                 str); \
 	} \
 	if (indexH >= 0 && hours30_output) { \
-		(void)strftime(tgtH, 2, "%H", &tm); \
+		(void)strftime(tgtH, 3, "%H", &tm); \
 		tgtH[2] = '\0'; \
- fprintf(stderr,"tgtH: %s\n",tgtH);\
 		H = (int)strtol(tgtH, (char **)NULL, 10) + 24; \
- fprintf(stderr,"H: %d\n",H);\
 		sprintf(tgtH, "%02d", H); \
 		INDEX_OF_HH(FMT); \
 		if (indexH >= 0) \
