@@ -91,7 +91,16 @@ typedef unsigned char u_char;
 					vary_destroy(v); \
 					v = NULL; \
 				} \
+				if (FLAG_D) { \
+					PRINT_STRUCT_TM(tm); \
+				} \
+				/* If the member values of structtm are */ \
+				/* inappropriate, convert them to */ \
+				/* appropriate data. */ \
 				mktime(&tm); \
+				if (FLAG_D) { \
+					PRINT_STRUCT_TM(tm); \
+				} \
 				(void)strftime(str, str_len, \
 					R_ARGV_ARG2[index], &tm); \
 				if (FLAG_3) { \
@@ -109,9 +118,9 @@ typedef unsigned char u_char;
 	}
 
 #define HOURS30_INPUT_PRE(FMT) \
-	if (FLAG_D) \
-		fprintf(stderr, "HOURS30_INPUT_PRE(FMT): " \
-				"%s\n", FMT); \
+	if (FLAG_D) { \
+		fprintf(stderr, "HOURS30_INPUT_PRE(FMT): %s\n", FMT); \
+	} \
 	varry[1] = '0'; \
 	INDEX_OF_HH(FMT); \
 	if (indexH >= 0 && (int)strlen(str) >= indexH + 2) { \
@@ -138,8 +147,9 @@ typedef unsigned char u_char;
 	}
 
 #define HOURS30_INPUT_POST \
-	if (FLAG_D) \
+	if (FLAG_D) { \
 		fprintf(stderr, "HOURS30_INPUT_POST():\n"); \
+	} \
 	v = vary_append(v, varry); \
 	vary_apply(v, &tm); \
 	vary_destroy(v); \
@@ -147,8 +157,8 @@ typedef unsigned char u_char;
 
 #define HOURS30_OUTPUT_PRE(GYO_BUFFER) \
 	if (FLAG_D) { \
-		fprintf(stderr, "HOURS30_OUTPUT_PRE(GYO_BUFFER): " \
-				"%s\n", GYO_BUFFER[index_30hbase]); \
+		fprintf(stderr, "HOURS30_OUTPUT_PRE(GYO_BUFFER): %s\n", \
+		        GYO_BUFFER[index_30hbase]); \
 	} \
 	hours30_output = 0; \
 	p_base = strptime(GYO_BUFFER[index_30hbase], "%Y%m%d", \
@@ -159,20 +169,36 @@ typedef unsigned char u_char;
 		vary_apply(v, &tm_tomorrow); \
 		vary_destroy(v); \
 		v = NULL; \
+		if (FLAG_D) { \
+			PRINT_STRUCT_TM(tm); \
+		} \
+		/* If the member values of structtm are inappropriate, */ \
+		/* convert them to appropriate data. */ \
 		mktime(&tm_tomorrow); \
+		if (FLAG_D) { \
+			PRINT_STRUCT_TM(tm); \
+		} \
 		(void)strftime(basedate, 9, "%Y%m%d", &tm_tomorrow); \
 		basedate[8] = '\0'; \
 		\
-		/* target date */ \
+		if (FLAG_D) { \
+			PRINT_STRUCT_TM(tm); \
+		} \
+		/* If the member values of structtm are inappropriate, */ \
+		/* convert them to appropriate data. */ \
 		mktime(&tm); \
+		if (FLAG_D) { \
+			PRINT_STRUCT_TM(tm); \
+		} \
+		/* target date */ \
 		(void)strftime(tgtdate, 9, "%Y%m%d", &tm); \
 		tgtdate[8] = '\0'; \
 		\
 		if (FLAG_D) { \
 			fprintf(stderr, "HOURS30_OUTPUT_PRE(GYO_BUFFER): " \
-				"basedate + 1d: %s\n", basedate); \
+				        "basedate + 1d: %s\n", basedate); \
 			fprintf(stderr, "HOURS30_OUTPUT_PRE(GYO_BUFFER): " \
-				"tgtdate      : %s\n", tgtdate); \
+				        "tgtdate      : %s\n", tgtdate); \
 		} \
 		if (0 == strcmp(basedate, tgtdate)) { \
 			hours30_output = 1; \
@@ -184,13 +210,13 @@ typedef unsigned char u_char;
 	}
 
 #define HOURS30_OUTPUT_POST(FMT) \
-	if (FLAG_D) \
-		fprintf(stderr, "HOURS30_OUTPUT_POST(FMT): " \
-				"%s\n" \
-				"HOURS30_OUTPUT_POST(FMT): " \
-				"indexH: %d\n" \
-				"HOURS30_OUTPUT_POST(FMT): " \
-				"str: %s\n", FMT, indexH, str); \
+	if (FLAG_D) { \
+		fprintf(stderr, "HOURS30_OUTPUT_POST(FMT): %s\n", FMT); \
+		fprintf(stderr, "HOURS30_OUTPUT_POST(FMT): indexH: %d\n", \
+		                 indexH); \
+		fprintf(stderr, "HOURS30_OUTPUT_POST(FMT): str: %s\n", \
+		                 str); \
+	} \
 	if (indexH >= 0 && hours30_output) { \
 		(void)strftime(tgtH, 2, "%H", &tm); \
 		tgtH[2] = '\0'; \
@@ -200,16 +226,17 @@ typedef unsigned char u_char;
 		if (indexH >= 0) \
 			strncpy(str + indexH, tgtH, 2); \
 	} \
-	if (FLAG_D) \
-		fprintf(stderr, "HOURS30_OUTPUT_POST(FMT): " \
-				"str: %s\n", str); \
+	if (FLAG_D) { \
+		fprintf(stderr, "HOURS30_OUTPUT_POST(FMT): str: %s\n", str); \
+	}
 
 #define INDEX_OF_HH(FMT) \
 	ptr = strstr(FMT, "%H"); \
-	if (FLAG_D) \
+	if (FLAG_D) { \
 		fprintf(stderr, "INDEX_OF_HH(FMT): " \
-				"ptr = strstr(FMT, \"%%H\")\n" \
-				"INDEX_OF_HH(FMT): ptr: %s\n", ptr); \
+		                "ptr = strstr(FMT, \"%%H\")\n"); \
+		fprintf(stderr, "INDEX_OF_HH(FMT): ptr: %s\n", ptr); \
+	} \
 	indexH = 0; \
 	if (NULL != ptr) { \
 		loopend = 0; \
@@ -252,5 +279,11 @@ typedef unsigned char u_char;
 	} \
 	else \
 		indexH = -1; \
-	if (FLAG_D) \
-		fprintf(stderr, "INDEX_OF_HH(FMT): indexH: %d\n", indexH);
+	if (FLAG_D) { \
+		fprintf(stderr, "INDEX_OF_HH(FMT): indexH: %d\n", indexH); \
+	}
+
+#define PRINT_STRUCT_TM(TM) \
+	fprintf(stderr, "STRUCT_TM "); \
+	fprintf(stderr, "%d/%d/%d ", TM.tm_year, TM.tm_mon, TM.tm_mday); \
+	fprintf(stderr, "%d:%d:%d\n", TM.tm_hour, TM.tm_min, TM.tm_sec);
