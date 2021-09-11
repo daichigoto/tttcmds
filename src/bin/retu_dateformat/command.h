@@ -208,6 +208,7 @@ typedef unsigned char u_char;
 	if (indexH >= 0 && hours30_output) { \
 		(void)strftime(tgtH, 2, "%H", &tm); \
 		tgtH[2] = '\0'; \
+ fprintf(stderr,"tgtH: %s\n",tgtH);\
 		H = (int)strtol(tgtH, (char **)NULL, 10) + 24; \
  fprintf(stderr,"H: %d\n",H);\
 		sprintf(tgtH, "%02d", H); \
