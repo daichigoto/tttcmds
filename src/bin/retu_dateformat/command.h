@@ -104,10 +104,8 @@ typedef unsigned char u_char;
 				(void)strftime(str, str_len, \
 					R_ARGV_ARG2[index], &tm); \
 				if (FLAG_3) { \
-			 fprintf(stderr,"str: %s\n",str);\
 					HOURS30_OUTPUT_POST( \
 						R_ARGV_ARG2[index]) \
-			 fprintf(stderr,"str: %s\n",str);\
 				} \
 				str2ssvstr(ssvstr, str); \
 				printf("%s", ssvstr); \
@@ -211,6 +209,7 @@ typedef unsigned char u_char;
 		(void)strftime(tgtH, 2, "%H", &tm); \
 		tgtH[2] = '\0'; \
 		H = (int)strtol(tgtH, (char **)NULL, 10) + 24; \
+ fprintf(stderr,"H: %d\n",H);\
 		sprintf(tgtH, "%02d", H); \
 		INDEX_OF_HH(FMT); \
 		if (indexH >= 0) \
