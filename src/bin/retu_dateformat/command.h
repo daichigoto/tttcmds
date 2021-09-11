@@ -101,13 +101,13 @@ typedef unsigned char u_char;
 				/* inappropriate, convert them to */ \
 				/* appropriate data. */ \
 				mktime(&tm); \
-			 fprintf(stderr,"str: %s\n",str);\
 				(void)strftime(str, str_len, \
 					R_ARGV_ARG2[index], &tm); \
-			 fprintf(stderr,"str: %s\n",str);\
 				if (FLAG_3) { \
+			 fprintf(stderr,"str: %s\n",str);\
 					HOURS30_OUTPUT_POST( \
 						R_ARGV_ARG2[index]) \
+			 fprintf(stderr,"str: %s\n",str);\
 				} \
 				str2ssvstr(ssvstr, str); \
 				printf("%s", ssvstr); \
