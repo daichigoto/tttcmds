@@ -1,0 +1,72 @@
+#  Copyright (c) 2021 Daichi GOTO
+#  All rights reserved.
+#  
+#  Redistribution and use in source and binary forms, with or without
+#  modifigation, are permitted provided that the following conditions are 
+#  met: 
+#  
+#  1. Redistributions of source code must retain the above copyright 
+#     notice, this list of conditions and the following disclaimer. 
+#  2. Redistributions in binary form must reproduce the above copyright 
+#     notice, this list of conditions and the following disclaimer in the 
+#     documentation and/or other materials provided with the distribution. 
+#  
+#  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS 
+#  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT 
+#  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR 
+#  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT 
+#  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, 
+#  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT 
+#  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, 
+#  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY 
+#  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT 
+#  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE 
+#  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+include		./../../../mk/ttt.win.dirs.mk
+include		./../../../mk/ttt.win.perm.mk
+include		./../../../mk/ttt.win.cmd.mk
+include		./../../../mk/ttt.win.cc.mk
+
+CMD=		ongs_awk.exe
+ALIASES=	owk.exe
+
+TMPSRCS=	awkgram.c awkgram.h ytab.h proctab.c
+TMPBINS=	maketab.exe
+
+SRCS=		awkgram.c proctab.c b.c lex.c lib.c main.c parse.c run.c \
+		tran.c
+OBJS=		$(SRCS:.c=.o)
+
+# To maintain compatibility, we use the original AWK (one-true-awk)
+# code from FreeBSD. It is old code and has many compilation warnings. 
+# For this reason, specify some options to prevent warning options from 
+# appearing.
+CFLAGS+=	-Wno-missing-field-initializers \
+		-Wno-unused-parameter \
+		-Wno-self-assign
+
+all: build
+
+prebuild: install-required-tool ytab.h proctab.c
+
+ytab.h: awkgram.y
+	btyacc -d -o awkgram.c awkgram.y
+	ln -sf awkgram.h ytab.h
+
+proctab.c: maketab.c
+	${CC} ${CFLAGS} maketab.c -o maketab.exe
+	./maketab.exe > proctab.c
+
+preclean:
+	rm -f $(TMPSRCS) $(TMPBINS) $(OBJS)
+
+install-required-tool:
+#--------------------------------------------------------------------
+# btyacc
+#--------------------------------------------------------------------
+ifneq ($(wildcard /usr/bin/btyacc.exe),/usr/bin/btyacc.exe)
+	pacman -S --noconfirm btyacc
+endif
+
+include		./../../../mk/ttt.win.build.mk
