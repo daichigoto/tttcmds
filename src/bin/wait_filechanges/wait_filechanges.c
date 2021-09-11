@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Daichi GOTO
+ * Copyright (c) 2016,2021 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -27,21 +27,38 @@
 
 #include "command.h"
 
-#ifdef __linux__
+/*---------------------------------------------------------------------
+ * MSYS2
+ *-------------------------------------------------------------------- */
+#if defined(__MSYS__)
 
+#include <fileapi.h>
+
+int
+main(int argc, char *argv[])
+{
+	exit(EX_OK);
+}
+
+/*---------------------------------------------------------------------
+ * Linux
+ *-------------------------------------------------------------------- */
+#elif defined(__linux__)
 int
 main(int argc, char *argv[])
 {
 	//XXX
 	// Not implemented yet for Linux.
-	// You must implement using epoll(7)? I don't know well.
+	// You must implement using inotify or epoll(7)? I don't know well.
 	argc = 0;
 	argv[0] = NULL;
 	exit(EX_UNAVAILABLE);
 }
 
+/*---------------------------------------------------------------------
+ * FreeBSD / Mac
+ *-------------------------------------------------------------------- */
 #else
-
 #include <sys/types.h>
 #include <sys/event.h>
 #include <sys/time.h>
@@ -90,5 +107,4 @@ main(int argc, char *argv[])
 
 	exit(EX_OK);
 }
-
 #endif
