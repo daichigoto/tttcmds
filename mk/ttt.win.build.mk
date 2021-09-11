@@ -31,7 +31,7 @@ OBJS?=		$(SRCS:.c=.o)
 _aliases=	$(shell	grep '#define ALIAS' command.h		| \
 			sed 's/#define ALIAS //'		| \
 			sed 's/"//g'				)
-ALIASES=	$(_aliases:=.exe)
+ALIASES?=	$(_aliases:=.exe)
 
 ifndef all
 all: build
