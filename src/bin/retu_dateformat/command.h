@@ -40,6 +40,9 @@ typedef unsigned char u_char;
 
 #define TGT_GYO_PROCESS(GYO_BUFFER,NF) \
 	for (int i = 1; i <= NF; i++) { \
+		if (FLAG_D) { \
+			fprintf(stderr, "\n"); \
+		} \
 		if (GYO_BUFFER[i][0] == '\0' || \
 			(GYO_BUFFER[i][0] == '@' && \
 			 GYO_BUFFER[i][1] == '\0')) { \
