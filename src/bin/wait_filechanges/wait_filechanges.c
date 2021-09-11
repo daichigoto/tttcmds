@@ -32,11 +32,40 @@
  *-------------------------------------------------------------------- */
 #if defined(__MSYS__)
 
-#include <fileapi.h>
+#include <windows.h>
 
+// DEGRADATION
+//
+// This command can specify files as the monitoring targets, but the Windows 
+// FindFirstChangeNotification() function cannot specify a file as the 
+// monitoring target. For this reason, we assume that only directories can 
+// be specified for monitoring on Windows.
+//
+// Also, we don't support option -p on Windows (Although this can be 
+// implemented... eventually, when I get around to it, maybe).
 int
 main(int argc, char *argv[])
 {
+	getcmdargs(argc, argv, "hvD", CMDARGS_R_NONE|CMDARGS_F_NEED);
+
+	HANDLE **handle;
+	handle = calloc(F_ARGC, sizeof(HANDLE *));
+
+	for (int i = 0; i < F_ARGC; i++) {
+		handle[i] = FindFirstChangeNotification( 
+			F_ARGV[i+1], 	// directory path to be monitored
+			TRUE,		// subdirectories are also coverd
+			FILE_NOTIFY_CHANGE_LAST_WRITE
+					// detects writing to files
+		);
+		if (INVALID_HANDLE_VALUE == handle[i]) {
+			fprintf(stderr, 
+			        "FindFirstChangeNotification: "
+				"INVALID_HANDLE_VALUE: %s\n", F_ARGV[i+1]);
+			exit(EX_USAGE);
+		}
+	}
+
 	exit(EX_OK);
 }
 
