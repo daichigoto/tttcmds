@@ -73,6 +73,9 @@ typedef unsigned char u_char;
 			 */ \
 			HOURS30_INPUT_PRE(R_ARGV_ARG1[index]) \
 			p = strptime(str, R_ARGV_ARG1[index], &tm); \
+			if (FLAG_D) { \
+				PRINT_STRUCT_TM(tm); \
+			} \
 			HOURS30_INPUT_POST \
 			if (NULL == p) { \
 				if (FLAG_e) \
@@ -91,16 +94,10 @@ typedef unsigned char u_char;
 					vary_destroy(v); \
 					v = NULL; \
 				} \
-				if (FLAG_D) { \
-					PRINT_STRUCT_TM(tm); \
-				} \
 				/* If the member values of structtm are */ \
 				/* inappropriate, convert them to */ \
 				/* appropriate data. */ \
 				mktime(&tm); \
-				if (FLAG_D) { \
-					PRINT_STRUCT_TM(tm); \
-				} \
 				(void)strftime(str, str_len, \
 					R_ARGV_ARG2[index], &tm); \
 				if (FLAG_3) { \
@@ -169,27 +166,15 @@ typedef unsigned char u_char;
 		vary_apply(v, &tm_tomorrow); \
 		vary_destroy(v); \
 		v = NULL; \
-		if (FLAG_D) { \
-			PRINT_STRUCT_TM(tm); \
-		} \
 		/* If the member values of structtm are inappropriate, */ \
 		/* convert them to appropriate data. */ \
 		mktime(&tm_tomorrow); \
-		if (FLAG_D) { \
-			PRINT_STRUCT_TM(tm); \
-		} \
 		(void)strftime(basedate, 9, "%Y%m%d", &tm_tomorrow); \
 		basedate[8] = '\0'; \
 		\
-		if (FLAG_D) { \
-			PRINT_STRUCT_TM(tm); \
-		} \
 		/* If the member values of structtm are inappropriate, */ \
 		/* convert them to appropriate data. */ \
 		mktime(&tm); \
-		if (FLAG_D) { \
-			PRINT_STRUCT_TM(tm); \
-		} \
 		/* target date */ \
 		(void)strftime(tgtdate, 9, "%Y%m%d", &tm); \
 		tgtdate[8] = '\0'; \
