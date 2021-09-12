@@ -25,7 +25,11 @@ THIS SOFTWARE.
 #include <sys/cdefs.h>
 // __FBSDID("$FreeBSD: releng/11.0/contrib/one-true-awk/main.c 271879 2014-09-19 18:24:02Z pfg $");
 
+#if defined(__MSYS__)
+const char	*_version = "version 20121220 (FreeBSD)";
+#else
 const char	*version = "version 20121220 (FreeBSD)";
+#endif
 
 #define DEBUG
 #include <stdio.h>
@@ -80,7 +84,7 @@ int main(int argc, char *argv[])
 	symtab = makesymtab(NSYMTAB/NSYMTAB);
 	while (argc > 1 && argv[1][0] == '-' && argv[1][1] != '\0') {
 		if (strcmp(argv[1],"-version") == 0 || strcmp(argv[1],"--version") == 0) {
-			printf("awk %s\n", version);
+			printf("awk %s\n", _version);
 			exit(0);
 			break;
 		}
@@ -144,7 +148,7 @@ int main(int argc, char *argv[])
 			dbg = atoi(&argv[1][2]);
 			if (dbg == 0)
 				dbg = 1;
-			printf("awk %s\n", version);
+			printf("awk %s\n", _version);
 			break;
 		default:
 			WARNING("unknown option %s ignored", argv[1]);
