@@ -10,11 +10,6 @@ operating systems.
 
 TTT COMMANDS is licensed under the **[2-clause BSD license](LICENSE)**.
 
-Download
---------
-
-[https://github.com/daichigoto/tttcmds/archive/master.zip](https://github.com/daichigoto/tttcmds/archive/master.zip)
-
 Build and Use
 -------------
 
@@ -118,5 +113,10 @@ Package Install
 ### FreeBSD 11+
 
     sudo pkg install tttcmds
+
+Download
+--------
+
+[https://github.com/daichigoto/tttcmds/archive/master.zip](https://github.com/daichigoto/tttcmds/archive/master.zip)
 
 *Homepage:* https://github.com/daichigoto/tttcmds/
