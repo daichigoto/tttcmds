@@ -18,38 +18,19 @@ Download
 Build and Install
 -----------------
 
-### Install some system or packages required for building
-
-* FreeBSD 11+
+#### FreeBSD 11+
 
     sudo pkg install kyua
-
-* Windows 10+ (You need [winget](https://github.com/microsoft/winget-cli/))
-
-    Install "[App Installer](https://www.microsoft.com/ja-jp/p/%E3%82%A2%E3%83%97%E3%83%AA-%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%A9%E3%83%BC/9nblggh4nns1)" via Microsoft Store
-	Install "[Winget](https://github.com/microsoft/winget-cli/releases)"
-
-* Mac (you need [Homebrew](http://brew.sh/))
-
-    brew install bsdmake
-    brew install kyua
-
-* Ubuntu 16.04
-
-    sudo apt-get install clang
-    sudo apt-get install libbsd-dev
-    sudo apt-get install freebsd-buildutils
-    # There is no kyua package for Ubuntu.
-    # There is no ATF package for Ubuntu.
-
-### Build and install
-
-* FreeBSD 11+
 
     make clean build
     sudo make install
 
-* Windows 10+
+#### Windows 10+ (You need [winget](https://github.com/microsoft/winget-cli/))
+
+###### Winget
+
+    Install "[App Installer](https://www.microsoft.com/ja-jp/p/%E3%82%A2%E3%83%97%E3%83%AA-%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%A9%E3%83%BC/9nblggh4nns1)" via Microsoft Store
+    Install "[Winget](https://github.com/microsoft/winget-cli/releases)"
 
 ###### PATH 
 
@@ -94,22 +75,30 @@ Add the environment variable LC_CTYPE. The value is "ja_JP.UTF-8". If you don't 
     cd tttcmds
     make 
 
-* Mac
+#### Mac (you need [Homebrew](http://brew.sh/))
 
+    brew install bsdmake
+    brew install kyua
+
+    cd tttcmds
     bsdmake clean build
-    sudo bsdmake install
 
-* Windows 10+
+#### Ubuntu 16.04
 
-* Ubuntu 16.04
+    sudo apt-get install clang
+    sudo apt-get install libbsd-dev
+    sudo apt-get install freebsd-buildutils
+    # There is no kyua package for Ubuntu.
+    # There is no ATF package for Ubuntu.
 
+    cd tttcmds
     bmake clean build
     sudo bmake install
 
 Package Install
 ---------------
 
-* FreeBSD 11+
+#### FreeBSD 11+
 
     sudo pkg install tttcmds
 
