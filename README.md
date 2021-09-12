@@ -15,39 +15,39 @@ Download
 
 [https://github.com/daichigoto/tttcmds/archive/master.zip](https://github.com/daichigoto/tttcmds/archive/master.zip)
 
-Installation
-------------
+Build and Install
+-----------------
 
 ### Install some system or packages required for building
 
 * FreeBSD 11+
 
-        sudo pkg install kyua
+    sudo pkg install kyua
 
 * Windows 10+ (You need [winget](https://github.com/microsoft/winget-cli/))
 
-        Install "[App Installer](https://www.microsoft.com/ja-jp/p/%E3%82%A2%E3%83%97%E3%83%AA-%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%A9%E3%83%BC/9nblggh4nns1)" via Microsoft Store
+    Install "[App Installer](https://www.microsoft.com/ja-jp/p/%E3%82%A2%E3%83%97%E3%83%AA-%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%A9%E3%83%BC/9nblggh4nns1)" via Microsoft Store
 	Install "[Winget](https://github.com/microsoft/winget-cli/releases)"
 
 * Mac (you need [Homebrew](http://brew.sh/))
 
-        brew install bsdmake
-        brew install kyua
+    brew install bsdmake
+    brew install kyua
 
 * Ubuntu 16.04
 
-        sudo apt-get install clang
-        sudo apt-get install libbsd-dev
-        sudo apt-get install freebsd-buildutils
-        # There is no kyua package for Ubuntu.
-        # There is no ATF package for Ubuntu.
+    sudo apt-get install clang
+    sudo apt-get install libbsd-dev
+    sudo apt-get install freebsd-buildutils
+    # There is no kyua package for Ubuntu.
+    # There is no ATF package for Ubuntu.
 
 ### Build and install
 
 * FreeBSD 11+
 
-        make clean build
-        sudo make install
+    make clean build
+    sudo make install
 
 * Windows 10+
 
@@ -69,47 +69,48 @@ Add the environment variable LC_CTYPE. The value is "ja_JP.UTF-8". If you don't 
 
 ###### MSYS2 installing 
 
-        winget install MSYS2
-        pacman -Syu --noconfirm
+    winget install MSYS2
+    pacman -Syu --noconfirm
 
 ###### git installing
 
-        pacman -S --noconfirm git
+    pacman -S --noconfirm git
 
 ###### misc buidling and installing
 
-        cd ${HOME}
-        mkdir Documents
-        cd Documents
-        git clone https://github.com/daichigoto/misc.git
-        cd misc
-        make
+    cd ${HOME}
+    mkdir Documents
+    cd Documents
+    git clone https://github.com/daichigoto/misc.git
+    cd misc
+    make
 
 ###### tttcmds building and installing
 
-        cd ${HOME}
-        mkdir Documents
-        cd Documents
-        git clone https://github.com/daichigoto/tttcmds.git
-        cd tttcmds
-        make 
+    cd ${HOME}
+    mkdir Documents
+    cd Documents
+    git clone https://github.com/daichigoto/tttcmds.git
+    cd tttcmds
+    make 
 
 * Mac
 
-        bsdmake clean build
-        sudo bsdmake install
+    bsdmake clean build
+    sudo bsdmake install
 
 * Windows 10+
 
 * Ubuntu 16.04
 
-        bmake clean build
-        sudo bmake install
+    bmake clean build
+    sudo bmake install
 
-### Install using packages
+Package Install
+---------------
 
 * FreeBSD 11+
 
-	sudo pkg install tttcmds
+    sudo pkg install tttcmds
 
 *Homepage:* https://github.com/daichigoto/tttcmds/
