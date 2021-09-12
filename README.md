@@ -96,14 +96,14 @@ Add tttcmds/bin to the PATH environment variable.
 
 Add tttcmds/bin to the PATH environment variable.
 
+###### Build
+
     sudo apt-get install clang
     sudo apt-get install libbsd-dev
     sudo apt-get install freebsd-buildutils
     # There is no kyua package for Ubuntu.
     # There is no ATF package for Ubuntu.
-
-###### Build
-
+    
     cd tttcmds
     bmake clean build
 
