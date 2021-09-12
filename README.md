@@ -15,22 +15,28 @@ Download
 
 [https://github.com/daichigoto/tttcmds/archive/master.zip](https://github.com/daichigoto/tttcmds/archive/master.zip)
 
-Build and Install
------------------
+Build and Use
+-------------
 
 #### FreeBSD 11+
 
+###### PATH
+
+Add tttcmds/bin to the PATH environment variable.
+
+###### Build
+
     sudo pkg install kyua
 
+    cd tttcmds
     make clean build
-    sudo make install
 
-#### Windows 10+ (You need [winget](https://github.com/microsoft/winget-cli/))
+#### Windows 10+ (You need [Winget](https://github.com/microsoft/winget-cli/))
 
 ###### Winget
 
-    Install "[App Installer](https://www.microsoft.com/ja-jp/p/%E3%82%A2%E3%83%97%E3%83%AA-%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%A9%E3%83%BC/9nblggh4nns1)" via Microsoft Store
-    Install "[Winget](https://github.com/microsoft/winget-cli/releases)"
+- Install "[App Installer](https://www.microsoft.com/ja-jp/p/%E3%82%A2%E3%83%97%E3%83%AA-%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%A9%E3%83%BC/9nblggh4nns1)" via Microsoft Store
+- Install "[Winget](https://github.com/microsoft/winget-cli/releases)"
 
 ###### PATH 
 
@@ -77,6 +83,12 @@ Add the environment variable LC_CTYPE. The value is "ja_JP.UTF-8". If you don't 
 
 #### Mac (you need [Homebrew](http://brew.sh/))
 
+###### PATH
+
+Add tttcmds/bin to the PATH environment variable.
+
+###### Build
+
     brew install bsdmake
     brew install kyua
 
@@ -85,15 +97,20 @@ Add the environment variable LC_CTYPE. The value is "ja_JP.UTF-8". If you don't 
 
 #### Ubuntu 16.04
 
+###### PATH
+
+Add tttcmds/bin to the PATH environment variable.
+
     sudo apt-get install clang
     sudo apt-get install libbsd-dev
     sudo apt-get install freebsd-buildutils
     # There is no kyua package for Ubuntu.
     # There is no ATF package for Ubuntu.
 
+###### Build
+
     cd tttcmds
     bmake clean build
-    sudo bmake install
 
 Package Install
 ---------------
