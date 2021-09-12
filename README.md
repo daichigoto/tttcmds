@@ -18,13 +18,18 @@ Download
 Installation
 ------------
 
-### Install some packages required for build
+### Install some system or packages required for building
 
 * FreeBSD 11+
 
         sudo pkg install kyua
 
-* Darwin 16.0.0+ (you need a [brew](http://brew.sh/))
+* Windows 10+ (You need [winget](https://github.com/microsoft/winget-cli/))
+
+        Install "[App Installer](https://www.microsoft.com/ja-jp/p/%E3%82%A2%E3%83%97%E3%83%AA-%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%A9%E3%83%BC/9nblggh4nns1)" via Microsoft Store
+	Install "[Winget](https://github.com/microsoft/winget-cli/releases)"
+
+* Mac (you need [Homebrew](http://brew.sh/))
 
         brew install bsdmake
         brew install kyua
@@ -44,10 +49,57 @@ Installation
         make clean build
         sudo make install
 
-* Darwin 16.0.0+
+* Windows 10+
+
+###### PATH 
+
+Add the following paths to the PATH environment variable with the following priorities.
+
+1. ${HOME}/Documents/misc/bin/
+2. ${HOME}/Documents/tttcmds/bin/
+3. C:\msys64\usr\bin
+4. C:\msys64\mingw64\bin
+
+###### HOME
+Add the environment variable HOME. The value should be the user's home directory, such as "C:\Users\daichi". If this environment variable is not specified, the MSYS2 home directory will be C:\msys64\home\daichi, etc., which is difficult to use.
+
+###### LC_CTYPE
+
+Add the environment variable LC_CTYPE. The value is "ja_JP.UTF-8". If you don't specify this environment variable, MSYS2's vim, etc. will not be able to use Japanese properly.
+
+###### MSYS2 installing 
+
+        winget install MSYS2
+        pacman -Syu --noconfirm
+
+###### git installing
+
+        pacman -S --noconfirm git
+
+###### misc buidling and installing
+
+        cd ${HOME}
+        mkdir Documents
+        cd Documents
+        git clone https://github.com/daichigoto/misc.git
+        cd misc
+        make
+
+###### tttcmds building and installing
+
+        cd ${HOME}
+        mkdir Documents
+        cd Documents
+        git clone https://github.com/daichigoto/tttcmds.git
+        cd tttcmds
+        make 
+
+* Mac
 
         bsdmake clean build
         sudo bsdmake install
+
+* Windows 10+
 
 * Ubuntu 16.04
 
