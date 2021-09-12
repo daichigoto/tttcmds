@@ -18,7 +18,7 @@ Download
 Build and Use
 -------------
 
-#### FreeBSD 11+
+### FreeBSD 11+
 
 ###### PATH
 
@@ -31,7 +31,7 @@ Add tttcmds/bin to the PATH environment variable.
     cd tttcmds
     make clean build
 
-#### Windows 10+ (You need [Winget](https://github.com/microsoft/winget-cli/))
+### Windows 10+ (You need [Winget](https://github.com/microsoft/winget-cli/))
 
 ###### Winget
 
@@ -81,7 +81,7 @@ Add the environment variable LC_CTYPE. The value is "ja_JP.UTF-8". If you don't 
     cd tttcmds
     make 
 
-#### Mac (you need [Homebrew](http://brew.sh/))
+### Mac (you need [Homebrew](http://brew.sh/))
 
 ###### PATH
 
@@ -95,7 +95,7 @@ Add tttcmds/bin to the PATH environment variable.
     cd tttcmds
     bsdmake clean build
 
-#### Ubuntu 16.04
+### Ubuntu 16.04
 
 ###### PATH
 
@@ -115,7 +115,7 @@ Add tttcmds/bin to the PATH environment variable.
 Package Install
 ---------------
 
-#### FreeBSD 11+
+### FreeBSD 11+
 
     sudo pkg install tttcmds
 
