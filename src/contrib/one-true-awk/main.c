@@ -84,7 +84,11 @@ int main(int argc, char *argv[])
 	symtab = makesymtab(NSYMTAB/NSYMTAB);
 	while (argc > 1 && argv[1][0] == '-' && argv[1][1] != '\0') {
 		if (strcmp(argv[1],"-version") == 0 || strcmp(argv[1],"--version") == 0) {
+#if defined(__MSYS__)
 			printf("awk %s\n", _version);
+#else
+			printf("awk %s\n", version);
+#endif
 			exit(0);
 			break;
 		}
@@ -148,7 +152,11 @@ int main(int argc, char *argv[])
 			dbg = atoi(&argv[1][2]);
 			if (dbg == 0)
 				dbg = 1;
+#if defined(__MSYS__)
 			printf("awk %s\n", _version);
+#else
+			printf("awk %s\n", version);
+#endif
 			break;
 		default:
 			WARNING("unknown option %s ignored", argv[1]);
