@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016, 2019, 2021 Daichi GOTO
+ * Copyright (c) 2016,2019,2021 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -25,9 +25,31 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+#define FILEPROCESS_FOPEN(FILE_P, PATH, MODE) \
+	/* Process for Windows where /dev/stdin does not exist. */ \
+	if (0 == strncmp("/dev/stdin", PATH, 10)) { \
+		FILE_P = stdin; \
+	} \
+	else { \
+		FILE_P = fopen(PATH, MODE); \
+	} \
+	if (NULL == FILE_P) \
+		err(errno, "%s", PATH);
+
+#define FILEPROCESS_OPEN(FILE_D, PATH, FLAGS) \
+	/* Process for Windows where /dev/stdin does not exist. */ \
+	if (0 == strncmp("/dev/stdin", PATH, 10)) { \
+		FILE_D = STDIN_FILENO; \
+	} \
+	else { \
+		FILE_D = open(PATH, MODE); \
+	} \
+	if (-1 == FILE_D) \
+		err(errno, "%s", PATH); \
+
 #define FILEPROCESS_RETU { \
 	FILE *fp_fp; \
-  int intbuf; \
+	int intbuf; \
 	int fp_no_output = 0; \
 	int fp_b = 0, fp_r_i = 1; \
 	int fp_buf_i, fp_buf_len; \
@@ -35,15 +57,7 @@
 	fp_buf_len = BUFFER_SIZE; \
 	fp_buf = calloc(fp_buf_len, sizeof(char)); \
 	for (int fp_file_i = 1; fp_file_i <= F_ARGC; fp_file_i++) { \
-		/* Process for Windows where /dev/stdin does not exist. */ \
-		if (0 == strncmp("/dev/stdin", F_ARGV[fp_file_i], 10)) { \
-			fp_fp = stdin; \
-		} \
-		else { \
-			fp_fp = fopen(F_ARGV[fp_file_i], "r"); \
-		} \
-		if (NULL == fp_fp) \
-			err(errno, "%s", F_ARGV[fp_file_i]); \
+		FILEPROCESS_FOPEN(fp_fp, F_ARGV[fp_file_i], "r") \
 		while (EOF != (fp_b = intbuf = fgetc(fp_fp))) { \
 			fp_p = fp_buf; \
 			fp_buf_i = 0; \
@@ -121,15 +135,7 @@
 	fp_ibuf = calloc(fp_ibuf_len + 1, sizeof(char *)); \
 	for (int fp_file_i = 1; \
 	     fp_file_i <= F_ARGC; fp_file_i++) { \
-		/* Process for Windows where /dev/stdin does not exist. */ \
-		if (0 == strncmp("/dev/stdin", F_ARGV[fp_file_i], 10)) { \
-			fp_fp = stdin; \
-		} \
-		else { \
-			fp_fp = fopen(F_ARGV[fp_file_i], "r"); \
-		} \
-		if (NULL == fp_fp) \
-			err(errno, "%s", F_ARGV[fp_file_i]); \
+		FILEPROCESS_FOPEN(fp_fp, F_ARGV[fp_file_i], "r") \
 		stat(F_ARGV[fp_file_i], &fp_sb); \
 		fp_p = fp_buf; \
 		fp_buf_i = fp_nf = 0; \
@@ -271,15 +277,7 @@
 	FILE *fp_fp; \
 	int fp_b = 0; \
 	for (int fp_file_i = 1; fp_file_i <= F_ARGC; fp_file_i++) { \
-		/* Process for Windows where /dev/stdin does not exist. */ \
-		if (0 == strncmp("/dev/stdin", F_ARGV[fp_file_i], 10)) { \
-			fp_fp = stdin; \
-		} \
-		else { \
-			fp_fp = fopen(F_ARGV[fp_file_i], "r"); \
-		} \
-		if (NULL == fp_fp) \
-			err(errno, "%s", F_ARGV[fp_file_i]); \
+		FILEPROCESS_FOPEN(fp_fp, F_ARGV[fp_file_i], "r") \
 		while (1) { \
 			fp_b = fgetc(fp_fp); \
 			TGT_CHAR_PROCESS(fp_b) \
@@ -295,15 +293,7 @@
 	int fp_b = 0; \
 	char fp_bpre; \
 	for (int fp_file_i = 1; fp_file_i <= F_ARGC; fp_file_i++) { \
-		/* Process for Windows where /dev/stdin does not exist. */ \
-		if (0 == strncmp("/dev/stdin", F_ARGV[fp_file_i], 10)) { \
-			fp_fp = stdin; \
-		} \
-		else { \
-			fp_fp = fopen(F_ARGV[fp_file_i], "r"); \
-		} \
-		if (NULL == fp_fp) \
-			err(errno, "%s", F_ARGV[fp_file_i]); \
+		FILEPROCESS_FOPEN(fp_fp, F_ARGV[fp_file_i], "r") \
 		while (1) { \
 			fp_b = fgetc(fp_fp); \
 			if (EOF == fp_b) { \
@@ -327,8 +317,7 @@
 			err(errno, "%s", F_ARGV[fp_file_i]); \
 		fp_size = fp_st.st_size; \
 		fp_buf = calloc(fp_size + 1, sizeof(char)); \
-		if (-1 == (fp_fd = open(F_ARGV[fp_file_i], O_RDONLY))) \
-			err(errno, "%s", F_ARGV[fp_file_i]); \
+		FILEPROCESS_OPEN(fp_fd, F_ARGV[fp_file_i], O_RDONLY) \
 		fp_rsize = 0; \
 		while (fp_rsize != fp_size) \
 			fp_rsize += read(fp_fd, fp_buf+fp_rsize, \
