@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016,2019 Daichi GOTO
+ * Copyright (c) 2016,2019,2021 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -51,9 +51,7 @@ main(int argc, char *argv[])
 	/*
 	 * Process the first file
 	 */
-	rfd = open(F_ARGV[1], O_RDONLY);
-	if (-1 == rfd)
-		err(EX_NOINPUT, "%s", F_ARGV[1]);
+	FILEPROCESS_OPEN(rfd, F_ARGV[1], O_RDONLY)
 
 	tagremoved = false;
 	outputed = false;
@@ -100,9 +98,7 @@ main(int argc, char *argv[])
 	 * Process second and subsequent files
 	 */
 	for (int file_i = 2; file_i <= F_ARGC; file_i++) {
-		rfd = open(F_ARGV[file_i], O_RDONLY);
-		if (-1 == rfd)
-			err(EX_NOINPUT, "%s", F_ARGV[1]);
+		FILEPROCESS_OPEN(rfd, F_ARGV[file_i], O_RDONLY)
 
 		outputed = false;
 		nw = 0;
