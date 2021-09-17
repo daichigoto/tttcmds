@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Daichi GOTO
+ * Copyright (c) 2019,2021 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -38,9 +38,7 @@ gyo(const char *fpath)
 	lines = 0;
 	fsize = 0;
 
-	fd = open(fpath, O_RDONLY);
-	if (-1 == fd) 
-		err(errno, "%s", fpath);
+	FILEPROCESS_OPEN(fd, fpath, O_RDONLY)
 
 	nr = read(fd, buf, BUFLEN);
 	fsize += nr;

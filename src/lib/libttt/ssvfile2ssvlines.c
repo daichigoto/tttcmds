@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017,2019 Daichi GOTO
+ * Copyright (c) 2017,2019,2021 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -36,9 +36,7 @@ ssvfile2ssvlines(const char *filename, struct ssvline *ssv_firstline)
 	int len;
 	char buf[buflen], *p;
 
-	fp = fopen(filename, "r");
-	if (NULL == fp)
-		err(errno, "%s", filename);
+	FILEPROCESS_FOPEN(fp, filename, "r")
 
 	p_ssvline = ssv_firstline;
 	p_ssvline->data = NULL;
