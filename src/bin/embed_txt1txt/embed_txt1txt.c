@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016,2017,2019 Daichi GOTO
+ * Copyright (c) 2016,2017,2019,2021 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -51,8 +51,7 @@ main(int argc, char *argv[])
 		if (-1 == stat(R_ARGV_ARG2[i], &st))
 			err(errno, "%s", R_ARGV_ARG2[i]);
 
-		if (-1 == (fd = open(R_ARGV_ARG2[i], O_RDONLY)))
-			err(errno, "%s", R_ARGV_ARG2[i]);
+		FILEPROCESS_OPEN(fd, R_ARGV_ARG2[i], O_RDONLY)
 
 		text[i] = calloc(st.st_size + 1, sizeof(char));
 		text[i][st.st_size] = '\0';
