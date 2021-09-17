@@ -77,9 +77,7 @@ main(int argc, char *argv[])
 	// Create btree storage
 	btree = dbopen(NULL, O_CREAT | O_RDWR, 0666, DB_BTREE, NULL);
 
-	fp = fopen(F_ARGV[1], "r");
-	if (NULL == fp)
-		err(errno, "%s", F_ARGV[1]);
+	FILEPROCESS_FOPEN(fp, F_ARGV[1], "r")
 
 	while (NULL != fgets(line_buf, LINE_BUF_MAX, fp)) {
 		// Remove the line feed from the line
