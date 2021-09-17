@@ -199,9 +199,7 @@ simple_comparison()
 	int keyword_len = strlen(keyword);			\
 	bool not_enough_columns;				\
 								\
-	fp = fopen(fpath, "r");					\
-	if (NULL == fp)						\
-		err(errno, "%s", F_ARGV[1]);			\
+	FILEPROCESS_FOPEN(fp, fpath, "r")			\
 								\
 	while (NULL != fgets(line_buf, LINE_BUF_MAX, fp)) {	\
 		/* Seek to the target row */			\
