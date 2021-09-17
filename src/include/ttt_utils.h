@@ -42,7 +42,7 @@
 		FILE_D = STDIN_FILENO; \
 	} \
 	else { \
-		FILE_D = open(PATH, MODE); \
+		FILE_D = open(PATH, FLAGS; \
 	} \
 	if (-1 == FILE_D) \
 		err(errno, "%s", PATH); \
