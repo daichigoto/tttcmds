@@ -202,10 +202,9 @@ main(int argc, char *argv[])
 		/*
 		 * file to a_array[][]
 		 */
-		FILE *fp = fopen(FLAG_f_ARG, "r");	
-		if (NULL == fp)
-			usage();
+		FILE *fp;
 		char a_buf[1024*64], *a_buf_p;
+		FILEPROCESS_FOPEN(fp, FLAG_f_ARG, "r")
 		fgets(a_buf, 1024*64, fp);
 		fclose(fp);
 
