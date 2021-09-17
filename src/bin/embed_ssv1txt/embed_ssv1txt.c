@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016,2017,2019 Daichi GOTO
+ * Copyright (c) 2016,2017,2019,202,2021 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -53,8 +53,7 @@ main(int argc, char *argv[])
 	 */
 	if (FLAG_s) {
 		FILE *fp;
-		if (NULL == (fp = fopen(FLAG_s_ARG, "r")))
-			err(errno, "%s", FLAG_s_ARG);
+		FILEPROCESS_FOPEN(fp, FLAG_s_ARG, "r")
 
 		char buf[BUFSIZ], *p, *p2;
 		int gyo = 0, n;
@@ -112,9 +111,8 @@ main(int argc, char *argv[])
 	stat(FLAG_t_ARG, &sb);
 	tsize = sb.st_size;
 	tbuf = calloc(tsize + 1, sizeof(char));
-	
-	if (-1 == (fd = open(FLAG_t_ARG, O_RDONLY)))
-		err(errno, "%s", FLAG_t_ARG);
+
+	FILEPROCESS_OPEN(fd, FLAG_t_ARG, O_RDONLY)
 	while (rs != tsize)
 		rs += read(fd, tbuf + rs, tsize - rs);
 	tbuf[tsize] = '\0';
