@@ -42,7 +42,10 @@ Add the following paths to the PATH environment variable with the following prio
 3. C:\msys64\usr\bin
 4. C:\msys64\mingw64\bin
 
+The starting point for the build is ${HOME}\Documents\misc\bin\make.ps1. Therefore, it is necessary to add ${HOME}\Documents\misc\bin\ to the environment variable PATH with the highest priority so that it will be the first target of the search.
+
 ###### HOME
+
 Add the environment variable HOME. The value should be the user's Windows home directory, such as "C:\Users\daichi". If this environment variable is not specified, the MSYS2 home directory will be like C:\msys64\home\daichi where is not home directory of Windows.
 
 Windows home directory and MSYS2 home directory are different. By setting the value of the environment variable HOME as described above, you can change the home directory of MSYS2 to the home directory of Windows. If you want to use Windows and MSYS2 in a more integrated way, this setting can help. If you want to keep your home directory different, there is no need to set the environment variable HOME.
@@ -50,6 +53,8 @@ Windows home directory and MSYS2 home directory are different. By setting the va
 ###### LC_CTYPE
 
 Add the environment variable LC_CTYPE. The value is your locale like "ja_JP.UTF-8". If you don't specify this environment variable, MSYS2's vim, etc. will not be able to use non-ascii language properly.
+
+When you have finished adding environment variables, quit all Windows Terminal and start a new Windows Terminal. If you do not quit the Windows Terminal, the PATH environment variable you set will not be reflected.
 
 ###### MSYS2 installing 
 
