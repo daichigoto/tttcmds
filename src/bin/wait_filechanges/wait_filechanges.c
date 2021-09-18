@@ -359,7 +359,7 @@ main(int argc, char *argv[])
 			warnc(errno, "%s", ent->fts_path);
 			continue;
 		}
-		i = open(ent->fts_path, O_RDONLY);
+		FILEPROCESS_OPEN(i, ent->fts_path, O_RDONLY)
 		EV_SET(&ke, i, EVFILT_VNODE, EV_ADD|EV_CLEAR,
 		       NOTE_DELETE|NOTE_WRITE|NOTE_EXTEND|
 		       NOTE_ATTRIB|NOTE_RENAME, 0, NULL);
