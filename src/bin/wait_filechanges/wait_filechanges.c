@@ -288,11 +288,35 @@ openFile(char *file_path)
 		FILE_ATTRIBUTE_NORMAL,	// normal file
 		NULL			// no template file
 	);
+
+	/*
+	 * Some operations, such as writing to a file from an application 
+	 * or overwriting a file, may fail to open the file. For this reason, 
+	 * even if it fails once, it will try to open the file several times.
+	 */
+	for (int i = 0; i < 100 && hFile == INVALID_HANDLE_VALUE; i++) {
+		/*
+		 * Explicitly generate context switches to handle actions on 
+		 * files from other applications.
+		 */
+		Sleep(1);
+
+		hFile = CreateFile(
+			TEXT(file_path),	// file to open
+			GENERIC_READ,		// open for reading
+			FILE_SHARE_READ,	// share for reading
+			NULL,			// default security
+			OPEN_EXISTING,		// open existing file
+			FILE_ATTRIBUTE_NORMAL,	// normal file
+			NULL			// no template file
+		);
+	}
 	if (hFile == INVALID_HANDLE_VALUE) {
 		fprintf(stderr,
 		        "can't open file: %s\n", file_path);
 		exit(EX_IOERR);
 	}
+
 	return hFile;
 }
 
