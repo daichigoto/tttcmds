@@ -43,7 +43,9 @@ Add the following paths to the PATH environment variable with the following prio
 4. C:\msys64\mingw64\bin
 
 ###### HOME
-Add the environment variable HOME. The value should be the user's home directory, such as "C:\Users\daichi". If this environment variable is not specified, the MSYS2 home directory will be C:\msys64\home\daichi, etc., which is difficult to use.
+Add the environment variable HOME. The value should be the user's Windows home directory, such as "C:\Users\daichi". If this environment variable is not specified, the MSYS2 home directory will be like C:\msys64\home\daichi where is not home directory of Windows.
+
+Windows home directory and MSYS2 home directory are different. By setting the value of the environment variable HOME as described above, you can change the home directory of MSYS2 to the home directory of Windows. If you want to use Windows and MSYS2 in a more integrated way, this setting can help. If you want to keep your home directory different, there is no need to set the environment variable HOME.
 
 ###### LC_CTYPE
 
