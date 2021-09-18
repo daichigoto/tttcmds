@@ -62,9 +62,7 @@ fast_print(void)
 	char *line_buf;
 	line_buf = calloc(LINE_BUF_MAX, sizeof(char *));
 
-	fp = fopen(F_ARGV[file_i], "r");
-	if (NULL == fp)
-		err(errno, "%s", F_ARGV[file_i]);
+	FILEPROCESS_FOPEN(fp, F_ARGV[file_i], "r")
 
 	// Delete the first line
 	if (FLAG_1)
