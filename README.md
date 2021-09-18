@@ -37,8 +37,8 @@ Add tttcmds/bin to the PATH environment variable.
 
 Add the following paths to the PATH environment variable with the following priorities.
 
-1. ${HOME}/Documents/misc/bin/
-2. ${HOME}/Documents/tttcmds/bin/
+1. ${HOME}\Documents\misc\bin
+2. ${HOME}\Documents\tttcmds\bin
 3. C:\msys64\usr\bin
 4. C:\msys64\mingw64\bin
 
@@ -60,18 +60,14 @@ Add the environment variable LC_CTYPE. The value is "ja_JP.UTF-8". If you don't 
 
 ###### misc buidling and installing
 
-    cd ${HOME}
-    mkdir Documents
-    cd Documents
+    cd ${HOME}\Documents
     git clone https://github.com/daichigoto/misc.git
     cd misc
     make
 
 ###### tttcmds building and installing
 
-    cd ${HOME}
-    mkdir Documents
-    cd Documents
+    cd ${HOME}\Documents
     git clone https://github.com/daichigoto/tttcmds.git
     cd tttcmds
     make 
