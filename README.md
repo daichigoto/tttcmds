@@ -72,6 +72,8 @@ When you have finished adding environment variables, quit all Windows Terminal a
     cd misc
     make
 
+If the build fails, check if any build tools other than MSYS2 have been added to the PATH. If other build tools have a higher priority than MSYS2, edit the PATH environment variable and change it so that the MSYS2 path is hit more preferentially.
+
 ###### tttcmds building and installing
 
     cd ${HOME}\Documents
