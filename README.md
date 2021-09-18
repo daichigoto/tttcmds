@@ -49,7 +49,7 @@ Windows home directory and MSYS2 home directory are different. By setting the va
 
 ###### LC_CTYPE
 
-Add the environment variable LC_CTYPE. The value is "ja_JP.UTF-8". If you don't specify this environment variable, MSYS2's vim, etc. will not be able to use Japanese properly.
+Add the environment variable LC_CTYPE. The value is your locale like "ja_JP.UTF-8". If you don't specify this environment variable, MSYS2's vim, etc. will not be able to use non-ascii language properly.
 
 ###### MSYS2 installing 
 
