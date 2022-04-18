@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019,2021  Daichi GOTO
+ * Copyright (c) 2019,2021,2022  Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -25,7 +25,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#define VERSION "20190814"
+#define VERSION "20220418"
 #define CMDNAME "conv_ssv2yukossv"
 #define ALIAS "ssv2yukossv mkyuko"
 
