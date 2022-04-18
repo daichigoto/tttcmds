@@ -125,8 +125,6 @@ main(int argc, char *argv[])
 	 * 		有効 == 0xe6 0x9c 0x89 0xe5 0x8a 0xb9 
 	 * 		無効 == 0xe7 0x84 0xa1 0xe5 0x8a 0xb9 
 	 */
-// MSYS2, Linux - Normal Code
-#if defined(__MSYS__) || defined(__linux__) || defined(__FreeBSD__)
 	bool first_line = true;
 	int previous_1st_colm_len;
 	char previous_1st_colm[4096];
@@ -176,41 +174,6 @@ main(int argc, char *argv[])
 	}
 	// END
 	print_line(previous_line, FLAG_d);
-#else
-// FreeBSD, Mac - High Speed Processing Code
-	char *previous_line;
-	int key_len;
-
-	key_len = 0;
-	previous_line = NULL;
-	while (0 == btree->seq(btree, &key, &val, R_NEXT)) {
-		char *p;
-		p = val.data;
-
-		// BEGIN
-		if (NULL == previous_line) {
-			previous_line = val.data;
-			while (IS_NOT_SEPARATOR(p)) {
-				++p;
-			}
-			key_len = p - previous_line;
-			continue;
-		}
-		// ID is the same as previous line	
-		else if (0 == strncmp(previous_line, val.data, key_len)) {
-			previous_line = val.data;
-			continue;
-		}
-		// ID is different from the previous line.
-		// Check the 4th column and print if valid.
-		else {
-			print_line(previous_line, FLAG_d);
-			previous_line = val.data;
-		}
-	}
-	// END
-	print_line(previous_line, FLAG_d);
-#endif
 
 	exit(EX_OK);
 }
