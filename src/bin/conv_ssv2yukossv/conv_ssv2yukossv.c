@@ -126,7 +126,7 @@ main(int argc, char *argv[])
 	 * 		無効 == 0xe7 0x84 0xa1 0xe5 0x8a 0xb9 
 	 */
 // MSYS2, Linux - Normal Code
-#if defined(__MSYS__) || defined(__linux__)
+#if defined(__MSYS__) || defined(__linux__) || defined(__FreeBSD__)
 	bool first_line = true;
 	int previous_1st_colm_len;
 	char previous_1st_colm[4096];
