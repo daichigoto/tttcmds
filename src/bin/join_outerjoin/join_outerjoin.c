@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Daichi GOTO
+ * Copyright (c) 2017,2023 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -112,6 +112,8 @@ main(int argc, char *argv[])
 		}
 		while (NULL != p_ssvline);
 	}
+
+	getcmdargs_unlinktmpf();
 
 	exit(EX_OK);
 }
