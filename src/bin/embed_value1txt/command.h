@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016,2019,2021 Daichi GOTO
+ * Copyright (c) 2016,2019,2021,2023 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -25,7 +25,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#define VERSION "20190808"
+#define VERSION "20230324"
 #define CMDNAME "embed_value1txt"
 #define ALIAS "val1txt"
 

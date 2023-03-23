@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016,2019,2021 Daichi GOTO
+ * Copyright (c) 2016,2019,2021,2023 Daichi GOTO
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -65,6 +65,8 @@ main(int argc, char *argv[])
 	}
 
 	FILEPROCESS_ALLBUFFER
+
+	getcmdargs_unlinktmpf();
 
 	exit(EX_OK);
 }
