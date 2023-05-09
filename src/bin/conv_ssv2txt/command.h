@@ -59,7 +59,7 @@ int width_in_terminal(const char *);
  */
 #define TGT_GYO_PROCESS(GYO_BUFFER,NF) \
 	for (i = 1; i <= NF; i++) { \
-		len = ssvstr2str_len(GYO_BUFFER[i]); \
+		len = width_in_terminal(GYO_BUFFER[i]); \
 		if (maxlen[i] < len) \
 			maxlen[i] = len; \
 	}
