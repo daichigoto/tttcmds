@@ -95,8 +95,36 @@ width_in_terminal(const char *buf)
 		//  perform the judgment process strictly for each encoding.)
 		if (1 == char_bytes) {
 
-			// 1 byte is assumed to be a half-width character.
-			width_in_terminal += 1;
+			// '\033' - ESC
+			if ('\033' == *p) {
+				// When the character is an escape, process 
+				// that character and the following string 
+				// as an ANSI escape sequence.
+				//
+				//	color	- \033[NUMm
+				//	cursor	- \033[H	- upper left
+				//	cursor	- \033[R;CH	- move to R/C
+				//	cursor	- \033[A	- move to up
+				//	cursor	- \033[B	- move to down
+				//	cursor	- \033[C	- move to right
+				//	cursor	- \033[D	- move to left
+				//
+				// The aforementioned ANSI escape sequences 
+				// are non-printing characters and therefore 
+				// are not counted in terms of character width.
+				while ('\0' != *(1+p) && 'm' != *(1+p) &&
+				       'H' != *(1+p) &&
+				       'A' != *(1+p) && 'B' != *(1+p) &&
+				       'C' != *(1+p) && 'D' != *(1+p)) {
+					++p;
+				}
+				++p;
+			}
+			else {
+				// 1 byte is assumed to be a half-width 
+				// character.
+				width_in_terminal += 1;
+			}
 		}
 		else {
 			// 2 or more bytes are assumed to be a full-width character.
